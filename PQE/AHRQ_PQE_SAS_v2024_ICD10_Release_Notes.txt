@@ -1,0 +1,76 @@
+===============================================================================================================
+Prevention Quality Indicators in Emergency Department Settings (PQE) Software Version SAS v2024
+RELEASE DATE: July 2024
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's all-payer software is named PQE SAS QI v2024
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+- Reflects coding changes based on fiscal year 2024 coding updates to the International Classification 
+  of Diseases, Tenth Revision, Clinical Modification/Procedure Coding System (ICD-10-CM/PCS). These coding 
+  changes impact all software modules.
+- Includes modified code sets, labels, and output in multiple modules. See log of changes for 
+  indicator-by-indicator changes.
+- Updates risk-adjustment, signal variance, and reference population rates using data from the 2021
+  Healthcare Cost and Utilization Project (HCUP) State Inpatient Databases (SID).
+- Updates QI population file estimates covering the years 2000 through 2023 using US Census Bureau data. 
+  Please see the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2024/AHRQ_QI_v2024_ICD10_Population_File.pdf 
+- Updates module name from Emergency Department Prevention Quality Indicators Beta (ED PQI Beta) to 
+  Prevention Quality Indicators in Emergency Department Settings (PQE).
+- Includes five area-level Prevention Quality Indicators in Emergency Department Settings (PQE):
+  • PQE 01 - Visits for Non-Traumatic Dental Conditions in ED
+  • PQE 02 - Visits for Chronic Ambulatory Care Sensitive Conditions in ED
+  • PQE 03 - Visits for Acute Ambulatory Care Sensitive Conditions in ED
+  • PQE 04 - Visits for Asthma in ED
+  • PQE 05 - Visits for Back Pain in ED (requiring variables for the identification of patient revisits)
+
+Measure specific changes are outlined on the AHRQ QI website;
+PQE - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQE/V2024/ChangeLog_PQE_v2024.pdf
+
+===============================================================================================================
+Version 2023 of AHRQ's Quality Indicators (QI) includes the beta release of a new module: 
+The Emergency Department Prevention Quality Indicators (ED PQI)
+RELEASE DATE: September 2023
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's all-payer software is named PQE Beta SAS Version 2023
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+- Reflects fiscal year 2023 coding updates to the International Classification of Diseases, 
+  Tenth Revision, Clinical Modification/Procedure Coding System (ICD-10-CM/PCS) 
+
+- Includes five area-level Prevention Quality Emergency Department (PQE) Indicators:
+  • PQE 01 - ED Visits for Non-Traumatic Dental Conditions
+  • PQE 02 - ED Visits for Chronic Ambulatory Care Sensitive Conditions
+  • PQE 03 - ED Visits for Acute Ambulatory Care Sensitive Conditions
+  • PQE 04 - ED Visits for Asthma
+  • PQE 05 - ED Visits for Back Pain (requiring variables for the identification of patient revisits)
+
+- Identifies conditions for which access to quality ambulatory care can reduce the likelihood of hospital care
+  
+- Identifies numerators of treat-and-release cases from the ED and inpatient discharges admitted through the ED
+  
+- Defines denominators as adults and/or children (depending on the measure) by membership in a population
+
+- Includes QI population file estimates covering the years 2000 through 2022 using US Census Bureau data; 
+  please see the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2023/AHRQ_QI_v2023_ICD10_Population_File.pdf 
+  
+- Calculates rates of ED visits for geographic areas
+
+- Provides measure specifications available at https://qualityindicators.ahrq.gov/measures/ED_PQI_TechSpec
+  
+- Uses the 2019 Healthcare Cost and Utilization Project (HCUP) State Inpatient Databases (SID) and State 
+  Emergency Department Databases (SEDD) to compile reference population data (and calculate benchmarks and 
+  risk-adjustment parameter estimates) which includes visits from the SEDD and discharges admitted 
+  through the ED from the SID 
+
+- Provides risk adjustment for age and sex or age, sex, and poverty decile as well as smoothed rates 
+  adjusted for reliability. 
+ 
+- Includes software instructions for the ED PQI module in the Quality Indicators Software 
+  Instructions and Data Dictionary, SAS QI v2023, available at:
+  https://qualityindicators.ahrq.gov/Downloads/Software/SAS/V2023/Software_Inst_SASQI_v2023_September_2023.pdf
+
+===============================================================================================================

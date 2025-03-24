@@ -1,0 +1,309 @@
+=============================================================================================
+Prevention Quality Indicators (PQI) Software Version SAS v2024
+RELEASE DATE: July 2024
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's all-payer software is named SAS QI v2024
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+- Reflects coding changes based on fiscal year 2024 coding updates to the International Classification 
+  of Diseases, Tenth Revision, Clinical Modification/Procedure Coding System (ICD-10-CM/PCS). These coding 
+  changes impact all software modules.
+- Includes modified code sets, labels, and output in multiple modules. See log of changes for 
+  indicator-by-indicator changes.
+- Updates risk-adjustment, signal variance, and reference population rates using data from the 2021
+  Healthcare Cost and Utilization Project (HCUP) State Inpatient Databases (SID).
+- Updates QI population file estimates covering the years 2000 through 2023 using US Census Bureau data. 
+  Please see the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2024/AHRQ_QI_v2024_ICD10_Population_File.pdf 
+- Revised Major Diagnostic Category (MDC) Requirements
+     • SAS QI v2024 now includes additional checks on user input for MDC_PROVIDED to avoid software errors. 
+       In the case where MDC_PROVIDED is not 0 or 1, or if MDC_PROVIDED = 1 but the MDC values are out of range of 
+       0-25, the software will not execute to avoid errors or unexpected results. 
+- Continues to provide the option to produce stratified rates. Expected rates, risk-adjusted rates, smoothed rates, 
+  and composites are suppressed in certain situations. Because age and gender are used in risk adjustment models, 
+  it is inappropriate to produce risk-adjusted rates for any stratum that includes these variables.
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/V2024/ChangeLog_PQI_v2024.pdf
+
+=============================================================================================
+Prevention Quality Indicators (PQI) Software Version SAS v2023
+Release date: AUGUST 2023
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's all-payers version is named SAS QI v2023
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+- Reflects coding changes based on fiscal year 2023 coding updates to the International Classification 
+  of Diseases, Tenth Revision, Clinical Modification/Procedure Coding System (ICD-10-CM/PCS). 
+  These coding changes impact all software modules.
+- Includes modified code sets, labels, and output in multiple modules. See log of changes for 
+  indicator-by-indicator changes.
+- Includes risk-adjustment, signal variance, and reference population rates using data from the 2019 and 2020
+  Healthcare Cost and Utilization Project (HCUP) State Inpatient Databases (SID). The use of multiple years of 
+  data serves several purposes, such as allowing users to select the appropriate year for the denominator as well as 
+  for the risk-adjustment model, providing risk-adjusted scores appropriate to either a pandemic period (2020) 
+  or a non-pandemic period (2019), according to user preference.
+- Revised Major Diagnostic Category (MDC) Requirements
+     • v2023 creates new assignments for MDC 14 (obstetrics) based on the diagnosis codes from a MDC 14 code list 
+	   in order to allow users to generate risk-adjusted, smoothed, or composite rates for indicators where MDC 14 
+	   is used in the measure specifications. Starting with v2023, the area-level indicators no longer require MDCs. 
+	   Consequently, the MDC_PROVIDED option has been removed as it does not have any impact on the software. 
+	   The software will not suppress risk-adjusted rates and smoothed rates.
+- Continues to provide the option to produce stratified rates. Expected rates, risk-adjusted rates, smoothed rates, 
+  and composites are suppressed in certain situations. Because age and gender are used in risk adjustment models, 
+  it is inappropriate to produce risk-adjusted rates for any stratum that includes these variables.
+- Updated QI population file estimates covering the years 2000 through 2022 using US Census Bureau data. 
+  Please see the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2023/AHRQ_QI_v2023_ICD10_Population_File.pdf 
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/V2023/ChangeLog_PQI_v2023.pdf
+
+=============================================================================================
+Prevention Quality Indicators Software Version SAS v2022
+Release date: JULY 2022
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's All-Payers version is named SAS QI v2022
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Added support for fiscal year 2022 code updates dictated by the Centers for Disease Control and Prevention (CDC) National
+  Center for Health Statistics (NCHS) and Centers for Medicare & Medicaid Services (CMS)
+  These coding changes impact all software modules.
+- Modified setnames, labels, and outputs in multiple modules. See log of changes for indicator-by-indicator changes.
+- Updated risk-adjustment, signal variance, reference population rates, and composite weights for PSI, IQI, PDI, 
+  and PQI modules using the 2019 HCUP state inpatient databases.
+- Users must have major diagnostic categories (MDC) assigned for each discharge on their input file. MDCs are used in measure specifications.
+  The AHRQ v2022 software no longer imputes MDC as in v2021 since the calculation is error-prone when 
+  the correct classification software is not applied to the input data. Different versions of the Medicare 
+  Severity-Diagnostic Related Group (MS-DRG) grouper produce slightly different results with respect to certain high 
+  resource intensity MS-DRGs. Specifically, MS-DRGs 001-019 and 981-989 are classified as "pre-MDC" MS-DRGs, which means
+  that they are associated with such high length of stay and/or cost that they supersede the usual assignment of MS-DRGs
+  within body system or MDC categories. For records assigned to these MS-DRGs, some versions of the grouper software retain
+  the MDC that would be assigned based on the principal diagnosis and procedure codes, whereas other versions of the grouper
+  software overwrite the MDC assignment with a blank, missing, or nonnumeric value such as "PRE." 
+  Thus, users MUST PROVIDE the MDC generated by the Centers for Medicare & Medicaid Services (CMS) MS-DRG grouper software, 
+  without imputing or mapping from MS-DRGs. For accurate results, all eligible records should have an MDC between 01 and 25. 
+  For those users who need to construct MDC, please view the documentation and software available here:
+  https://www.cms.gov/files/zip/icd-10-ms-drgs-v391-effective-april-1-2022.zip.
+- Users should set the MDC_PROVIDED macro variable to "0" in the CONTROL program when MDC is missing or incomplete on the input data. 
+  If MDC is available and fully coded, users should set the MDC_PROVIDED macro variables to "1". 
+  If users set the MDC_PROVIDED macro variable to "1" in the CONTROL  program, but MDC values are missing on input data, 
+  the software will exclude those discharges with missing MDCs and output an error message – "ERROR: MDC_PROVIDED = 1 in 
+  CONTROL program but all MDC values are missing on input data".      
+- In AHRQ software v2022, users continue to have two options to calibrate smoothed rates and composite values using observed to expected ratio: 
+	• Option 1: Set Calibration_OE_to_ref_pop to 1 in SAS QI control programs to calibrate using the 2019 HCUP reference population 
+      observed-to-expected (O-E) ratio. This is recommended and is therefore the default choice.
+	• Option 2: Set Calibration_OE_to_ref_pop to 0 in SAS QI control programs to calibrate to the O-E ratio of the user's input data. 
+      This option is provided to large health care systems or states who want to calibrate the predicted QI rates within the system. 
+      Starting with AHRQ SAS QI v2021, there is a new step in the software to rescale the predicted probabilities if the O/E calibration 
+      pushes them above 1.0. The caveat is that the interpretation of the rates may be different since the software would still use 2019 
+      HCUP reference population rate as multiplier for risk adjustment rates.
+  For more details about the O-E ratio adjustment, please refer to the Empirical Methods document.
+  https://www.qualityindicators.ahrq.gov/Downloads/Resources/Publications/2022/Empirical_Methods_2022.pdf
+- Updated QI population file to use intercensal and postcensal estimates of county-level population by single-year age group, sex, race,
+  and Hispanic origin covering the years 2000 through 2021 are from the US Census Bureau. The new population file uses Census estimates for 
+  single year age population to create AHRQ age bands. Please see the details around the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2022/AHRQ_QI_v2022_ICD10_Population_File.pdf 
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/V2022/ChangeLog_PQI_v2022.pdf
+
+=============================================================================================
+Prevention Quality Indicators Software Version SAS v2021
+Release date: JULY 2021
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's All-Payers version is named SAS QI v2021.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Added support for fiscal year 2021 code updates dictated by the Centers for Disease Control and Prevention (CDC) National
+  Center for Health Statistics (NCHS) and Centers for Medicare & Medicaid Services (CMS)
+  These coding changes impact all software modules.
+- Modified setnames, labels, and outputs in multiple modules. See log of changes for indicator-by-indicator changes.
+- Updated risk-adjustment, signal variance, reference population rates, and composite weights for PSI, IQI, PDI, 
+  and PQI modules using the 2018 HCUP state inpatient databases.
+- In AHRQ software v2021, the user has two options to calibrate smoothed rates and composite values using observed to expected ratio: 
+	• Option 1: Set Calibration_OE_to_ref_pop to 1 in SAS QI control programs to calibrate using the 2018 HCUP reference population 
+      observed-to-expected (O-E) ratio. This is recommended and is therefore the default choice.
+	• Option 2: Set Calibration_OE_to_ref_pop to 0 in SAS QI control programs to calibrate to the O-E ratio of the user's input data. 
+      This option is provided to large health care systems or states who want to calibrate the predicted QI rates within the system. 
+      Starting with AHRQ SAS QI v2021, there is a new step in the software to rescale the predicted probabilities if the O/E calibration 
+      pushes them above 1.0. The caveat is that the interpretation of the rates may be different since the software would still use 2018 
+      HCUP reference population rate as multiplier for risk adjustment rates.
+  For more details about the O-E ratio adjustment, please refer to the Empirical Methods document.
+  https://www.qualityindicators.ahrq.gov/Downloads/Resources/Publications/2021/Empirical_Methods_2021.pdf
+- Udpdated QI population file to use intercensal and postcensal estimates of county-level population by single-year age group, sex, race,
+  and Hispanic origin covering the years 2000 are through 2020 from the US Census Bureau. The new population file uses Census estimates for 
+  single year age population to create AHRQ age bands. Please see the details around the population file methodology at: 
+  http://www.qualityindicators.ahrq.gov/Downloads/Software/SAS/V2021/AHRQ_QI_v2021 _ICD10_Population_File.pdf 
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/v2021/ChangeLog_PQI_v2021.pdf
+
+=============================================================================================
+Prevention Quality Indicators Software Version SAS v2020
+Release date: JULY 2020
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's All-Payers version is named SAS QI v2020.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Added support for fiscal year 2020 code updates dictated by the Centers for Disease Control and Prevention (CDC) National
+  Center for Health Statistics (NCHS) and Centers for Medicare & Medicaid Services (CMS) through March 31, 2020. 
+  The SAS QI v2020 ICD-10-CM/PCS software does not reflect coding updates effective April 1, 2020. 
+  These coding changes impact all software modules.
+- Modified setnames, labels, and outputs in multiple modules. See log of changes for indicator-by-indicator changes.
+- Updated risk-adjustment, signal variance, reference population rates, and composite weights for PSI, IQI, PDI, 
+  and PQI modules using the 2017 HCUP state inpatient databases.
+- Users interested in calculating expected, risk-adjusted, smoothed, or composite values must have major diagnostic categories (MDCs)
+  assigned for each discharge on their input file. MDCs are used in risk adjustment, and although the QI software includes a macro to 
+  calculate MDC, it does not account for assignments for pre-MDC DRGs or multiple trauma cases (MDC 24). Different versions of the MS-DRG
+  grouper produce slightly different results with respect to certain high resource intensity MS-DRGs. Specifically, MS-DRGs 001-017 
+  and 981-989 are classified as "preMDC" MS-DRGs, which means that they are associated with such high length of stay and/or cost that
+  they supersede the usual assignment of MS-DRGs within body system or MDC categories. For records assigned to these MS-DRGs, some
+  versions of the grouper software retain the MDC that would be assigned based on the principal diagnosis and procedure codes, whereas
+  other versions of the grouper software overwrite the MDC assignment with a blank, missing, or nonnumeric value such as "PRE." 
+  For those users who need to construct MDC, please view the documentation and software available here:
+    https://downloads.cms.gov/files/ms-drg-v37-0-r0-mce.zip
+- In AHRQ software v2020, the user now has two options to calibrate smoothed rates and composite values using observed to expected ratio: 
+  Option 1: Set Calibration_OE_to_ref_pop to 1 in SAS QI control programs to calibrate using the 2017 HCUP reference population 
+  observed-to-expected (O-E) ratio. This is recommended and is therefore the default choice.
+  Option 2: Set Calibration_OE_to_ref_pop to 0 in SAS QI control programs to calibrate to the O-E ratio of the user's input data. 
+  This option is provided to large health care systems or states who want to calibrate the predicted QI rates within the system. 
+  The caveat is that the interpretation of the rates may be different since the software would still use 2017 
+  HCUP reference population rate as multiplier for risk adjustment rates.
+  For more details about the O-E ratio adjustment, please refer to the Empirical Methods document.
+  https://www.qualityindicators.ahrq.gov/Downloads/Resources/Publications/2020/Empirical_Methods_2020.pdf
+- Updated AHRQ Population file to use intercensal and postcensal estimates of county-level population by single-year age group, sex, race, 
+  and Hispanic origin covering the years 2000 through 2019 from the US Census Bureau. The new population file uses Census estimates for
+  single year age population to create AHRQ age bands.
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/v2020/ChangeLog_PQI_v2020.pdf
+
+=============================================================================================
+Prevention Quality Indicator Software Version SAS v2019, ICD-10-CM/PCS 
+Release date: JULY 2019
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's All-Payers version is named SAS QI v2019 ICD-10-CM/PCS. 
+ 
+Because of the transition to ICD-10-CM/PCS, SAS QI v2019 is the first software to support risk-adjustment using ICD-10-CMS/PCS.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Added support for fiscal year 2019 code updates dictated by the Centers for Disease Control and Prevention (CDC) National
+  Center for Health Statistics (NCHS) and Centers for Medicare & Medicaid Services (CMS).
+- Introduces execution of all the supporting SAS programs from within the PQI_AREA_CONTROL.sas program.
+- Modified setnames, labels, and outputs in multiple modules. See log of changes for indicator-by-indicator changes.
+- Added risk-adjustment, signal variance, and reference population rates for PQI module using
+  the 2016 HCUP state inpatient databases.
+  The previous version of this indicator allowed the denominator to be specified with the diabetic population only and calculated with the SAS QI
+  software through the condition-specific denominator. However, the disease-specific denominator file (PQI_Area_Condition.sas) has been temporarily
+  removed from the software for further review and updates. So, the calculation of condition specific rates for PQI 01, 03, 14 and 16 is not available in v2019
+- Remove measures from version 2019:
+	PQI 02 Perforated Appendix Admission Rate
+	PQI 09 Low Birth Weight Rate - PQI09 was available as a stand alone module and included in the PDI Module.
+	PQI 11 Community-Acquired Pneumonia Admission Rate
+- Users interested in calculating expected, risk-adjusted, smoothed, or composite values must have major diagnostic categories (MDCs)
+  assigned for each discharge on their input file. MDCs are used in risk adjustment, and although the QI software includes a macro to 
+  calculate MDC, it does not account for assignments for pre-MDC DRGs or multiple trauma cases (MDC 24). Different versions of the MS-DRG
+  grouper produce slightly different results with respect to certain high resource intensity MS-DRGs. Specifically, MS-DRGs 001-017 
+  and 981-989 are classified as "preMDC" MS-DRGs, which means that they are associated with such high length of stay and/or cost that
+  they supersede the usual assignment of MS-DRGs within body system or MDC categories. For records assigned to these MS-DRGs, some
+  versions of the grouper software retain the MDC that would be assigned based on the principal diagnosis and procedure codes, whereas
+  other versions of the grouper software overwrite the MDC assignment with a blank, missing, or nonnumeric value such as "PRE." 
+  For those users who need to construct MDC, please view the documentation and software available here:
+    https://downloads.cms.gov/files/MS-DRG-V36-0-R0-MSGMCE-V36-0-R0-MCE-V36-0-R0.zip
+- Updated AHRQ Population file to use intercensal and postcensal estimates of county-level population by single-year age group, sex, race, 
+  and Hispanic origin covering the years 2000 through 2018 from the US Census Bureau. The new population file uses Census estimates for
+  single year age population to create AHRQ age bands.
+
+=====================================================================================================================
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/v2019/ChangeLog_PQI_v2019.pdf
+
+=============================================================================================
+Version SAS v2018, ICD-10-CM/PCS (Non-Risk Adjusted)
+Release date: JUNE 2018
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+This version of AHRQ's All-Payers version is named SAS QI v2018 ICD-10-CM/PCS (Non Risk Adjusted). AHRQ has revised the 
+versioning approach with their software tools to better reflect the fiscal year the software tools are released, 
+instead of an incremental version number. Hence, the next All-Payers release will not be called v8.0, but instead, will be 
+called v2018.
+ 
+Because of the transition to ICD-10-CM/PCS, risk adjustment is not supported in the 2018 SAS 
+(or in v6.0 and v7.0 beta SAS software) for ICD-10-CM/PCS. 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Added support for fiscal year 2018 code updates dictated by the Centers for Disease Control and Prevention (CDC) National
+  Center for Health Statistics (NCHS) and Centers for Medicare & Medicaid Services(CMS).
+- Consolidated formats for DIAPHRP and LUNGBIP into THORAIP due to redundancy.
+- Suppressed output of NQI 02, Neonatal Mortality rate, pending technical specification review.
+- Updated AHRQ Population file to use US Census 'County Population by Characteristics: 2010-2017 Vintage' tables.
+  The new population file uses Census estimates for singe year age population to create AHRQ 18+ age bands, This file includes estimates for the 1995 to 2017 period.
+  Population data from years 1995-1999 uses a different method for the age group (18 – 24) compared to the population data starting with 2000.
+
+=============================================================================================
+Version 7.0.1 Beta, ICD-10-CM/PCS
+Release date: December 2017
+-----------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AHRQ has named this a "beta version" as a signal to users that there may be significant differences
+between results obtained when using data and QI software based on ICD-9-CM coding vs. the results 
+obtained when using data and QI software based on ICD-10-CM/PCS.
+Users should interpret rates using the 7.0 beta version with caution. 
+A brief introduction to the differences between ICD-9-CM and ICD-10-CM/PCS 
+is available at: https://www.hcup-us.ahrq.gov/datainnovations/BriefIntrotoICD-10Codes041117.pdf
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+The v7.0.1 Beta includes updates to the PDI, PQI, and PQI09 modules.
+- Added support for the updated area population file for the years 2016 and 2017.
+  The population data is used in calculating the denominator of area level indicators.
+  The 1995 to 2017 population file is available for download on the AHRQ SAS Software website.
+  http://www.qualityindicators.ahrq.gov/Software/SAS.aspx
+- Except for the addition of 2016 and 2017 population data, this version is exactly same as SAS QI 7.0 Beta.
+
+=============================================================================================
+Version 7.0 Beta, ICD-10-CM/PCS
+Release date: September 2017
+-----------------------------------------
+
+-  Adds PQI_AREA_CONDITION.sas to calculate diabetes rates for prevention quality indicators across stratifiers.  (PQI)
+- Remove unused PDI variables DUALCAT, FIPST, CNTPRDAY, CONGCAT, TRNSFER, TRNSOUT, MAXPR, NOPOUB04, NOPRDAY, ARRY6, ARRY3, PAY2
+- Remove unused IQI variables MORT30, DNR, FIPSTCO, FIPST, PSTCO, LOS, POPCAT, DUALCAT, PAY2, TRNSFER, MAXDX, MAXPR, NOPOUB04, NOPRDAY,
+     TRNSOUT, CNTPRDAY, ARRY1, ARRY3, ARRY6
+- Remove unused PSI variables ASOURCE, FIPSTCO, FIPST, and PSTCO, POPCAT, DUALCAT, MAXDX, MAXPR, NOPOUB04, NOPRDAY, TRNSOUT, TRANSFER
+     PAY2, CNTPRDAY, ARRY1, ARRY3, ARRY4, ARRY6
+- Remove unused PQI variables DUALCAT, PAY2, POVCAT1-POVCAT10, FEMALE, PVIDX, AGECAT1-AGECAT14, FAGECAT1-FAGECAT14, ARRY1, ARRY2, ARRY3
+- Added support for ICD Version 34 and MS-DRG Version 34 codes through 09/30/2017
+- Remove measures from version 7.0.
+    IQI 23 Laparoscopic Cholecystectomy Rate
+    IQI 24 Incidental Appendectomy in the Elderly Rate
+    IQI 25 Bilateral Cardiac Catheterization Rate
+    IQI 26 Coronary Artery Bypass Graft (CABG) Rate
+    IQI 27 Percutaneous Coronary Intervention (PCI) Rate
+    IQI 28 Hysterectomy Rate
+    IQI 29 Laminectomy or Spinal Fusion Rate
+    PSI 21 Retained Surgical Item or Unretrieved Device Fragment Rate 
+    PSI 22 Iatrogenic Pneumothorax Rate 
+    PSI 23 Central Venous Catheter-Related Blood Stream Infection Rate 
+    PSI 24 Postoperative Wound Dehiscence Rate
+    PSI 25 Unrecognized Abdominopelvic Accidental Puncture or Laceration Rate 
+    PSI 26 Transfusion Reaction Rate 
+    PSI 27 Postoperative Hemorrhage or Hematoma Rate
+
+- Added exclusion for cases in hospice care at admission where POINTOFORIGINUB04 equal to 'F'.  (applicable to: IQI 15-20; PSI 04).
+- Add support for present on admission exemption diagnosis codes based on date of discharge.
+
+=====================================================================================================================
+
+Measure specific changes are outlined in the AHRQ SAS download page;
+
+PQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PQI/v2018/ChangeLog_PQI_v2018.pdf
+
+IQI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/IQI/v2018/ChangeLog_IQI_v2018.pdf
+
+PSI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PSI/V2018/ChangeLog_PSI_v2018.pdf 
+
+PDI - https://www.qualityindicators.ahrq.gov/Downloads/Modules/PDI/V2018/ChangeLog_PDI_v2018.pdf 
