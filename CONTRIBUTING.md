@@ -34,7 +34,7 @@ If you're new to open source, check out the [First Contributions Guide](https://
 
 ## Code of Conduct
 
-This project follows a **Code of Conduct**. Please read our [guidelines](https://github.com/panth-tyler/panth-qi/wiki) before contributing.
+This project follows a **Code of Conduct**. Please read our [guidelines](https://github.com/AHRQ/qi-sas/wiki) before contributing.
 
 ---
 
@@ -107,7 +107,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) stand
 1. **Fork and Clone**:
 
    ```bash
-   git clone https://github.com/panth-tyler/panth-qi.git
+   git clone https://github.com/AHRQ/qi-sas.git
    cd project
    ```
 
@@ -138,7 +138,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) stand
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the [Apache License](https://github.com/panth-tyler/panth-qi?tab=License-1-ov-file).
+By contributing to this project, you agree that your contributions will be licensed under the [Apache License](https://github.com/AHRQ/qi-sas?tab=License-1-ov-file).
 
 ---
 
