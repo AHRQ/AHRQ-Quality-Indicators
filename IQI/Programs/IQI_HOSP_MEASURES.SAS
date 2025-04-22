@@ -4,8 +4,8 @@
 *         Assigns the IQI outcome measure of interest to inpatient records.
 *         Variables created by this program are TPIQXX and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using IQI_FORMATS.SAS BEFORE running this program.
@@ -14,7 +14,7 @@
 *  USER NOTE2: The AHRQ QI software does not support the calculation of weighted
 *              estimates and standard errors using complex sampling designs.
 * 
-*  USER NOTE3: See the AHRQ_IQI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_IQI_SAS_v2023_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *==================================================================================;
@@ -23,14 +23,23 @@
  title3 'AHRQ INPATIENT QUALITY INDICATORS: ASSIGN IQIs TO INPATIENT DATA';
 
  * ------------------------------------------------------------------ ;
- * --- VERIFY MDC VALUES PROVIDED ON THE INPUT FILE ARE VALID     --- ;
+ * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
+ * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
+ * --- VALUES ARE MISSING. REVIEW AFTER RUNNING IQI_HOSP_MEASURES. -- ;
  * ------------------------------------------------------------------ ;
+
+ data   OUTMSR.&DELFILE.
+   (keep=KEY HOSPID SEX AGE DX1 MDC YEAR DQTR);
+ set  INMSR.&DISCHARGE.;
+ if (AGE lt 0) or (AGE lt 18 and not %MDX1($MDC14PRINDX.)) or %MDX1($MDC15PRINDX.) or (missing(SEX)) or
+    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
+    (&MDC_PROVIDED. = 1 and missing(MDC));
+ run;
 
  %macro check_mdc;
    %if &MDC_PROVIDED. = 1 %then %do;
-
      proc sql noprint;
-       select count(*), nmiss(MDC), min(MDC), max(MDC) into :n_total, :n_miss, :min_MDC, :max_MDC
+       select count(*), nmiss(MDC) into :n_total, :n_miss
        from INMSR.&DISCHARGE.;
      quit;
 
@@ -39,53 +48,10 @@
        %abort cancel;
      %end;
 
-
-     %put minimum MDC=&min_MDC., maximum MDC=&max_MDC.;
-
-     %if &min_MDC. <0 or &max_MDC. >25 %then %do;
-       %put "WARNING: MDC_PROVIDED = 1 in CONTROL program but some MDC values are out of range of 0-25";
-     %end;
-
    %end;
  %mend check_mdc;
  %check_mdc;
 
- * ------------------------------------------------------------------ ;
- * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
- * ------------------------------------------------------------------ ;
- 
- %macro check_pay1_race;
-   %global PAY1_PROVIDED RACE_PROVIDED;
-   proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
-   proc sql noprint;
-      select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
-   quit;
-
-   %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
-
-   %if &PAY1_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have PAY1. The software creates a fake PAY1 as PAY1=999 for the programs to run";
-   %end;
-   %if &RACE_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have RACE. The software creates a fake RACE as RACE=999 for the programs to run";
-   %end;
- %mend check_pay1_race;
- %check_pay1_race;
-
- * ------------------------------------------------------------------ ;
- * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
- * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
- * --- VALUES ARE MISSING. REVIEW AFTER RUNNING IQI_HOSP_MEASURES. -- ;
- * ------------------------------------------------------------------ ;
-
- data   OUTMSR.&DELFILE.
-   (keep=KEY HOSPID SEX AGE DX1 DRG MDC YEAR DQTR);
- set  INMSR.&DISCHARGE.;
- if (AGE lt 0) or (AGE lt 18 and not %MDX1($MDC14PRINDX.)) or %MDX1($MDC15PRINDX.) or (missing(SEX)) or
-    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
-    (&MDC_PROVIDED. = 1 and missing(MDC));
- run;
 
  * -------------------------------------------------------------- ;
  * --- INPATIENT QUALITY INDICATOR (IQI) NAMING CONVENTION:   --- ;
@@ -103,24 +69,24 @@
           TPIQ08 TPIQ09 TPIQ09_WITH_CANCER TPIQ09_WITHOUT_CANCER 
           TPIQ11 TPIQ11_OPEN_RUPTURED TPIQ11_OPEN_UNRUPTURED TPIQ11_ENDO_RUPTURED TPIQ11_ENDO_UNRUPTURED 
           TPIQ12 TPIQ15-TPIQ17 TPIQ17_HEMSTROKE_SUBARACH TPIQ17_HEMSTROKE_INTRACER TPIQ17_ISCHEMSTROKE 
-          TPIQ18-TPIQ22 TPIQ30-TPIQ31 TPIQ33 &OUTFILE_KEEP
+          TPIQ18-TPIQ22 TPIQ30-TPIQ31 TPIQ33
     );
 
  set   INMSR.&DISCHARGE.
-    (keep=KEY HOSPID DRG MDC SEX AGE YEAR DQTR
-          DISP ASOURCE POINTOFORIGINUB04
-          DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY_PAY1_RACE
-          DXPOA1-DXPOA&NDX. &OUTFILE_KEEP);
+    (keep=KEY HOSPID DRG MDC SEX AGE RACE YEAR DQTR
+          PAY1 DISP ASOURCE POINTOFORIGINUB04
+          DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY
+          DXPOA1-DXPOA&NDX.);
 
  label
  SEX = 'Sex of the patient'
  key = 'Unique record identifier'
  ;
 
- ARRAY DX(&NDX.)    $ DX1-DX&NDX.;
- ARRAY DXPOA(&NDX.) $ DXPOA1-DXPOA&NDX.;
- ARRAY PR(&NPR.)    $ PR1-PR&NPR.;
- ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;
+ ARRAY DX(&NDX.)    DX1-DX&NDX.;
+ ARRAY DXPOA(&NDX.) DXPOA1-DXPOA&NDX.;
+ ARRAY PR(&NPR.)    PR1-PR&NPR.;
+ ARRAY PRDAY(&NPR.) PRDAY1-PRDAY&NPR.;
 
  * --------------------------------------------------------------- ;
  * -- DELETE NON-ADULT RECORDS AND RECORDS WITH MISSING VALUES --- ;
@@ -162,16 +128,7 @@
  else if (YEAR in (2022) and DQTR in (1,2,3)) then ICDVER = 39;
  else if (YEAR in (2022) and DQTR in (4))     then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
- else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
- else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
-
-
- * -------------------------------------------------------------- ;
- * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
- * -------------------------------------------------------------- ;
-
-  %CreateFakePAY1_RACE;
+ else ICDVER = 40; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -304,7 +261,7 @@
  * --- CONSTRUCT DXCCSR VARIABLES ------------------------------- ;
  * -------------------------------------------------------------- ;
  
- %include MacLib(IQI_HOSP_DXCCSR_Code_v2024.sas);
+ %include MacLib(IQI_HOSP_DXCCSR_Code_v2023.sas);
 
 
  * -------------------------------------------------------------- ;
@@ -320,7 +277,7 @@
  * --- IDENTIFY MRTAMISTD --------------------------------------- ;
  * -------------------------------------------------------------- ;
   attrib MRTAMISTD length=3
-  label='STEMI AMI';
+   label='STEMI AMI';
    
   if %MDXAQ2($MRTAMISTD.) or %MDX1($MRTAMISTD.) then MRTAMISTD = 1;
   else MRTAMISTD = 0;
@@ -669,6 +626,8 @@
     TPIQ12 TPIQ15-TPIQ17 TPIQ17_HEMSTROKE_SUBARACH TPIQ17_HEMSTROKE_INTRACER TPIQ17_ISCHEMSTROKE 
     TPIQ18-TPIQ20 TPIQ30-TPIQ31
  ;
+ array TPIQP TPIQ21 TPIQ22 TPIQ33
+ ;
 
  * --- EXCLUDE CASES WITH MISSING VALUES FOR DISP --------------- ;
  if (DISP lt 0) then do over TPIQ;
@@ -679,6 +638,16 @@
  if DISP in (2) then do over TPIQ;
    TPIQ = .;
  end;
+
+ * --- EXCLUDE COVID OR NON-COVID DEPENDING ON USER PREFERENCE -- ;
+ if (COVIDDX = 1 and &COVID_19. = 1) or (COVIDDX = 0 and &COVID_19. = 3) then do;
+  do over TPIQ;
+    TPIQ = .;
+  end;
+  do over TPIQP;
+    TPIQP = .;
+  end;
+end;
 
  * -------------------------------------------------------------- ;
  * --- IDENTIFY TRANSFERS --------------------------------------- ;
@@ -699,7 +668,7 @@
  * --- CONSTRUCT PRCCSR VARIABLES ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(IQI_HOSP_PRCCSR_Code_v2024.sas);
+ %include MacLib(IQI_HOSP_PRCCSR_Code_v2023.sas);
 
 run;
 

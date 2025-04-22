@@ -1,27 +1,27 @@
 * ================== Program: PQE_AREA_RISKADJ.SAS ==================;
 *
-*  TITLE:  AREA LEVEL RISK ADJUSTED RATES FOR AHRQ PREVENTION QUALITY 
-*          INDICATORS IN EMERGENCY DEPARTMENT SETTINGS (PQE)
+*  TITLE:  AREA LEVEL RISK ADJUSTED RATES AHRQ EMERGENCY DEPARTMENT 
+*          PREVENTION QUALITY INDICATORS (ED PQI)
 *
 *  DESCRIPTION:
 *         Calculates risk-adjusted and smoothed rates for
-*         PQE across stratifiers.
+*         ED PQI across stratifiers.
 *         Variables created by this program are EAQExx, RAQExx, 
 *         LAQExx, UAQExx, SAQExx, SNAQExx, VAQExx, XAQExx
 *         Output stratified by AGE, SEXCAT and POVCAT from
 *         population file and PQE_AREA_MEASURES output.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  BETA VERSION: SAS QI v2023
+*  RELEASE DATE: SEPTEMBER 2023
 *
 *====================================================================;
 
  title2 'PQE_AREA_RISKADJ PROGRAM';
- title3 'AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE): CALCULATE RISK-ADJUSTED AREA RATES';
+ title3 'AHRQ PREVENTION QUALITY ED (PQE) INDICATORS: CALCULATE RISK-ADJUSTED AREA RATES';
  
-*====================================================================================;
-*  PART I: CALCULATE AREA RATES FOR AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS
-*====================================================================================;
+*=========================================================================;
+*  PART I: CALCULATE AREA RATES FOR AHRQ ED PREVENTION QUALITY INDICATORS
+*=========================================================================;
 
  * ---------------------------------------------------------------- ;   
  * --- POPULATION GROUPS FOR EACH QI BASED ON 18 5-YEAR AGE RANGES  ;
@@ -33,8 +33,7 @@
  %LET POPCAT_AQE05 = 5,6,7,8,9,10,11,12,13,14,15,16,17,18;       /* 18+     */
 
  * ------------------------------------------------------------------- ;
- * --- PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE)          --- ;
- * --- NAMING CONVENTION:                                          --- ;
+ * --- PREVENTION QUALITY ED (PQE) INDICATOR NAMING CONVENTION:    --- ;
  * --- THE FIRST LETTER IDENTIFIES THE PREVENTION QUALITY          --- ;
  * --- INDICATOR AS ONE OF THE FOLLOWING:                          --- ;
  * ---       (T) NUMERATOR ("TOP") - FROM PQE_AREA_MEASURES        --- ;
@@ -108,6 +107,7 @@
  proc   Sort data=TEMP0(keep=MAREA) out=MAREA nodupkey;
  by     MAREA;
  run;
+ 
  /* FOR COUNTY-LEVEL ANALYSIS, LOAD COUNTY-LEVEL POPULATION DATA.                      */
  /* POPULATION IS DETERMINED BY MAREA LEVEL AND YEAR SPECIFIED IN PQE_AREA_CONTROL.SAS */
 
@@ -117,7 +117,7 @@
                POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
                POP_2010 POP_2011 POP_2012 POP_2013 POP_2014 
 			   POP_2015 POP_2016 POP_2017 POP_2018 POP_2019 
-			   POP_2020 POP_2021 POP_2022 POP_2023 POP 8
+			   POP_2020 POP_2021 POP_2022 POP 8
                STATE $2.
         ;
     
@@ -128,19 +128,18 @@
 			   POP_2005 POP_2006 POP_2007 POP_2008 POP_2009 
 			   POP_2010 POP_2011 POP_2012 POP_2013 POP_2014 
 			   POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-			   POP_2020 POP_2021 POP_2022 POP_2023;
+			   POP_2020 POP_2021 POP_2022 ;
     
         %CTY2MA
     
         POP = POP_&POPYEAR.; 
 
-        * --- For PQE 03 Acute ACSC, exclude age 3 month or younger (0-3 month) --- ;
+        * --- for PQE 03 Acute ACSC, exclude age 3 month or younger (0-3 month) --- ;
         * --- assume uniform distribution in 0-4 year (0-59 month)              --- ;
         IF POPCAT=1 THEN POPX = ROUND(POP * 0.95);
         ELSE POPX = POP;
 
         STATE = FIPSTATE(INPUT(SUBSTR(FIPSTCO,1,2),2.0)) ;
-
        
     RUN;
 /* END OF COUNTY LEVEL POPULATION */
@@ -167,7 +166,7 @@
  run;
 
  * ---------------------------------------------------------------- ;
- * - PREVENTION QUALITY INDICATORS IN ED SETTINGS ADJUSTED RATES  - ;
+ * --- ED PREVENTION QUALITY INDICATORS ADJUSTED RATES ------------ ;
  * ---------------------------------------------------------------- ;
  * AREA-LEVEL INDICATOR DENOMINATORS ARE ADJUSTED BASED ON THE  --- ;
  * COMBINATION OF COUNTY, AGE, SEX IN THE NUMERATOR.            --- ;
@@ -282,60 +281,41 @@ data TEMP1;
 	 end;
      
    PVIDX = put(MAREA,$POVCAT.);
-
    if PVIDX > 0 then ARRY3(PVIDX) = 1;
-
-   /*remove PVIDX=0 counties for SES risk-adjusted rate calculation, this happens to CT in v2024*/
-   %if &USE_SES = 1 %then %do; 
-     if PVIDX = 0 then delete; 
-   %end;
    drop I;
 run;
 
  * --- THIS DATA STEP READS THE REGRESSION COEFFICIENTS FOR EACH --- ;
  * --- COVARIATE.                                                --- ;
 
+ data   TEMP2(keep=INTERCEP FEMALE AGECAT1-AGECAT18 FAGECAT1-FAGECAT18
+                   POVCAT1-POVCAT10  
+                   _NAME_ _TYPE_ _LINK_ _LNLIKE_ _STATUS_);
+ length INTERCEP FEMALE AGECAT1-AGECAT18 FAGECAT1-FAGECAT18
+        POVCAT1-POVCAT10 _LNLIKE_ 8
+        _NAME_ _TYPE_ _LINK_ $8 _STATUS_ $11;
+
  %IF &USE_SES=0 %THEN %DO ;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_v2024.csv";
+    infile COVAR missover lrecl=1500;
  %END ;
  %ELSE %DO;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_SES_v2024.csv";
+    infile COVARSES missover lrecl=1500;
  %END ;
 
- * --- LOAD CSV PARAMTERS & SHAPE DATA --- ;
- data TEMP1_MODEL ;
-   length variable $32 df estimate 8 ;
-   infile RACOEFFS DSD DLM=',' LRECL=1024 FIRSTOBS=2;
-   input variable df estimate ;
- run ;
-
- proc TRANSPOSE data=TEMP1_MODEL out=TEMP2_MODEL;
-     id variable;
-     var estimate;
- run ;
-
- data TEMP2;
-   set TEMP2_MODEL;
-
-   _NAME_ = "MHAT" ;
-   _TYPE_ = "PARMS" ;
- run ;
-
- data _null_;
-    set TEMP1_MODEL end=LAST;
-    format vars $5000.;
-    retain vars;
-
-    if variable ne "Intercept" then  vars = trim(vars)||" "||trim(variable);
-    if LAST then call symput("VARS_",vars);
-run;
+ input  N INTERCEP FEMALE AGECAT1-AGECAT18 FAGECAT1-FAGECAT18
+        POVCAT1-POVCAT10  
+        _NAME_ _TYPE_ _LINK_ _LNLIKE_ _STATUS_;
+ 
+ if N = &N.;
+ run;
 
  * --- THIS STEP CALCULATES A PREDICTED PREVENTION QUALITY INDICATOR BY  --- ;
  * --- MULTIPLYING THE STRATIFIED NUMERATOR AND DENOMINATOR TOTALS BY    --- ;
  * --- THE MEASURE COEFFICIENTS FROM THE COVARIATES FILE.                --- ;
 
  proc   SCORE data=TEMP1 SCORE=TEMP2 TYPE=PARMS OUT=TEMP1Y;
- var    &VARS_.;
+ var    FEMALE AGECAT1-AGECAT14 FAGECAT1-FAGECAT14
+        POVCAT1-POVCAT10;
  run;
 
  %let dsid=%sysfunc(open(temp1y));
@@ -346,7 +326,6 @@ run;
 
  data   TEMP1Y;
  set    TEMP1Y;
-
  EHAT = EXP(MHAT)/(1 + EXP(MHAT));
  run;
 
@@ -359,10 +338,10 @@ run;
     SET TEMP1Y; 
      * --- SWITCH OE RATIO BASED ON USE_SES FLAG --- ;
     %IF &USE_SES = 0 %THEN %DO ;
-      %include MacLib(PQE_AREA_OE_Array_v2024.SAS);
+      %include MacLib(PQE_AREA_OE_Array_v2023.SAS);
     %END ;
     %ELSE %DO ;
-      %include MacLib(PQE_AREA_OE_Array_SES_v2024.SAS);
+      %include MacLib(PQE_AREA_OE_Array_SES_v2023.SAS);
     %END ;   
     
     * --- MAP MEASURE NUM TO ARRAY INDEX SUB_N --- ;
@@ -372,7 +351,6 @@ run;
     if "&PQ." = "AQE04"      then SUB_N = 4;
     if "&PQ." = "AQE05"      then SUB_N = 5;
     EHAT=EHAT*ARRYAOE(SUB_N);
-    IF EHAT > 0.99 THEN EHAT = 0.99;
     PHAT = EHAT * (1 - EHAT); 
     ONE=1;   
  RUN;
@@ -400,7 +378,6 @@ run;
     IF _N_=1 THEN SET OE&PQ.;
     SET TEMP1Y;
     EHAT=EHAT*O_E&PQ.;
-    IF EHAT > 0.99 THEN EHAT = 0.99;
     PHAT = EHAT * (1 - EHAT);    
     ONE=1;
  RUN;
@@ -421,10 +398,10 @@ run;
 
   * --- SWITCH SIGNAL VARIANCE BASED ON USE_SES FLAG --- ;
  %IF &USE_SES = 0 %THEN %DO ;
-   %include MacLib(PQE_AREA_Sigvar_Array_v2024.SAS);
+   %include MacLib(PQE_AREA_Sigvar_Array_v2023.SAS);
  %END ;
  %ELSE %DO ;
-   %include MacLib(PQE_AREA_Sigvar_Array_SES_v2024.SAS);
+   %include MacLib(PQE_AREA_Sigvar_Array_SES_v2023.SAS);
  %END ;
 
  if &N. = 1 then SUB_N = 1;
@@ -519,21 +496,21 @@ data   RISKADJ;
    SN&qi_num. = "&qi_name. (Reliability of the risk-adjusted rate)"
    ;
  %mend label_qis;
- %label_qis(qi_num=AQE01, qi_name=PQE 01 Visits for Non-Traumatic Dental Conditions in ED);
- %label_qis(qi_num=AQE02, qi_name=PQE 02 Visits for Chronic Ambulatory Care Sensitive Conditions in ED);
- %label_qis(qi_num=AQE03, qi_name=PQE 03 Visits for Acute Ambulatory Care Sensitive Conditions in ED); 
- %label_qis(qi_num=AQE04, qi_name=PQE 04 Visits for Asthma in ED);
- %label_qis(qi_num=AQE05, qi_name=PQE 05 Visits for Back Pain in ED);
+ %label_qis(qi_num=AQE01, qi_name=PQE 01 VISITS FOR NON-TRAUMATIC DENTAL CONDITIONS);
+ %label_qis(qi_num=AQE02, qi_name=PQE 02 VISITS FOR CHRONIC AMBULATORY CARE SENSITIVE CONDITIONS);
+ %label_qis(qi_num=AQE03, qi_name=PQE 03 VISITS FOR ACUTE AMBULATORY CARE SENSITIVE CONDITIONS);
+ %label_qis(qi_num=AQE04, qi_name=PQE 04 VISITS FOR ASTHMA);
+ %label_qis(qi_num=AQE05, qi_name=PQE 05 VISITS FOR BACK PAIN);
 
  run;
 
-*=================================================================================;
-*  PART II: MERGE AREA RATES FOR AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS
-*=================================================================================;
+*=======================================================================;
+*  PART II: MERGE AREA RATES FOR AHRQ ED PREVENTION QUALITY INDICATORS
+*=======================================================================;
  
- * ------------------------------------------------------------------------- ;
- * --- PREVENTION QUALITY INDICATOR IN EMERGENCY DEPARTMENT MERGED RATES --- ;
- * ------------------------------------------------------------------------- ;
+ * ---------------------------------------------------------------------- ;
+ * --- EMERGENCY DEPARTMENT PREVENTION QUALITY INDICATOR MERGED RATES --- ;
+ * ---------------------------------------------------------------------- ;
  data   OUTARSK.&OUTFILE_AREARISK.;
  merge  OUTAOBS.&OUTFILE_AREAOBS.(
             keep=MAREA POPCAT SEXCAT _TYPE_ 
@@ -635,11 +612,11 @@ data   RISKADJ;
 
  %MEND PRT;
 
- %PRT(01,Visits for Non-Traumatic Dental Conditions in ED);
- %PRT(02,Visits for Chronic Ambulatory Care Sensitive Conditions in ED);
- %PRT(03,Visits for Acute Ambulatory Care Sensitive Conditions in ED); 
- %PRT(04,Visits for Asthma in ED);
- %PRT(05,Visits for Back Pain in ED);
+ %PRT(01,VISITS FOR NON-TRAUMATIC DENTAL CONDITIONS);
+ %PRT(02,VISITS FOR CHRONIC AMBULATORY CARE SENSITIVE CONDITIONS);
+ %PRT(03,VISITS FOR ACUTE AMBULATORY CARE SENSITIVE CONDITIONS);
+ %PRT(04,VISITS FOR ASTHMA);
+ %PRT(05,VISITS FOR BACK PAIN);
 
  %END;
 
@@ -652,17 +629,6 @@ data   RISKADJ;
  * ---------------------------------------------------------------- ;
 
  %MACRO TEXT;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OAQE: EAQE: RAQE: LAQE: UAQE: SAQE:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*100000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
 
  %IF &TXTARSK. = 1  %THEN %DO;
 	%LET TYPEARN  = %sysfunc(tranwrd(%quote(&TYPELVLA.),%str(,),_));
@@ -674,14 +640,13 @@ data   RISKADJ;
  set OUTARSK.&OUTFILE_AREARISK;
  FILE "&QECSVRF2." lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREARISK data set created with the following CONTROL options:";
+ put "AHRQ BETA SAS QI v2023 &OUTFILE_AREARISK data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "States with valid revisit variables (StatesWithVisitlink_) = &StatesWithVisitlink_";
  put "Output stratification includes TYPELVLA = &TYPELVLA";
  put "&&USE_SES&USE_SES (USE_SES = &USE_SES)"; 
- put "Number of diagnoses evaluated = &NDX";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "MAREA" "," "Age" "," "Sex" "," "Type" ","
@@ -702,19 +667,19 @@ data   RISKADJ;
  put MAREA  $5. "," POPCAT 3. "," SEXCAT 3. "," _TYPE_ 2.  ","
  (TAQE01 TAQE02 TAQE03 TAQE04 TAQE05) (7.0 ",")
   ","
- (PAQE01 PAQE02 PAQE03 PAQE04 PAQE05) (13.0 ",")
+ (PAQE01 PAQE02 PAQE03 PAQE04 PAQE05) (13.2 ",")
  ","
- (OAQE01 OAQE02 OAQE03 OAQE04 OAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OAQE01 OAQE02 OAQE03 OAQE04 OAQE05) (12.10 ",")
  ","
- (EAQE01 EAQE02 EAQE03 EAQE04 EAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (EAQE01 EAQE02 EAQE03 EAQE04 EAQE05) (12.10 ",")
  ","
- (RAQE01 RAQE02 RAQE03 RAQE04 RAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (RAQE01 RAQE02 RAQE03 RAQE04 RAQE05) (12.10 ",")
  ","
- (LAQE01 LAQE02 LAQE03 LAQE04 LAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (LAQE01 LAQE02 LAQE03 LAQE04 LAQE05) (12.10 ",")
  ","
- (UAQE01 UAQE02 UAQE03 UAQE04 UAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (UAQE01 UAQE02 UAQE03 UAQE04 UAQE05) (12.10 ",")
  ","
- (SAQE01 SAQE02 SAQE03 SAQE04 SAQE05) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (SAQE01 SAQE02 SAQE03 SAQE04 SAQE05) (12.10 ",")
  ","
  (SNAQE01 SNAQE02 SNAQE03 SNAQE04 SNAQE05) (12.10 ",")
  ","

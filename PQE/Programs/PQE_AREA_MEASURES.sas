@@ -1,12 +1,12 @@
 * ====================== PROGRAM: PQE_AREA_MEASURES.SAS =========================;
 *
 *  DESCRIPTION:
-*         Assigns the Prevention Quality Indicators in Emergency Department
-*         Settings (PQE) outcomes of interest to ED records.
+*         Assigns the Emergency Department Prevention Quality Indicators (ED PQI) 
+*         outcome of interest to outpatient ED records;
 *         Variables created by this program are TAQEnn and EXCLUDEQEnn.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  BETA VERSION: SAS QI v2023
+*  RELEASE DATE: SEPTEMBER 2023
 *
 *  USER NOTE: The PQE_AREA_FORMATS.SAS program must be run BEFORE
 *             running this program.
@@ -14,7 +14,7 @@
 * ===============================================================================;
 
 TITLE2 'PQE_AREA_MEASURES PROGRAM';
-TITLE3 'AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE): ASSIGN OUTCOMES TO DATA';
+TITLE3 'AHRQ PREVENTION QUALITY ED (PQE) INDICATORS: ASSIGN OUTCOMES TO DATA';
 
 * -------------------------------------------------------------- ;
 * --- IN PREPARATION FOR PQEs THAT TRACK ED PATIENTS OVER    --- ;
@@ -23,29 +23,16 @@ TITLE3 'AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE): ASSIGN OUTCOMES
 * --- ELEMENTS ARE PROVIDED IN THE SAS SOFTWARE INSTRUCTIONS --- ;
 * -------------------------------------------------------------- ; 
   
-DATA TEMP0;
-   SET INMSR.&DISCHARGE.
-    (KEEP = KEY FEMALE AGE AGEMONTH HOSPID PSTCO HOSPST
-            YEAR DQTR DX1-DX&NDX. EDADMIT
-            VisitLink DaysToEvent LOS DIED HCUP_ED &OUTFILE_KEEP);
-   if HCUP_ED > 0;
-   
-   ATTRIB RESIDENT LENGTH=8 LABEL='Whether patient resides in same state as admitting hospital';
-   IF FIPSTATE(INPUT(SUBSTR(PUT(PSTCO,Z5.),1,2),8.))=HOSPST AND NOT MISSING(HOSPST) THEN RESIDENT=1; ELSE RESIDENT=0;
-
-   ATTRIB DIED_VISIT LENGTH=8 LABEL='Indicates in-hospital death';
-   IF DIED=0 OR MISSING(DIED) THEN DIED_VISIT=0;
-   ELSE IF DIED=1 AND EDADMIT=0 THEN DIED_VISIT=1;
-   ELSE IF DIED=1 AND EDADMIT=1 THEN DIED_VISIT=2;
-RUN;
-
-PROC SORT DATA = TEMP0 ;
-    BY HOSPST PSTCO VisitLink DaysToEvent DIED_VISIT EDADMIT LOS KEY;
+PROC SORT DATA = INMSR.&DISCHARGE.
+    (KEEP = KEY FEMALE AGE AGEMONTH HOSPID PSTCO2 HOSPST
+            YEAR DQTR DX1-DX&NDX. RESIDENT EDADMIT
+            VisitLink DaysToEvent LOS DIED_VISIT )
+    OUT = TEMP0 ;
+    BY HOSPST PSTCO2 VisitLink DaysToEvent DIED_VISIT EDADMIT LOS KEY;
 RUN;
 
 * ------------------------------------------------------------------ ;
-* --- PREVENTION QUALITY INDICATORS IN ED SETTING (PQE)          --- ;
-* --- NAMING CONVENTION:                                         --- ;
+* --- PREVENTION QUALITY ED (PQE) INDICATOR NAMING CONVENTION:   --- ;
 * --- THE FIRST LETTER IDENTIFIES THE PREVENTION QUALITY         --- ;
 * --- INDICATOR AS ONE OF THE FOLLOWING:                         --- ;
 * ---             (T) NUMERATOR ("TOP")                          --- ;
@@ -68,13 +55,13 @@ RUN;
 * ------------------------------------------------------------------ ;
 
 DATA OUTMSR.&OUTFILE_MEAS.
-                 (KEEP = KEY PSTCO FIPSTCO YEAR DQTR 
+                 (KEEP = KEY PSTCO2 FIPSTCO YEAR DQTR 
                          POPCAT SEXCAT HOSPST VisitLink RESIDENT
                          TAQE: EXCLUDE: 
-                         DAYSTOEVENT LOS DX1 &OUTFILE_KEEP)
+                         DAYSTOEVENT LOS DX1)
 ;
     SET TEMP0 ; 
-    BY HOSPST PSTCO VisitLink DaysToEvent;
+    BY HOSPST PSTCO2 VisitLink DaysToEvent;
                                            
     * --------------------------------------------------------------------- ;
     * --- VARIABLES FOR REVISIT ANALYSIS                                --- ;
@@ -88,8 +75,8 @@ DATA OUTMSR.&OUTFILE_MEAS.
     * -------------------------------------------------------------- ;
     * --- DECLARE VARIABLES                                      --- ;
     * -------------------------------------------------------------- ;
-    ATTRIB BackPainVisit1 Length=3 Label='Visit #1 for Back Pain in ED: PQE 05 (0/1)'
-           BackPainVisit2 Length=3 Label='Visit #2 for Back Pain in ED: PQE 05 (0/1)';                                                         
+    ATTRIB BackPainVisit1 Length=3 Label='Back Pain ED Visit #1 for PQE 05 (0/1)'
+           BackPainVisit2 Length=3 Label='Back Pain ED Visit #2 for PQE 05 (0/1)';                                                         
     
     * ------------------------------------------------------------ ;
     * --- RETAIN THESE VARIABLES NEEDED FOR REVISIT INDICATOR  --- ;
@@ -112,7 +99,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
     * -------------------------------------------------------------- ;
     ATTRIB FIPSTCO LENGTH=$5 LABEL='FIPS STATE COUNTY CODE';
     
-    IF NOT MISSING(PSTCO) THEN FIPSTCO = PUT(PSTCO, Z5.);
+	IF NOT MISSING(PSTCO2) THEN FIPSTCO = PUT(PSTCO2, Z5.);
 
     * -------------------------------------------------------------- ;
     * --- DEFINE SEX CATEGORY                                    --- ;
@@ -132,25 +119,25 @@ DATA OUTMSR.&OUTFILE_MEAS.
 
     IF NOT MISSING(AGE) THEN POPCAT=INPUT(PUT(AGE,AGEFMT.),2.0);
 
-    * ---------------------------------------------------------------------------------------- ;
-    * --- DEFINE AREA LEVEL PREVENTION QUALITY INDICATORS IN EMERGENCY DEPARTMENT SETTINGS --- ;
-    * ---------------------------------------------------------------------------------------- ;
+    * ---------------------------------------------------------------------------- ;
+    * --- DEFINE AREA LEVEL EMERGENCY DEPARTMENT PREVENTION QUALITY INDICATORS --- ;
+    * ---------------------------------------------------------------------------- ;
 
     ATTRIB
-        TAQE01 LENGTH=3 LABEL= 'Visits for Non-Traumatic Dental Conditions in ED (Numerator)'
-        TAQE02 LENGTH=3 LABEL= 'Visits for Chronic Ambulatory Care Sensitive Conditions in ED (Numerator)'
-        TAQE03 LENGTH=3 LABEL= 'Visits for Acute Ambulatory Care Sensitive Conditions in ED (Numerator)'    
-        TAQE04 LENGTH=3 LABEL= 'Visits for Asthma in ED (Numerator)'
-        TAQE05 LENGTH=3 LABEL= 'Visits for Back Pain in ED (Numerator)'
-        EXCLUDEQE01 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 01 Visits for Non-Traumatic Dental Conditions in ED'
-        EXCLUDEQE02 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 02 Visits for Chronic Ambulatory Care Sensitive Conditions in ED' 
-        EXCLUDEQE03 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 03 Visits for Acute Ambulatory Care Sensitive Conditions in ED'
-        EXCLUDEQE04 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 04 Visits for Asthma in ED'  
-        EXCLUDEQE05 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 05 Visits for Back Pain in ED'  ;
+        TAQE01 LENGTH=3 LABEL= 'ED VISITS FOR NON-TRAUMATIC DENTAL CONDITIONS (Numerator)'
+        TAQE02 LENGTH=3 LABEL= 'ED VISITS FOR CHRONIC AMBULATORY CARE SENSITIVE CONDITIONS (Numerator)'
+        TAQE03 LENGTH=3 LABEL= 'ED VISITS FOR ACUTE AMBULATORY CARE SENSITIVE CONDITIONS (Numerator)'    
+        TAQE04 LENGTH=3 LABEL= 'ED VISITS FOR ASTHMA (Numerator)'
+        TAQE05 LENGTH=3 LABEL= 'ED VISITS FOR BACK PAIN (Numerator)'
+        EXCLUDEQE01 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 01 ED VISITS FOR DENTAL CONDITIONS'
+        EXCLUDEQE02 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 02 ED VISITS FOR CHRONIC ACSC' 
+        EXCLUDEQE03 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 03 ED VISITS FOR ACUTE ACSC'
+        EXCLUDEQE04 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 04 ED VISITS FOR ASTHMA'  
+        EXCLUDEQE05 LENGTH=3 LABEL='EXCLUSION FLAG FOR PQE 05 ED VISITS FOR BACK PAIN'  ;
 	
-    * ------------------------------------------------------------------------------------------- ;
-    * --- CONSTRUCT AREA LEVEL PREVENTION QUALITY INDICATORS IN EMERGENCY DEPARTMENT SETTINGS --- ;
-    * ------------------------------------------------------------------------------------------- ;
+    * ------------------------------------------------------------------------------- ;
+    * --- CONSTRUCT AREA LEVEL EMERGENCY DEPARTMENT PREVENTION QUALITY INDICATORS --- ;
+    * ------------------------------------------------------------------------------- ;
 
     * ----------------------------------------------------------- ;
     * --- PQE 01 : VISITS FOR NON-TRAUMATIC DENTAL CONDITIONS --- ;
@@ -165,7 +152,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
     OR MISSING(FEMALE) 
     OR MISSING(DX1) 
     OR RESIDENT NE 1 
-    OR MISSING(PSTCO)          THEN EXCLUDEQE01 = 1;
+    OR MISSING(PSTCO2)          THEN EXCLUDEQE01 = 1;
     ELSE IF AGE LT 5            THEN EXCLUDEQE01 = 2;
     ELSE IF %MDX(TraumaToFace.) THEN EXCLUDEQE01 = 3;
     ELSE                             EXCLUDEQE01 = 0; 
@@ -175,7 +162,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
     * --- DENOMINATOR:                                              --- ;
     * ---   Area population                                         --- ;
     
-    IF EXCLUDEQE01 = 0 THEN DO;
+	IF EXCLUDEQE01 = 0 THEN DO;
         IF %MDX1(DentalVisit.) THEN TAQE01 = 1;
     END;    
 
@@ -193,20 +180,20 @@ DATA OUTMSR.&OUTFILE_MEAS.
     OR MISSING(FEMALE) 
     OR MISSING(DX1) 
     OR RESIDENT NE 1
-    OR MISSING(PSTCO) THEN EXCLUDEQE02 = 1;
+    OR MISSING(PSTCO2) THEN EXCLUDEQE02 = 1;
     ELSE IF AGE LE 39  THEN EXCLUDEQE02 = 2;
     ELSE                    EXCLUDEQE02 = 0; 
 
     * --- NUMERATOR:                                                                 --- ;
     * ---   ED visits with first-listed diagnoses of:                                --- ;
-  	* ---   Asthma, COPD, heart failure, or acute diabetic hyper- and hypoglycemic   --- ;
+	* ---   Asthma, COPD, heart failure, or acute diabetic hyper- and hypoglycemic   --- ;
     * ---   complications, or chronic kidney disease.                                --- ; 
     * ---   Also included is a first-listed diagnosis of lower respiratory infection --- ;
     * ---   with a second-listed of COPD or asthma.                                  --- ;
     * --- DENOMINATOR:                                                               --- ;
     * ---   Area population                                                          --- ;
     
-    IF EXCLUDEQE02 = 0 THEN DO;
+	IF EXCLUDEQE02 = 0 THEN DO;
         IF ( %MDX1(HeartFailure.) )
         OR ( %MDX1(COPD.)         )
         OR ( %MDX1(Asthma.)       )
@@ -236,7 +223,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
     OR MISSING(FEMALE) 
     OR MISSING(DX1) 
     OR RESIDENT NE 1
-    OR MISSING(PSTCO)                                   THEN EXCLUDEQE03 = 1;
+    OR MISSING(PSTCO2)                                   THEN EXCLUDEQE03 = 1;
     ELSE IF AGE GE 65                                    THEN EXCLUDEQE03 = 2;
     ELSE IF %MDX1(Cellulitis.) AND %MDX2(diabetes.)      THEN EXCLUDEQE03 = 3;
     ELSE IF %MDX(immunocompromised.)                     THEN EXCLUDEQE03 = 4;
@@ -280,7 +267,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
     OR MISSING(FEMALE) 
     OR MISSING(DX1) 
     OR RESIDENT NE 1
-    OR MISSING(PSTCO)                  THEN EXCLUDEQE04 = 1;
+    OR MISSING(PSTCO2)                  THEN EXCLUDEQE04 = 1;
     ELSE IF AGE LT 5 OR AGE GE 40       THEN EXCLUDEQE04 = 2;
     ELSE IF %MDX(CysticFibrosis.) 
          OR %MDX(RespiratoryAnomalies.)
@@ -321,18 +308,16 @@ DATA OUTMSR.&OUTFILE_MEAS.
     OR MISSING(FEMALE) 
     OR MISSING(DX1) 
     OR RESIDENT NE 1
-    OR MISSING(PSTCO)                     THEN EXCLUDEQE05 = 1;
+    OR MISSING(PSTCO2)             THEN EXCLUDEQE05 = 1;
     ELSE IF MISSING(VisitLink) 
-         OR MISSING(DaysToEvent)           THEN EXCLUDEQE05 = 2;
-    ELSE IF AGE LT 18                      THEN EXCLUDEQE05 = 3;
-    ELSE IF %MDX(TRAUMAF.)                 THEN EXCLUDEQE05 = 4;
-    ELSE IF %MDX(BPExcludeCancer.)         THEN EXCLUDEQE05 = 5;
-    ELSE IF %MDX(BPExcludeUTI.)            THEN EXCLUDEQE05 = 6;
-    ELSE IF %MDX(BPExcludeFever.)          THEN EXCLUDEQE05 = 7;
-    ELSE IF %MDX(BPExcludeCES.)            THEN EXCLUDEQE05 = 8;
-    ELSE IF %MDX(BPEXCLUDEGALLSTONE.)      THEN EXCLUDEQE05 = 9;
-    ELSE IF %MDX(BPEXCLUDEKIDNEYSTONE.)    THEN EXCLUDEQE05 = 10;
-    ELSE                                   EXCLUDEQE05 = 0;
+         OR MISSING(DaysToEvent)   THEN EXCLUDEQE05 = 2;
+    ELSE IF AGE LT 18              THEN EXCLUDEQE05 = 3;
+    ELSE IF %MDX(TRAUMAF.)         THEN EXCLUDEQE05 = 4;
+    ELSE IF %MDX(BPExcludeCancer.) THEN EXCLUDEQE05 = 5;
+    ELSE IF %MDX(BPExcludeUTI.)    THEN EXCLUDEQE05 = 6;
+    ELSE IF %MDX(BPExcludeFever.)  THEN EXCLUDEQE05 = 7;
+    ELSE IF %MDX(BPExcludeCES.)    THEN EXCLUDEQE05 = 8;
+    ELSE                                EXCLUDEQE05 = 0;
 
     * --- NUMERATOR:                                                --- ;
     * ---   Patients with two or more ED visits with                --- ;
@@ -344,7 +329,7 @@ DATA OUTMSR.&OUTFILE_MEAS.
         IF BackPainVisit1 = . THEN BackPainVisit1 = 1;             * this is the 1st back pain visit ;
         ELSE IF BackPainVisit1 = 1 AND BackPainVisit2 = . THEN DO; * this is the 2nd back pain visit ;
             BackPainVisit2 = 1;                                    * found the 2nd back pain visit   ;
-            TAQE05 = 1;        * only count the 2nd if there are more than 2 visits for back pain in ED;
+            TAQE05 = 1;        * only count the 2nd if there are more than 2 ED visits for back pain ;
         END;
     END;            
 
@@ -406,8 +391,8 @@ RUN;
     RUN;
 %MEND EXCLUSION_COUNTS_ ;
 
-%EXCLUSION_COUNTS_(QINUM_=QE01, QILabel_=Visits for Non-Traumatic Dental Conditions in ED);
-%EXCLUSION_COUNTS_(QINUM_=QE02, QILabel_=Visits for Chronic Ambulatory Care Sensitive Conditions in ED);
-%EXCLUSION_COUNTS_(QINUM_=QE03, QILabel_=Visits for Acute Ambulatory Care Sensitive Conditions in ED); 
-%EXCLUSION_COUNTS_(QINUM_=QE04, QILabel_=Visits for Asthma in ED);
-%EXCLUSION_COUNTS_(QINUM_=QE05, QILabel_=Visits for Back Pain in ED);
+%EXCLUSION_COUNTS_(QINUM_=QE01, QILabel_=ED VISITS FOR NON-TRAUMATIC DENTAL CONDITIONS);
+%EXCLUSION_COUNTS_(QINUM_=QE02, QILabel_=ED VISITS FOR CHRONIC AMBULATORY CARE SENSITIVE CONDITIONS);
+%EXCLUSION_COUNTS_(QINUM_=QE03, QILabel_=ED VISITS FOR ACUTE AMBULATORY CARE SENSITIVE CONDITIONS);
+%EXCLUSION_COUNTS_(QINUM_=QE04, QILabel_=ED VISITS FOR ASTHMA);  
+%EXCLUSION_COUNTS_(QINUM_=QE05, QILabel_=ED VISITS FOR BACK PAIN);

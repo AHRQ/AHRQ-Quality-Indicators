@@ -5,14 +5,14 @@
 *               This indicator is also included in the Pediatric
 *               Quality Indicator module.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI17_FORMATS.SAS BEFORE running this program. 
 *              This is done through the CONTROL program.
 *
-*  USER NOTE2: See the AHRQ_PSI17_SAS_v2024_ICD10_Release_Notes.txt 
+*  USER NOTE2: See the AHRQ_PSI17_SAS_v2023_ICD10_Release_Notes.txt 
 *              file for software change notes.
 *
 *  USER NOTE3:  The AHRQ QI software does not support the calculation of
@@ -24,15 +24,25 @@
  title2 'PSI17_HOSP_MEASURES PROGRAM';
  title3 'AHRQ PATIENT SAFETY INDICATORS: ASSIGN PSI 17 TO INPATIENT DATA';
 
- * ------------------------------------------------------------------ ;
- * --- VERIFY MDC VALUES PROVIDED ON THE INPUT FILE ARE VALID     --- ;
- * ------------------------------------------------------------------ ;
+
+ * -------------------------------------------------------------- ;
+ * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT --- ;
+ * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE  --- ;
+ * --- VALUES ARE MISSING.                   			      --- ;
+ * -------------------------------------------------------------- ;
+
+ data   OUTMSR.&DELFILE.
+ 	(keep=KEY HOSPID SEX AGE DX1 MDC YEAR DQTR);
+ set 	INMSR.&DISCHARGE.;
+ if (AGE lt 0) or (AGE ge 18 or %MDX1($MDC14PRINDX.)) or (missing(SEX)) or
+	(missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
+    (&MDC_PROVIDED. = 1 and missing(MDC));
+ run;
 
  %macro check_mdc;
    %if &MDC_PROVIDED. = 1 %then %do;
-
      proc sql noprint;
-       select count(*), nmiss(MDC), min(MDC), max(MDC) into :n_total, :n_miss, :min_MDC, :max_MDC 
+       select count(*), nmiss(MDC) into :n_total, :n_miss
        from INMSR.&DISCHARGE.;
      quit;
 
@@ -41,53 +51,10 @@
        %abort cancel;
      %end;
 
-
-     %put minimum MDC=&min_MDC., maximum MDC=&max_MDC.;
-
-     %if &min_MDC. <0 or &max_MDC. >25 %then %do;
-       %put "WARNING: MDC_PROVIDED = 1 in CONTROL program but some MDC values are out of range of 0-25";
-     %end;
-
    %end;
  %mend check_mdc;
  %check_mdc;
 
- * ------------------------------------------------------------------ ;
- * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
- * ------------------------------------------------------------------ ;
-
- %macro check_pay1_race;
-   %global PAY1_PROVIDED RACE_PROVIDED;
-   proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
-   proc sql noprint;
-      select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
-   quit;
-
-   %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
-
-   %if &PAY1_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have PAY1. The software creates a placeholder for PAY1 as PAY1=999 for the programs to run";
-   %end;
-   %if &RACE_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have RACE. The software creates a placeholder for RACE as RACE=999 for the programs to run";
-   %end;
- %mend check_pay1_race;
- %check_pay1_race;
-
- * -------------------------------------------------------------- ;
- * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT --- ;
- * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE  --- ;
- * --- VALUES ARE MISSING.                                    --- ;
- * -------------------------------------------------------------- ;
-
- data   OUTMSR.&DELFILE.
- 	(keep=KEY HOSPID SEX AGE DX1 DRG MDC YEAR DQTR);
- set 	INMSR.&DISCHARGE.;
- if (AGE lt 0) or (AGE ge 18 or %MDX1($MDC14PRINDX.)) or (missing(SEX)) or
-    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
-    (&MDC_PROVIDED. = 1 and missing(MDC));
- run;
 
  * ---------------------------------------------------------------- ;
  * --- PATIENT SAFETY INDICATOR (PSI) NAMING CONVENTION:        --- ;
@@ -95,17 +62,17 @@
  * --- AS NUMERATOR, 'T' ("TOP"). THE SECOND LETTER IDENTIFIES  --- ;
  * --- THE TYPE OF INDICATOR WITH 'P' FOR HOSPITAL LEVEL. THE   --- ;
  * --- NEXT TWO CHARACTERS ARE 'PS'. THE LAST TWO DIGITS ARE    --- ;
- * --- 17 FOR INDICATOR PSI 17.                                 --- ;
+ * --- 17 FOR INDICATOR PSI 17.                         	    --- ;
  * ---------------------------------------------------------------- ;
  
  data   OUTMSR.&OUTFILE_MEAS.
     (keep=KEY HOSPID DRG MDC YEAR DQTR
           PAGECAT AGEDCAT BWHTCAT SEXCAT RACECAT PAYCAT COVIDDX
-          TPPS17 AGE AGEDAY &OUTFILE_KEEP);
+          TPPS17 AGE AGEDAY);
  set   INMSR.&DISCHARGE.
      (keep=KEY HOSPID DRG MDC SEX AGE AGEDAY
-           YEAR DQTR %ADDPAY1_RACE POINTOFORIGINUB04 ATYPE
-           DX1-DX&NDX. DXPOA1-DXPOA&NDX. &OUTFILE_KEEP);
+           RACE YEAR DQTR PAY1 POINTOFORIGINUB04 ATYPE
+           DX1-DX&NDX. DXPOA1-DXPOA&NDX.);
 
  label
  HOSPID   = 'Hospital Identification Number'
@@ -117,7 +84,6 @@
 
  * ----------------------------------------------------------------- ;
  * --- DELETE NON-PEDIATRIC RECORDS AND RECORDS WITH MISSING VALUES  ;
- * --- FOR AGE, SEX, DX1, DQTR, YEAR, MDC OR DRG = 999           --- ;
  * ----------------------------------------------------------------- ;
  
  if missing(SEX) then delete;
@@ -154,16 +120,7 @@
  else if (YEAR in (2022) and DQTR in (1,2,3)) then ICDVER = 39;
  else if (YEAR in (2022) and DQTR in (4))     then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
- else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
- else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
-
-
- * -------------------------------------------------------------- ;
- * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
- * -------------------------------------------------------------- ;
-
-  %CreateFakePAY1_RACE;
+ else ICDVER = 40; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -342,6 +299,11 @@
 
    *** Exclude Osteogenesis imperfecta;
       if %MDX($OSTEOID.) then TPPS17 = .;
+
+   *** Exclude based on COVID-19 flag;
+      if (COVIDDX = 1 and &COVID_19. = 1) or 
+         (COVIDDX = 0 and &COVID_19. = 3)
+         then TPPS17 = .;  
 
    end;
 

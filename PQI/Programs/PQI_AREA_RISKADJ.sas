@@ -11,8 +11,8 @@
 *         Output stratified by AGE, SEXCAT and POVCAT from
 *         population file and PQI_AREA_MEASURES output.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *====================================================================;
 
@@ -90,7 +90,7 @@
            POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
            POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
            POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-           POP_2020 POP_2021 POP_2022 POP_2023 POP 8;
+           POP_2020 POP_2021 POP_2022 POP 8;
 
     infile POPFILE missover FIRSTOBS=2;
 
@@ -100,7 +100,7 @@
           POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
           POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
           POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-          POP_2020 POP_2021 POP_2022 POP_2023;
+          POP_2020 POP_2021 POP_2022;
 
     %CTY2MA
 
@@ -231,49 +231,66 @@
  run;
 
  data   TEMP1;
- length FEMALE AGECAT1-AGECAT14 FAGECAT1-FAGECAT14
-        POVCAT1-POVCAT10 3;
+ length FEMALE AGECAT1-AGECAT14 FAGECAT1-FAGECAT14 YEAR2020 YEAR2020_FEMALE YEAR2020_AGE1-YEAR2020_AGE14 YEAR2020_FEMALE_AGE1-YEAR2020_FEMALE_AGE14
+        POVCAT1-POVCAT10 YEAR2020_POV1-YEAR2020_POV10 3;
  set    TEMP1;
+
+ RA_YEAR=&RA_YEAR.;
 
  if SEXCAT in (2) then FEMALE = 1;
  else FEMALE = 0;
 
+ if RA_YEAR >= 2020 then YEAR2020 = 1;
+ else YEAR2020 = 0;
+
+ YEAR2020_FEMALE = YEAR2020 * FEMALE;
+
  array ARRY1{14} AGECAT1-AGECAT14;
  array ARRY2{14} FAGECAT1-FAGECAT14;
+ array ARRY4{14} YEAR2020_AGE1-YEAR2020_AGE14;
+ ARRAY ARRY6{14} YEAR2020_FEMALE_AGE1-YEAR2020_FEMALE_AGE14;
 
  do I = 1 TO 14;
-    ARRY1(I) = 0; ARRY2(I) = 0;
+    ARRY1(I) = 0; ARRY2(I) = 0; ARRY4(I) = 0; ARRY6(I) = 0;
  end;
 
  N = &N.;
 
  if N NOTIN (9) then ARRY1(POPCAT-4) = 1;
  if N NOTIN (9) then ARRY2(POPCAT-4) = FEMALE;
+ if N NOTIN (9) then ARRY4(POPCAT-4) = YEAR2020;
+ if N NOTIN (9) then ARRY6(POPCAT-4) = ARRY1(POPCAT-4) * YEAR2020_FEMALE;
 
  array ARRY3{10} POVCAT1-POVCAT10;
+ array ARRY5{10} YEAR2020_POV1-YEAR2020_POV10;
 
  do I = 1 TO 10;
     ARRY3(I) = 0;
+    ARRY5(I) = 0;
  end;
 
- PVIDX = put(MAREA,$POVCAT.);
+ %IF &RA_YEAR.=2020 %THEN %DO;
+    PVIDX = put(MAREA,$POVCAT20F.);
+ %END;
+ %ELSE %IF &RA_YEAR.=2019 %THEN %DO;
+    PVIDX = put(MAREA,$POVCAT19F.);
+ %END;
 
- if PVIDX > 0 then ARRY3(PVIDX) = 1;
+ if PVIDX > 0 then do; 
+    ARRY3(PVIDX) = 1;
+    ARRY5(PVIDX) = YEAR2020 ;
+ end;
 
- /*remove PVIDX=0 counties for SES risk-adjusted rate calculation, this happens to CT in v2024*/
- %if &USE_SES = 1 %then %do; 
-   if PVIDX = 0 then delete; 
- %end;
  run;
 
  * --- THIS DATA STEP READS THE REGRESSION COEFFICIENTS FOR EACH --- ;
  * --- COVARIATE.                                                --- ;
 
  %IF &USE_SES=0 %THEN %DO ;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_v2024.csv";
+    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_v2023.csv";
  %END ;
  %ELSE %DO;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_SES_v2024.csv";
+    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_SES_v2023.csv";
  %END ;
 
  * --- LOAD CSV PARAMTERS & SHAPE DATA --- ;
@@ -333,10 +350,10 @@ run;
     SET TEMP1Y; 
      * --- SWITCH OE RATIO BASED ON USE_SES FLAG --- ;
     %IF &USE_SES = 0 %THEN %DO ;
-      %include MacLib(PQI_AREA_OE_Array_v2024.SAS);
+      %include MacLib(PQI_AREA_OE_Array_v2023.SAS);
     %END ;
     %ELSE %DO ;
-      %include MacLib(PQI_AREA_OE_Array_SES_v2024.SAS);
+      %include MacLib(PQI_AREA_OE_Array_SES_v2023.SAS);
     %END ;   
     
     * --- MAP MEASURE NUM TO ARRAY INDEX SUB_N --- ;
@@ -356,7 +373,6 @@ run;
     if "&PQ." = "APQ93"      then SUB_N = 14;
 
     EHAT=EHAT*ARRYAOE(SUB_N);
-    IF EHAT > 0.99 THEN EHAT = 0.99;
     PHAT = EHAT * (1 - EHAT); 
     ONE=1;   
  RUN;
@@ -384,7 +400,6 @@ run;
     IF _N_=1 THEN SET OE&PQ.;
     SET TEMP1Y;
     EHAT=EHAT*O_E&PQ.;
-    IF EHAT > 0.99 THEN EHAT = 0.99;
     PHAT = EHAT * (1 - EHAT);    
     ONE=1;
  RUN;
@@ -405,10 +420,10 @@ run;
 
  * --- SWITCH SIGNAL VARIANCE BASED ON USE_SES FLAG --- ;
  %IF &USE_SES = 0 %THEN %DO ;
-   %include MacLib(PQI_AREA_Sigvar_Array_v2024.SAS);
+   %include MacLib(PQI_AREA_Sigvar_Array_v2023.SAS);
  %END ;
  %ELSE %DO ;
-   %include MacLib(PQI_AREA_Sigvar_Array_SES_v2024.SAS);
+   %include MacLib(PQI_AREA_Sigvar_Array_SES_v2023.SAS);
  %END ;
 
  if &N. = 1 then SUB_N = 1;
@@ -702,17 +717,6 @@ run;
  * ---------------------------------------------------------------- ;
 
  %MACRO TEXT;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OAPQ: EAPQ: RAPQ: LAPQ: UAPQ: SAPQ:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*100000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
 
  %IF &TXTARSK. = 1  %THEN %DO;
 	%LET TYPEARN  = %sysfunc(tranwrd(&TYPELVLA.,%str(,),_));
@@ -724,14 +728,13 @@ run;
  set OUTARSK.&OUTFILE_AREARISK;
  FILE "&PQCSVRF2." lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREARISK data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_AREARISK data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
+ put "Risk adjustment model year (RA_YEAR) = &RA_YEAR";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "Output stratification includes TYPELVLA = &TYPELVLA";
  put "&&USE_SES&USE_SES (USE_SES = &USE_SES)"; 
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "MAREA" "," "Age"  "," "Sex"  "," "Race"  "," "Type" ","
@@ -784,7 +787,7 @@ run;
  "VAPQ05" "," "VAPQ07" "," "VAPQ08" ","
  "VAPQ11" "," "VAPQ12" ","
  "VAPQ14" "," "VAPQ15" "," "VAPQ16" ","
- "VAPQ90" "," "VAPQ91" "," "VAPQ92" "," "VAPQ93"  ","
+ "VAPQ90" "," "VAPQ91" "," "VAPQ92" "," "VAPQ93"
  "XAPQ01" "," "XAPQ03" "," 
  "XAPQ05" "," "XAPQ07" "," "XAPQ08" ","
  "XAPQ11" "," "XAPQ12" ","
@@ -796,19 +799,19 @@ run;
  put MAREA  $5. "," AGECAT 3. "," SEXCAT 3. "," RACECAT 3.  "," _TYPE_ 2.  ","
  (TAPQ01 TAPQ03 TAPQ05 TAPQ07-TAPQ08 TAPQ11 TAPQ12 TAPQ14-TAPQ16 TAPQ90-TAPQ93) (7.0 ",")
   ","
- (PAPQ01 PAPQ03 PAPQ05 PAPQ07-PAPQ08 PAPQ11 PAPQ12 PAPQ14-PAPQ16 PAPQ90-PAPQ93) (13.0 ",")
+ (PAPQ01 PAPQ03 PAPQ05 PAPQ07-PAPQ08 PAPQ11 PAPQ12 PAPQ14-PAPQ16 PAPQ90-PAPQ93) (13.2 ",")
  ","
- (OAPQ01 OAPQ03 OAPQ05 OAPQ07-OAPQ08 OAPQ11 OAPQ12 OAPQ14-OAPQ16 OAPQ90-OAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OAPQ01 OAPQ03 OAPQ05 OAPQ07-OAPQ08 OAPQ11 OAPQ12 OAPQ14-OAPQ16 OAPQ90-OAPQ93) (12.10 ",")
  ","
- (EAPQ01 EAPQ03 EAPQ05 EAPQ07-EAPQ08 EAPQ11 EAPQ12 EAPQ14-EAPQ16 EAPQ90-EAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (EAPQ01 EAPQ03 EAPQ05 EAPQ07-EAPQ08 EAPQ11 EAPQ12 EAPQ14-EAPQ16 EAPQ90-EAPQ93) (12.10 ",")
  ","
- (RAPQ01 RAPQ03 RAPQ05 RAPQ07-RAPQ08 RAPQ11 RAPQ12 RAPQ14-RAPQ16 RAPQ90-RAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (RAPQ01 RAPQ03 RAPQ05 RAPQ07-RAPQ08 RAPQ11 RAPQ12 RAPQ14-RAPQ16 RAPQ90-RAPQ93) (12.10 ",")
  ","
- (LAPQ01 LAPQ03 LAPQ05 LAPQ07-LAPQ08 LAPQ11 LAPQ12 LAPQ14-LAPQ16 LAPQ90-LAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (LAPQ01 LAPQ03 LAPQ05 LAPQ07-LAPQ08 LAPQ11 LAPQ12 LAPQ14-LAPQ16 LAPQ90-LAPQ93) (12.10 ",")
  ","
- (UAPQ01 UAPQ03 UAPQ05 UAPQ07-UAPQ08 UAPQ11 UAPQ12 UAPQ14-UAPQ16 UAPQ90-UAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (UAPQ01 UAPQ03 UAPQ05 UAPQ07-UAPQ08 UAPQ11 UAPQ12 UAPQ14-UAPQ16 UAPQ90-UAPQ93) (12.10 ",")
  ","
- (SAPQ01 SAPQ03 SAPQ05 SAPQ07-SAPQ08 SAPQ11 SAPQ12 SAPQ14-SAPQ16 SAPQ90-SAPQ93) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (SAPQ01 SAPQ03 SAPQ05 SAPQ07-SAPQ08 SAPQ11 SAPQ12 SAPQ14-SAPQ16 SAPQ90-SAPQ93) (12.10 ",")
  ","
  (SNAPQ01 SNAPQ03 SNAPQ05 SNAPQ07-SNAPQ08 SNAPQ11 SNAPQ12 SNAPQ14-SNAPQ16 SNAPQ90-SNAPQ93) (12.10 ",")
  ","

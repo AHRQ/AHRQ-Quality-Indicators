@@ -9,8 +9,8 @@
 *         population file and PQI_AREA_MEASURES.SAS output.
 *         Variables created by this program are PAPQxx and OAPQxx.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *============================================================================ ;
 
@@ -70,7 +70,7 @@
            POP_2005 POP_2006 POP_2007 POP_2008 POP_2009 
            POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
            POP_2015 POP_2016 POP_2017 POP_2018 POP_2019 
-           POP_2020 POP_2021 POP_2022 POP_2023 POP 8;
+           POP_2020 POP_2021 POP_2022 POP 8;
 
     infile POPFILE missover firstobs=2;
 
@@ -80,7 +80,7 @@
           POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
           POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
           POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-          POP_2020 POP_2021 POP_2022 POP_2023;
+          POP_2020 POP_2021 POP_2022;
 
     %CTY2MA
 
@@ -422,34 +422,20 @@ run; quit;
  * -------------------------------------------------------------- ;
 
  %MACRO TEXT;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OAP:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*100000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
-
 
  %IF &TXTAOBS. = 1  %THEN %DO;
 
  data _NULL_;
  set OUTAOBS.&OUTFILE_AREAOBS.;
- %scale_rates;
  file PQTXTAOB lrecl=1000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
+ put "Risk adjustment model year (RA_YEAR) = &RA_YEAR";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "Output stratification includes TYPELVLA = &TYPELVLA";
  put "&&USE_SES&USE_SES (USE_SES = &USE_SES)"; 
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "MAREA" "," "Age" "," "Sex" "," "Race" "," "Type" ","
@@ -474,10 +460,9 @@ run; quit;
  put MAREA $5. "," AGECAT 3. "," SEXCAT 3. "," RACECAT 3. "," _TYPE_ 2. ","
  (TAPQ01 TAPQ03 TAPQ05 TAPQ07-TAPQ08 TAPQ11 TAPQ12 TAPQ14-TAPQ16 TAPQ90-TAPQ93) (7.0 ",")
  ","
- (PAPQ01 PAPQ03 PAPQ05 PAPQ07-PAPQ08 PAPQ11 PAPQ12 PAPQ14-PAPQ16 PAPQ90-PAPQ93) (13.0 ",") 
+ (PAPQ01 PAPQ03 PAPQ05 PAPQ07-PAPQ08 PAPQ11 PAPQ12 PAPQ14-PAPQ16 PAPQ90-PAPQ93) (13.2 ",") 
  ","
- (OAPQ01 OAPQ03 OAPQ05 OAPQ07-OAPQ08 OAPQ11 OAPQ12 OAPQ14-OAPQ16 OAPQ90-OAPQ93) 
- %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OAPQ01 OAPQ03 OAPQ05 OAPQ07-OAPQ08 OAPQ11 OAPQ12 OAPQ14-OAPQ16 OAPQ90-OAPQ93) (12.10 ",")
  ;
  run;
 

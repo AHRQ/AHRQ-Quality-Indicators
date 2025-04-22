@@ -8,8 +8,8 @@
 *         Output stratified by HOSPID, AGECAT, SEXCAT, PAYCAT, and  RACECAT.
 *         Variables created by this program are PPIQXX and OPIQXX
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *===================================================================================;
 
@@ -231,32 +231,18 @@ run; quit;
  * -------------------------------------------------------------- ;
 
  %MACRO TEXTP1;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OPIQ:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
- 
  %if &TXTHOBS. = 1  %then %do;
 
  data _NULL_;
  set OUTHOBS.&OUTFILE_HOSPOBS.;
- %scale_rates;
  file IQTXTHOB lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "HOSP ID" "," "Age"  "," "Sex"  "," "Payer" "," "Race"  "," "Type" ","
@@ -286,12 +272,12 @@ run; quit;
  (PPIQ08 PPIQ09 PPIQ09_WITH_CANCER PPIQ09_WITHOUT_CANCER 
   PPIQ11 PPIQ11_OPEN_RUPTURED PPIQ11_OPEN_UNRUPTURED PPIQ11_ENDO_RUPTURED PPIQ11_ENDO_UNRUPTURED 
   PPIQ12 PPIQ15-PPIQ17 PPIQ17_HEMSTROKE_SUBARACH PPIQ17_HEMSTROKE_INTRACER PPIQ17_ISCHEMSTROKE 
-  PPIQ18-PPIQ22 PPIQ30-PPIQ31 PPIQ33) (13.0 ",")
+  PPIQ18-PPIQ22 PPIQ30-PPIQ31 PPIQ33) (13.2 ",")
  ","
  (OPIQ08 OPIQ09 OPIQ09_WITH_CANCER OPIQ09_WITHOUT_CANCER 
   OPIQ11 OPIQ11_OPEN_RUPTURED OPIQ11_OPEN_UNRUPTURED OPIQ11_ENDO_RUPTURED OPIQ11_ENDO_UNRUPTURED 
   OPIQ12 OPIQ15-OPIQ17 OPIQ17_HEMSTROKE_SUBARACH OPIQ17_HEMSTROKE_INTRACER OPIQ17_ISCHEMSTROKE 
-  OPIQ18-OPIQ22 OPIQ30-OPIQ31 OPIQ33) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+  OPIQ18-OPIQ22 OPIQ30-OPIQ31 OPIQ33) (12.10 ",")
  ;
  run;
 

@@ -1,9 +1,9 @@
 * ========================= PROGRAM: PQE_AREA_CONTROL.SAS ======================== ;
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  BETA VERSION: SAS QI v2023
+*  RELEASE DATE: SEPTEMBER 2023
 * ================================================================================ ;
-* The Prevention Quality Indicator in Emergency Department Settings (PQE) module
-  of the AHRQ Quality Indicators software includes the following programs:
+* The Prevention Quality Emergency Department (PQE) Indicator module of the 
+  AHRQ Quality Indicators software includes the following programs:
    
    1. PQE_AREA_CONTROL.SAS    Assigns user inputs required by other programs
                               and optional output options.  
@@ -12,7 +12,7 @@
 
    3. PQE_AREA_MEASURES.SAS   Assigns Prevention Quality Indicators to outpatient 
                               emergency department (ED) records. 
-                              Refer to technical specification documents for details.
+							  Refer to technical specification documents for details.
 							  
    4. PQE_AREA_OBSERVED.SAS   Calculates observed rates for area-level indicators.
 
@@ -24,25 +24,31 @@
                            to the layout in the software instructions.
                            The file name is up to the user but must be listed below.
                             
-   2. PQE_Dx_Macros_v2024.SAS Standard processes used by the other SAS programs.
+   2. PQE_Dx_Macros_v2023.SAS Standard processes used by the other SAS programs.
                               The user does not need to open.
                             
-   3. 2000-2023_Population_Files_v2024.txt  Population file with counts by area, age, and sex.
+   3. 2000-2022_Population_Files_v2023.txt  Population file with counts by area, age, and sex.
                                             Required for area rate calculation. Available as a 
                                             separate download from the AHRQ website.
 
-   4. PQE_AREA_Sigvar_Array_v2024.SAS  File with noise and signal variance estimates 
+   4. PQE_AREA_Sigvar_Array_v2023.SAS  File with noise and signal variance estimates 
                                        and reference rates for smoothing by age and sex.
 
-   5. PQE_AREA_Sigvar_Array_SES_v2024.SAS  File with noise and signal variance estimates 
+   5. PQE_AREA_Sigvar_Array_SES_v2023.SAS  File with noise and signal variance estimates 
                                            and reference rates for smoothing by age, sex and
-                                           socioeconomic status (SES).
+										   socioeconomic status (SES).
 
-   6. PQE_AREA_OE_Array_v2024.SAS  Array for observed/expected (OE) ratio adjustment from 
+   6. PQE_AREA_Covariates_v2023.txt  File with regression coefficients from reference  
+                                     population used for risk adjustment by age and sex. 
+
+   7. PQE_AREA_Covariates_SES_v2023.txt  File with regression coefficients from reference  
+                                         population used for risk adjustment by age, sex and SES.
+
+   8. PQE_AREA_OE_Array_v2023.SAS  Array for observed/expected (OE) ratio adjustment from 
                                    reference population based on risk adjustment models. 
-                                   The software provides two options to use OE ratio adjustment.
+								   The software provides two options to use OE ratio adjustment.
 
-   7. PQE_AREA_OE_Array_SES_v2024.SAS  Array for OE ratio adjustment from reference population 
+   9. PQE_AREA_OE_Array_SES_v2023.SAS  Array for OE ratio adjustment from reference population 
                                        based on risk adjustment models. The software provides 
                                        two options to use OE ratio adjustment by age, sex and SES. 
   
@@ -66,18 +72,16 @@
         each file based on the location of the PQE folder listed in the 
         PATHNAME variable.
 
- * See the AHRQ_PQE_SAS_v2024_ICD10_Release_Notes.txt file for version change details.
-
  Generally speaking, a first-time user of this software would proceed 
  as outlined below:
 
-    1.  Modify and save all required user inputs in PQE_AREA_CONTROL.SAS (This program - MUST be done.)
+    1.  Modify and save all required user inputs in PQE_AREA_CONTROL.SAS (this program). This MUST be done.
 
     2.  Select the programs to run by updating the flags (EXE_FMT, EXE_MSR, EXE_AOBS, EXE_ARSK).
         The default option will run all programs. Programs must be run in order and will not execute if 
         the required input is not available. See log for details. 
 
-    3.  Run (submit) the PQE_AREA_CONTROL.SAS (MUST be done). 
+    3.  Run (submit) the PQE_AREA_CONTROL.SAS (this MUST be done). 
 	
  * ---------------------------------------------------------------- ;
  * --------------    INPUTS FOR ALL PROGRAMS    ------------------- ;
@@ -85,16 +89,16 @@
  
 *PATHNAME specifies the location of the PQE folder which includes the
           Programs, Macros, and SASData subfolders;
-%LET PATHNAME= C:\Pathname\PQE;                *<===USER MUST modify;      
+%LET PATHNAME = C:\Pathname\PQE;               *<===USER MUST modify;
 
 *DISFOLDER specifies the folder that contains the discharge data;
-%LET DISFOLDER=C:\Pathname;                    *<===USER MUST modify;
+%LET DISFOLDER = C:\Pathname;                  *<===USER MUST modify;
 
 *DISCHARGE specifies the name of the discharge data file;
-%LET DISCHARGE= discharges;                    *<===USER MUST modify;
+%LET DISCHARGE = discharges;                   *<===USER MUST modify;
 
 *SUFX specifies an identifier suffix to be placed on output datasets;
-%LET SUFX =  v2024;                             *<===USER may modify;
+%LET SUFX = v2023;                              *<===USER may modify;
 
 *LIBRARY is where formats generated by PQE_AREA_FORMATS will be saved.;
 libname LIBRARY  "&PATHNAME.\SASData";          *<===USER may modify;
@@ -114,13 +118,13 @@ libname LIBRARY  "&PATHNAME.\SASData";          *<===USER may modify;
  * --- THE DISCHARGE DATA. POPYEAR WILL IDENTIFY POPULATION USED -- ;
  * --- BY THE PQE_AREA_OBSERVED AND PQE_ARE_RISKADJ PROGRAMS.    -- ;
  * ---------------------------------------------------------------- ;
-%LET POPYEAR = 2023;                            *<===USER may modify;
+%LET POPYEAR = 2022;                            *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- SET LOCATION OF POPULATION FILE                          --- ;
  * ---------------------------------------------------------------- ;
-filename POPFILE  "&PATHNAME.\ParmFiles\2000-2023_Population_Files_v2024.txt";  *<===USER may modify; 
-
+filename POPFILE  "&PATHNAME.\ParmFiles\2000-2022_Population_Files_v2023.txt";  *<===USER may modify; 
+                                       
  * ---------------------------------------------------------------- ;
  * --- INDICATE IF RECORDS SHOULD BE PRINTED AS SAS OUTPUT AT   --- ;
  * --- END OF EACH PROGRAM.  0 = NO, 1 = YES                    --- ;
@@ -128,15 +132,15 @@ filename POPFILE  "&PATHNAME.\ParmFiles\2000-2023_Population_Files_v2024.txt";  
  %LET PRINT = 0;                              *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
- * --- INDICATE IF O_E RATIO ADJUSTMENT IS FROM REFERENCE POPULATION;
+ * --- INDICATE IF OE RATIO ADJUSTMENT IS FROM REFERENCE POPULATION ;
  * --- 1 = YES, DEFAULT AND RECOMMENDED                         --- ;
- * --- 0 = NO,  O_E RATIOS BASED ON USER DATA WILL BE CALCULATED--- ; 
+ * --- 0 = NO,  OE RATIOS BASED ON USER DATA WILL BE CALCULATED --- ; 
  * ---          AND USED. USE WITH CAUTION.                     --- ;
  * ---------------------------------------------------------------- ;
 %LET Calibration_OE_to_ref_pop = 1;             *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
- * --- ADD OPTION TO COMPRESS OUTPUT.                           --- ;
+ * --- ADD OPTION TO COMPRESS OUTPUT SAS DATA.                  --- ;
  * --- RECOMMENDED WITH LARGE FILES. TO RESTORE, RUN:           --- ;
  * --- options compress = no                                    --- ;
  * ---------------------------------------------------------------- ;
@@ -152,7 +156,7 @@ filename MacLib "&PATHNAME.\Macros" ;           *<===USER may modify;
  * --- INPUT DATA YEAR.                                         --- ;
  * --- LEAVE BLANK IF REVISIT VARIABLES ARE NOT AVAILABLE.      --- ;
  * ---------------------------------------------------------------- ;
-%LET StatesWithVisitlink_ = AK AR CA CO FL GA HI IA IN MA MD ME MO MS NE NY OR SC SD TN UT VT WI WY; *<===USER MUST MODIFY;
+%LET StatesWithVisitlink_ = AK AR CA CO FL GA HI IA IN MA MD MO MS NE NV NY OR SC SD TN UT VT WI WY; *<===USER MUST MODIFY;
 
  * ---------------------------------------------------------------- ;
  * ---              PROGRAM : PQE_AREA_MEASURES.SAS             --- ;
@@ -172,15 +176,7 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
  * --- SET NAME OF OUTPUT FILE FROM PQE_AREA_MEASURES.SAS       --- ;
  * ---------------------------------------------------------------- ;
 %LET OUTFILE_MEAS = QEMSR_&SUFX.;               *<===USER may modify;
-
- * ---------------------------------------------------------------- ;
- * --- INDICATE ADDITIONAL INPUT VARIABLES TO KEEP ON OUTPUT    --- ;
- * --- DATA FILE FROM PQE_AREA_MEASURES.SAS.                    --- ;
- * --- INPUT VARIABLES ALWAYS INCLUDED ON THE OUTPUT FILE ARE:  --- ;
- * --- KEY PSTCO YEAR DQTR HOSPST VisitLink LOS DX1             --- ;
- * ---------------------------------------------------------------- ;
-%LET OUTFILE_KEEP = ;                           *<===USER may modify;
-
+                                                                     
  * ---------------------------------------------------------------- ;
  * --- MODIFY NUMBER OF DIAGNOSIS VARIABLES TO MATCH INPUT      --- ;
  * --- DISCHARGE DATA. VALUE MUST BE GREATER THAN ZERO.         --- ;
@@ -245,16 +241,19 @@ filename QETXTAOB "&PATHNAME.\SASData\QEAO_&SUFX..TXT"; *<===USER may modify;
  * ---------------------------------------------------------------- ; 
 libname OUTARSK "&PATHNAME.\SASData";           *<===USER may modify;
 
- * ---------------------------------------------------------------- ;
- * --- TO USE SOCIOECONOMIC STATUS IN AREA RISK ADJUSTMENT      --- ;
- * --- SET USE_SES=1 BELOW.                                     --- ;
- * ---------------------------------------------------------------- ;
+* ---------------------------------------------------------------- ;
+* --- TO USE SOCIOECONOMIC STATUS IN AREA RISK ADJUSTMENT      --- ;
+* --- SET USE_SES=1 BELOW.                                     --- ;
+* ---------------------------------------------------------------- ;
 %LET USE_SES = 0;                               *<===USER may modify;
 
- * ------------------------------------------------------------------ ;
- * --- SET NAME OF RISK ADJUSTMENT PARAMETERS DIRECTORY           --- ;
- * ------------------------------------------------------------------ ;
- %LET RADIR = &PATHNAME.\ParmFiles;               *<===USER may modify;
+ * ---------------------------------------------------------------- ;
+ * --- SET NAME OF COVARIATE FILE. THESE FILES CONTAIN THE      --- ;
+ * --- REGRESSION COEFFICIENTS FOR EACH COVARIATE. THERE IS ONE --- ;
+ * --- OBSERVATION PER ED PREVENTION QUALITY INDICATOR.         --- ;
+ * ---------------------------------------------------------------- ;
+filename COVAR    "&PATHNAME.\ParmFiles\PQE_Area_Covariates_v2023.txt";     *<===USER may modify;
+filename COVARSES "&PATHNAME.\ParmFiles\PQE_Area_Covariates_SES_v2023.txt"; *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- NAME SAS DATASET OUTPUT FROM PQE_AREA_RISKADJ.SAS        --- ;
@@ -262,24 +261,18 @@ libname OUTARSK "&PATHNAME.\SASData";           *<===USER may modify;
  * ---------------------------------------------------------------- ;
 %LET OUTFILE_AREARISK = QEARSKADJ_&SUFX. ;      *<===USER may modify;
 
- * ---------------------------------------------------------------- ;
- * --- INDICATE IF YOU WANT TO CREATE A COMMA-DELIMITED TEXT    --- ;
- * --- FILE OF OUTFILE_AREARISK FOR EXPORT INTO A SPREADSHEET   --- ;
- * ---    0 = NO, 1 = YES.                                      --- ;
- * ---------------------------------------------------------------- ;
+* ---------------------------------------------------------------- ;
+* --- INDICATE IF YOU WANT TO CREATE A COMMA-DELIMITED TEXT    --- ;
+* --- FILE OF OUTFILE_AREARISK FOR EXPORT INTO A SPREADSHEET   --- ;
+* ---    0 = NO, 1 = YES.                                      --- ;
+* ---------------------------------------------------------------- ;
 %LET TXTARSK = 0;                               *<===USER may modify;
 
- * ---------------------------------------------------------------- ;
- * --- IF YOU CREATE A COMMA-DELIMITED TEXT FILE,               --- ;
- * --- SPECIFY THE LOCATION OF THE FILE.                        --- ;
- * ---------------------------------------------------------------- ;
+* ---------------------------------------------------------------- ;
+* --- IF YOU CREATE A COMMA-DELIMITED TEXT FILE,               --- ;
+* --- SPECIFY THE LOCATION OF THE FILE.                        --- ;
+* ---------------------------------------------------------------- ;
 filename QETXTARA "&PATHNAME.\SASData\QEARSKADJ_&SUFX..TXT";   *<===USER may modify;
-
- * ---------------------------------------------------------------- ;
- * --- INDICATE WHETHER THE MEASURES SHOULD BE REPORTED PER     --- ;
- * --- 100,000 POPULATION IN OUTPUT TEXT FILES: 0 = NO, 1 = YES --- ;
- * ---------------------------------------------------------------- ;
-%LET SCALE_RATES = 0;                           *<===USER may modify;
 
 
 ************************* Programs to execute ********************************* ;
@@ -295,7 +288,7 @@ filename QETXTARA "&PATHNAME.\SASData\QEARSKADJ_&SUFX..TXT";   *<===USER may mod
 
 ************************* END USER INPUT ***************************************;
 * --- Include standard diagnosis and procedure macros.                      --- ;
-%include MacLib(PQE_Dx_Macros_v2024.SAS);
+%include MacLib(PQE_Dx_Macros_v2023.SAS);
 
 * --- Execute Macro to run Measure and Observed rate calculations.          --- ;
 %PROG_EXE(&PATHNAME.,&EXE_FMT.,&EXE_MSR.,&EXE_AOBS.,&EXE_ARSK.);

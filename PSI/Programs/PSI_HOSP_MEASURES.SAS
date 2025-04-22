@@ -6,8 +6,8 @@
 *         Variables created by this program are TPPSXX, PPPSXX, stratifiers, and 
 *         severity indicators.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI_FORMATS.SAS BEFORE running this program. 
@@ -16,7 +16,7 @@
 *  USER NOTE2: The AHRQ QI software does not support the calculation of weighted
 *              estimates and standard errors using complex sampling designs.
 *
-*  USER NOTE3: See the AHRQ_PSI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_PSI_SAS_v2023_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE4: Although some of the exclusion criteria for present on admission 
@@ -29,14 +29,23 @@
  title3 'AHRQ INPATIENT QUALITY INDICATORS: ASSIGN PSIs TO INPATIENT DATA';
 
  * ------------------------------------------------------------------ ;
- * --- VERIFY MDC VALUES PROVIDED ON THE INPUT FILE ARE VALID     --- ;
+ * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
+ * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
+ * --- VALUES ARE MISSING. REVIEW AFTER RUNNING PSI_HOSP_MEASURES. -- ;
  * ------------------------------------------------------------------ ;
 
- %macro check_mdc;
-   %if &MDC_PROVIDED. = 1 %then %do;
+ data   OUTMSR.&DELFILE.
+     (keep=KEY HOSPID SEX AGE DX1 MDC YEAR DQTR);
+ set     INMSR.&DISCHARGE.;
+ if (AGE lt 0) or (AGE lt 18 and not %MDX1($MDC14PRINDX.)) or %MDX1($MDC15PRINDX.) or (missing(SEX)) or
+    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
+    (&MDC_PROVIDED. = 1 and missing(MDC));
+ run;
 
+  %macro check_mdc;
+   %if &MDC_PROVIDED. = 1 %then %do;
      proc sql noprint;
-       select count(*), nmiss(MDC), min(MDC), max(MDC) into :n_total, :n_miss, :min_MDC, :max_MDC
+       select count(*), nmiss(MDC) into :n_total, :n_miss
        from INMSR.&DISCHARGE.;
      quit;
 
@@ -45,54 +54,11 @@
        %abort cancel;
      %end;
 
-
-     %put minimum MDC=&min_MDC., maximum MDC=&max_MDC.;
-
-     %if &min_MDC. <0 or &max_MDC. >25 %then %do;
-       %put "WARNING: MDC_PROVIDED = 1 in CONTROL program but some MDC values are out of range of 0-25";
-     %end;
-
    %end;
  %mend check_mdc;
  %check_mdc;
- 
- * ------------------------------------------------------------------ ;
- * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
- * ------------------------------------------------------------------ ;
 
- %macro check_pay1_race;
-   %global PAY1_PROVIDED RACE_PROVIDED;
-   proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
-   proc sql noprint;
-      select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
-   quit;
 
-   %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
-
-   %if &PAY1_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have PAY1. The software creates a fake PAY1 as PAY1=999 for the programs to run";
-   %end;
-   %if &RACE_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have RACE. The software creates a fake RACE as RACE=999 for the programs to run";
-   %end;
- %mend check_pay1_race;
- %check_pay1_race;
-
- * ------------------------------------------------------------------ ;
- * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
- * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
- * --- VALUES ARE MISSING. REVIEW AFTER RUNNING PSI_HOSP_MEASURES. -- ;
- * ------------------------------------------------------------------ ;
-
- data   OUTMSR.&DELFILE.
-     (keep=KEY HOSPID SEX AGE DX1 DRG MDC YEAR DQTR);
- set     INMSR.&DISCHARGE.;
- if (AGE lt 0) or (AGE lt 18 and not %MDX1($MDC14PRINDX.)) or %MDX1($MDC15PRINDX.) or (missing(SEX)) or
-    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999) or
-    (&MDC_PROVIDED. = 1 and missing(MDC));
- run;
- 
  * ------------------------------------------------------------------ ;
  * --- PATIENT SAFETY INDICATOR (PSI) NAMING CONVENTION:          --- ;
  * --- THE FIRST LETTER IDENTIFIES THE PATIENT SAFETY             --- ;
@@ -124,14 +90,14 @@
           TPPS05-TPPS08  TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19
           PPPS02-PPPS04  PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE
           PPPS05-PPPS08  PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19
-          HPPS13 HPPS15 &OUTFILE_KEEP
+          HPPS13 HPPS15
 );
  set   INMSR.&DISCHARGE.
       (keep=KEY HOSPID DRG MDC SEX AGE
-            YEAR DQTR
+            RACE YEAR DQTR PAY1
             DISP LOS ASOURCE POINTOFORIGINUB04 ATYPE
-            DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY_PAY1_RACE
-            DXPOA1-DXPOA&NDX. &OUTFILE_KEEP);
+            DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY
+            DXPOA1-DXPOA&NDX.);
 
  label
  HOSPID   = 'Hospital Identification Number'
@@ -183,9 +149,7 @@
  else if (YEAR in (2022) and DQTR in (1,2,3)) then ICDVER = 39;
  else if (YEAR in (2022) and DQTR in (4))     then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
- else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
- else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
+ else ICDVER = 40; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -238,13 +202,6 @@
    label='LOW MORTALITY DRGS';
 
  LOWMODR = put(MDRG,LOWMODR.);
-
-
- * -------------------------------------------------------------- ;
- * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
- * -------------------------------------------------------------- ;
-
-  %CreateFakePAY1_RACE;
 
 
  * -------------------------------------------------------------- ;
@@ -420,7 +377,7 @@
  * --- CONSTRUCT AHRQ COMORBIDITY ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PSI_HOSP_Comorb_Code_v2024.sas);
+ %include MacLib(PSI_HOSP_Comorb_Code_v2023.sas);
 
 
  * -------------------------------------------------------------- ;
@@ -466,7 +423,7 @@
  
    if (MEDICDR or SURGIDR) then do;
 
-      %include MacLib(PSI_03_Site_Specific_Macro_v2024.sas);
+      %include MacLib(PSI_03_Site_Specific_Macro_v2023.sas);
 
       *** Exclude severe burns;
 
@@ -857,15 +814,15 @@
    if SURGIDR or MEDICDR then do;
 
       TPPS08 = 0; QPPS08 = 0;
-      TPPS08_HIP_FX = 0; TPPS08_OTHER_FX = 0;
+	  TPPS08_HIP_FX = 0; TPPS08_OTHER_FX = 0;
 
       if %MDX2($FXID.) then TPPS08 = 1;
 
       *** PSI 08 components;
-      *** In-Hospital Fall with Hip Fracture Rate: PS08_HIP_FX;
-      *** In-Hospital Fall with Other Fracture Rate: PS08_OTHER_FX; 
+	  *** In-Hospital Fall with Hip Fracture Rate: PS08_HIP_FX;
+	  *** In-Hospital Fall with Other Fracture Rate: PS08_OTHER_FX; 
 
-      if TPPS08=1 then do;
+	  if TPPS08=1 then do;
          if %MDX2($HIPFXID.) then TPPS08_HIP_FX = 1;
 	     else TPPS08_OTHER_FX =1;
 	  end;
@@ -899,12 +856,11 @@
 
   if (&PRDAY. = 1 and ORDAY ne . and MPRDAY ne .) then do;
 
-      if MPRDAY < ORDAY then TPPS09 = .; 
+      if MPRDAY < ORDAY then TPPS09 = .;
 
   end;
 
  %MEND;
-
 
    if SURGIDR and ORCNT > 0 then do;
 
@@ -929,24 +885,16 @@
           hematoma-related procedure occurs before the first OR procedure;
 
       %ORDAY($HEMOTH2P.);
-      %MPRDAY($HEMOTH2P.); PS9_MPRDAY_HEMOTH2P=MPRDAY;
+      %MPRDAY($HEMOTH2P.);
       %PS9;
 
       *** Exclude MDC 14;
 
       if %MDX1($MDC14PRINDX.) then TPPS09 = .;
 
-      *** Exclude Coagulation Disorders and anticoagulant/antithormbotic coagulopathies POA;
+      *** Exclude Coagulation Disorders;
+
       if %MDX($COAGDID.) then TPPS09 = . ;
-      if %MDX1($MEDBLEEDD.) then TPPS09 = . ;
-      if %MDX2Q2($MEDBLEEDD.) then QPPS09 = 1;
-
-	  *** Exclude if administration of thrombolytic(THROMBOLYTICP) ccurs before or on the same day as the first procedure for treatment of hemorrhage or hematoma(HEMOTH2P);
-	  
-	  %MPRDAY($THROMBOLYTICP.); PS9_MPRDAY_THROMBOLYTICP=MPRDAY;
-
-	  if PS9_MPRDAY_THROMBOLYTICP^=. and PS9_MPRDAY_HEMOTH2P^=. and PS9_MPRDAY_THROMBOLYTICP <= PS9_MPRDAY_HEMOTH2P then TPPS09=.; 
-
 
       *** Determine numerator exclusion for secondary Dx POA;
 
@@ -1141,20 +1089,15 @@
 
       if %MDX1($DEEPVIB.) or %MDX1($PULMOID.) then TPPS12 = .;
 
-      *** Account for secondary diagnosis present on admission;
+	  *** Account for secondary diagnosis present on admission;
 
-      if %MDX2Q2($DEEPVIB.) then DEEPVIB_cd = 1;
+	  if %MDX2Q2($DEEPVIB.) then DEEPVIB_cd = 1;
       if %MDX2Q2($PULMOID.) then PULMOID_cd = 1;
       if DEEPVIB_cd or PULMOID_cd then QPPS12 = 1;
 
-      *** Exclude hospitalizations with clinically significant HIT, without regard to POA; 
+	  *** Exclude hospitalizations with clinically significant HIT, without regard to POA; 
 
       if %MDX2($HITD.) then TPPS12 = .; 
-
-      *** Exclude if the first OR procedure occurs after or on 10th day from the admission;
-
-      %MPRDAY($ORPROC.);
-      if MPRDAY >=10 then TPPS12 = .;
 
       *** Exclude if interruption of vena cava occurs before or on the
           same day as the first OR procedure;
@@ -1225,11 +1168,6 @@
       *** Exclude MDC 14;
 
       if %MDX1($MDC14PRINDX.) then TPPS13 = .;
-
-      *** Exclude if the first OR procedure occurs after or on 10th day from the admission;
-
-      %MPRDAY($ORPROC.);
-      if MPRDAY >=10 then TPPS13 = .;
 
       *** Determine numerator exclusion for secondary Dx POA;
 
@@ -1350,14 +1288,14 @@
 
   %MEND;
 
-   %include MacLib(PSI_15_Num_Denom_Macro_v2024.sas);
+   %include MacLib(PSI_15_Num_Denom_Macro_v2023.sas);
    %PSI15_denom_numer($ABDOMI15P.);
 
    if (MEDICDR or SURGIDR) and flag_PSI15_Denom = 1 then do;
 
       TPPS15 = 0; QPPS15 = 0;
 
-      %include MacLib(PSI_15_Site_Specific_Macro_v2024.sas);
+      %include MacLib(PSI_15_Site_Specific_Macro_v2023.sas);
 
       *** Exclude MDC 14;
 
@@ -1376,7 +1314,7 @@
          6 - Two major therapeutic procedures with any or no diagnostic procedures 
          7 - Three or more major therapeutic procedures with any or no diagnostic procedures;
 
-      %PCLASSR_m;
+      %PRCLASS_m;
 
       if TPPS15 NE . then do;
          if PRCLS2 = 0 and PRCLS4 = 0                     then HPPS15 = 1;
@@ -1453,11 +1391,20 @@
     if QPPS15 in (.,1) then TPPS15 = .;
 
 
+ * -------------------------------------------------------------- ;
+ * --- APPLY COVID EXCLUSIONS ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+  
+  array TPPS TPPS02-TPPS04 TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
+  if (COVIDDX = 1 and &COVID_19. = 1) or (COVIDDX = 0 and &COVID_19. = 3) then do over TPPS;
+    TPPS = .;
+  end;
+
+
  * ----------------------------------------------------------------------------------- ;
  * ---- ASSIGN DENOMINATORS FOR HOSPITAL_LEVEL PSIs BASED ON NON-MISSING NUMERATOR --- ;
  * ----------------------------------------------------------------------------------- ;
-
-  array TPPS   TPPS02-TPPS04 TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
+ 
   array PPPS 3 PPPS02-PPPS04 PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE PPPS05-PPPS08 PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19;
   do over TPPS;
     if TPPS ge 0 then PPPS = 1;

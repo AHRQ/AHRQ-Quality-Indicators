@@ -6,8 +6,8 @@
 *         Program uses HOSPID, GPPD08, GPPD10 and
 *         GPPD12 from PDI_ALL_MEASURES.SAS program.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *=============================================================================;
 
@@ -137,42 +137,29 @@ label
  * -------------------------------------------------------------- ;
 
  %MACRO TEXTST;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OPPD:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
 
  %IF &TXTSTRAT. = 1  %THEN %DO;
 
  data _NULL_;
    set OUTST.&OUTFILE_STRAT.;
-   %scale_rates;
  file PDTXTSTR lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_STRAT data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_STRAT data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "PDI" "," "HOSP ID" "," "Stratifier" "," "Numerator" "," "Denominator" "," "Rate" "," "Type";
  end;
  
  if _TYPE_ in (4,12) and GPPD08 NE . then 
- put "08 ," HOSPID 13. "," GPPD08 3. "," TPPD08 7.0 "," PPPD08 13.2 "," OPPD08 %if &SCALE_RATES = 1 %then 12.2 ","; %else 12.10 "," ; _TYPE_ 2.;
+ put "08 ," HOSPID 13. "," GPPD08 3. "," TPPD08 7.0 "," PPPD08 13.2 "," OPPD08 12.10 "," _TYPE_ 2.;
  if _TYPE_ in (2,10) and GPPD10 NE . then 
- put "10 ," HOSPID 13. "," GPPD10 3. "," TPPD10 7.0 "," PPPD10 13.2 "," OPPD10 %if &SCALE_RATES = 1 %then 12.2 ","; %else 12.10 "," ; _TYPE_ 2.;
+ put "10 ," HOSPID 13. "," GPPD10 3. "," TPPD10 7.0 "," PPPD10 13.2 "," OPPD10 12.10 "," _TYPE_ 2.;
  if _TYPE_ in (1,9) and GPPD12 NE . then 
- put "12 ," HOSPID 13. "," GPPD12 3. "," TPPD12 7.0 "," PPPD12 13.2 "," OPPD12 %if &SCALE_RATES = 1 %then 12.2 ","; %else 12.10 "," ; _TYPE_ 2.;
+ put "12 ," HOSPID 13. "," GPPD12 3. "," TPPD12 7.0 "," PPPD12 13.2 "," OPPD12 12.10 "," _TYPE_ 2.;
  ;
  run;
 

@@ -9,8 +9,8 @@
 *     Output stratified by HOSPID, AGECAT, SEXCAT, PAYCAT, and RACECAT.
 *     Variable created by this program is OPPSXX
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *======================================================================;
 
@@ -131,7 +131,7 @@ run; quit;
 
 proc Means data=OUTHOBS.&OUTFILE_HOSPOBS. (where=(_TYPE_ IN (16))) n nmiss min max mean nolabels;
    var OPPS02-OPPS04 OPPS04_DVT_PE OPPS04_PNEUMONIA OPPS04_SEPSIS OPPS04_SHOCK OPPS04_GIHEMORRHAGE OPPS05-OPPS08 OPPS08_HIP_FX OPPS08_OTHER_FX OPPS09-OPPS14 OPPS14_OPEN OPPS14_NONOPEN OPPS15 OPPS18 OPPS19;
-   title  'SUMMARY OF PATIENT SAFETY HOSPITAL LEVEL INDICATOR AVERAGE RATES (MEAN) WHEN _TYPE_=16';
+   title  'SUMMARY OF PATIENT SAFETY HOSPITAL LEVEL INDICATOR AVERAGE RATES(MEAN) WHEN _TYPE_=16';
 run; quit;
 
  * -------------------------------------------------------------- ;
@@ -142,42 +142,24 @@ run; quit;
 
  %IF &PRINT. = 1 %THEN %DO;
 
- %MACRO PRT(PS,TEXT,VOLUME=0);
+ %MACRO PRT(PS,TEXT);
 
  proc  Print data=OUTHOBS.&OUTFILE_HOSPOBS. label split='*';
- %IF &VOLUME=0 %THEN %DO;
-   var   HOSPID AGECAT SEXCAT PAYCAT RACECAT TPPS&PS. PPPS&PS. OPPS&PS. ;
-   label HOSPID  = "HOSPID"
-         AGECAT  = "AGECAT"
-         SEXCAT  = "SEXCAT"
-         PAYCAT  = "PAYCAT"
-         RACECAT = "RACECAT"
-         TPPS&PS.   = "TPPS&PS.*(Numerator)"
-         PPPS&PS.   = "PPPS&PS.*(Population)"
-         OPPS&PS.   = "OPPS&PS.*(Observed)"
-         ;
-   format AGECAT AGECAT.
-          SEXCAT SEXCAT.
-          PAYCAT PAYCAT.
-          RACECAT RACECAT.
-          TPPS&PS. PPPS&PS. 13.0 OPPS&PS. 8.6;
- %END;	
- %ELSE %DO;
-   var   HOSPID AGECAT SEXCAT PAYCAT RACECAT TPPS&PS.;
-   label HOSPID  = "HOSPID"
-         AGECAT  = "AGECAT"
-         SEXCAT  = "SEXCAT"
-         PAYCAT  = "PAYCAT"
-         RACECAT = "RACECAT"
-         TPPS&PS.   = "TPPS&PS.*(Numerator)"
-         ;
-   format AGECAT AGECAT.
-          SEXCAT SEXCAT.
-          PAYCAT PAYCAT.
-          RACECAT RACECAT.
-          TPPS&PS. 13.0
-		  ;
-  %END;
+ var   HOSPID AGECAT SEXCAT PAYCAT RACECAT TPPS&PS. PPPS&PS. OPPS&PS. ;
+ label HOSPID  = "HOSPID"
+       AGECAT  = "AGECAT"
+       SEXCAT  = "SEXCAT"
+       PAYCAT  = "PAYCAT"
+       RACECAT = "RACECAT"
+       TPPS&PS.   = "TPPS&PS.*(Numerator)"
+       PPPS&PS.   = "PPPS&PS.*(Population)"
+       OPPS&PS.   = "OPPS&PS.*(Observed)"
+       ;
+ format AGECAT AGECAT.
+        SEXCAT SEXCAT.
+        PAYCAT PAYCAT.
+        RACECAT RACECAT.
+        TPPS&PS. PPPS&PS. 13.0 OPPS&PS. 8.6;
  title4 "Indicator &PS.: &TEXT";
  run;
 
@@ -196,7 +178,7 @@ run; quit;
  %PRT(04_SEPSIS      ,Death Rate among Surgical Inpatients with Serious Treatable Complications Stratum_SEPSIS      : Sepsis);
  %PRT(04_SHOCK       ,Death Rate among Surgical Inpatients with Serious Treatable Complications Stratum_SHOCK       : Shock/Cardiac Arrest);
  %PRT(04_GIHEMORRHAGE,Death Rate among Surgical Inpatients with Serious Treatable Complications Stratum_GIHEMORRHAGE: Gastrointestinal (GI) Hemorrhage/Acute Ulcer);
- %PRT(05,Retained Surgical Item or Unretrieved Device Fragment Count,VOLUME=1);
+ %PRT(05,Retained Surgical Item or Unretrieved Device Fragment Count);
  %PRT(06,Iatrogenic Pneumothorax Rate);
  %PRT(07,Central Venous Catheter-Related Blood Stream Infection Rate);
  %IF &PRDAY. = 1 %THEN %DO;
@@ -210,7 +192,7 @@ run; quit;
  %END;
  %ELSE %DO;
      %PRT(08,In-Hospital Fall-Associated Fracture Rate-NO PRDAY);
-     %PRT(08_HIP_FX,In-Hospital Fall with Hip Fracture Rate Component-NO PRDAY);
+	 %PRT(08_HIP_FX,In-Hospital Fall with Hip Fracture Rate Component-NO PRDAY);
      %PRT(08_OTHER_FX,In-Hospital Fall with Other Fracture Rate Component-NO PRDAY);
      %PRT(09,Postoperative Hemorrhage or Hematoma Rate-NO PRDAY);
      %PRT(10,Postoperative Acute Kidney Injury Requiring Dialysis Rate-NO PRDAY);
@@ -244,31 +226,17 @@ run; quit;
  * -------------------------------------------------------------- ;
 
  %MACRO TEXTP1;
- 
- %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OPPS:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
- 
  %if &TXTHOBS. = 1  %then %do;
  data _NULL_;
  set OUTHOBS.&OUTFILE_HOSPOBS.;
- %scale_rates;
  file PSTXTHOB lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "HOSP ID" "," "Age" "," "Sex" "," "Payer" "," "Race" "," "Type" ","
@@ -293,10 +261,9 @@ run; quit;
  put HOSPID 13. "," AGECAT 3. "," SEXCAT 3. "," PAYCAT 3. "," RACECAT 3. "," _TYPE_ 2.  ","
  (TPPS02-TPPS04 TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19) (7.0 ",")
   ","
- (PPPS02-PPPS04 PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE PPPS05-PPPS08 PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19) (13.0 ",")
+ (PPPS02-PPPS04 PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE PPPS05-PPPS08 PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19) (13.2 ",")
  ","
- (OPPS02-OPPS04 OPPS04_DVT_PE OPPS04_PNEUMONIA OPPS04_SEPSIS OPPS04_SHOCK OPPS04_GIHEMORRHAGE OPPS05-OPPS08 OPPS08_HIP_FX OPPS08_OTHER_FX OPPS09-OPPS14 OPPS14_OPEN OPPS14_NONOPEN OPPS15 OPPS18 OPPS19)
- %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OPPS02-OPPS04 OPPS04_DVT_PE OPPS04_PNEUMONIA OPPS04_SEPSIS OPPS04_SHOCK OPPS04_GIHEMORRHAGE OPPS05-OPPS08 OPPS08_HIP_FX OPPS08_OTHER_FX OPPS09-OPPS14 OPPS14_OPEN OPPS14_NONOPEN OPPS15 OPPS18 OPPS19) (12.10 ",")
  ;
  run;
 

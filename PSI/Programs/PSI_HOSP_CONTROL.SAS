@@ -1,6 +1,6 @@
 * ===================== PROGRAM: PSI_HOSP_CONTROL.SAS =========================== ;
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 * =============================================================================== ;
 * The Patient Safety Indicator (PSI) module of the AHRQ Quality
   Indicators software includes the following programs:
@@ -26,37 +26,37 @@
                            to the software instructions.
                            The file name is up to the user but must be listed below.
 
-   2. PSI_HOSP_Dx_Pr_Macros_v2024.sas  Standard processes used by the other SAS programs.
+   2. PSI_HOSP_Dx_Pr_Macros_v2023.sas  Standard processes used by the other SAS programs.
                                        The user does not need to open.
 
-   3. PSI_HOSP_Regvars_v2024.sas  Creates age, sex, MDC, MDRG flag variables for use by risk adjustment.  
+   3. PSI_HOSP_Regvars_v2023.sas  Creates age, sex, MDC, MDRG flag variables for use by risk adjustment.  
 	
-   4. PSI_HOSP_Comorb_Format_v2024.sas  Creates formats assigning comorbidity groups based on 
+   4. PSI_HOSP_Comorb_Format_v2023.sas  Creates formats assigning comorbidity groups based on 
                                         ICD-10-CM ELIXHAUSER COMORBIDITY software.
 	
-   5. PSI_HOSP_Comorb_Code_v2024.sas  Creates comorbidity variables based on the presence
+   5. PSI_HOSP_Comorb_Code_v2023.sas  Creates comorbidity variables based on the presence
                                       of secondary diagnoses and redefines comorbidity group by
                                       eliminating DRGs directly related to them.
 	
-   6. PSI_HOSP_Sigvar_Array_v2024.sas  Arrays for signal variance and reference population rates used 
+   6. PSI_HOSP_Sigvar_Array_v2023.sas  Arrays for signal variance and reference population rates used 
                                        by risk adjustment program.
 	
-   7. PSI_HOSP_Composite_Arrays_v2024.sas  Arrays used in PSI_HOSP_COMPOSITE.SAS program.
+   7. PSI_HOSP_Composite_Arrays_v2023.sas  Arrays used in PSI_HOSP_COMPOSITE.SAS program.
 	
-   8. PSI_HOSP_Composite_Wt_v2024.sas  Provides default National Quality Forum endorsed
+   8. PSI_HOSP_Composite_Wt_v2023.sas  Provides default National Quality Forum endorsed
                                        10 component harm adjusted numerator weights.
 
-   9. PSI_HOSP_OE_Array_v2024.sas  Array for OE ratio adjustment from reference population based 
+   9. PSI_HOSP_OE_Array_v2023.sas  Array for OE ratio adjustment from reference population based 
                                    on risk adjustment models. 
                                    The software provides two options to use OE ratio adjustment.
 
-  10. PSI_03_Site_Specific_Macro_v2024.sas  PSI 03 specific macro to look at sites of pressure ulcers, 
+  10. PSI_03_Site_Specific_Macro_v2023.sas  PSI 03 specific macro to look at sites of pressure ulcers, 
                                             included in the PSI_HOSP_MEASURES.SAS program.
 
-  11. PSI_15_Num_Denom_Macro_v2024.sas  PSI 15 specific macro to use procedure days of ABDOMI15P to define the
+  11. PSI_15_Num_Denom_Macro_v2023.sas  PSI 15 specific macro to use procedure days of ABDOMI15P to define the
                                         numerator and denominator included in the PSI_HOSP_MEASURES.SAS program.
 
-  12. PSI_15_Site_Specific_Macro_v2024.sas  PSI 15 macro to evaluate specific organs or structures,
+  12. PSI_15_Site_Specific_Macro_v2023.sas  PSI 15 macro to evaluate specific organs or structures,
                                             included in the PSI_HOSP_MEASURES.SAS program.
 
 ***************************************************************************** ;
@@ -90,7 +90,7 @@
          each file based on the location of the PSI folder listed in the
          PATHNAME variable.
 
- * See the AHRQ_PSI_SAS_v2024_ICD10_Release_Notes.txt file for version change details.
+ * See the AHRQ_PSI_SAS_v2023_ICD10_Release_Notes.txt file for version change details.
 
  Generally speaking, a first-time user of this software would proceed 
  as outlined below:
@@ -109,16 +109,16 @@
 
 *PATHNAME specifies the location of the PSI folder which includes the
           Programs, Macros, ParmFiles, and SASData subfolders;
-%LET PATHNAME=C:\Pathname\PSI;                *<===USER MUST modify;
+%LET PATHNAME= C:\Pathname\PSI;                *<===USER MUST modify;
 
 *DISFOLDER specifies the folder that contains the discharge data;
-%LET DISFOLDER=C:\Pathname;                  *<===USER MUST modify;
+%LET DISFOLDER = C:\Pathname;                  *<===USER MUST modify;
 
 *DISCHARGE specifies the name of the discharge data file;
-%LET DISCHARGE=discharges;                      *<===USER MUST modify;
+%LET DISCHARGE= discharges;                    *<===USER MUST modify;
 
 *SUFX specifies an identifier suffix to be placed on output datasets;
-%LET SUFX = v2024;                              *<===USER may modify;
+%LET SUFX = v2023;                              *<===USER may modify;
 
 *LIBRARY is where formats generated by PSI_HOSP_FORMATS will be saved;
 libname LIBRARY "&PATHNAME.\SASData";           *<===USER may modify;
@@ -169,14 +169,6 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
 %LET OUTFILE_MEAS = PSMSR_&SUFX.;               *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
- * --- INDICATE ADDITIONAL INPUT VARIABLES TO KEEP ON OUTPUT    --- ;
- * --- DATA FILE FROM PSI_HOSP_MEASURES.SAS.                    --- ;
- * --- INPUT VARIABLES ALWAYS INCLUDED ON THE OUTPUT FILE ARE:  --- ;
- * --- KEY HOSPID DRG MDC YEAR DQTR AGE SEX LOS                 --- ;
- * ---------------------------------------------------------------- ;
-%LET OUTFILE_KEEP = ;                           *<===USER may modify;
-
- * ---------------------------------------------------------------- ;
  * --- MODIFY INPUT AND OUTPUT FILE                             --- ;
  * ---------------------------------------------------------------- ;
  * --- PROGRAM DEFAULT ASSUMES THERE ARE                        --- ;
@@ -189,6 +181,16 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
  * ---------------------------------------------------------------- ;
 %LET NDX = 35;                                  *<===USER may modify;
 %LET NPR = 30;                                  *<===USER may modify;
+
+ * ---------------------------------------------------------------- ;
+ * --- INDICATE TREATMENT OF COVID DIAGNOSES IN DISCHARGE DATA  --- ;
+ * ---    1 = EXCLUDE DISCHARGES WITH COVID-19 POA              --- ;
+ * ---    2 = NO EXCLUSIONS FOR COVID-19 POA (DEFAULT)          --- ;
+ * ---    3 = EXCLUDE NON-COVID DISCHARGES,                     --- ;
+ * ---        ONLY INCLUDES DISCHARGES WITH COVID-19 POA        --- ;
+ * --- OPTIONS 1 AND 3 WILL SUPPRESS RISK-ADJUSTED RATES        --- ;
+ * ---------------------------------------------------------------- ;
+%LET COVID_19 = 2;                              *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE WHETHER DISCHARGES INCLUDE MDC DATA             --- ;
@@ -358,7 +360,7 @@ libname OUTHCOMP "&PATHNAME.\SASData";          *<===USER may modify;
  * --- SET NAME OF FILE CONTAINING COMPONENT MEASURE REFERENCE  --- ;
  * --- RATES AND STANDARD DEVIATION ARRAYS.                     --- ;
  * ---------------------------------------------------------------- ;
-%LET PSCOMPRR = PSI_HOSP_Composite_Arrays_v2024.sas; *<===USER may modify;
+%LET PSCOMPRR = PSI_HOSP_Composite_Arrays_v2023.sas; *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE IF A COMMA-DELIMITED TEXT FILE OF OUTFILE_COMP  --- ;
@@ -372,12 +374,6 @@ libname OUTHCOMP "&PATHNAME.\SASData";          *<===USER may modify;
  * --- SPECIFY THE LOCATION OF THE FILE.                        --- ;
  * ---------------------------------------------------------------- ;
 filename PSTXTCMP "&PATHNAME.\SASData\PSCOMP_&SUFX..TXT"; *<===USER may modify;
-
- * ---------------------------------------------------------------- ;
- * --- INDICATE WHETHER THE MEASURES SHOULD BE REPORTED PER     --- ;
- * --- 1,000 DISCHARGES IN OUTPUT TEXT FILES : 0 = NO, 1 = YES. --- ;
- * ---------------------------------------------------------------- ;
-%LET SCALE_RATES = 0;                           *<===USER may modify;
 
 
 ************************* Programs to execute ********************************* ;
@@ -394,14 +390,7 @@ filename PSTXTCMP "&PATHNAME.\SASData\PSCOMP_&SUFX..TXT"; *<===USER may modify;
 
 ************************* END USER INPUT ***************************************;
 * --- Include standard diagnosis and procedure macros.                      --- ;
-%include MacLib(PSI_HOSP_Dx_Pr_Macros_v2024.sas);
-
-* --- Check the values of the macro variables                               --- ;
-* --- If the user-provided values are out of range, the software will abort --- ;
-* --- MDC_PROVIDED: 0, 1                                                    --- ;
-* --- PRDAY:        0, 1                                                    --- ;
- %check_macroval;
+%include MacLib(PSI_HOSP_Dx_Pr_Macros_v2023.sas);
 
 * --- Execute Control Program to run flagged programs.                      --- ;
 %PROG_EXE(&PATHNAME.,&EXE_FMT.,&EXE_MSR.,&EXE_HOBS.,&EXE_HRSK.,&EXE_HCMP.);
-

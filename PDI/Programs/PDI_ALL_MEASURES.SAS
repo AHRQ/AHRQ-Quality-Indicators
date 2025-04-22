@@ -5,8 +5,8 @@
 *     Variables created by this program are TPPDXX, TPPS17, TAPDXX, GPPXX, 
 *     and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PDI_FORMATS.SAS BEFORE running this program. 
@@ -16,7 +16,7 @@
 *              weighted estimates and standard errors using complex
 *              sampling designs.
 *
-*  USER NOTE3: See the AHRQ_PDI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_PDI_SAS_v2023_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE4: Although some of the exclusion criteria for present on admission 
@@ -29,14 +29,23 @@
  title3 'AHRQ PEDIATRIC QUALITY INDICATORS: ASSIGN PDIs TO INPATIENT DATA';
 
  * ------------------------------------------------------------------ ;
- * --- VERIFY MDC VALUES PROVIDED ON THE INPUT FILE ARE VALID     --- ;
+ * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
+ * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
+ * --- VALUES ARE MISSING. REVIEW AFTER RUNNING PDI_ALL_MEASURES. --- ;
+ * --- CHECK MDC FOR HOSPITAL-LEVEL PDI.                          --- ;
  * ------------------------------------------------------------------ ;
+
+ data OUTMSR.&DELFILE.
+   (keep=KEY HOSPID SEX AGE DX1 MDC YEAR DQTR);
+ set  INMSR.&DISCHARGE.;
+ if (AGE lt 0) or (AGE ge 18 or %MDX1($MDC14PRINDX.)) or (missing(SEX)) or
+    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999);
+ run;
 
  %macro check_mdc;
    %if &MDC_PROVIDED. = 1 %then %do;
-
      proc sql noprint;
-       select count(*), nmiss(MDC), min(MDC), max(MDC) into :n_total, :n_miss, :min_MDC, :max_MDC 
+       select count(*), nmiss(MDC) into :n_total, :n_miss
        from INMSR.&DISCHARGE.;
      quit;
 
@@ -45,53 +54,11 @@
        %abort cancel;
      %end;
 
-     %put minimum MDC=&min_MDC., maximum MDC=&max_MDC.;
-
-     %if &min_MDC. <0 or &max_MDC. >25 %then %do;
-       %put "WARNING: MDC_PROVIDED = 1 in CONTROL program but some MDC values are out of range of 0-25";
-     %end;
-
    %end;
  %mend check_mdc;
  %check_mdc;
 
- * ------------------------------------------------------------------ ;
- * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
- * ------------------------------------------------------------------ ;
 
- %macro check_pay1_race;
-   %global PAY1_PROVIDED RACE_PROVIDED;
-   proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
-   proc sql noprint;
-      select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
-   quit;
-
-   %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
-
-   %if &PAY1_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have PAY1. The software creates a fake PAY1 as PAY1=999 for the programs to run";
-   %end;
-   %if &RACE_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have RACE. The software creates a fake RACE as RACE=999 for the programs to run";
-   %end;
- %mend check_pay1_race;
- %check_pay1_race;
-
- * ------------------------------------------------------------------ ;
- * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT     --- ;
- * --- WILL NOT BE INCLUDED IN ANALYSIS BECAUSE KEY VARIABLE      --- ;
- * --- VALUES ARE MISSING. REVIEW AFTER RUNNING PDI_ALL_MEASURES. --- ;
- * --- CHECK MDC FOR HOSPITAL-LEVEL PDI.                          --- ;
- * ------------------------------------------------------------------ ;
-
- data OUTMSR.&DELFILE.
-   (keep=KEY HOSPID SEX AGE DX1 DRG MDC YEAR DQTR);
- set  INMSR.&DISCHARGE.;
- if (AGE lt 0) or (AGE ge 18 or %MDX1($MDC14PRINDX.)) or (missing(SEX)) or
-    (missing(DX1)) or (missing(DQTR)) or (missing(YEAR)) or (DRG = 999);
- run;
- 
  * -------------------------------------------------------------- ;
  * --- PEDIATRIC QUALITY INDICATOR (PDI) NAMING CONVENTION:   --- ;
  * --- THE FIRST LETTER IDENTIFIES THE PEDIATRIC INDICATOR    --- ;
@@ -117,14 +84,14 @@ data   OUTMSR.&OUTFILE_MEAS.
           TPNQ03
           TAPD14--TAPD16 TAPD18 TAPD90--TAPD92
           GPPD08 GPPD10 GPPD12
-          HPPD01 HPPD10 &OUTFILE_KEEP
+          HPPD01 HPPD10
         );
 
  set   INMSR.&DISCHARGE.
       (keep=KEY HOSPID DRG MDC SEX AGE AGEDAY PSTCO
-            YEAR DQTR DISP LOS ASOURCE POINTOFORIGINUB04 ATYPE
-            DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY_PAY1_RACE
-            DXPOA1-DXPOA&NDX. &OUTFILE_KEEP);
+            RACE YEAR DQTR PAY1 DISP LOS ASOURCE POINTOFORIGINUB04 ATYPE
+            DX1-DX&NDX. PR1-PR&NPR. %ADDPRDAY
+            DXPOA1-DXPOA&NDX.);
 
  label
  HOSPID = 'Hospital Identification Number'
@@ -192,9 +159,7 @@ data   OUTMSR.&OUTFILE_MEAS.
  else if (YEAR in (2022) and DQTR in (1,2,3)) then ICDVER = 39;
  else if (YEAR in (2022) and DQTR in (4))     then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
- else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
- else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
+ else ICDVER = 40; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -259,13 +224,6 @@ data   OUTMSR.&OUTFILE_MEAS.
  DRG3C = put(MDRG,DRG3C.);
  DRG4C = put(MDRG,DRG4C.);
  DRG9C = put(MDRG,DRG9C.);
-
-
- * -------------------------------------------------------------- ;
- * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
- * -------------------------------------------------------------- ;
-
-  %CreateFakePAY1_RACE;
 
 
  * -------------------------------------------------------------- ;
@@ -435,7 +393,7 @@ data   OUTMSR.&OUTFILE_MEAS.
  attrib HPPD10 length=3
    label='RISK CLASS FOR PDI 10';
 
- %PCLASSR;
+ %PRCLASS;
 
 
  * -------------------------------------------------------------- ;
@@ -547,14 +505,14 @@ data   OUTMSR.&OUTFILE_MEAS.
  * --- CONSTRUCT AHRQ COMORBIDITY ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PDI_Comorb_Code_v2024.sas);
+ %include MacLib(PDI_Comorb_Code_v2023.sas);
 
 
  * -------------------------------------------------------------- ;
  * --- CONSTRUCT CCSR VARIABLES                 ----------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PDI_CCSR_Code_v2024.sas);
+ %include MacLib(PDI_CCSR_Code_v2023.sas);
 
 
  * --- CONSTRUCT HOSPITAL LEVEL INDICATORS ---------------------- ;
@@ -712,10 +670,8 @@ data   OUTMSR.&OUTFILE_MEAS.
 
      *** Stratify by risk category (1-Low risk, 2-High risk);
 
-      if %MDX2Q2($MEDBLEEDD.) then MEDBLEEDD_cd=1;
-
       if TPPD08 NE . then do;
-         if %MDX($COAGDID.) or %MPR($ECMOP.) or %MDX1($MEDBLEEDD.) or MEDBLEEDD_cd=1 then GPPD08 = 2;
+         if %MDX($COAGDID.) or %MPR($ECMOP.) then GPPD08 = 2;
          else GPPD08 = 1;
       end;
 
@@ -855,11 +811,6 @@ data   OUTMSR.&OUTFILE_MEAS.
       *** Exclude Neonate;
 
       if NEONATE then TPPD10 = .;
-
-      *** Exclude if the first OR procedure occurs after or on 10th day from the admission;
-
-      %MPRDAY($ORPROC.);
-      if MPRDAY >=10 then TPPD10 = .;
 
       *** Determine numerator exclusion for secondary Dx POA;
 
@@ -1156,6 +1107,15 @@ end;
    TAPD92 = .;
  end;
 
+
+ * -------------------------------------------------------------- ;
+ * --- APPLY COVID EXCLUSIONS ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+
+  array TPPD TPPD01 TPPD05 TPPD08--TPPD10 TPPD12 TPPS17 TPNQ03;
+  if (COVIDDX = 1 and &COVID_19. = 1) or (COVIDDX = 0 and &COVID_19. = 3) then do over TPPD;
+    TPPD = .;
+  end;
 
  * ------------------------------------------------------- ;
  * --- Sync QPPD and TPPD values               ----------- ;

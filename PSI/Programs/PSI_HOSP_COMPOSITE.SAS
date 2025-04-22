@@ -6,8 +6,8 @@
 *         National Quality Forum endorsed 10 component harm adjusted
 *         numerator weights.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE:  Requires output from PSI_HOSP_RISKADJ.SAS
 *
@@ -17,7 +17,7 @@ title  'PROGRAM PSI_HOSP_COMPOSITE';
 %MACRO PSC;
 
 *Do not calculate composite measures if certain flags are set in the CONTROL program;
-%if &MDC_PROVIDED. = 0 or &PRDAY. = 0 %then %do;
+%if &COVID_19. = 1 or &COVID_19. = 3 or &MDC_PROVIDED. = 0 or &PRDAY. = 0 %then %do;
 data OUTHCOMP.&OUTFILE_COMP.;
   HOSPID=.; COMP1=.; COMP1VAR=.; COMP1SE=.; COMP1WHT=.; COMP1LB=.; COMP1UB=.;
   RPPS03=.; RPPS06=.; RPPS08=.; RPPS09=.; RPPS10=.; RPPS11=.; RPPS12=.; RPPS13=.; RPPS14=.; RPPS15=.; 
@@ -37,7 +37,7 @@ run;
 * Import PSI Composite Weights                                  --- ;
 * Weights sum to 1.0                                            --- ;
 *===================================================================;
-%include MacLib(PSI_HOSP_Composite_Wt_v2024.sas);
+%include MacLib(PSI_HOSP_Composite_Wt_v2023.sas);
 %setweights;
 
 *===================================================================;
@@ -157,7 +157,6 @@ COMP1SE  = SQRT(COMP1VAR);
 COMP1LB  = COMP1 - 1.96* COMP1SE;
 COMP1UB  = COMP1 + 1.96* COMP1SE;
 
-
 run;
 
 %END;
@@ -245,30 +244,16 @@ run; quit;
 * --- FOR EXPORT INTO SPREADSHEETS                           --- ;
 * -------------------------------------------------------------- ;
 %MACRO TEXT;
-
-%macro scale_rates;
-  
-  %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES RPPS: REFPS:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-  %END;
-	
-%mend scale_rates;
-
 %IF &TXTCOMP. = 1 %THEN %DO;
  data _NULL_;
  set OUTHCOMP.&OUTFILE_COMP.;
- %scale_rates;
  file PSTXTCMP lrecl=2000 ;
  if _N_=1 then do;
-  put "AHRQ SAS QI v2024 &OUTFILE_COMP data set created with the following CONTROL options:";
+  put "AHRQ SAS QI v2023 &OUTFILE_COMP data set created with the following CONTROL options:";
   put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+  put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
   put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
   put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
-  put "Number of diagnoses evaluated = &NDX";
-  put "Number of procedures evaluated = &NPR";
   put "Review the CONTROL program for more information about these options.";
   put ;
   put "HOSP ID" "," "COMP1" "," "COMP1VAR" "," "COMP1SE" "," "COMP1WHT" "," " COMP1LB" "," "COMP1UB" "," 
@@ -282,14 +267,12 @@ run; quit;
  end;
 
  put HOSPID 13. "," COMP1 12.10 "," COMP1VAR 12.10 "," COMP1SE 12.10 "," COMP1WHT 12.10 "," COMP1LB 12.10 ","  COMP1UB 12.10 "," 
-    (RPPS03 RPPS06 RPPS08-RPPS15) 
-	%if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");  ","
+    (RPPS03 RPPS06 RPPS08-RPPS15) (12.10 ",")  ","
     (VPPS03 VPPS06 VPPS08-VPPS15) (12.10 ",")  ","
     (APPS03 APPS06 APPS08-APPS15) (12.10 ",")  ","
-    (PPPS03 PPPS06 PPPS08-PPPS15) (13.0 ",")   ","
+    (PPPS03 PPPS06 PPPS08-PPPS15) (13.2 ",")   ","
     (WPPS03 WPPS06 WPPS08-WPPS15) (12.10 ",")  ","
-    (REFPS03 REFPS06 REFPS08-REFPS15) 
-	%if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+    (REFPS03 REFPS06 REFPS08-REFPS15) (12.10 ",")  ","
     ;
  run;
 

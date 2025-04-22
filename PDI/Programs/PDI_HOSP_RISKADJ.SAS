@@ -9,8 +9,8 @@
 *                                          RPNQ03, LPNQ03, UPNQ03, SPNQ03, XPNQ03  
 *        Output stratified by HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT. 
 *                
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: The AHRQ QI software does not support the calculation of weighted   
 *              estimates and standard errors using complex sampling designs. 
@@ -44,20 +44,20 @@
 * --- LEVEL INDICATOR.  THE NEXT TWO CHARACTERS ARE ALWAYS 'PD'.     --- ;
 * --- THE LAST TWO DIGITS ARE THE INDICATOR NUMBER                   --- ;
 * ---------------------------------------------------------------------- ;
-* --- THE PDI_HOSP_REGVARS_v2024.SAS PROGRAM CREATES THE VARIABLES   --- ;
+* --- THE PDI_HOSP_REGVARS_v2023.SAS PROGRAM CREATES THE VARIABLES   --- ;
 * --- USED FOR RISK ADJUSTMENT. THE USER MUST ENSURE THAT THE        --- ;
 * --- PDI_ALL_CONTROL PROGRAM INCLUDES THE CORRECT LOCATION FOR THE  --- ;
-* --- PDI_HOSP_REGVARS_v2024 SAS CODE.                               --- ;
+* --- PDI_HOSP_REGVARS_v2023 SAS CODE.                               --- ;
 *----------------------------------------------------------------------- ;
 
 data &OUTFILE_MEAS.;
      set OUTMSR.&OUTFILE_MEAS.;
-     %include MacLib(PDI_HOSP_Regvars_v2024.sas);
+     %include MacLib(PDI_HOSP_Regvars_v2023.sas);
 run ;
 
 %MACRO MOD3(PD);
 
- *-- CREATE AN INDICATOR-LEVEL FLAG FOR WHETHER RISK-ADJUSTED AND SMOOTHED RATES ARE SUPPRESSED DUE TO NO PRDAY --* ;
+ *-- CREATE AN INDICATOR-LEVEL FLAG FOR WHETHER RATES ARE SUPPRESSED DUE TO NO PRDAY --* ;
 %let PD_PRDAY = PD08 PD09;
 %let PRDAY_RA = 0;
 %if &PRDAY. = 0 %then %do;
@@ -66,12 +66,12 @@ run ;
   %end;
 %end;
 
- *-- DO NOT CALCULATE RISK-ADJUSTED AND SMOOTHED RATES IF CERTAIN FLAGS ARE SET IN THE CONTROL PROGRAM --* ;
-%if &PRDAY_RA. = 1 %then %let SUPPRESS_RA = 1;
+ *-- DO NOT CALCULATE RISK-ADJUSTED RATES IF CERTAIN FLAGS ARE SET IN THE CONTROL PROGRAM --* ;
+%if &COVID_19. = 1 or &COVID_19. = 3 or &PRDAY_RA. = 1 %then %let SUPPRESS_RA = 1;
   %else %let SUPPRESS_RA = 0;
 
  *-- PARAMETER FILE USED FOR SCORING --*;
- filename RACOEFFS "&HQIRADIR./Gee_&PD._AGE_SEX.csv";
+ filename RACOEFFS "&HQIRADIR./GEE_&PD._AGE_SEX.csv";
 
  * --- LOAD CSV PARAMTERS & SHAPE DATA  --- ;
  data TEMP1_MODEL ;
@@ -132,7 +132,7 @@ run;
 %if &Calibration_OE_to_ref_pop. = 1 %then %do;
  DATA TEMP1Y&pd.;  
     SET TEMP1Y&pd.;    
-    %include MacLib(PDI_HOSP_OE_Array_v2024.sas);
+    %include MacLib(PDI_HOSP_OE_Array_v2023.sas);
     
     *-- MAP MEASURE NUM TO ARRAY INDEX SUB_N --* ;
     if "&PD." = "PD01"      then SUB_N = 1;
@@ -195,7 +195,7 @@ run;
    if _TYPE_ &TYPELVLH;
 
  *-- LOAD SIGNAL AND NOISE ARRAYS FROM TEXT FILE --* ;
- %include MacLib(PDI_HOSP_Sigvar_Array_v2024.sas);
+ %include MacLib(PDI_HOSP_Sigvar_Array_v2023.sas);
 
  *-- MAP MEASURE NUM TO ARRAY INDEX SUB_N --* ;
  if "&PD." = "PD01" then SUB_N = 1;
@@ -465,35 +465,21 @@ run;
  * -------------------------------------------------------------- ;
  
 %MACRO TEXT;
-
-%macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OPPD: EPPD: RPPD: LPPD: UPPD: SPPD:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
-%mend scale_rates;
-
 %IF &TXTHRISK. = 1 %THEN %DO;
 	%LET TYPEPRN  = %sysfunc(tranwrd(&TYPELVLH.,%str(,),_));
 	%LET TYPEPRN2  = %sysfunc(compress(&TYPEPRN.,'(IN )'));
 	%let PDCSVREF = %sysfunc(pathname(PDTXTHRA));
 	%let PDCSVRF2 =  %sysfunc(tranwrd(&PDCSVREF.,.TXT,_&TYPEPRN2..TXT));
- data _NULL_;
- set OUTHRISK.&OUTFILE_HOSPRISK.;
- %scale_rates;
+	 data _NULL_;
+set OUTHRISK.&OUTFILE_HOSPRISK.;
  file  "&PDCSVRF2." lrecl=4500 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPRISK data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPRISK data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put
@@ -520,14 +506,14 @@ run;
  
  put HOSPID 13. "," BWHTCAT 3. "," AGEDCAT 3. "," PAGECAT 3. "," SEXCAT 3. "," PAYCAT 3. "," RACECAT 3. "," _TYPE_ 2.  ","
  (TPPD01 TPPD05 TPPD08-TPPD10 TPPD12 TPNQ03) (7.0  ",")  ","
- (PPPD01 PPPD05 PPPD08-PPPD10 PPPD12 PPNQ03) (13.0 ",")  ","
- (OPPD01 OPPD05 OPPD08-OPPD10 OPPD12 OPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (EPPD01 EPPD05 EPPD08-EPPD10 EPPD12 EPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (RPPD01 RPPD05 RPPD08-RPPD10 RPPD12 RPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (LPPD01 LPPD05 LPPD08-LPPD10 LPPD12 LPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (UPPD01 UPPD05 UPPD08-UPPD10 UPPD12 UPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (SPPD01 SPPD05 SPPD08-SPPD10 SPPD12 SPNQ03) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); "," 
- (XPPD01 XPPD05 XPPD08-XPPD10 XPPD12 XPNQ03) (12.10 ",") 
+ (PPPD01 PPPD05 PPPD08-PPPD10 PPPD12 PPNQ03) (13.2 ",")  ","
+ (OPPD01 OPPD05 OPPD08-OPPD10 OPPD12 OPNQ03) (12.10 ",") ","
+ (EPPD01 EPPD05 EPPD08-EPPD10 EPPD12 EPNQ03) (12.10 ",") ","
+ (RPPD01 RPPD05 RPPD08-RPPD10 RPPD12 RPNQ03) (12.10 ",") ","
+ (LPPD01 LPPD05 LPPD08-LPPD10 LPPD12 LPNQ03) (12.10 ",") ","
+ (UPPD01 UPPD05 UPPD08-UPPD10 UPPD12 UPNQ03) (12.10 ",") ","
+ (SPPD01 SPPD05 SPPD08-SPPD10 SPPD12 SPNQ03) (12.10 ",") ","
+ (XPPD01 XPPD05 XPPD08-XPPD10 XPPD12 XPNQ03) (12.10 ",")
  ;
  
 run;

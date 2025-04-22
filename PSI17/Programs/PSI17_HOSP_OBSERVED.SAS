@@ -10,8 +10,8 @@
 *     Variable created by this program is OPPS17
 *     This indicator is also included in the Pediatric Quality Indicator module.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *=================================================================================;
 
@@ -67,7 +67,7 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
  label
  HOSPID   = 'Hospital Identification Number'
  ;
- 
+
  drop _FREQ_ ;
 
  run;
@@ -91,9 +91,10 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
 
  %IF &PRINT. = 1 %THEN %DO;
 
- %MACRO PRT(PD,TEXT);
+ %MACRO PRT(PD,TEXT,VOLUME);
 
  proc print data=OUTHOBS.&OUTFILE_HOSPOBS. label SPLIT='*';
+ %IF &VOLUME=0 %THEN %DO;
    var   HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT TP&PD. PP&PD. OP&PD. ;
    label HOSPID  = "Hospital Identification Number"
        BWHTCAT = "Birth Weight Categories"
@@ -113,12 +114,33 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
         PAYCAT PAYCAT.
         RACECAT RACECAT.
         TP&PD. PP&PD. 13.0 OP&PD. 8.6;
+ %END;
+ %ELSE %DO;
+   var   HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT TP&PD.    ;
+   label HOSPID  = "Hospital Identification Number"
+       BWHTCAT = "Birth Weight Categories"
+       AGEDCAT = "Age in Days Categories"
+       PAGECAT = "Pediatric Age Categories"
+       SEXCAT  = "Sex Categories"
+       PAYCAT  = "Patient Primary Payer"
+       RACECAT = "Race Categories"
+       TP&PD.   = "TP&PD.*(Numerator)"
+       ;
+   format BWHTCAT BWHTCAT.
+        AGEDCAT AGEDCAT.
+        PAGECAT PAGECAT.
+        SEXCAT SEXCAT.
+        PAYCAT PAYCAT.
+        RACECAT RACECAT.
+        TP&PD. 13.0;
+ %END;
    title4 "Indicator &PD.: &TEXT";
+
  run;
 
  %MEND PRT;
 
- %PRT(PS17,Birth Trauma Rate - Injury to Neonate);
+ %PRT(PS17,Birth Trauma Rate - Injury to Neonate,0);
 
  %END;
 
@@ -135,13 +157,12 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
  %if &TXTHOBS. = 1  %then %do;
  data _NULL_;
  set OUTHOBS.&OUTFILE_HOSPOBS.;
- %if &SCALE_RATES = 1 %then if not missing(OPPS17) then OPPS17 = OPPS17*1000;;
  file P17TXTHO lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
- put "Number of diagnoses evaluated = &NDX";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "HOSP ID" "," "AgeDays" "," "Sex" "," "Payer" "," "Race" "," "Type" ","
@@ -151,9 +172,9 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
  put HOSPID 13. "," AGEDCAT 3. "," SEXCAT 3. "," PAYCAT 3. "," RACECAT 3. "," _TYPE_ 2.  ","
  (TPPS17) (7.0 ",")
   ","
- (PPPS17) (13.0 ",")
+ (PPPS17) (13.2 ",")
  ","
- (OPPS17) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OPPS17) (12.10 ",")
  ;
  run;
 

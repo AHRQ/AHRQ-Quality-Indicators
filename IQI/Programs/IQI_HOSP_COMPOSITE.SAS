@@ -6,23 +6,23 @@
 *         based on user defined weights.
 *         (Default National Quality Forum Weights supplied.)
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE:  Requires output from IQI_HOSP_RISKADJ.SAS
 *              BEFORE running this program.
 *
 *========================================================================;
 
-%let OUTSASC3 = IQI_HOSP_Composite_Arrays_v2024.sas ;
+%let OUTSASC3 = IQI_HOSP_Composite_Arrays_v2023.sas ;
 
-*If supplying weights, update array in IQI_HOSP_Composite_Wt_v2024.sas file;
-%let IQIWTS = IQI_HOSP_Composite_Wt_v2024.sas ;
+*If supplying weights, update array in IQI_HOSP_Composite_Wt_v2023.sas file;
+%let IQIWTS = IQI_HOSP_Composite_Wt_v2023.sas ;
 
 %MACRO IQC;
 
 *Do not calculate composite measures if certain flags are set in the CONTROL program;
-%if &MDC_PROVIDED. = 0  or &PRDAY. = 0 %then %do;
+%if &COVID_19. = 1 or &COVID_19 = 3 or &MDC_PROVIDED. = 0  or &PRDAY. = 0 %then %do;
 data OUTHCOMP.&OUTFILE_COMP.;
   HOSPID=.;
   IQC90=.; IQC90VAR=.; IQC90SE=.; IQC90WHT=.; IQC90LB=.; IQC90UB=.; IQC91=.; IQC91VAR=.; IQC91SE=.; IQC91WHT=.; IQC91LB=.; IQC91UB=.;
@@ -295,30 +295,16 @@ run;
 * --- FOR EXPORT INTO SPREADSHEETS                           --- ;
 * -------------------------------------------------------------- ;
 %MACRO TEXT;
-
-%macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES RPIQ: REFIQ:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
-%mend scale_rates;
-
 %IF &TXTCOMP. = 1 %THEN %DO;
  data _NULL_;
  set OUTHCOMP.&OUTFILE_COMP.;
- %scale_rates;
  file IQTXTCMP lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put  "HOSP ID" "," 
@@ -336,12 +322,12 @@ run;
  put HOSPID 13. "," 
      IQC90 12.10 "," IQC90VAR 12.10 "," IQC90SE 12.10 "," IQC90WHT 12.10 "," IQC90LB 12.10 ","  IQC90UB 12.10 "," 
      IQC91 12.10 "," IQC91VAR 12.10 "," IQC91SE 12.10 "," IQC91WHT 12.10 "," IQC91LB 12.10 ","  IQC91UB 12.10 "," 
-    (RPIQ08 RPIQ09 RPIQ11 RPIQ12 RPIQ30 RPIQ31 RPIQ15-RPIQ20) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); ","
+    (RPIQ08 RPIQ09 RPIQ11 RPIQ12 RPIQ30 RPIQ31 RPIQ15-RPIQ20) (12.10 ",")  ","
     (VPIQ08 VPIQ09 VPIQ11 VPIQ12 VPIQ30 VPIQ31 VPIQ15-VPIQ20) (12.10 ",")  ","
     (APIQ08 APIQ09 APIQ11 APIQ12 APIQ30 APIQ31 APIQ15-APIQ20) (12.10 ",")  ","
-    (PPIQ08 PPIQ09 PPIQ11 PPIQ12 PPIQ30 PPIQ31 PPIQ15-PPIQ20) (13.0 ",")   ","
+    (PPIQ08 PPIQ09 PPIQ11 PPIQ12 PPIQ30 PPIQ31 PPIQ15-PPIQ20) (13.2 ",")   ","
     (WPIQ08 WPIQ09 WPIQ11 WPIQ12 WPIQ30 WPIQ31 WPIQ15-WPIQ20) (12.10 ",")  ","
-    (REFIQ08 REFIQ09 REFIQ11 REFIQ12 REFIQ30 REFIQ31 REFIQ15-REFIQ20) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ","); 
+    (REFIQ08 REFIQ09 REFIQ11 REFIQ12 REFIQ30 REFIQ31 REFIQ15-REFIQ20) (12.10 ",")  ","
     ;
  run;
 

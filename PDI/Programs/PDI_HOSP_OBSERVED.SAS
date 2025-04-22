@@ -9,8 +9,8 @@
 *     Variables created by this program are PPPDXX, PPNQ03, PPPS17, 
 *     OPPDXX, OPNQ03, and OPPS17.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *=============================================================================;
 
@@ -201,32 +201,19 @@ run; quit;
  * -------------------------------------------------------------- ;
 
  %MACRO TEXTP1;
- 
-  %macro scale_rates;
-   
-   %IF &SCALE_RATES = 1 %THEN %DO;
-      ARRAY RATES OPPD:;
-      do over RATES;
-        if not missing(RATES) then RATES = RATES*1000;	
-	  end;
-	%END;
-	
- %mend scale_rates;
 
  %if &TXTHOBS. = 1  %then %do;
 
  data _NULL_;
  set  OUTHOBS.&OUTFILE_HOSPOBS.;
- %scale_rates;
  file  PDTXTHOB lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2023 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
+ put "&&COVID_19&COVID_19. (COVID_19 = &COVID_19)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
- put "Number of diagnoses evaluated = &NDX";
- put "Number of procedures evaluated = &NPR";
  put "Review the CONTROL program for more information about these options.";
  put ;
  put "HOSP ID" "," "BWHT" "," "Age Days" "," "Age"  "," "Sex"  "," "Payer" "," "Race" "," "Type" ","
@@ -247,9 +234,9 @@ run; quit;
  put HOSPID 13. "," BWHTCAT 3. "," AGEDCAT 3. "," PAGECAT 3. "," SEXCAT 3. "," PAYCAT 3. "," RACECAT 3. "," _TYPE_ 2.  ","
  (TPPD01 TPPD05 TPPD08-TPPD10 TPPD12 TPNQ03 TPPS17) (7.0 ",")
   ","
- (PPPD01 PPPD05 PPPD08-PPPD10 PPPD12 PPNQ03 PPPS17) (13.0 ",")
+ (PPPD01 PPPD05 PPPD08-PPPD10 PPPD12 PPNQ03 PPPS17) (13.2 ",")
  ","
- (OPPD01 OPPD05 OPPD08-OPPD10 OPPD12 OPNQ03 OPPS17) %if &SCALE_RATES = 1 %then (12.2 ","); %else (12.10 ",");
+ (OPPD01 OPPD05 OPPD08-OPPD10 OPPD12 OPNQ03 OPPS17) (12.10 ",")
  ;
  run;
 

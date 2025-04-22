@@ -5,13 +5,13 @@
 *         stratifier categories to inpatient records.
 *         Variables created by this program are TAPQXX and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2023
+*  RELEASE DATE: AUGUST 2023
 *
 *  USER NOTE1: The PQI_FORMATS.SAS program must be run BEFORE
 *              running this program.
 *
-*  USER NOTE2: See the AHRQ_PQI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE2: See the AHRQ_PQI_SAS_v2023_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE3: The AHRQ QI software does not support the calculation of
@@ -22,29 +22,6 @@
 
  title2 'PQI_AREA_MEASURES PROGRAM';
  title3 'AHRQ PREVENTION QUALITY INDICATORS: ASSIGN PQIs TO INPATIENT DATA';
-
- * ------------------------------------------------------------------ ;
- * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
- * ------------------------------------------------------------------ ;
-
- %macro check_pay1_race;
-   %global PAY1_PROVIDED RACE_PROVIDED;
-   proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
-   proc sql noprint;
-      select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
-   quit;
-
-   %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
-
-   %if &PAY1_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have PAY1. The software creates a fake PAY1 as PAY1=999 for the programs to run";
-   %end;
-   %if &RACE_PROVIDED. = 0 %then %do;
-     %put "WARNING: The input data does not have RACE. The software creates a fake RACE as RACE=999 for the programs to run";
-   %end;
- %mend check_pay1_race;
- %check_pay1_race;
 
  * ------------------------------------------------------------------- ;
  * --- CREATE A PERMANENT DATASET CONTAINING ALL RECORDS THAT      --- ;
@@ -72,12 +49,12 @@
 data OUTMSR.&OUTFILE_MEAS.
                  (keep=KEY FIPST FIPSTCO DRG MDC YEAR DQTR
                        AGECAT AGECCAT POPCAT SEXCAT RACECAT
-                       TAPQ01--TAPQ16 TAPQ90-TAPQ93 &OUTFILE_KEEP);
+                       TAPQ01--TAPQ16 TAPQ90-TAPQ93 );
  set INMSR.&DISCHARGE.
                  (keep=KEY DRG MDC SEX AGE PSTCO
-                       %ADDPAY1_RACE YEAR DQTR
+                       RACE YEAR DQTR PAY1
                        ASOURCE POINTOFORIGINUB04
-                       DX1-DX&NDX. PR1-PR&NPR. &OUTFILE_KEEP);
+                       DX1-DX&NDX. PR1-PR&NPR.);
 
  label
  key = 'Unique record identifier'
@@ -134,16 +111,8 @@ data OUTMSR.&OUTFILE_MEAS.
  else if (YEAR in (2022) and DQTR in (1,2,3)) then ICDVER = 39;
  else if (YEAR in (2022) and DQTR in (4))     then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
- else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
- else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
+ else ICDVER = 40; *Defaults to last version for discharges outside coding updates.;
 
-
- * -------------------------------------------------------------- ;
- * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
- * -------------------------------------------------------------- ;
-
-  %CreateFakePAY1_RACE;
 
  * --------------------------------------------------------------- ;
  * --- DEFINE STRATIFIER: PAYER CATEGORY ------------------------- ;
