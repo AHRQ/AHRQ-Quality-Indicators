@@ -27,3 +27,56 @@ _Disclaimer: The statements and opinions expressed are solely of the authors and
 ## Documentation
 
 Visit our [repository Wiki](https://github.com/AHRQ/qi-sas/wiki) for software documentation and additional resources.
+
+
+## Installing pyspark with jupyter notebooks
+
+Note: Apache Spark is more compatiable with JDK 11
+
+1. Navigate to the directory where the archive was downloaded and extract the file
+```bash
+tar -xzvf [FileName.tar.gz]
+```
+2. Install the JDK (MAC) 
+```bash
+sudo mv jdk-11.0.1.jdk /Library/Java/JavaVirtualMachines/
+```
+3. Check java version:
+```bash
+java --version
+```
+
+4. Install Python
+```bash
+brew install python
+```
+5. Check python version:
+```bash
+python3 --version
+```
+
+6. Install Apache Spark
+```bash
+brew install apache-spark
+```
+7. Install Jypter Notebook
+```bash
+pip install notebook
+```
+
+8. Run Jupiter Notebook
+```bash
+jupyter notebook
+```
+
+### Execute Notebook in Shell
+
+```bash
+jupyter nbconvert --execute QI.ipynb --to notebook --stdout --inFile "/Users/mshaque/Workarea/Projects/qi-pyspark-poc/DATA/sid_2021_8M.csv" 
+```
+
+### Execute the comparison between different reports
+
+```bash
+jupyter nbconvert --execute QI-QC.ipynb --to notebook --stdout --pyFile "/Users/mshaque/Workarea/Projects/qi-pyspark-poc/DATA/MHI-report-10K.csv/part-00000-07102378-1961-4f92-abb6-c655a4b93104-c000.csv" --refFile "/Users/mshaque/Workarea/Projects/qi-pyspark-poc/DATA/MHAO_v2024_21_10K.TXT" --qiFile "/Users/mshaque/Workarea/Projects/qi-pyspark-poc/DATA/QI_v2024_10K.csv"
+```
