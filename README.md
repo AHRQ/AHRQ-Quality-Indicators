@@ -1,18 +1,6 @@
-# Agency for Healthcare Research & Quality (AHRQ) <br> Quality Indicators (QI), SAS QI Software
+# Agency for Healthcare Research & Quality (AHRQ) <br> Quality Indicators (QI), Software
 
-Harnessing the power of SAS/STAT Software for advanced users of the AHRQ QI modules.
-
-## Installation
-
-AHRQ's SAS QI Software is a set of programs that run using SAS (Statistical Analysis System).
-
-To learn more about computer and data requirements of SAS QI Software, visit our Wiki page to [get started](https://github.com/AHRQ/qi-sas/wiki/Getting-Started).
-
-Latest Release: SAS QI v2024.0.1 Full Software Package
-
-The AHRQ QI software now includes the Maternal Health Indicators (MHI) BETA module - New!
-
-Download the latest software version from the [AHRQ QI Website](https://qualityindicators.ahrq.gov/software/sas_qi) or [Releases](https://github.com/AHRQ/qi-sas/releases).
+This is a developmental version of the Maternal Health Indicators (MHI) BETA module, v2024.0.1, in a testing phase. 
 
 ## Contributing
 
