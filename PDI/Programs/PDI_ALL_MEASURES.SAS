@@ -5,8 +5,8 @@
 *     Variables created by this program are TPPDXX, TPPS17, TAPDXX, GPPXX, 
 *     and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PDI_FORMATS.SAS BEFORE running this program. 
@@ -16,7 +16,7 @@
 *              weighted estimates and standard errors using complex
 *              sampling designs.
 *
-*  USER NOTE3: See the AHRQ_PDI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_PDI_SAS_v2025_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE4: Although some of the exclusion criteria for present on admission 
@@ -136,6 +136,7 @@ data   OUTMSR.&OUTFILE_MEAS.
  ARRAY PR (&NPR.) $  PR1 - PR&NPR.;
  ARRAY DX (&NDX.) $  DX1 - DX&NDX.;
  ARRAY DXPOA (&NDX.) $  DXPOA1 - DXPOA&NDX.;
+ ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;  *Initialize the PRDAYxx variables to avoid the warnings in the log when the macro variable PRDAY is set to 0;
 
  * ----------------------------------------------------------------- ;
  * --- DEFINE ODC903                                             --- ;
@@ -194,7 +195,9 @@ data   OUTMSR.&OUTFILE_MEAS.
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
  else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
+ else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
+ else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
+ else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -547,14 +550,14 @@ data   OUTMSR.&OUTFILE_MEAS.
  * --- CONSTRUCT AHRQ COMORBIDITY ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PDI_Comorb_Code_v2024.sas);
+ %include MacLib(PDI_Comorb_Code_v2025.sas);
 
 
  * -------------------------------------------------------------- ;
  * --- CONSTRUCT CCSR VARIABLES                 ----------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PDI_CCSR_Code_v2024.sas);
+ %include MacLib(PDI_CCSR_Code_v2025.sas);
 
 
  * --- CONSTRUCT HOSPITAL LEVEL INDICATORS ---------------------- ;
@@ -607,7 +610,7 @@ data   OUTMSR.&OUTFILE_MEAS.
          6 - Two major therapeutic procedures with any or no diagnostic procedures 
          7 - Three or more major therapeutic procedures with any or no diagnostic procedures;
 
-      if TPPD01 NE . then do;
+      if TPPD01 NE . and QPPD01 NE . and QPPD01 NE 1 then do;
          if PRCLS2 = 0 and PRCLS4 = 0                     then HPPD01 = 1;
          else if PRCLS4 = 0  and PRCLS2 > 0               then HPPD01 = 2;
          else if PRCLS1 = 0 and PRCLS3 = 0 and PRCLS4 = 1 then HPPD01 = 3;
@@ -714,7 +717,7 @@ data   OUTMSR.&OUTFILE_MEAS.
 
       if %MDX2Q2($MEDBLEEDD.) then MEDBLEEDD_cd=1;
 
-      if TPPD08 NE . then do;
+      if TPPD08 NE . and QPPD08 NE . and QPPD08 NE 1 then do;
          if %MDX($COAGDID.) or %MPR($ECMOP.) or %MDX1($MEDBLEEDD.) or MEDBLEEDD_cd=1 then GPPD08 = 2;
          else GPPD08 = 1;
       end;
@@ -762,10 +765,15 @@ data   OUTMSR.&OUTFILE_MEAS.
       %PD9N($PR9671P., 2);
       %PD9N($PR9672P., 0);
 
-     *** Exclude principal diagnosis;
+      *** Exclude principal diagnosis or secondary diagnosis POA of Acute Respiratory Failure;
 
       if %MDX1($ACURF3D.) then TPPD09 = .;
       if %MDX2Q2($ACURF3D.) then QPPD09 = 1;
+
+      *** Exclude principal diagnosis or secondary diagnosis POA of End Stage Heart Failure;
+      
+      if %MDX1($ESHFD.) then TPPD09 = .;
+      if %MDX2Q2($ESHFD.) then QPPD09 = 1;
 
       *** Exclude if tracheostomy procedure is the only OR procedure;
 
@@ -819,7 +827,7 @@ data   OUTMSR.&OUTFILE_MEAS.
 
       *** Exclude Hospitalizations involving lung transplantations;
 
-      if %MPR($LUNGTRANSP.) then TPPD09 = .;
+      if %MPR($LUNGHEARTTXP.) then TPPD09 = .;
 
       *** Determine numerator exclusion for secondary Dx POA;
 
@@ -882,14 +890,14 @@ data   OUTMSR.&OUTFILE_MEAS.
 
       *** Risk adjust by risk category (0-Low risk, 1-Intermediate risk, 2-High risk, 3-Very high risk);
 
-      if TPPD10 NE . then do;
+      if TPPD10 NE . and QPPD10 NE . and QPPD10 NE 1 then do;
          if %MDXAQ2($IMMUNHD.) then flag_IMMUNHD=1; 
-         if %MPR($TRANSPP.)    then flag_TRANSPP=1;
+         if %MPR($IMMUNIP.)    then flag_IMMUNIP=1;
          if %MDXAQ2($IMMUITD.) then flag_IMMUITD=1;
          if %MDXAQ2($HEPFA2D.) then flag_HEPFA2D=1;
          if %MDXAQ2($HEPFA3D.) then flag_HEPFA3D=1;
 
-         if flag_HEPFA3D=1 or flag_TRANSPP=1 then HPPD10=3; 
+         if flag_HEPFA3D=1 or flag_IMMUNIP=1 then HPPD10=3; 
          else if flag_IMMUNHD=1  then HPPD10 = 2;
          else if flag_IMMUITD=1 or flag_HEPFA2D=1 then HPPD10 = 1; 
          else HPPD10 = 0;
@@ -931,8 +939,8 @@ data   OUTMSR.&OUTFILE_MEAS.
 
      *** Stratify by risk category (1-Low risk, 2-Intermediate risk, 3-High risk);
 
-      if TPPD12 NE . then do;
-         if %MDX($IMMUNHD.) or %MPR($TRANSPP.) or %MDX($CANITD.) then GPPD12 = 3;
+      if TPPD12 NE . and QPPD12 NE . and QPPD12 NE 1 then do;
+         if %MDX($IMMUNHD.) or %MPR($IMMUNIP.) or %MDX($CANITD.) then GPPD12 = 3;
          else if %MDX($IMMUITD.) or (%MDX($HEPFA2D.) and %MDX($HEPFA3D.)) or
                  %MDX($ACSCYFD.) or %MDX($HEMOPHD.) then GPPD12 = 2;
          else GPPD12 = 1;
@@ -1078,7 +1086,7 @@ end;
 
       *** Exclude High and Intermediate Risk Immunocompromised state;
 
-      if %MDX($IMMUNHD.) or %MPR($TRANSPP.) then TAPD18 = .;
+      if %MDX($IMMUNHD.) or %MPR($IMMUNIP.) then TAPD18 = .;
       if %MDX($IMMUITD.) or (%MDX($HEPFA2D.) and %MDX($HEPFA3D.)) then TAPD18 = .;
 
       *** Exclude age <= 90 days;

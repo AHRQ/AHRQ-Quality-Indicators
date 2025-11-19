@@ -5,14 +5,14 @@
 *               This indicator is also included in the Pediatric
 *               Quality Indicator module.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI17_FORMATS.SAS BEFORE running this program. 
 *              This is done through the CONTROL program.
 *
-*  USER NOTE2: See the AHRQ_PSI17_SAS_v2024_ICD10_Release_Notes.txt 
+*  USER NOTE2: See the AHRQ_PSI17_SAS_v2025_ICD10_Release_Notes.txt 
 *              file for software change notes.
 *
 *  USER NOTE3:  The AHRQ QI software does not support the calculation of
@@ -156,8 +156,9 @@
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
  else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
-
+ else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
+ else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
+ else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
 
  * -------------------------------------------------------------- ;
  * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;

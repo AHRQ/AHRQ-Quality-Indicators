@@ -9,8 +9,8 @@
 *     Variables created by this program are PPPDXX, PPNQ03, PPPS17, 
 *     OPPDXX, OPNQ03, and OPPS17.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *=============================================================================;
 
@@ -130,10 +130,9 @@ run; quit;
 
  %IF &PRINT. = 1 %THEN %DO;
 
- %MACRO PRT(PD,TEXT,VOLUME);
+ %MACRO PRT(PD,TEXT);
 
  proc   Print data=OUTHOBS.&OUTFILE_HOSPOBS. label SPLIT='*';
- %IF &VOLUME=0 %THEN %DO;
  var    HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT TP&PD. PP&PD. OP&PD. ;
  label HOSPID  = "Hospital Identification Number"
        BWHTCAT = "Birth Weight Categories"
@@ -153,40 +152,20 @@ run; quit;
         PAYCAT PAYCAT.
         RACECAT RACECAT.
         TP&PD. PP&PD. 13.0 OP&PD. 8.6;
- %END;
- %ELSE %DO;
- var    HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT TP&PD.  ;
- label HOSPID  = "Hospital Identification Number"
-       BWHTCAT = "Birth Weight Categories"
-       AGEDCAT = "Age in Days Categories"
-       PAGECAT = "Pediatric Age Categories"
-       SEXCAT  = "Sex Categories"
-       PAYCAT  = "Patient Primary Payer"
-       RACECAT = "Race Categories"
-       TP&PD.   = "TP&PD.*(Numerator)"
-       ;
- format BWHTCAT BWHTCAT.
-        AGEDCAT AGEDCAT.
-        PAGECAT PAGECAT.
-        SEXCAT SEXCAT.
-        PAYCAT PAYCAT.
-        RACECAT RACECAT.
-        TP&PD. 13.0;
- %END;
  title4 "Indicator &PD.: &TEXT";
 
  run;
 
  %MEND PRT;
 
- %PRT(PD01,Accidental Puncture or Laceration Rate,0);
- %PRT(PD05,Iatrogenic Pneumothorax Rate,0);
- %PRT(PD08,Postoperative Hemorrhage or Hematoma Rate,0);
- %PRT(PD09,Postoperative Respiratory Failure Rate,0);
- %PRT(PD10,Postoperative Sepsis Rate,0);
- %PRT(PD12,Central Venous Catheter-Related Blood Stream Infection Rate,0);
- %PRT(NQ03,Neonatal Blood Stream Infection Rate,0);
- %PRT(PS17,Birth Trauma Rate - Injury to Neonate,0);
+ %PRT(PD01,Accidental Puncture or Laceration Rate);
+ %PRT(PD05,Iatrogenic Pneumothorax Rate);
+ %PRT(PD08,Postoperative Hemorrhage or Hematoma Rate);
+ %PRT(PD09,Postoperative Respiratory Failure Rate);
+ %PRT(PD10,Postoperative Sepsis Rate);
+ %PRT(PD12,Central Venous Catheter-Related Blood Stream Infection Rate);
+ %PRT(NQ03,Neonatal Blood Stream Infection Rate);
+ %PRT(PS17,Birth Trauma Rate - Injury to Neonate);
 
  %END;
 
@@ -220,7 +199,7 @@ run; quit;
  %scale_rates;
  file  PDTXTHOB lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

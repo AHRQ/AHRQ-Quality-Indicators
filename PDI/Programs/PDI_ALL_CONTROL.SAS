@@ -1,6 +1,6 @@
 * ================================ Program: PDI_ALL_CONTROL.SAS ============================== ;
-* VERSION: SAS QI v2024
-* RELEASE DATE: JULY 2024
+* VERSION: SAS QI v2025
+* RELEASE DATE: AUGUST 2024
 * ============================================================================================ ;
 * The Pediatric Quality Indicator (PDI) module of the AHRQ Quality
   Indicators software includes the following programs:
@@ -30,45 +30,45 @@
                            to the software instructions.
                            The file name is up to the user but must be listed below.
 
-   2. PDI_Dx_Pr_Macros_v2024.sas  Standard processes used by the other SAS programs.
+   2. PDI_Dx_Pr_Macros_v2025.sas  Standard processes used by the other SAS programs.
                                   The user does not need to open.
 
-   3. PDI_CCSR_Format_v2024.sas  Creates formats assigning Clinical Classification 
+   3. PDI_CCSR_Format_v2025.sas  Creates formats assigning Clinical Classification 
                                  Software-Refined (CCSR) variables.
 
-   4. PDI_CCSR_Code_v2024.sas  Creates CCSR variables based on the presence of diagnoses.
+   4. PDI_CCSR_Code_v2025.sas  Creates CCSR variables based on the presence of diagnoses.
 
-   5. PDI_Comorb_Format_v2024.sas  Creates formats assigning comorbidity groups based on 
+   5. PDI_Comorb_Format_v2025.sas  Creates formats assigning comorbidity groups based on 
                                    ICD-10-CM ELIXHAUSER COMORBIDITY software.
 	
-   6. PDI_Comorb_Code_v2024.sas  Creates comorbidity variables based on the presence
+   6. PDI_Comorb_Code_v2025.sas  Creates comorbidity variables based on the presence
                                  of secondary diagnoses and redefines comorbidity group by
                                  eliminating DRGs directly related to them.
 
-   7. 2000-2023_Population_Files_v2024.txt  Population file with counts by area, age, and sex.
+   7. 2000-2024_Population_Files_v2025.txt  Population file with counts by area, age, and sex.
                                             Required for area rate calculation. Available as a
                                             separate download from the AHRQ website.
 						   
-   8. PDI_AREA_SIGVAR_ARRAY_v2024.SAS  File with noise and signal variance estimates 
+   8. PDI_AREA_SIGVAR_ARRAY_v2025.SAS  File with noise and signal variance estimates 
                                        and reference rates for smoothing by age and sex.
 
-   9. PDI_AREA_SIGVAR_ARRAY_SES_v2024.SAS  File with noise and signal variance estimates 
+   9. PDI_AREA_SIGVAR_ARRAY_SES_v2025.SAS  File with noise and signal variance estimates 
                                            and reference rates for smoothing by age, sex and SES.
   
-  10. PDI_AREA_OE_Array_v2024.SAS  Array for OE ratio adjustment from reference population 
+  10. PDI_AREA_OE_Array_v2025.SAS  Array for OE ratio adjustment from reference population 
                                    based on risk adjustment models. The software provides 
                                    two options to use OE ratio adjustment.
 
-  11. PDI_AREA_OE_Array_SES_v2024.SAS  Array for OE ratio adjustment from reference population 
+  11. PDI_AREA_OE_Array_SES_v2025.SAS  Array for OE ratio adjustment from reference population 
                                        based on risk adjustment models. The software provides 
                                        two options to use OE ratio adjustment by age, sex and SES. 
                                              
-  12. PDI_HOSP_Regvars_v2024.sas  Creates age, sex, MDRG flag variables for use by risk adjustment.  
+  12. PDI_HOSP_Regvars_v2025.sas  Creates age, sex, MDRG flag variables for use by risk adjustment.  
   
-  13. PDI_HOSP_Sigvar_Array_v2024.sas  Arrays for signal variance and reference population rates used 
+  13. PDI_HOSP_Sigvar_Array_v2025.sas  Arrays for signal variance and reference population rates used 
                                        by risk adjustment program.
                           
-  14. PDI_HOSP_OE_Array_v2024.sas  Array for OE ratio adjustment from reference population based 
+  14. PDI_HOSP_OE_Array_v2025.sas  Array for OE ratio adjustment from reference population based 
                                    on risk adjustment models. 
                                    The software provides two options to use OE ratio adjustment.
                                     
@@ -102,7 +102,7 @@
          each file based on the location of the PDI folder listed in the
          PATHNAME variable.
 
- * See the AHRQ_PDI_SAS_v2024_ICD10_Release_Notes.txt file for version change details.
+ * See the AHRQ_PDI_SAS_v2025_ICD10_Release_Notes.txt file for version change details.
 
  Generally speaking, a first-time user of this software would proceed 
  as outlined below:
@@ -130,7 +130,7 @@
 %LET DISCHARGE=discharges;                       *<===USER MUST modify;
 
 *SUFX specifies an identifier suffix to be placed on output datasets;
-%LET SUFX = v2024;                               *<===USER may modify;
+%LET SUFX = v2025;                               *<===USER may modify;
 
 *LIBRARY is where formats generated by PDI_ALL_FORMATS will be saved;
 LIBNAME LIBRARY  "&PATHNAME.\SASData";          *<===USER may modify;
@@ -149,12 +149,12 @@ LIBNAME LIBRARY  "&PATHNAME.\SASData";          *<===USER may modify;
  * --- THE DISCHARGE DATA. POPYEAR WILL IDENTIFY POPULATION USED -- ;
  * --- BY THE PDI_AREA_OBSERVED AND PDI_AREA_RISKADJ PROGRAM     -- ;
  * ---------------------------------------------------------------- ;
-%LET POPYEAR = 2023;   *<===USER may modify;
+%LET POPYEAR = 2024;   *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- SET LOCATION OF POPULATION FILE                          --- ;
  * ---------------------------------------------------------------- ;
-filename POPFILE  "&PATHNAME.\ParmFiles\2000-2023_Population_Files_v2024.txt";  *<===USER may modify;
+filename POPFILE  "&PATHNAME.\ParmFiles\2000-2024_Population_Files_v2025.txt";  *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE IF RECORDS SHOULD BE PRINTED IN SAS OUTPUT AT   --- ;
@@ -202,12 +202,11 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE ADDITIONAL INPUT VARIABLES TO KEEP ON OUTPUT    --- ;
- * --- DATA FILE FROM PDI_ALL_MEASURES.SAS.                     --- ;
+ * --- DATA FILE FROM PSI_HOSP_MEASURES.SAS.                    --- ;
  * --- INPUT VARIABLES ALWAYS INCLUDED ON THE OUTPUT FILE ARE:  --- ;
  * --- KEY HOSPID DRG MDC SEX AGE AGEDAY YEAR DQTR LOS          --- ;
  * ---------------------------------------------------------------- ;
 %LET OUTFILE_KEEP = ;                           *<===USER may modify;
-
  * ---------------------------------------------------------------- ;
  * --- MODIFY INPUT AND OUTPUT FILE                             --- ;
  * ---------------------------------------------------------------- ;
@@ -253,7 +252,6 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
  * - RUNNING PDI_ALL_MEASURES.                                  --- ;
  * ---------------------------------------------------------------- ;
 %LET DELFILE  = PDI_DELETED_&SUFX.;             *<===USER may modify;
-
  * ================================================================ ;
  * ============HOSPITAL-LEVEL PEDIATRIC QUALITY INDICATORS========= ;
  * ================================================================ ;
@@ -599,7 +597,7 @@ libname OUTARSK "&PATHNAME.\SASData";           *<===USER may modify;
  * --- IF YOU CREATE A COMMA-DELIMITED TEXT FILE,               --- ;
  * --- SPECIFY THE LOCATION OF THE FILE.                        --- ;
  * ---------------------------------------------------------------- ;
-filename PDTXTARA "&PATHNAME.\SASData\PDARSKADJ_&SUFX..TXT"; *<===USER may modify;
+filename PDTXTARA "&PATHNAME.\SASData\SASData\PDARSKADJ_&SUFX..TXT"; *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE WHETHER THE MEASURES SHOULD BE REPORTED PER     --- ;
@@ -626,7 +624,7 @@ filename PDTXTARA "&PATHNAME.\SASData\PDARSKADJ_&SUFX..TXT"; *<===USER may modif
 
 ************************* END USER INPUT ***************************************;
 * --- Include standard diagnosis and procedure macros.                      --- ;
-%include MacLib(PDI_Dx_Pr_Macros_v2024.sas);
+%include MacLib(PDI_Dx_Pr_Macros_v2025.sas);
 
 * --- Check the values of the macro variables                               --- ;
 * --- If the user-provided values are out of range, the software will abort --- ;

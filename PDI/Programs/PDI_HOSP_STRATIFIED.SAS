@@ -6,8 +6,8 @@
 *         Program uses HOSPID, GPPD08, GPPD10 and
 *         GPPD12 from PDI_ALL_MEASURES.SAS program.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *=============================================================================;
 
@@ -156,7 +156,7 @@ label
    %scale_rates;
  file PDTXTSTR lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_STRAT data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_STRAT data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

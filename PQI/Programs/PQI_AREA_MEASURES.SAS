@@ -5,13 +5,13 @@
 *         stratifier categories to inpatient records.
 *         Variables created by this program are TAPQXX and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: The PQI_FORMATS.SAS program must be run BEFORE
 *              running this program.
 *
-*  USER NOTE2: See the AHRQ_PQI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE2: See the AHRQ_PQI_SAS_v2025_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE3: The AHRQ QI software does not support the calculation of
@@ -21,7 +21,7 @@
 * ===========================================================================;
 
  title2 'PQI_AREA_MEASURES PROGRAM';
- title3 'AHRQ PREVENTION QUALITY INDICATORS: ASSIGN PQIs TO INPATIENT DATA';
+ title3 'Prevention Quality Indicators in Inpatient Settings (PQI): ASSIGN PQIs TO INPATIENT DATA';
 
  * ------------------------------------------------------------------ ;
  * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
@@ -136,8 +136,9 @@ data OUTMSR.&OUTFILE_MEAS.
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
  else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
-
+ else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
+ else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
+ else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
 
  * -------------------------------------------------------------- ;
  * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;
@@ -491,10 +492,10 @@ run;
 proc means data = OUTMSR.&OUTFILE_MEAS. n nmiss min max NOLABELS ;
      var DRG MDC YEAR DQTR
          AGECAT AGECCAT POPCAT SEXCAT RACECAT;
-     title4 "PREVENTION QUALITY INDICATOR CATEGORICAL VARIABLES AND RANGES OF VALUES";
+     title4 "Prevention Quality Indicators in Inpatient Settings (PQI): CATEGORICAL VARIABLES AND RANGES OF VALUES";
 run; quit;
 
 proc means data = OUTMSR.&OUTFILE_MEAS. n nmiss sum mean NOLABELS ;
      var TAPQ01 TAPQ03 TAPQ05 TAPQ07-TAPQ08 TAPQ11 TAPQ12 TAPQ14-TAPQ16 TAPQ90-TAPQ93;
-     title5 "PREVENTION QUALITY INDICATOR NUMERATORS (COUNT=SUM)";
+     title5 "Prevention Quality Indicators in Inpatient Settings (PQI): NUMERATORS (COUNT=SUM)";
 run; quit;

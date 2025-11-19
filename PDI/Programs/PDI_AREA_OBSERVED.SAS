@@ -9,8 +9,8 @@
 *         from population file and PDI_ALL_MEASURE.SAS output.
 *         Variables created by this program are PAPDXX and OAPDXX.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *=============================================================================;
 
@@ -70,7 +70,7 @@
            POP_2005 POP_2006 POP_2007 POP_2008 POP_2009 
            POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
            POP_2015 POP_2016 POP_2017 POP_2018 POP_2019 
-           POP_2020 POP_2021 POP_2022 POP_2023 POP 8;
+           POP_2020 POP_2021 POP_2022 POP_2023 POP_2024 POP 8;
 
     infile POPFILE missover firstobs=2;
 
@@ -80,7 +80,7 @@
           POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
           POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
           POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-          POP_2020 POP_2021 POP_2022 POP_2023;
+          POP_2020 POP_2021 POP_2022 POP_2023 POP_2024;
 
     %CTY2MA
 
@@ -420,7 +420,7 @@ run; quit;
  %scale_rates;
  file PDTXTAOB lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";

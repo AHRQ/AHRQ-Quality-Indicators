@@ -9,8 +9,8 @@
 *                                          RPNQ03, LPNQ03, UPNQ03, SPNQ03, XPNQ03  
 *        Output stratified by HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT. 
 *                
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: The AHRQ QI software does not support the calculation of weighted   
 *              estimates and standard errors using complex sampling designs. 
@@ -44,15 +44,15 @@
 * --- LEVEL INDICATOR.  THE NEXT TWO CHARACTERS ARE ALWAYS 'PD'.     --- ;
 * --- THE LAST TWO DIGITS ARE THE INDICATOR NUMBER                   --- ;
 * ---------------------------------------------------------------------- ;
-* --- THE PDI_HOSP_REGVARS_v2024.SAS PROGRAM CREATES THE VARIABLES   --- ;
+* --- THE PDI_HOSP_REGVARS_v2025.SAS PROGRAM CREATES THE VARIABLES   --- ;
 * --- USED FOR RISK ADJUSTMENT. THE USER MUST ENSURE THAT THE        --- ;
 * --- PDI_ALL_CONTROL PROGRAM INCLUDES THE CORRECT LOCATION FOR THE  --- ;
-* --- PDI_HOSP_REGVARS_v2024 SAS CODE.                               --- ;
+* --- PDI_HOSP_REGVARS_v2025 SAS CODE.                               --- ;
 *----------------------------------------------------------------------- ;
 
 data &OUTFILE_MEAS.;
      set OUTMSR.&OUTFILE_MEAS.;
-     %include MacLib(PDI_HOSP_Regvars_v2024.sas);
+     %include MacLib(PDI_HOSP_Regvars_v2025.sas);
 run ;
 
 %MACRO MOD3(PD);
@@ -99,7 +99,7 @@ run ;
 
  data _null_;
 	set TEMP1_MODEL end=LAST;
-	format vars $5000.;
+	format vars $10000.;
 	retain vars;
 
 	if variable ne "Intercept" then  vars = trim(vars)||" "||trim(variable);
@@ -132,7 +132,7 @@ run;
 %if &Calibration_OE_to_ref_pop. = 1 %then %do;
  DATA TEMP1Y&pd.;  
     SET TEMP1Y&pd.;    
-    %include MacLib(PDI_HOSP_OE_Array_v2024.sas);
+    %include MacLib(PDI_HOSP_OE_Array_v2025.sas);
     
     *-- MAP MEASURE NUM TO ARRAY INDEX SUB_N --* ;
     if "&PD." = "PD01"      then SUB_N = 1;
@@ -195,7 +195,7 @@ run;
    if _TYPE_ &TYPELVLH;
 
  *-- LOAD SIGNAL AND NOISE ARRAYS FROM TEXT FILE --* ;
- %include MacLib(PDI_HOSP_Sigvar_Array_v2024.sas);
+ %include MacLib(PDI_HOSP_Sigvar_Array_v2025.sas);
 
  *-- MAP MEASURE NUM TO ARRAY INDEX SUB_N --* ;
  if "&PD." = "PD01" then SUB_N = 1;
@@ -271,7 +271,7 @@ run;
  data RP&PD.;
    length HOSPID &HOSPID_TYP.. BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT 3;
           call missing(HOSPID); _TYPE_=0; BWHTCAT=.; AGEDCAT=.; PAGECAT=.; SEXCAT=.; PAYCAT=.; RACECAT=.; 
-          EP&PD.=.; RP&PD.=.; LP&PD.=.; UP&PD.=.; SP&PD.=.; XP&PD.=.; VP&PD.=.; SNP&PD. = .; SE&PD.  = .;
+          EP&PD.=.; RP&PD.=.; LP&PD.=.; UP&PD.=.; SP&PD.=.; XP&PD.=.; VP&PD.=.; SNP&PD. = .; 
           TP&PD.=.; PP&PD.=.; OP&PD.=.;
     output;
  run;
@@ -401,9 +401,9 @@ run; quit;
 
 %IF &PRINT. = 1 %THEN %DO;
 
-%MACRO PRT(PD,TEXT,VOLUME,STRATA);
+%MACRO PRT(PD,TEXT,STRATA);
 proc PRINT data=OUTHRISK.&OUTFILE_HOSPRISK. label SPLIT='*';
-%IF   &VOLUME = 0 AND &STRATA=0 %THEN %DO;
+%IF   &STRATA=0 %THEN %DO;
 var HOSPID TP&PD. PP&PD. OP&PD. EP&PD. RP&PD. LP&PD. UP&PD. SP&PD. XP&PD.;
 label HOSPID  = "Hospital Identification Number"
       TP&PD. = "TP&PD.*(Numerator)"
@@ -417,13 +417,6 @@ label HOSPID  = "Hospital Identification Number"
       XP&PD. = "XP&PD.*(Standard error of the smoothed rate)"
       ;
 format TP&PD. PP&PD. 13.0 OP&PD. RP&PD. EP&PD. SP&PD. XP&PD. 8.6;
-%END;
-%ELSE %IF &VOLUME. = 1 %THEN %DO;
-var HOSPID TP&PD. ;
-label HOSPID  = "HOSPID"
-      TP&PD. = "TP&PD.*(NUMERATOR)"
-      ;
-format TP&PD. 13.0 ;
 %END;
 %ELSE %IF &STRATA. = 1 %THEN %DO;
 var HOSPID TP&PD. PP&PD. OP&PD. EP&PD. RP&PD. LP&PD. UP&PD.;
@@ -445,13 +438,13 @@ run;
 
 %MEND PRT;
 
- %PRT(PD01, PDI 01 Accidental Puncture or Laceration Rate,0,0);
- %PRT(PD05, PDI 05 Iatrogenic Pneumothorax Rate,0,0);
- %PRT(PD08, PDI 08 Postoperative Hemorrhage or Hematoma Rate,0,0);
- %PRT(PD09, PDI 09 Postoperative Respiratory Failure Rate,0,0);
- %PRT(PD10, PDI 10 Postoperative Sepsis Rate,0,0);
- %PRT(PD12, PDI 12 Central Venous Catheter-Related Blood Stream Infection Rate,0,0);
- %PRT(NQ03, NQI 03 Neonatal Blood Stream Infection Rate,0,0);
+ %PRT(PD01, PDI 01 Accidental Puncture or Laceration Rate,0);
+ %PRT(PD05, PDI 05 Iatrogenic Pneumothorax Rate,0);
+ %PRT(PD08, PDI 08 Postoperative Hemorrhage or Hematoma Rate,0);
+ %PRT(PD09, PDI 09 Postoperative Respiratory Failure Rate,0);
+ %PRT(PD10, PDI 10 Postoperative Sepsis Rate,0);
+ %PRT(PD12, PDI 12 Central Venous Catheter-Related Blood Stream Infection Rate,0);
+ %PRT(NQ03, NQI 03 Neonatal Blood Stream Infection Rate,0);
 
 %END;
 
@@ -487,7 +480,7 @@ run;
  %scale_rates;
  file  "&PDCSVRF2." lrecl=4500 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPRISK data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_HOSPRISK data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

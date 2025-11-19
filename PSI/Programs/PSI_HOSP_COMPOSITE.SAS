@@ -6,8 +6,8 @@
 *         National Quality Forum endorsed 10 component harm adjusted
 *         numerator weights.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE:  Requires output from PSI_HOSP_RISKADJ.SAS
 *
@@ -37,7 +37,7 @@ run;
 * Import PSI Composite Weights                                  --- ;
 * Weights sum to 1.0                                            --- ;
 *===================================================================;
-%include MacLib(PSI_HOSP_Composite_Wt_v2024.sas);
+%include MacLib(PSI_HOSP_Composite_Wt_v2025.sas);
 %setweights;
 
 *===================================================================;
@@ -157,7 +157,6 @@ COMP1SE  = SQRT(COMP1VAR);
 COMP1LB  = COMP1 - 1.96* COMP1SE;
 COMP1UB  = COMP1 + 1.96* COMP1SE;
 
-
 run;
 
 %END;
@@ -263,7 +262,7 @@ run; quit;
  %scale_rates;
  file PSTXTCMP lrecl=2000 ;
  if _N_=1 then do;
-  put "AHRQ SAS QI v2024 &OUTFILE_COMP data set created with the following CONTROL options:";
+  put "AHRQ SAS QI v2025 &OUTFILE_COMP data set created with the following CONTROL options:";
   put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
   put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
   put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

@@ -4,8 +4,8 @@
 *         Assigns the IQI outcome measure of interest to inpatient records.
 *         Variables created by this program are TPIQXX and stratifiers.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using IQI_FORMATS.SAS BEFORE running this program.
@@ -14,7 +14,7 @@
 *  USER NOTE2: The AHRQ QI software does not support the calculation of weighted
 *              estimates and standard errors using complex sampling designs.
 * 
-*  USER NOTE3: See the AHRQ_IQI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_IQI_SAS_v2025_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *==================================================================================;
@@ -99,7 +99,7 @@
 
  data   OUTMSR.&OUTFILE_MEAS.
     (keep=KEY HOSPID DRG MDC SEX AGE YEAR DQTR
-          AGECAT SEXCAT RACECAT PAYCAT TRNSFER COVIDDX D_DXCCSR_: D_IQ: CSHOCKANOXBDD MRTAMISTD DNR
+          AGECAT SEXCAT RACECAT PAYCAT TRNSFER COVIDDX D_DXCCSR_: D_IQ: SYSHFD CSHOCKANOXBDD MRTAMISTD DNR
           TPIQ08 TPIQ09 TPIQ09_WITH_CANCER TPIQ09_WITHOUT_CANCER 
           TPIQ11 TPIQ11_OPEN_RUPTURED TPIQ11_OPEN_UNRUPTURED TPIQ11_ENDO_RUPTURED TPIQ11_ENDO_UNRUPTURED 
           TPIQ12 TPIQ15-TPIQ17 TPIQ17_HEMSTROKE_SUBARACH TPIQ17_HEMSTROKE_INTRACER TPIQ17_ISCHEMSTROKE 
@@ -120,7 +120,7 @@
  ARRAY DX(&NDX.)    $ DX1-DX&NDX.;
  ARRAY DXPOA(&NDX.) $ DXPOA1-DXPOA&NDX.;
  ARRAY PR(&NPR.)    $ PR1-PR&NPR.;
- ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;
+ ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;  *Initialize the PRDAYxx variables to avoid the warnings in the log when the macro variable PRDAY is set to 0;
 
  * --------------------------------------------------------------- ;
  * -- DELETE NON-ADULT RECORDS AND RECORDS WITH MISSING VALUES --- ;
@@ -164,7 +164,9 @@
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
  else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
+ else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
+ else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
+ else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
 
 
  * -------------------------------------------------------------- ;
@@ -304,14 +306,22 @@
  * --- CONSTRUCT DXCCSR VARIABLES ------------------------------- ;
  * -------------------------------------------------------------- ;
  
- %include MacLib(IQI_HOSP_DXCCSR_Code_v2024.sas);
+ %include MacLib(IQI_HOSP_DXCCSR_Code_v2025.sas);
 
+ * -------------------------------------------------------------- ;
+ * --- IDENTIFY SYSHFD        ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+  attrib SYSHFD length=3
+  label='Systolic heart failure diagnosis codes';
+
+  if %MDXAQ2($SYSHFD.) then SYSHFD = 1;
+  else SYSHFD = 0;
 
  * -------------------------------------------------------------- ;
  * --- IDENTIFY CSHOCKANOXBDD ----------------------------------- ;
  * -------------------------------------------------------------- ;
   attrib CSHOCKANOXBDD length=3
-  label='Cardiogenic shock, anoxic brain injury, or cardiac arrest';
+  label='Cardiogenic shock, cardiac arrest, and anoxic brain damage diagnosis codes';
 
   if %MDXAQ2($CSHOCKANOXBDD.) then CSHOCKANOXBDD = 1;
   else CSHOCKANOXBDD = 0;
@@ -699,7 +709,7 @@
  * --- CONSTRUCT PRCCSR VARIABLES ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(IQI_HOSP_PRCCSR_Code_v2024.sas);
+ %include MacLib(IQI_HOSP_PRCCSR_Code_v2025.sas);
 
 run;
 

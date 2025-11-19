@@ -10,8 +10,8 @@
 *     Variable created by this program is OPPS17
 *     This indicator is also included in the Pediatric Quality Indicator module.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *=================================================================================;
 
@@ -138,7 +138,7 @@ title3 'AHRQ PATIENT SAFETY INDICATOR 17: CALCULATE OBSERVED HOSPITAL LEVEL RATE
  %if &SCALE_RATES = 1 %then if not missing(OPPS17) then OPPS17 = OPPS17*1000;;
  file P17TXTHO lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "Output stratification includes TYPELVLH = &TYPELVLH";
  put "Number of diagnoses evaluated = &NDX";

@@ -1,9 +1,9 @@
-*======================PROGRAM: MHI_FORMATS.SAS==============================;
+*======================PROGRAM: MHI_FORMATS.SAS =============================;
 *
-* DESCRIPTION: Creates format library for AHRQ Maternal Health Indicators
+* DESCRIPTION: Creates format library for AHRQ Maternal Health Indicators    
 *
-* VERSION: SAS Beta version of MHI v2024
-* RELEASE DATE: SEPTEMBER 2024
+* VERSION: SAS Beta version of MHI v2025
+* RELEASE DATE: AUGUST 2024
 * 
 *============================================================================;
 
@@ -15,784 +15,786 @@ proc format LIBRARY=LIBRARY;
 
     /* Numerator MHI DX and PR codes */
 
-    /* 1. Acute myocardial infarction ICD-10  DX*/
-    Value $DX_Acute_MyoCard_Infarct
-        'I2101'                 /*ST elevation (STEMI) myocardial infarction involving left main coronary artery*/
-        ,'I2102'                /*ST elevation (STEMI) myocardial infarction involving left anterior descending coronary artery*/
-        ,'I2109'                /*ST elevation (STEMI) myocardial infarction involving other coronary artery of anterior wall*/
-        ,'I2111'                /*ST elevation (STEMI) myocardial infarction involving right coronary artery*/
-        ,'I2119'                /*ST elevation (STEMI) myocardial infarction involving other coronary artery of inferior wall*/
-        ,'I2121'                /*ST elevation (STEMI) myocardial infarction involving left circumflex coronary artery*/
-        ,'I2129'                /*ST elevation (STEMI) myocardial infarction involving other sites*/
-        ,'I213'                 /*ST elevation (STEMI) myocardial infarction of unspecified site*/
-        ,'I214'                 /*Non-ST elevation (NSTEMI) myocardial infarction*/
-        ,'I219'                 /*Acute myocardial infarction, unspecified*/
-        ,'I21A1'                /*Acute myocardial infarction type 2*/
-        ,'I21A9'                /*Other myocardial infarction type*/
-        ,'I21B'                 /*Myocardial infarction with coronary microvascular dysfunction*/
-        ,'I220'                 /*Subsequent ST elevation (STEMI) myocardial infarction of anterior wall*/
-        ,'I221'                 /*Subsequent ST elevation (STEMI) myocardial infarction of inferior wall*/
-        ,'I222'                 /*Subsequent non-ST elevation (NSTEMI) myocardial infarction*/
-        ,'I228'                 /*Subsequent ST elevation (STEMI) myocardial infarction of other sites*/
-        ,'I229 ' = '1'          /*Subsequent ST elevation (STEMI) myocardial infarction of unspecified site*/
-        OTHER = '0';
+	/* 1. Acute myocardial infarction ICD-10  DX*/
+	Value $DX_Acute_MyoCard_Infarct
+		'I2101'                 /*ST elevation (STEMI) myocardial infarction involving left main coronary artery*/
+		,'I2102'                /*ST elevation (STEMI) myocardial infarction involving left anterior descending coronary artery*/
+		,'I2109'                /*ST elevation (STEMI) myocardial infarction involving other coronary artery of anterior wall*/
+		,'I2111'                /*ST elevation (STEMI) myocardial infarction involving right coronary artery*/
+		,'I2119'                /*ST elevation (STEMI) myocardial infarction involving other coronary artery of inferior wall*/
+		,'I2121'                /*ST elevation (STEMI) myocardial infarction involving left circumflex coronary artery*/
+		,'I2129'                /*ST elevation (STEMI) myocardial infarction involving other sites*/
+		,'I213'                 /*ST elevation (STEMI) myocardial infarction of unspecified site*/
+		,'I214'                 /*Non-ST elevation (NSTEMI) myocardial infarction*/
+		,'I219'                 /*Acute myocardial infarction, unspecified*/
+		,'I21A1'                /*Acute myocardial infarction type 2*/
+		,'I21A9'                /*Other myocardial infarction type*/
+		,'I21B'                 /*Myocardial infarction with coronary microvascular dysfunction*/
+		,'I220'                 /*Subsequent ST elevation (STEMI) myocardial infarction of anterior wall*/
+		,'I221'                 /*Subsequent ST elevation (STEMI) myocardial infarction of inferior wall*/
+		,'I222'                 /*Subsequent non-ST elevation (NSTEMI) myocardial infarction*/
+		,'I228'                 /*Subsequent ST elevation (STEMI) myocardial infarction of other sites*/
+		,'I229 ' = '1'          /*Subsequent ST elevation (STEMI) myocardial infarction of unspecified site*/
+		OTHER = '0';
 
-    /* 2. Aneurysm ICD-10 DX*/
-    Value $DX_Aneurysm
-        'I7100'                 /*Dissection of unspecified site of aorta*/
-        ,'I7101'                /*Dissection of thoracic aorta*/
-        ,'I71010'               /*Dissection of ascending aorta*/
-        ,'I71011'       /*Dissection of aortic arch*/
-        ,'I71012'       /*Dissection of descending thoracic aorta*/
-        ,'I71019'       /*Dissection of thoracic aorta, unspecified*/
-        ,'I7110'        /*Thoracic aortic aneurysm, ruptured, unspecified*/
-        ,'I7111'        /*Aneurysm of the ascending aorta, ruptured*/
-        ,'I7112'        /*Aneurysm of the aortic arch, ruptured*/
-        ,'I7113'        /*Aneurysm of the descending thoracic aorta, ruptured*/
-        ,'I7120'        /*Thoracic aortic aneurysm, without rupture, unspecified*/
-        ,'I7121'        /*Aneurysm of the ascending aorta, without rupture*/
-        ,'I7122'        /*Aneurysm of the aortic arch, without rupture*/
-        ,'I7123'        /*Aneurysm of the descending thoracic aorta, without rupture*/
-        ,'I7130'        /*Abdominal aortic aneurysm, ruptured, unspecified*/
-        ,'I7131'        /*Pararenal abdominal aortic aneurysm, ruptured*/
-        ,'I7132'        /*Juxtarenal abdominal aortic aneurysm, ruptured*/
-        ,'I7133'        /*Infrarenal abdominal aortic aneurysm, ruptured*/
-        ,'I7140'        /*Abdominal aortic aneurysm, without rupture, unspecified*/
-        ,'I7141'        /*Pararenal abdominal aortic aneurysm, without rupture*/
-        ,'I7142'        /*Juxtarenal abdominal aortic aneurysm, without rupture*/
-        ,'I7143'        /*Infrarenal abdominal aortic aneurysm, without rupture*/
-        ,'I7150'        /*Thoracoabdominal aortic aneurysm, ruptured, unspecified*/
-        ,'I7151'        /*Supraceliac aneurysm of the thoracoabdominal aorta, ruptured*/
-        ,'I7152'        /*Paravisceral aneurysm of the thoracoabdominal aorta, ruptured*/
-        ,'I7160'        /*Thoracoabdominal aortic aneurysm, without rupture, unspecified*/
-        ,'I7161'        /*Supraceliac aneurysm of the thoracoabdominal aorta, without rupture*/
-        ,'I7162'        /*Paravisceral aneurysm of the thoracoabdominal aorta, without rupture*/
-        ,'I7102'                /*Dissection of abdominal aorta*/
-        ,'I7103'                /*Dissection of thoracoabdominal aorta*/
-        ,'I711'                 /*Thoracic aortic aneurysm, ruptured*/
-        ,'I712'                 /*Thoracic aortic aneurysm, without rupture*/
-        ,'I713'                 /*Abdominal aortic aneurysm, ruptured*/
-        ,'I714'                 /*Abdominal aortic aneurysm, without rupture*/
-        ,'I715'                 /*Thoracoabdominal aortic aneurysm, ruptured*/
-        ,'I716'                 /*Thoracoabdominal aortic aneurysm, without rupture*/
-        ,'I718'                 /*Aortic aneurysm of unspecified site, ruptured*/
-        ,'I719'                 /*Aortic aneurysm of unspecified site, without rupture*/
-        ,'I790' = '1'           /*Aneurysm of aorta in diseases classified elsewhere*/
-        OTHER = '0';
+	/* 2. Aneurysm ICD-10 DX*/
+	Value $DX_Aneurysm
+		'I7100'                 /*Dissection of unspecified site of aorta*/
+		,'I7101'                /*Dissection of thoracic aorta*/
+		,'I71010'               /*Dissection of ascending aorta*/
+		,'I71011' 		/*Dissection of aortic arch*/
+		,'I71012' 		/*Dissection of descending thoracic aorta*/
+		,'I71019'		/*Dissection of thoracic aorta, unspecified*/
+		,'I7110'		/*Thoracic aortic aneurysm, ruptured, unspecified*/
+		,'I7111'		/*Aneurysm of the ascending aorta, ruptured*/
+		,'I7112'		/*Aneurysm of the aortic arch, ruptured*/
+		,'I7113'		/*Aneurysm of the descending thoracic aorta, ruptured*/
+		,'I7120'		/*Thoracic aortic aneurysm, without rupture, unspecified*/
+		,'I7121'		/*Aneurysm of the ascending aorta, without rupture*/
+		,'I7122'		/*Aneurysm of the aortic arch, without rupture*/
+		,'I7123'		/*Aneurysm of the descending thoracic aorta, without rupture*/
+		,'I7130'		/*Abdominal aortic aneurysm, ruptured, unspecified*/
+		,'I7131'		/*Pararenal abdominal aortic aneurysm, ruptured*/
+		,'I7132'		/*Juxtarenal abdominal aortic aneurysm, ruptured*/
+		,'I7133'		/*Infrarenal abdominal aortic aneurysm, ruptured*/
+		,'I7140'		/*Abdominal aortic aneurysm, without rupture, unspecified*/
+		,'I7141'		/*Pararenal abdominal aortic aneurysm, without rupture*/
+		,'I7142'		/*Juxtarenal abdominal aortic aneurysm, without rupture*/
+		,'I7143'		/*Infrarenal abdominal aortic aneurysm, without rupture*/
+		,'I7150'		/*Thoracoabdominal aortic aneurysm, ruptured, unspecified*/
+		,'I7151'		/*Supraceliac aneurysm of the thoracoabdominal aorta, ruptured*/
+		,'I7152'		/*Paravisceral aneurysm of the thoracoabdominal aorta, ruptured*/
+		,'I7160'		/*Thoracoabdominal aortic aneurysm, without rupture, unspecified*/
+		,'I7161'		/*Supraceliac aneurysm of the thoracoabdominal aorta, without rupture*/
+		,'I7162'		/*Paravisceral aneurysm of the thoracoabdominal aorta, without rupture*/
+		,'I7102'                /*Dissection of abdominal aorta*/
+		,'I7103'                /*Dissection of thoracoabdominal aorta*/
+		,'I711'                 /*Thoracic aortic aneurysm, ruptured*/
+		,'I712'                 /*Thoracic aortic aneurysm, without rupture*/
+		,'I713'                 /*Abdominal aortic aneurysm, ruptured*/
+		,'I714'                 /*Abdominal aortic aneurysm, without rupture*/
+		,'I715'                 /*Thoracoabdominal aortic aneurysm, ruptured*/
+		,'I716'                 /*Thoracoabdominal aortic aneurysm, without rupture*/
+		,'I718'                 /*Aortic aneurysm of unspecified site, ruptured*/
+		,'I719'                 /*Aortic aneurysm of unspecified site, without rupture*/
+		,'I790' = '1'           /*Aneurysm of aorta in diseases classified elsewhere*/
+		OTHER = '0';
 
-    /* 3. Acute renal failure ICD-10 DX*/
-    Value $DX_Acute_Renal_Fail
-        'N170'                 /*Acute kidney failure with tubular necrosis */                                                                                                                                                                                                                    
-        ,'N171'                /*Acute kidney failure with acute cortical necrosis */                                                                                                                                                   
-        ,'N172'                /*Acute kidney failure with medullary necrosis */                                                                                                                                                                                                                   
-        ,'N178'                /*Other acute kidney failure */                                                                                                                                                                                                                                     
-        ,'N179'                /*Acute kidney failure, unspecified */                                                                                                                                                                                                                              
-        ,'O904'            /*Postpartum acute kidney failure*/
-        ,'O9041'               /*Hepatorenal syndrome following labor and delivery*/
-        ,'O9049' = '1'         /*Other postpartum acute kidney failure*/
-        OTHER = '0';
+	/* 3. Acute renal failure ICD-10 DX*/
+	Value $DX_Acute_Renal_Fail
+		'N170' 	               /*Acute kidney failure with tubular necrosis */                                                                                                                                                                                                                    
+		,'N171'                /*Acute kidney failure with acute cortical necrosis */                                                                                                                                                   
+		,'N172'                /*Acute kidney failure with medullary necrosis */                                                                                                                                                                                                                   
+		,'N178'                /*Other acute kidney failure */                                                                                                                                                                                                                                     
+		,'N179'                /*Acute kidney failure, unspecified */                                                                                                                                                                                                                              
+		,'O904' 	       /*Postpartum acute kidney failure*/
+		,'O9041'               /*Hepatorenal syndrome following labor and delivery*/
+		,'O9049' = '1'         /*Other postpartum acute kidney failure*/
+		OTHER = '0';
 
-    /*4. Adult respiratory distress syndrome DX*/
-    Value $DX_Acute_Resp_Distress
-        'J80'                    /*Acute respiratory distress syndrome*/
-        ,'J951'                  /*Acute pulmonary insufficiency following thoracic surgery*/
-        ,'J952'                  /*Acute pulmonary insufficiency following nonthoracic surgery*/
-        ,'J953'                  /*Chronic pulmonary insufficiency following surgery*/
-        ,'J95821'                /*Acute postprocedural respiratory failure*/
-        ,'J95822'                /*Acute and chronic postprocedural respiratory failure*/
-        ,'J9600'                 /*Acute respiratory failure, unspecified whether with hypoxia or hypercapnia*/
-        ,'J9601'                 /*Acute respiratory failure with hypoxia*/
-        ,'J9602'                 /*Acute respiratory failure with hypercapnia*/
-        ,'J9620'                 /*Acute and chronic respiratory failure, unspecified whether with hypoxia or hypercapnia*/
-        ,'J9621'                 /*Acute and chronic respiratory failure with hypoxia*/
-        ,'J9622'                 /*Acute and chronic respiratory failure with hypercapnia*/
-        ,'J9690'                 /*Respiratory failure, unspecified, unspecified whether with hypoxia or hypercapnia*/
-        ,'J9691'                 /*Respiratory failure, unspecified with hypoxia*/
-        ,'J9692'                 /*Respiratory failure, unspecified with hypercapnia*/
-        ,'R0603'                 /*Acute respiratory distress*/
-        ,'R092' = '1'            /*Respiratory arrest*/
-        OTHER = '0';
+	/*4. Adult respiratory distress syndrome DX*/
+	Value $DX_Acute_Resp_Distress
+		'J80'                    /*Acute respiratory distress syndrome*/
+		,'J951'                  /*Acute pulmonary insufficiency following thoracic surgery*/
+		,'J952'                  /*Acute pulmonary insufficiency following nonthoracic surgery*/
+		,'J953'                  /*Chronic pulmonary insufficiency following surgery*/
+		,'J95821'                /*Acute postprocedural respiratory failure*/
+		,'J95822'                /*Acute and chronic postprocedural respiratory failure*/
+		,'J9600'                 /*Acute respiratory failure, unspecified whether with hypoxia or hypercapnia*/
+		,'J9601'                 /*Acute respiratory failure with hypoxia*/
+		,'J9602'                 /*Acute respiratory failure with hypercapnia*/
+		,'J9620'                 /*Acute and chronic respiratory failure, unspecified whether with hypoxia or hypercapnia*/
+		,'J9621'                 /*Acute and chronic respiratory failure with hypoxia*/
+		,'J9622'                 /*Acute and chronic respiratory failure with hypercapnia*/
+		,'J9690'                 /*Respiratory failure, unspecified, unspecified whether with hypoxia or hypercapnia*/
+		,'J9691'                 /*Respiratory failure, unspecified with hypoxia*/
+		,'J9692'                 /*Respiratory failure, unspecified with hypercapnia*/
+		,'R0603'                 /*Acute respiratory distress*/
+		,'R092' = '1'            /*Respiratory arrest*/
+		OTHER = '0';
 
-    /*5. Amniotic fluid embolism IDC-10 DX*/
-    Value $DX_Amniotic_Fluid_Emb
-         'O88112'                 /*Amniotic fluid embolism in pregnancy, second trimester*/
-        ,'O88113'                 /*Amniotic fluid embolism in pregnancy, third trimester*/
-        ,'O88119'                 /*Amniotic fluid embolism in pregnancy, unspecified trimester*/
-        ,'O8812'                  /*Amniotic fluid embolism in childbirth*/
-        ,'O8813' = '1'            /*Amniotic fluid embolism in the puerperium*/
-        OTHER = '0';
+	/*5. Amniotic fluid embolism IDC-10 DX*/
+	Value $DX_Amniotic_Fluid_Emb
+		 'O88112'                 /*Amniotic fluid embolism in pregnancy, second trimester*/
+		,'O88113'                 /*Amniotic fluid embolism in pregnancy, third trimester*/
+		,'O88119'                 /*Amniotic fluid embolism in pregnancy, unspecified trimester*/
+		,'O8812'                  /*Amniotic fluid embolism in childbirth*/
+		,'O8813' = '1'            /*Amniotic fluid embolism in the puerperium*/
+		OTHER = '0';
 
-    /* 6. Cardiac arrest/ventricular fibrillation*/
-    Value $DX_Card_Arrest_Vent_Fib
-        'I462'                  /*Cardiac arrest due to underlying cardiac condition*/
-        ,'I468'                 /*Cardiac arrest due to other underlying condition*/
-        ,'I469'                 /*Cardiac arrest, cause unspecified*/
-        ,'I4901'                /*Ventricular fibrillation*/
-        ,'I4902' = '1'          /*Ventricular flutter*/
-        OTHER = '0';
+	/* 6. Cardiac arrest/ventricular fibrillation*/
+	Value $DX_Card_Arrest_Vent_Fib
+		'I462'                 	/*Cardiac arrest due to underlying cardiac condition*/
+		,'I468'                 /*Cardiac arrest due to other underlying condition*/
+		,'I469'                 /*Cardiac arrest, cause unspecified*/
+		,'I4901'                /*Ventricular fibrillation*/
+		,'I4902' = '1'          /*Ventricular flutter*/
+		OTHER = '0';
 
-    /* 7. Conversion of cardiac rhythm PR */
-    Value $PR_Conv_Cardiac_Rhythm
-        '5A12012'               /*Performance of Cardiac Output, Single, Manual*/
-        ,'5A2204Z' = '1'        /*Restoration of Cardiac Rhythm, Single*/
-        OTHER = '0' ;
+	/* 7. Conversion of cardiac rhythm PR */
+	Value $PR_Conv_Cardiac_Rhythm
+		'5A12012'	 		 	/*Performance of Cardiac Output, Single, Manual*/
+		,'5A2204Z' = '1'	 	/*Restoration of Cardiac Rhythm, Single*/
+		OTHER = '0' ;
 
-    /* 8.1 Disseminated intravascular coagulation */
-    Value $DX_Diss_Intravasc_Coagul
-        'D65'                     /*Disseminated intravascular coagulation [defibrination syndrome]*/
-        ,'D688'                   /*Other specified coagulation defects*/
-        ,'D689'                   /*Coagulation defect, unspecified*/
-        ,'O45002'                 /*Premature separation of placenta with coagulation defect, unspecified, second trimester*/
-        ,'O45003'                 /*Premature separation of placenta with coagulation defect, unspecified, third trimester*/
-        ,'O45009'                 /*Premature separation of placenta with coagulation defect, unspecified, unspecified trimester*/
-        ,'O45012'                 /*Premature separation of placenta with afibrinogenemia, second trimester*/
-        ,'O45013'                 /*Premature separation of placenta with afibrinogenemia, third trimester*/
-        ,'O45019'                 /*Premature separation of placenta with afibrinogenemia, unspecified trimester*/
-        ,'O45022'                 /*Premature separation of placenta with disseminated intravascular coagulation, second trimester*/
-        ,'O45023'                 /*Premature separation of placenta with disseminated intravascular coagulation, third trimester*/
-        ,'O45029'                 /*Premature separation of placenta with disseminated intravascular coagulation, unspecified trimester*/
-        ,'O45092'                 /*Premature separation of placenta with other coagulation defect, second trimester*/
-        ,'O45093'                 /*Premature separation of placenta with other coagulation defect, third trimester*/
-        ,'O45099'                 /*Premature separation of placenta with other coagulation defect, unspecified trimester*/
-        ,'O46002'                 /*Antepartum hemorrhage with coagulation defect, unspecified, second trimester*/
-        ,'O46003'                 /*Antepartum hemorrhage with coagulation defect, unspecified, third trimester*/
-        ,'O46009'                 /*Antepartum hemorrhage with coagulation defect, unspecified, unspecified trimester*/
-        ,'O46012'                 /*Antepartum hemorrhage with afibrinogenemia, second trimester*/
-        ,'O46013'                 /*Antepartum hemorrhage with afibrinogenemia, third trimester*/
-        ,'O46019'                 /*Antepartum hemorrhage with afibrinogenemia, unspecified trimester*/
-        ,'O46022'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, second trimester*/
-        ,'O46023'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, third trimester*/
-        ,'O46029'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, unspecified trimester*/
-        ,'O46092'                 /*Antepartum hemorrhage with other coagulation defect, second trimester*/
-        ,'O46093'                 /*Antepartum hemorrhage with other coagulation defect, third trimester*/
-        ,'O46099'                 /*Antepartum hemorrhage with other coagulation defect, unspecified trimester*/
-        ,'O670'                   /*Intrapartum hemorrhage with coagulation defect*/
-        ,'O723' = '1'             /*Postpartum coagulation defects*/
-        OTHER = '0';
+	/* 8.1 Disseminated intravascular coagulation */
+	Value $DX_Diss_Intravasc_Coagul
+		'D65'                     /*Disseminated intravascular coagulation [defibrination syndrome]*/
+		,'D688'                   /*Other specified coagulation defects*/
+		,'D689'                   /*Coagulation defect, unspecified*/
+		,'O45002'                 /*Premature separation of placenta with coagulation defect, unspecified, second trimester*/
+		,'O45003'                 /*Premature separation of placenta with coagulation defect, unspecified, third trimester*/
+		,'O45009'                 /*Premature separation of placenta with coagulation defect, unspecified, unspecified trimester*/
+		,'O45012'                 /*Premature separation of placenta with afibrinogenemia, second trimester*/
+		,'O45013'                 /*Premature separation of placenta with afibrinogenemia, third trimester*/
+		,'O45019'                 /*Premature separation of placenta with afibrinogenemia, unspecified trimester*/
+		,'O45022'                 /*Premature separation of placenta with disseminated intravascular coagulation, second trimester*/
+		,'O45023'                 /*Premature separation of placenta with disseminated intravascular coagulation, third trimester*/
+		,'O45029'                 /*Premature separation of placenta with disseminated intravascular coagulation, unspecified trimester*/
+		,'O45092'                 /*Premature separation of placenta with other coagulation defect, second trimester*/
+		,'O45093'                 /*Premature separation of placenta with other coagulation defect, third trimester*/
+		,'O45099'                 /*Premature separation of placenta with other coagulation defect, unspecified trimester*/
+		,'O46002'                 /*Antepartum hemorrhage with coagulation defect, unspecified, second trimester*/
+		,'O46003'                 /*Antepartum hemorrhage with coagulation defect, unspecified, third trimester*/
+		,'O46009'                 /*Antepartum hemorrhage with coagulation defect, unspecified, unspecified trimester*/
+		,'O46012'                 /*Antepartum hemorrhage with afibrinogenemia, second trimester*/
+		,'O46013'                 /*Antepartum hemorrhage with afibrinogenemia, third trimester*/
+		,'O46019'                 /*Antepartum hemorrhage with afibrinogenemia, unspecified trimester*/
+		,'O46022'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, second trimester*/
+		,'O46023'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, third trimester*/
+		,'O46029'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, unspecified trimester*/
+		,'O46092'                 /*Antepartum hemorrhage with other coagulation defect, second trimester*/
+		,'O46093'                 /*Antepartum hemorrhage with other coagulation defect, third trimester*/
+		,'O46099'                 /*Antepartum hemorrhage with other coagulation defect, unspecified trimester*/
+		,'O670'                   /*Intrapartum hemorrhage with coagulation defect*/
+		,'O723' = '1'             /*Postpartum coagulation defects*/
+		OTHER = '0';
 
 
-    /* 8.2  Refined Disseminated intravascular coagulation (-O723, D68.8, D68.9) */
-    Value $DX_Diss_Intravasc_Coagul3_
-        'D65'                     /*Disseminated intravascular coagulation [defibrination syndrome]*/
-        ,'O45002'                 /*Premature separation of placenta with coagulation defect, unspecified, second trimester*/
-        ,'O45003'                 /*Premature separation of placenta with coagulation defect, unspecified, third trimester*/
-        ,'O45009'                 /*Premature separation of placenta with coagulation defect, unspecified, unspecified trimester*/
-        ,'O45012'                 /*Premature separation of placenta with afibrinogenemia, second trimester*/
-        ,'O45013'                 /*Premature separation of placenta with afibrinogenemia, third trimester*/
-        ,'O45019'                 /*Premature separation of placenta with afibrinogenemia, unspecified trimester*/
-        ,'O45022'                 /*Premature separation of placenta with disseminated intravascular coagulation, second trimester*/
-        ,'O45023'                 /*Premature separation of placenta with disseminated intravascular coagulation, third trimester*/
-        ,'O45029'                 /*Premature separation of placenta with disseminated intravascular coagulation, unspecified trimester*/
-        ,'O45092'                 /*Premature separation of placenta with other coagulation defect, second trimester*/
-        ,'O45093'                 /*Premature separation of placenta with other coagulation defect, third trimester*/
-        ,'O45099'                 /*Premature separation of placenta with other coagulation defect, unspecified trimester*/
-        ,'O46002'                 /*Antepartum hemorrhage with coagulation defect, unspecified, second trimester*/
-        ,'O46003'                 /*Antepartum hemorrhage with coagulation defect, unspecified, third trimester*/
-        ,'O46009'                 /*Antepartum hemorrhage with coagulation defect, unspecified, unspecified trimester*/
-        ,'O46012'                 /*Antepartum hemorrhage with afibrinogenemia, second trimester*/
-        ,'O46013'                 /*Antepartum hemorrhage with afibrinogenemia, third trimester*/
-        ,'O46019'                 /*Antepartum hemorrhage with afibrinogenemia, unspecified trimester*/
-        ,'O46022'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, second trimester*/
-        ,'O46023'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, third trimester*/
-        ,'O46029'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, unspecified trimester*/
-        ,'O46092'                 /*Antepartum hemorrhage with other coagulation defect, second trimester*/
-        ,'O46093'                 /*Antepartum hemorrhage with other coagulation defect, third trimester*/
-        ,'O46099'                 /*Antepartum hemorrhage with other coagulation defect, unspecified trimester*/
-        ,'O670' = '1'                  /*Intrapartum hemorrhage with coagulation defect*/
-        OTHER = '0';
+	/* 8.2  Refined Disseminated intravascular coagulation (-O723, D68.8, D68.9) */
+	Value $DX_Diss_Intravasc_Coagul3_
+		'D65'                     /*Disseminated intravascular coagulation [defibrination syndrome]*/
+		,'O45002'                 /*Premature separation of placenta with coagulation defect, unspecified, second trimester*/
+		,'O45003'                 /*Premature separation of placenta with coagulation defect, unspecified, third trimester*/
+		,'O45009'                 /*Premature separation of placenta with coagulation defect, unspecified, unspecified trimester*/
+		,'O45012'                 /*Premature separation of placenta with afibrinogenemia, second trimester*/
+		,'O45013'                 /*Premature separation of placenta with afibrinogenemia, third trimester*/
+		,'O45019'                 /*Premature separation of placenta with afibrinogenemia, unspecified trimester*/
+		,'O45022'                 /*Premature separation of placenta with disseminated intravascular coagulation, second trimester*/
+		,'O45023'                 /*Premature separation of placenta with disseminated intravascular coagulation, third trimester*/
+		,'O45029'                 /*Premature separation of placenta with disseminated intravascular coagulation, unspecified trimester*/
+		,'O45092'                 /*Premature separation of placenta with other coagulation defect, second trimester*/
+		,'O45093'                 /*Premature separation of placenta with other coagulation defect, third trimester*/
+		,'O45099'                 /*Premature separation of placenta with other coagulation defect, unspecified trimester*/
+		,'O46002'                 /*Antepartum hemorrhage with coagulation defect, unspecified, second trimester*/
+		,'O46003'                 /*Antepartum hemorrhage with coagulation defect, unspecified, third trimester*/
+		,'O46009'                 /*Antepartum hemorrhage with coagulation defect, unspecified, unspecified trimester*/
+		,'O46012'                 /*Antepartum hemorrhage with afibrinogenemia, second trimester*/
+		,'O46013'                 /*Antepartum hemorrhage with afibrinogenemia, third trimester*/
+		,'O46019'                 /*Antepartum hemorrhage with afibrinogenemia, unspecified trimester*/
+		,'O46022'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, second trimester*/
+		,'O46023'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, third trimester*/
+		,'O46029'                 /*Antepartum hemorrhage with disseminated intravascular coagulation, unspecified trimester*/
+		,'O46092'                 /*Antepartum hemorrhage with other coagulation defect, second trimester*/
+		,'O46093'                 /*Antepartum hemorrhage with other coagulation defect, third trimester*/
+		,'O46099'                 /*Antepartum hemorrhage with other coagulation defect, unspecified trimester*/
+		,'O670' = '1'                  /*Intrapartum hemorrhage with coagulation defect*/
+		OTHER = '0';
 
-    /* 9. Eclampsia */
-    Value $DX_Eclampsia
-        'O1500'                 /*Eclampsia complicating pregnancy, unspecified trimester*/
-        ,'O1502'                /*Eclampsia complicating pregnancy, second trimester*/
-        ,'O1503'                /*Eclampsia complicating pregnancy, third trimester*/
-        ,'O151'                 /*Eclampsia complicating labor*/
-        ,'O152'                 /*Eclampsia complicating the puerperium*/
-        ,'O159' = '1'           /*Eclampsia, unspecified as to time period*/
-        OTHER = '0';
+	/* 9. Eclampsia */
+	Value $DX_Eclampsia
+		'O1500'                 /*Eclampsia complicating pregnancy, unspecified trimester*/
+		,'O1502'                /*Eclampsia complicating pregnancy, second trimester*/
+		,'O1503'                /*Eclampsia complicating pregnancy, third trimester*/
+		,'O151'                 /*Eclampsia complicating labor*/
+		,'O152'                 /*Eclampsia complicating the puerperium*/
+		,'O159' = '1'           /*Eclampsia, unspecified as to time period*/
+		OTHER = '0';
 
-    /* 10. Heart failure/arrest during surgery or procedure */
-    Value $DX_Heart_Fail_Surgery
-        'I97120'                  /*Postprocedural cardiac arrest following cardiac surgery*/
-        ,'I97121'                 /*Postprocedural cardiac arrest following other surgery*/
-        ,'I97130'                 /*Postprocedural heart failure following cardiac surgery*/
-        ,'I97131'                 /*Postprocedural heart failure following other surgery*/
-        ,'I97710'                 /*Intraoperative cardiac arrest during cardiac surgery*/
-        ,'I97711'='1'             /*Intraoperative cardiac arrest during other surgery*/
-        OTHER = '0';
+	/* 10. Heart failure/arrest during surgery or procedure */
+	Value $DX_Heart_Fail_Surgery
+		'I97120'                  /*Postprocedural cardiac arrest following cardiac surgery*/
+		,'I97121'                 /*Postprocedural cardiac arrest following other surgery*/
+		,'I97130'                 /*Postprocedural heart failure following cardiac surgery*/
+		,'I97131'                 /*Postprocedural heart failure following other surgery*/
+		,'I97710'                 /*Intraoperative cardiac arrest during cardiac surgery*/
+		,'I97711'='1'             /*Intraoperative cardiac arrest during other surgery*/
+		OTHER = '0';
 
-    /* 11. Puerperal cerebrovascular disorders */
-    Value $DX_Puerp_Cerebrovascular
-        'A812'      /*Progressive multifocal leukoencephalopathy*/
-        ,'G450'     /*Vertebro-basilar artery syndrome*/
-        ,'G451'     /*Carotid artery syndrome (hemispheric)*/
-        ,'G452'     /*Multiple and bilateral precerebral artery syndromes*/
-        ,'G453'     /*Amaurosis fugax*/
-        ,'G454'     /*Transient global amnesia*/
-        ,'G458'     /*Oth transient cerebral ischemic attacks and related synd*/
-        ,'G459'     /*Transient cerebral ischemic attack, unspecified*/
-        ,'G460'     /*Middle cerebral artery syndrome*/
-        ,'G461'     /*Anterior cerebral artery syndrome*/
-        ,'G462'     /*Posterior cerebral artery syndrome*/
-        ,'G463'     /*Brain stem stroke syndrome*/
-        ,'G464'     /*Cerebellar stroke syndrome*/
-        ,'G465'     /*Pure motor lacunar syndrome*/
-        ,'G466'     /*Pure sensory lacunar syndrome*/
-        ,'G467'     /*Other lacunar syndromes*/
-        ,'G468'     /*Oth vascular syndromes of brain in cerebrovascular diseases*/
-        ,'G9349'     /*Other encephalopathy*/
-        ,'H3400'     /*Transient retinal artery occlusion, unspecified eye*/
-        ,'H3401'     /*Transient retinal artery occlusion, right eye*/
-        ,'H3402'     /*Transient retinal artery occlusion, left eye*/
-        ,'H3403'     /*Transient retinal artery occlusion, bilateral*/
-        ,'I6000'     /*Ntrm subarach hemorrhage from unsp carotid siphon and bifurc*/
-        ,'I6001'     /*Ntrm subarach hemor from right carotid siphon and bifurc*/
-        ,'I6002'     /*Ntrm subarach hemorrhage from left carotid siphon and bifurc*/
-        ,'I6010'     /*Ntrm subarach hemorrhage from unsp middle cerebral artery*/
-        ,'I6011'     /*Ntrm subarach hemorrhage from right middle cerebral artery*/
-        ,'I6012'     /*Ntrm subarach hemorrhage from left middle cerebral artery*/
-        ,'I602'      /*Ntrm subarach hemorrhage from anterior communicating artery*/
-        ,'I6020'     /*Ntrm subarach hemor from unsp anterior communicating artery*/
-        ,'I6021'     /*Ntrm subarach hemor from right anterior communicating artery*/
-        ,'I6022'     /*Ntrm subarach hemor from left anterior communicating artery*/
-        ,'I6030'     /*Ntrm subarach hemor from unsp posterior communicating artery*/
-        ,'I6031'     /*Ntrm subarach hemor from right post communicating artery*/
-        ,'I6032'     /*Ntrm subarach hemor from left posterior communicating artery*/
-        ,'I604'      /*Nontraumatic subarachnoid hemorrhage from basilar artery*/
-        ,'I6050'     /*Nontraumatic subarachnoid hemorrhage from unsp verteb art*/
-        ,'I6051'     /*Nontraumatic subarachnoid hemorrhage from r verteb art*/
-        ,'I6052'     /*Nontraumatic subarachnoid hemorrhage from l verteb art*/
-        ,'I606'      /*Nontraumatic subarachnoid hemorrhage from oth intracran art*/
-        ,'I607'      /*Nontraumatic subarachnoid hemorrhage from unsp intracran art*/
-        ,'I608'      /*Other nontraumatic subarachnoid hemorrhage*/
-        ,'I609'      /*Nontraumatic subarachnoid hemorrhage, unspecified*/
-        ,'I610'      /*Nontraumatic intcrbl hemorrhage in hemisphere, subcortical*/
-        ,'I611'      /*Nontraumatic intcrbl hemorrhage in hemisphere, cortical*/
-        ,'I612'      /*Nontraumatic intracerebral hemorrhage in hemisphere, unsp*/
-        ,'I613'      /*Nontraumatic intracerebral hemorrhage in brain stem*/
-        ,'I614'      /*Nontraumatic intracerebral hemorrhage in cerebellum*/
-        ,'I615'      /*Nontraumatic intracerebral hemorrhage, intraventricular*/
-        ,'I616'      /*Nontraumatic intracerebral hemorrhage, multiple localized*/
-        ,'I618'      /*Other nontraumatic intracerebral hemorrhage*/
-        ,'I619'      /*Nontraumatic intracerebral hemorrhage, unspecified*/
-        ,'I6200'     /*Nontraumatic subdural hemorrhage, unspecified*/
-        ,'I6201'     /*Nontraumatic acute subdural hemorrhage*/
-        ,'I6202'     /*Nontraumatic subacute subdural hemorrhage*/
-        ,'I6203'     /*Nontraumatic chronic subdural hemorrhage*/
-        ,'I621'      /*Nontraumatic extradural hemorrhage*/
-        ,'I629'      /*Nontraumatic intracranial hemorrhage, unspecified*/
-        ,'I6300'     /*Cerebral infarction due to thombos unsp precerebral artery*/
-        ,'I63011'    /*Cerebral infarction due to thrombosis of r verteb art*/
-        ,'I63012'    /*Cerebral infarction due to thrombosis of l verteb art*/
-        ,'I63013'    /*Cerebral infrc due to thrombosis of bilateral verteb art*/
-        ,'I63019'    /*Cerebral infarction due to thombos unsp vertebral artery*/
-        ,'I6302'     /*Cerebral infarction due to thrombosis of basilar artery*/
-        ,'I63031'    /*Cerebral infrc due to thrombosis of right carotid artery*/
-        ,'I63032'    /*Cerebral infarction due to thrombosis of left carotid artery*/
-        ,'I63033'    /*Cerebral infrc due to thombos of bilateral carotid arteries*/
-        ,'I63039'    /*Cerebral infarction due to thrombosis of unsp carotid artery*/
-        ,'I6309'     /*Cerebral infarction due to thrombosis of precerebral artery*/
-        ,'I6310'     /*Cerebral infarction due to embolism of unsp precerb artery*/
-        ,'I63111'    /*Cerebral infarction due to embolism of r verteb art*/
-        ,'I63112'    /*Cerebral infarction due to embolism of left vertebral artery*/
-        ,'I63113'    /*Cerebral infarction due to embolism of unsp vertebral artery*/
-        ,'I63119'    /*Cerebral infarction due to embolism of unsp vertebral artery*/
-        ,'I6312'     /*Cerebral infarction due to embolism of basilar artery*/
-        ,'I63131'    /*Cerebral infarction due to embolism of right carotid artery*/
-        ,'I63132'    /*Cerebral infarction due to embolism of left carotid artery*/
-        ,'I63133'    /*Cerebral infrc due to embolism of bilateral carotid arteries*/
-        ,'I63139'    /*Cerebral infarction due to embolism of unsp carotid artery*/
-        ,'I6319'     /*Cerebral infarction due to embolism of precerebral artery*/
-        ,'I6320'     /*Cereb infrc due to unsp occls or stenos of unsp precerb art*/
-        ,'I63211'    /*Cereb infrc due to unsp occls or stenos of right verteb art*/
-        ,'I63212'    /*Cereb infrc due to unsp occls or stenosis of left verteb art*/
-        ,'I63213'    /*Cereb infrc due to unsp occls or stenosis of bi verteb art*/
-        ,'I63219'    /*Cereb infrc due to unsp occls or stenosis of unsp verteb art*/
-        ,'I6322'     /*Cerebral infrc due to unsp occls or stenosis of basilar art*/
-        ,'I63231'    /*Cereb infrc due to unsp occls or stenos of right carotid art*/
-        ,'I63232'    /*Cereb infrc due to unsp occls or stenos of left carotid art*/
-        ,'I63233'    /*Cereb infrc due to unsp occls or stenosis of bi carotid art*/
-        ,'I63239'    /*Cereb infrc due to unsp occls or stenos of unsp crtd artery*/
-        ,'I6329'     /*Cerebral infrc due to unsp occls or stenosis of precerb art*/
-        ,'I6330'     /*Cerebral infarction due to thombos unsp cerebral artery*/
-        ,'I63311'    /*Cereb infrc due to thombos of right middle cerebral artery*/
-        ,'I63312'    /*Cerebral infrc due to thombos of left middle cerebral artery*/
-        ,'I63313'    /*Cerebral infrc due to thombos of bi middle cerebral arteries*/
-        ,'I63319'    /*Cerebral infrc due to thombos unsp middle cerebral artery*/
-        ,'I63321'    /*Cerebral infrc due to thombos of right ant cerebral artery*/
-        ,'I63322'    /*Cerebral infrc due to thombos of left ant cerebral artery*/
-        ,'I63323'    /*Cerebral infrc due to thombos of bilateral ant cerebral arteries*/
-        ,'I63329'    /*Cerebral infrc due to thombos unsp anterior cerebral artery*/
-        ,'I63331'    /*Cerebral infrc due to thombos of right post cerebral artery*/
-        ,'I63332'    /*Cerebral infrc due to thombos of left post cerebral artery*/
-        ,'I63333'    /*Cerebral infrc due to thombos of bi post cerebral arteries*/
-        ,'I63339'    /*Cerebral infrc due to thombos unsp posterior cerebral artery*/
-        ,'I63341'    /*Cerebral infrc due to thrombosis of right cereblr artery*/
-        ,'I63342'    /*Cerebral infarction due to thrombosis of left cereblr artery*/
-        ,'I63343'    /*Cerebral infrc due to thombos of bilateral cereblr arteries*/
-        ,'I63349'    /*Cerebral infarction due to thombos unsp cerebellar artery*/
-        ,'I6339'     /*Cerebral infarction due to thrombosis of oth cerebral artery*/
-        ,'I6340'     /*Cerebral infarction due to embolism of unsp cerebral artery*/
-        ,'I63411'    /*Cereb infrc due to embolism of right middle cerebral artery*/
-        ,'I63412'    /*Cereb infrc due to embolism of left middle cerebral artery*/
-        ,'I63413'    /*Cerebral infrc due to embolism of bi middle cerebral art*/
-        ,'I63419'    /*Cereb infrc due to embolism of unsp middle cerebral artery*/
-        ,'I63421'    /*Cerebral infrc due to embolism of right ant cerebral artery*/
-        ,'I63422'    /*Cerebral infrc due to embolism of left ant cerebral artery*/
-        ,'I63423'    /*Cerebral infrc due to embolism of bi ant cerebral arteries*/
-        ,'I63429'    /*Cerebral infrc due to embolism of unsp ant cerebral artery*/
-        ,'I63431'    /*Cerebral infrc due to embolism of right post cerebral artery*/
-        ,'I63432'    /*Cerebral infrc due to embolism of left post cerebral artery*/
-        ,'I63433'    /*Cerebral infrc due to embolism of bi post cerebral arteries*/
-        ,'I63439'    /*Cerebral infrc due to embolism of unsp post cerebral artery*/
-        ,'I63441'    /*Cerebral infarction due to embolism of right cereblr artery*/
-        ,'I63442'    /*Cerebral infarction due to embolism of left cereblr artery*/
-        ,'I63443'    /*Cerebral infrc due to embolism of bilateral cereblr arteries*/
-        ,'I63449'    /*Cerebral infarction due to embolism of unsp cereblr artery*/
-        ,'I6349'     /*Cerebral infarction due to embolism of other cerebral artery*/
-        ,'I6350'     /*Cereb infrc due to unsp occls or stenos of unsp cereb artery*/
-        ,'I63511'    /*Cereb infrc d/t unsp occls or stenos of right mid cereb art*/
-        ,'I63512'    /*Cereb infrc d/t unsp occls or stenos of left mid cereb art*/
-        ,'I63513'    /*Cereb infrc due to unsp occls or stenos of bi mid cereb art*/
-        ,'I63519'    /*Cereb infrc d/t unsp occls or stenos of unsp mid cereb art*/
-        ,'I63521'    /*Cereb infrc d/t unsp occls or stenos of right ant cereb art*/
-        ,'I63522'    /*Cereb infrc d/t unsp occls or stenos of left ant cereb art*/
-        ,'I63523'    /*Cerebral infrc due to unsp occls or stenos of bi ant cereb art*/
-        ,'I63529'    /*Cereb infrc d/t unsp occls or stenos of unsp ant cereb art*/
-        ,'I63531'    /*Cereb infrc d/t unsp occls or stenos of right post cereb art*/
-        ,'I63532'    /*Cereb infrc d/t unsp occls or stenos of left post cereb art*/
-        ,'I63533'    /*Cerebral infrc due to unsp occls or stenos of bi post cereb art*/
-        ,'I63539'    /*Cereb infrc d/t unsp occls or stenos of unsp post cereb art*/
-        ,'I63541'    /*Cereb infrc due to unsp occls or stenos of right cereblr art*/
-        ,'I63542'    /*Cereb infrc due to unsp occls or stenos of left cereblr art*/
-        ,'I63543'    /*Cereb infrc due to unsp occls or stenosis of bi cereblr art*/
-        ,'I63549'    /*Cereb infrc due to unsp occls or stenos of unsp cereblr art*/
-        ,'I6359'     /*Cereb infrc due to unsp occls or stenosis of cerebral artery*/
-        ,'I636'      /*Cerebral infrc due to cerebral venous thombos, nonpyogenic*/
-        ,'I638'      /*Other cerebral infarction*/
-        ,'I6381'     /*Other cereb infrc due to occls or stenosis of small artery*/
-        ,'I6389'     /*Other cerebral infarction*/
-        ,'I639'      /*Cerebral infarction, unspecified*/
-        ,'I6501'     /*Occlusion and stenosis of right vertebral artery*/
-        ,'I6502'     /*Occlusion and stenosis of left vertebral artery*/
-        ,'I6503'     /*Occlusion and stenosis of bilateral vertebral arteries*/
-        ,'I6509'     /*Occlusion and stenosis of unspecified vertebral artery*/
-        ,'I651'      /*Occlusion and stenosis of basilar artery*/
-        ,'I6521'     /*Occlusion and stenosis of right carotid artery*/
-        ,'I6522'     /*Occlusion and stenosis of left carotid artery*/
-        ,'I6523'     /*Occlusion and stenosis of bilateral carotid arteries*/
-        ,'I6529'     /*Occlusion and stenosis of unspecified carotid artery*/
-        ,'I658'      /*Occlusion and stenosis of other precerebral arteries*/
-        ,'I659'      /*Occlusion and stenosis of unspecified precerebral artery*/
-        ,'I6601'     /*Occlusion and stenosis of right middle cerebral artery*/
-        ,'I6602'     /*Occlusion and stenosis of left middle cerebral artery*/
-        ,'I6603'     /*Occlusion and stenosis of bilateral middle cerebral arteries*/
-        ,'I6609'     /*Occlusion and stenosis of unspecified middle cerebral artery*/
-        ,'I6611'     /*Occlusion and stenosis of right anterior cerebral artery*/
-        ,'I6612'     /*Occlusion and stenosis of left anterior cerebral artery*/
-        ,'I6613'     /*Occlusion and stenosis of bi anterior cerebral arteries*/
-        ,'I6619'     /*Occlusion and stenosis of unsp anterior cerebral artery*/
-        ,'I6621'     /*Occlusion and stenosis of right posterior cerebral artery*/
-        ,'I6622'     /*Occlusion and stenosis of left posterior cerebral artery*/
-        ,'I6623'     /*Occlusion and stenosis of bi posterior cerebral arteries*/
-        ,'I6629'     /*Occlusion and stenosis of unsp posterior cerebral artery*/
-        ,'I663'      /*Occlusion and stenosis of cerebellar arteries*/
-        ,'I668'      /*Occlusion and stenosis of other cerebral arteries*/
-        ,'I669'      /*Occlusion and stenosis of unspecified cerebral artery*/
-        ,'I670'      /*Dissection of cerebral arteries, nonruptured*/
-        ,'I671'      /*Cerebral aneurysm, nonruptured*/
-        ,'I672'      /*Cerebral atherosclerosis*/
-        ,'I673'      /*Progressive vascular leukoencephalopathy*/
-        ,'I674'      /*Hypertensive encephalopathy*/
-        ,'I675'      /*Moyamoya disease*/
-        ,'I676'      /*Nonpyogenic thrombosis of intracranial venous system*/
-        ,'I677'      /*Cerebral arteritis, not elsewhere classified*/
-        ,'I6781'     /*Acute cerebrovascular insufficiency*/
-        ,'I6782'     /*Cerebral ischemia*/
-        ,'I6783'     /*Posterior reversible encephalopathy syndrome*/
-        ,'I67841'    /*Reversible cerebrovascular vasoconstriction syndrome*/
-        ,'I67848'    /*Other cerebrovascular vasospasm and vasoconstriction*/
-        ,'I67850'    /*Cereb autosom dom artopath w subcort infarcts & leukoenceph*/
-        ,'I67858'    /*Other hereditary cerebrovascular disease*/
-        ,'I6789'     /*Other cerebrovascular disease*/
-        ,'I679'      /*Cerebrovascular disease, unspecified*/
-        ,'I680'      /*Cerebral amyloid angiopathy*/
-        ,'I682'      /*Cerebral arteritis in other diseases classified elsewhere*/
-        ,'I688'      /*Oth cerebrovascular disorders in diseases classd elswhr*/
-        ,'O2250'     /*Cerebral venous thrombosis in pregnancy, unsp trimester*/
-        ,'O2252'     /*Cerebral venous thrombosis in pregnancy, second trimester*/
-        ,'O2253'     /*Cerebral venous thrombosis in pregnancy, third trimester*/
-        ,'I97810'    /*Intraoperative cerebvasc infarction during cardiac surgery*/
-        ,'I97811'    /*Intraoperative cerebrovascular infarction during oth surgery*/
-        ,'I97820'    /*Postprocedural cerebvasc infarction folowing cardiac surgery*/
-        ,'I97821'    /*Postprocedural cerebrovascular infarction following oth surgery*/
-        ,'O873' = '1'    /*Cerebral venous thrombosis in the puerperium*/
-        OTHER = '0';
+	/* 11. Puerperal cerebrovascular disorders */
+	Value $DX_Puerp_Cerebrovascular
+		'A812'	 	/*Progressive multifocal leukoencephalopathy*/
+		,'G450'	 	/*Vertebro-basilar artery syndrome*/
+		,'G451'	 	/*Carotid artery syndrome (hemispheric)*/
+		,'G452'	 	/*Multiple and bilateral precerebral artery syndromes*/
+		,'G453'	 	/*Amaurosis fugax*/
+		,'G454'	 	/*Transient global amnesia*/
+		,'G458'	 	/*Oth transient cerebral ischemic attacks and related synd*/
+		,'G459'	 	/*Transient cerebral ischemic attack, unspecified*/
+		,'G460'	 	/*Middle cerebral artery syndrome*/
+		,'G461'	 	/*Anterior cerebral artery syndrome*/
+		,'G462'	 	/*Posterior cerebral artery syndrome*/
+		,'G463'	 	/*Brain stem stroke syndrome*/
+		,'G464'	 	/*Cerebellar stroke syndrome*/
+		,'G465'	 	/*Pure motor lacunar syndrome*/
+		,'G466'	 	/*Pure sensory lacunar syndrome*/
+		,'G467'	 	/*Other lacunar syndromes*/
+		,'G468'	 	/*Oth vascular syndromes of brain in cerebrovascular diseases*/
+		,'G9349'	 /*Other encephalopathy*/
+		,'H3400'	 /*Transient retinal artery occlusion, unspecified eye*/
+		,'H3401'	 /*Transient retinal artery occlusion, right eye*/
+		,'H3402'	 /*Transient retinal artery occlusion, left eye*/
+		,'H3403'	 /*Transient retinal artery occlusion, bilateral*/
+		,'I6000'	 /*Ntrm subarach hemorrhage from unsp carotid siphon and bifurc*/
+		,'I6001'	 /*Ntrm subarach hemor from right carotid siphon and bifurc*/
+		,'I6002'	 /*Ntrm subarach hemorrhage from left carotid siphon and bifurc*/
+		,'I6010'	 /*Ntrm subarach hemorrhage from unsp middle cerebral artery*/
+		,'I6011'	 /*Ntrm subarach hemorrhage from right middle cerebral artery*/
+		,'I6012'	 /*Ntrm subarach hemorrhage from left middle cerebral artery*/
+		,'I602'	 	 /*Ntrm subarach hemorrhage from anterior communicating artery*/
+		,'I6020'	 /*Ntrm subarach hemor from unsp anterior communicating artery*/
+		,'I6021'	 /*Ntrm subarach hemor from right anterior communicating artery*/
+		,'I6022'	 /*Ntrm subarach hemor from left anterior communicating artery*/
+		,'I6030'	 /*Ntrm subarach hemor from unsp posterior communicating artery*/
+		,'I6031'	 /*Ntrm subarach hemor from right post communicating artery*/
+		,'I6032'	 /*Ntrm subarach hemor from left posterior communicating artery*/
+		,'I604'	 	 /*Nontraumatic subarachnoid hemorrhage from basilar artery*/
+		,'I6050'	 /*Nontraumatic subarachnoid hemorrhage from unsp verteb art*/
+		,'I6051'	 /*Nontraumatic subarachnoid hemorrhage from r verteb art*/
+		,'I6052'	 /*Nontraumatic subarachnoid hemorrhage from l verteb art*/
+		,'I606'	  	 /*Nontraumatic subarachnoid hemorrhage from oth intracran art*/
+		,'I607'	 	 /*Nontraumatic subarachnoid hemorrhage from unsp intracran art*/
+		,'I608'	 	 /*Other nontraumatic subarachnoid hemorrhage*/
+		,'I609'	 	 /*Nontraumatic subarachnoid hemorrhage, unspecified*/
+		,'I610'	 	 /*Nontraumatic intcrbl hemorrhage in hemisphere, subcortical*/
+		,'I611'	 	 /*Nontraumatic intcrbl hemorrhage in hemisphere, cortical*/
+		,'I612'	 	 /*Nontraumatic intracerebral hemorrhage in hemisphere, unsp*/
+		,'I613'	 	 /*Nontraumatic intracerebral hemorrhage in brain stem*/
+		,'I614'	 	 /*Nontraumatic intracerebral hemorrhage in cerebellum*/
+		,'I615'	 	 /*Nontraumatic intracerebral hemorrhage, intraventricular*/
+		,'I616'	 	 /*Nontraumatic intracerebral hemorrhage, multiple localized*/
+		,'I618'	 	 /*Other nontraumatic intracerebral hemorrhage*/
+		,'I619'	 	 /*Nontraumatic intracerebral hemorrhage, unspecified*/
+		,'I6200'	 /*Nontraumatic subdural hemorrhage, unspecified*/
+		,'I6201'	 /*Nontraumatic acute subdural hemorrhage*/
+		,'I6202'	 /*Nontraumatic subacute subdural hemorrhage*/
+		,'I6203'	 /*Nontraumatic chronic subdural hemorrhage*/
+		,'I621'	 	 /*Nontraumatic extradural hemorrhage*/
+		,'I629'	 	 /*Nontraumatic intracranial hemorrhage, unspecified*/
+		,'I6300'	 /*Cerebral infarction due to thombos unsp precerebral artery*/
+		,'I63011'	 /*Cerebral infarction due to thrombosis of r verteb art*/
+		,'I63012'	 /*Cerebral infarction due to thrombosis of l verteb art*/
+		,'I63013'	 /*Cerebral infrc due to thrombosis of bilateral verteb art*/
+		,'I63019'	 /*Cerebral infarction due to thombos unsp vertebral artery*/
+		,'I6302'	 /*Cerebral infarction due to thrombosis of basilar artery*/
+		,'I63031'	 /*Cerebral infrc due to thrombosis of right carotid artery*/
+		,'I63032'	 /*Cerebral infarction due to thrombosis of left carotid artery*/
+		,'I63033'	 /*Cerebral infrc due to thombos of bilateral carotid arteries*/
+		,'I63039'	 /*Cerebral infarction due to thrombosis of unsp carotid artery*/
+		,'I6309'	 /*Cerebral infarction due to thrombosis of precerebral artery*/
+		,'I6310'	 /*Cerebral infarction due to embolism of unsp precerb artery*/
+		,'I63111'	 /*Cerebral infarction due to embolism of r verteb art*/
+		,'I63112'	 /*Cerebral infarction due to embolism of left vertebral artery*/
+		,'I63113'	 /*Cerebral infarction due to embolism of unsp vertebral artery*/
+		,'I63119'	 /*Cerebral infarction due to embolism of unsp vertebral artery*/
+		,'I6312'	 /*Cerebral infarction due to embolism of basilar artery*/
+		,'I63131'	 /*Cerebral infarction due to embolism of right carotid artery*/
+		,'I63132'	 /*Cerebral infarction due to embolism of left carotid artery*/
+		,'I63133'	 /*Cerebral infrc due to embolism of bilateral carotid arteries*/
+		,'I63139'	 /*Cerebral infarction due to embolism of unsp carotid artery*/
+		,'I6319'	 /*Cerebral infarction due to embolism of precerebral artery*/
+		,'I6320'	 /*Cereb infrc due to unsp occls or stenos of unsp precerb art*/
+		,'I63211'	 /*Cereb infrc due to unsp occls or stenos of right verteb art*/
+		,'I63212'	 /*Cereb infrc due to unsp occls or stenosis of left verteb art*/
+		,'I63213'	 /*Cereb infrc due to unsp occls or stenosis of bi verteb art*/
+		,'I63219'	 /*Cereb infrc due to unsp occls or stenosis of unsp verteb art*/
+		,'I6322'	 /*Cerebral infrc due to unsp occls or stenosis of basilar art*/
+		,'I63231'	 /*Cereb infrc due to unsp occls or stenos of right carotid art*/
+		,'I63232'	 /*Cereb infrc due to unsp occls or stenos of left carotid art*/
+		,'I63233'	 /*Cereb infrc due to unsp occls or stenosis of bi carotid art*/
+		,'I63239'	 /*Cereb infrc due to unsp occls or stenos of unsp crtd artery*/
+		,'I6329'	 /*Cerebral infrc due to unsp occls or stenosis of precerb art*/
+		,'I6330'	 /*Cerebral infarction due to thombos unsp cerebral artery*/
+		,'I63311'	 /*Cereb infrc due to thombos of right middle cerebral artery*/
+		,'I63312'	 /*Cerebral infrc due to thombos of left middle cerebral artery*/
+		,'I63313'	 /*Cerebral infrc due to thombos of bi middle cerebral arteries*/
+		,'I63319'	 /*Cerebral infrc due to thombos unsp middle cerebral artery*/
+		,'I63321'	 /*Cerebral infrc due to thombos of right ant cerebral artery*/
+		,'I63322'	 /*Cerebral infrc due to thombos of left ant cerebral artery*/
+		,'I63323'	 /*Cerebral infrc due to thombos of bilateral ant cerebral arteries*/
+		,'I63329'	 /*Cerebral infrc due to thombos unsp anterior cerebral artery*/
+		,'I63331'	 /*Cerebral infrc due to thombos of right post cerebral artery*/
+		,'I63332'	 /*Cerebral infrc due to thombos of left post cerebral artery*/
+		,'I63333'	 /*Cerebral infrc due to thombos of bi post cerebral arteries*/
+		,'I63339'	 /*Cerebral infrc due to thombos unsp posterior cerebral artery*/
+		,'I63341'	 /*Cerebral infrc due to thrombosis of right cereblr artery*/
+		,'I63342'	 /*Cerebral infarction due to thrombosis of left cereblr artery*/
+		,'I63343'	 /*Cerebral infrc due to thombos of bilateral cereblr arteries*/
+		,'I63349'	 /*Cerebral infarction due to thombos unsp cerebellar artery*/
+		,'I6339'	 /*Cerebral infarction due to thrombosis of oth cerebral artery*/
+		,'I6340'	 /*Cerebral infarction due to embolism of unsp cerebral artery*/
+		,'I63411'	 /*Cereb infrc due to embolism of right middle cerebral artery*/
+		,'I63412'	 /*Cereb infrc due to embolism of left middle cerebral artery*/
+		,'I63413'	 /*Cerebral infrc due to embolism of bi middle cerebral art*/
+		,'I63419'	 /*Cereb infrc due to embolism of unsp middle cerebral artery*/
+		,'I63421'	 /*Cerebral infrc due to embolism of right ant cerebral artery*/
+		,'I63422'	 /*Cerebral infrc due to embolism of left ant cerebral artery*/
+		,'I63423'	 /*Cerebral infrc due to embolism of bi ant cerebral arteries*/
+		,'I63429'	 /*Cerebral infrc due to embolism of unsp ant cerebral artery*/
+		,'I63431'	 /*Cerebral infrc due to embolism of right post cerebral artery*/
+		,'I63432'	 /*Cerebral infrc due to embolism of left post cerebral artery*/
+		,'I63433'	 /*Cerebral infrc due to embolism of bi post cerebral arteries*/
+		,'I63439'	 /*Cerebral infrc due to embolism of unsp post cerebral artery*/
+		,'I63441'	 /*Cerebral infarction due to embolism of right cereblr artery*/
+		,'I63442'	 /*Cerebral infarction due to embolism of left cereblr artery*/
+		,'I63443'	 /*Cerebral infrc due to embolism of bilateral cereblr arteries*/
+		,'I63449'	 /*Cerebral infarction due to embolism of unsp cereblr artery*/
+		,'I6349'	 /*Cerebral infarction due to embolism of other cerebral artery*/
+		,'I6350'	 /*Cereb infrc due to unsp occls or stenos of unsp cereb artery*/
+		,'I63511'	 /*Cereb infrc d/t unsp occls or stenos of right mid cereb art*/
+		,'I63512'	 /*Cereb infrc d/t unsp occls or stenos of left mid cereb art*/
+		,'I63513'	 /*Cereb infrc due to unsp occls or stenos of bi mid cereb art*/
+		,'I63519'	 /*Cereb infrc d/t unsp occls or stenos of unsp mid cereb art*/
+		,'I63521'	 /*Cereb infrc d/t unsp occls or stenos of right ant cereb art*/
+		,'I63522'	 /*Cereb infrc d/t unsp occls or stenos of left ant cereb art*/
+		,'I63523'	 /*Cerebral infrc due to unsp occls or stenos of bi ant cereb art*/
+		,'I63529'	 /*Cereb infrc d/t unsp occls or stenos of unsp ant cereb art*/
+		,'I63531'	 /*Cereb infrc d/t unsp occls or stenos of right post cereb art*/
+		,'I63532'	 /*Cereb infrc d/t unsp occls or stenos of left post cereb art*/
+		,'I63533'	 /*Cerebral infrc due to unsp occls or stenos of bi post cereb art*/
+		,'I63539'	 /*Cereb infrc d/t unsp occls or stenos of unsp post cereb art*/
+		,'I63541'	 /*Cereb infrc due to unsp occls or stenos of right cereblr art*/
+		,'I63542'	 /*Cereb infrc due to unsp occls or stenos of left cereblr art*/
+		,'I63543'	 /*Cereb infrc due to unsp occls or stenosis of bi cereblr art*/
+		,'I63549'	 /*Cereb infrc due to unsp occls or stenos of unsp cereblr art*/
+		,'I6359'	 /*Cereb infrc due to unsp occls or stenosis of cerebral artery*/
+		,'I636'	 	 /*Cerebral infrc due to cerebral venous thombos, nonpyogenic*/
+		,'I638'	 	 /*Other cerebral infarction*/
+		,'I6381'	 /*Other cereb infrc due to occls or stenosis of small artery*/
+		,'I6389'	 /*Other cerebral infarction*/
+		,'I639'	 	 /*Cerebral infarction, unspecified*/
+		,'I6501'	 /*Occlusion and stenosis of right vertebral artery*/
+		,'I6502'	 /*Occlusion and stenosis of left vertebral artery*/
+		,'I6503'	 /*Occlusion and stenosis of bilateral vertebral arteries*/
+		,'I6509'	 /*Occlusion and stenosis of unspecified vertebral artery*/
+		,'I651'	 	 /*Occlusion and stenosis of basilar artery*/
+		,'I6521'	 /*Occlusion and stenosis of right carotid artery*/
+		,'I6522'	 /*Occlusion and stenosis of left carotid artery*/
+		,'I6523'	 /*Occlusion and stenosis of bilateral carotid arteries*/
+		,'I6529'	 /*Occlusion and stenosis of unspecified carotid artery*/
+		,'I658'	 	 /*Occlusion and stenosis of other precerebral arteries*/
+		,'I659'	 	 /*Occlusion and stenosis of unspecified precerebral artery*/
+		,'I6601'	 /*Occlusion and stenosis of right middle cerebral artery*/
+		,'I6602'	 /*Occlusion and stenosis of left middle cerebral artery*/
+		,'I6603'	 /*Occlusion and stenosis of bilateral middle cerebral arteries*/
+		,'I6609'	 /*Occlusion and stenosis of unspecified middle cerebral artery*/
+		,'I6611'	 /*Occlusion and stenosis of right anterior cerebral artery*/
+		,'I6612'	 /*Occlusion and stenosis of left anterior cerebral artery*/
+		,'I6613'	 /*Occlusion and stenosis of bi anterior cerebral arteries*/
+		,'I6619'	 /*Occlusion and stenosis of unsp anterior cerebral artery*/
+		,'I6621'	 /*Occlusion and stenosis of right posterior cerebral artery*/
+		,'I6622'	 /*Occlusion and stenosis of left posterior cerebral artery*/
+		,'I6623'	 /*Occlusion and stenosis of bi posterior cerebral arteries*/
+		,'I6629'	 /*Occlusion and stenosis of unsp posterior cerebral artery*/
+		,'I663'	 	 /*Occlusion and stenosis of cerebellar arteries*/
+		,'I668'	 	 /*Occlusion and stenosis of other cerebral arteries*/
+		,'I669'	 	 /*Occlusion and stenosis of unspecified cerebral artery*/
+		,'I670'	 	 /*Dissection of cerebral arteries, nonruptured*/
+		,'I671'	 	 /*Cerebral aneurysm, nonruptured*/
+		,'I672'	 	 /*Cerebral atherosclerosis*/
+		,'I673'	 	 /*Progressive vascular leukoencephalopathy*/
+		,'I674'	 	 /*Hypertensive encephalopathy*/
+		,'I675'	 	 /*Moyamoya disease*/
+		,'I676'	 	 /*Nonpyogenic thrombosis of intracranial venous system*/
+		,'I677'	 	 /*Cerebral arteritis, not elsewhere classified*/
+		,'I6781'	 /*Acute cerebrovascular insufficiency*/
+		,'I6782'	 /*Cerebral ischemia*/
+		,'I6783'	 /*Posterior reversible encephalopathy syndrome*/
+		,'I67841'	 /*Reversible cerebrovascular vasoconstriction syndrome*/
+		,'I67848'	 /*Other cerebrovascular vasospasm and vasoconstriction*/
+		,'I67850'	 /*Cereb autosom dom artopath w subcort infarcts & leukoenceph*/
+		,'I67858'	 /*Other hereditary cerebrovascular disease*/
+		,'I6789'	 /*Other cerebrovascular disease*/
+		,'I679'	 	 /*Cerebrovascular disease, unspecified*/
+		,'I680'	 	 /*Cerebral amyloid angiopathy*/
+		,'I682'	  	 /*Cerebral arteritis in other diseases classified elsewhere*/
+		,'I688'	 	 /*Oth cerebrovascular disorders in diseases classd elswhr*/
+		,'O2250'	 /*Cerebral venous thrombosis in pregnancy, unsp trimester*/
+		,'O2252'	 /*Cerebral venous thrombosis in pregnancy, second trimester*/
+		,'O2253'	 /*Cerebral venous thrombosis in pregnancy, third trimester*/
+		,'I97810'	 /*Intraoperative cerebvasc infarction during cardiac surgery*/
+		,'I97811'	 /*Intraoperative cerebrovascular infarction during oth surgery*/
+		,'I97820'	 /*Postprocedural cerebvasc infarction folowing cardiac surgery*/
+		,'I97821'	 /*Postprocedural cerebrovascular infarction following oth surgery*/
+		,'O873' = '1'	 /*Cerebral venous thrombosis in the puerperium*/
+		OTHER = '0';
 
-    /* 12. Pulmonary edema / Acute heart failure */
-    Value $DX_Pulmonary_Edema
-        'J810'                   /*Acute pulmonary edema*/
-        ,'I501'                  /*Left ventricular failure, unspecified*/
-        ,'I5020'                 /*Unspecified systolic (congestive) heart failure*/
-        ,'I5021'                 /*Acute systolic (congestive) heart failure*/
-        ,'I5023'                 /*Acute on chronic systolic (congestive) heart failure*/
-        ,'I5030'                 /*Unspecified diastolic (congestive) heart failure*/
-        ,'I5031'                 /*Acute diastolic (congestive) heart failure*/
-        ,'I5033'                 /*Acute on chronic diastolic (congestive) heart failure*/
-        ,'I5040'                 /*Unspecified combined systolic (congestive) and diastolic (congestive) heart failure*/
-        ,'I5041'                 /*Acute combined systolic (congestive) and diastolic (congestive) heart failure*/
-        ,'I5043'                 /*Acute on chronic combined systolic (congestive) and diastolic (congestive) heart failure*/
-        ,'I50810'                /*Right heart failure, unspecified*/
-        ,'I50811'                /*Acute right heart failure*/
-        ,'I50813'                /*Acute on chronic right heart failure*/
-        ,'I50814'                /*Right heart failure due to left heart failure*/
-        ,'I5082'                 /*Biventricular heart failure*/
-        ,'I5083'                 /*High output heart failure*/
-        ,'I5084'                 /*End stage heart failure*/
-        ,'I5089'                 /*Other heart failure*/
-        ,'I509' = '1'            /*Heart failure, unspecified*/
-        OTHER = '0';
+	/* 12. Pulmonary edema / Acute heart failure */
+	Value $DX_Pulmonary_Edema
+		'J810'                   /*Acute pulmonary edema*/
+		,'I501'                  /*Left ventricular failure, unspecified*/
+		,'I5020'                 /*Unspecified systolic (congestive) heart failure*/
+		,'I5021'                 /*Acute systolic (congestive) heart failure*/
+		,'I5023'                 /*Acute on chronic systolic (congestive) heart failure*/
+		,'I5030'                 /*Unspecified diastolic (congestive) heart failure*/
+		,'I5031'                 /*Acute diastolic (congestive) heart failure*/
+		,'I5033'                 /*Acute on chronic diastolic (congestive) heart failure*/
+		,'I5040'                 /*Unspecified combined systolic (congestive) and diastolic (congestive) heart failure*/
+		,'I5041'                 /*Acute combined systolic (congestive) and diastolic (congestive) heart failure*/
+		,'I5043'                 /*Acute on chronic combined systolic (congestive) and diastolic (congestive) heart failure*/
+		,'I50810'                /*Right heart failure, unspecified*/
+		,'I50811'                /*Acute right heart failure*/
+		,'I50813'                /*Acute on chronic right heart failure*/
+		,'I50814'                /*Right heart failure due to left heart failure*/
+		,'I5082'                 /*Biventricular heart failure*/
+		,'I5083'                 /*High output heart failure*/
+		,'I5084'                 /*End stage heart failure*/
+		,'I5089'                 /*Other heart failure*/
+		,'I509' = '1'            /*Heart failure, unspecified*/
+		OTHER = '0';
 
-    /* 13. Severe anesthesia complications */
-    Value $DX_Severe_Anesth_Comp
-        'O29112'                  /*Cardiac arrest due to anesthesia during pregnancy, second trimester*/
-        ,'O29113'                 /*Cardiac arrest due to anesthesia during pregnancy, third trimester*/
-        ,'O29119'                 /*Cardiac arrest due to anesthesia during pregnancy, unspecified trimester*/
-        ,'O29122'                 /*Cardiac failure due to anesthesia during pregnancy, second trimester*/
-        ,'O29123'                 /*Cardiac failure due to anesthesia during pregnancy, third trimester*/
-        ,'O29129'                 /*Cardiac failure due to anesthesia during pregnancy, unspecified trimester*/
-        ,'O29192'                 /*Other cardiac complications of anesthesia during pregnancy, second trimester*/
-        ,'O29193'                 /*Other cardiac complications of anesthesia during pregnancy, third trimester*/
-        ,'O29199'                 /*Other cardiac complications of anesthesia during pregnancy, unspecified trimester*/
-        ,'O29212'                 /*Cerebral anoxia due to anesthesia during pregnancy, second trimester*/
-        ,'O29213'                 /*Cerebral anoxia due to anesthesia during pregnancy, third trimester*/
-        ,'O29219'                 /*Cerebral anoxia due to anesthesia during pregnancy, unspecified trimester*/
-        ,'O29292'                 /*Other central nervous system complications of anesthesia during pregnancy, second trimester*/
-        ,'O29293'                 /*Other central nervous system complications of anesthesia during pregnancy, third trimester*/
-        ,'O29299'                 /*Other central nervous system complications of anesthesia during pregnancy, unspecified trimester*/
-        ,'O740'                   /*Aspiration pneumonitis due to anesthesia during labor and delivery*/
-        ,'O741'                   /*Other pulmonary complications of anesthesia during labor and delivery*/
-        ,'O742'                   /*Cardiac complications of anesthesia during labor and delivery*/
-        ,'O743'                   /*Central nervous system complications of anesthesia during labor and delivery*/
-        ,'O8901'                  /*Aspiration pneumonitis due to anesthesia during the puerperium*/
-        ,'O8909'                  /*Other pulmonary complications of anesthesia during the puerperium*/
-        ,'O891'                   /*Cardiac complications of anesthesia during the puerperium*/
-        ,'O892'                   /*Central nervous system complications of anesthesia during the puerperium*/
-        ,'T882XXA'                /*Shock due to anesthesia, initial encounter*/
-        ,'T883XXA'='1'            /*Malignant hyperthermia due to anesthesia, initial encounter*/
-        OTHER = '0';
+	/* 13. Severe anesthesia complications */
+	Value $DX_Severe_Anesth_Comp
+		'O29112'                  /*Cardiac arrest due to anesthesia during pregnancy, second trimester*/
+		,'O29113'                 /*Cardiac arrest due to anesthesia during pregnancy, third trimester*/
+		,'O29119'                 /*Cardiac arrest due to anesthesia during pregnancy, unspecified trimester*/
+		,'O29122'                 /*Cardiac failure due to anesthesia during pregnancy, second trimester*/
+		,'O29123'                 /*Cardiac failure due to anesthesia during pregnancy, third trimester*/
+		,'O29129'                 /*Cardiac failure due to anesthesia during pregnancy, unspecified trimester*/
+		,'O29192'                 /*Other cardiac complications of anesthesia during pregnancy, second trimester*/
+		,'O29193'                 /*Other cardiac complications of anesthesia during pregnancy, third trimester*/
+		,'O29199'                 /*Other cardiac complications of anesthesia during pregnancy, unspecified trimester*/
+		,'O29212'                 /*Cerebral anoxia due to anesthesia during pregnancy, second trimester*/
+		,'O29213'                 /*Cerebral anoxia due to anesthesia during pregnancy, third trimester*/
+		,'O29219'                 /*Cerebral anoxia due to anesthesia during pregnancy, unspecified trimester*/
+		,'O29292'                 /*Other central nervous system complications of anesthesia during pregnancy, second trimester*/
+		,'O29293'                 /*Other central nervous system complications of anesthesia during pregnancy, third trimester*/
+		,'O29299'                 /*Other central nervous system complications of anesthesia during pregnancy, unspecified trimester*/
+		,'O740'                   /*Aspiration pneumonitis due to anesthesia during labor and delivery*/
+		,'O741'                   /*Other pulmonary complications of anesthesia during labor and delivery*/
+		,'O742'                   /*Cardiac complications of anesthesia during labor and delivery*/
+		,'O743'                   /*Central nervous system complications of anesthesia during labor and delivery*/
+		,'O8901'                  /*Aspiration pneumonitis due to anesthesia during the puerperium*/
+		,'O8909'                  /*Other pulmonary complications of anesthesia during the puerperium*/
+		,'O891'                   /*Cardiac complications of anesthesia during the puerperium*/
+		,'O892'                   /*Central nervous system complications of anesthesia during the puerperium*/
+		,'T882XXA'                /*Shock due to anesthesia, initial encounter*/
+		,'T883XXA'='1'            /*Malignant hyperthermia due to anesthesia, initial encounter*/
+		OTHER = '0';
 
-    /* 14. Sepsis */
-    Value $DX_Sepsis
-        'I76'                       /*Septic arterial embolism*/
-        ,'O85'                      /*Puerperal sepsis*/
-        ,'O8604'                    /*Sepsis following an obstetrical procedure*/
-        ,'T8112XA'                  /*Postprocedural septic shock, initial encounter*/
-        ,'T8144XA'                  /*Sepsis following a procedure, initial encounter*/
-        ,'R6520'                    /*Severe sepsis without septic shock*/
-        ,'R6521'                    /*Severe sepsis with septic shock*/
-        ,'A400'                     /*Sepsis due to streptococcus, group A*/
-        ,'A401'                     /*Sepsis due to streptococcus, group B*/
-        ,'A403'                     /*Sepsis due to Streptococcus pneumoniae*/
-        ,'A408'                     /*Other streptococcal sepsis*/
-        ,'A409'                     /*Streptococcal sepsis, unspecified*/
-        ,'A4101'                    /*Sepsis due to Methicillin susceptible Staphylococcus aureus*/
-        ,'A4102'                    /*Sepsis due to Methicillin resistant Staphylococcus aureus*/
-        ,'A411'                     /*Sepsis due to other specified staphylococcus*/
-        ,'A412'                     /*Sepsis due to unspecified staphylococcus*/
-        ,'A413'                     /*Sepsis due to Hemophilus influenzae*/
-        ,'A414'                     /*Sepsis due to anaerobes*/
-        ,'A4150'                    /*Gram-negative sepsis, unspecified*/
-        ,'A4151'                    /*Sepsis due to Escherichia coli [E. coli]*/
-        ,'A4152'                    /*Sepsis due to Pseudomonas*/
-        ,'A4153'                    /*Sepsis due to Serratia*/
-        ,'A4154'                    /*Sepsis due to Acinetobacter baumannii*/
-        ,'A4159'                    /*Other Gram-negative sepsis*/
-        ,'A4181'                    /*Sepsis due to Enterococcus*/
-        ,'A4189'                    /*Other specified sepsis*/
-        ,'A419'                     /*Sepsis, unspecified organism*/
-        ,'A327' = '1'               /*Listerial sepsis*/
-        OTHER = '0';
+	/* 14. Sepsis */
+	Value $DX_Sepsis
+		'I76'                 		/*Septic arterial embolism*/
+		,'O85'                 		/*Puerperal sepsis*/
+		,'O8604'                 	/*Sepsis following an obstetrical procedure*/
+		,'T8112XA'                  /*Postprocedural septic shock, initial encounter*/
+		,'T8144XA'                  /*Sepsis following a procedure, initial encounter*/
+		,'R6520'                 	/*Severe sepsis without septic shock*/
+		,'R6521'                 	/*Severe sepsis with septic shock*/
+		,'A400'                 	/*Sepsis due to streptococcus, group A*/
+		,'A401'                 	/*Sepsis due to streptococcus, group B*/
+		,'A403'                 	/*Sepsis due to Streptococcus pneumoniae*/
+		,'A408'                 	/*Other streptococcal sepsis*/
+		,'A409'                 	/*Streptococcal sepsis, unspecified*/
+		,'A4101'                	/*Sepsis due to Methicillin susceptible Staphylococcus aureus*/
+		,'A4102'                 	/*Sepsis due to Methicillin resistant Staphylococcus aureus*/
+		,'A411'                 	/*Sepsis due to other specified staphylococcus*/
+		,'A412'                 	/*Sepsis due to unspecified staphylococcus*/
+		,'A413'                 	/*Sepsis due to Hemophilus influenzae*/
+		,'A414'                 	/*Sepsis due to anaerobes*/
+		,'A4150'                	/*Gram-negative sepsis, unspecified*/
+		,'A4151'                 	/*Sepsis due to Escherichia coli [E. coli]*/
+		,'A4152'                 	/*Sepsis due to Pseudomonas*/
+		,'A4153'                 	/*Sepsis due to Serratia*/
+		,'A4154'			        /*Sepsis due to Acinetobacter baumannii*/
+		,'A4159'                 	/*Other Gram-negative sepsis*/
+		,'A4181'                 	/*Sepsis due to Enterococcus*/
+		,'A4189'                 	/*Other specified sepsis*/
+		,'A419'                 	/*Sepsis, unspecified organism*/
+		,'A327' = '1'               /*Listerial sepsis*/
+		OTHER = '0';
 
-    /* 15. Shock */
-    value $DX_Shock
-        'O751'                      /*Shock during or following labor and delivery*/
-        ,'R570'                     /*Cardiogenic shock*/
-        ,'R571'                     /*Hypovolemic shock*/
-        ,'R578'                     /*Other shock*/
-        ,'R579'                     /*Shock, unspecified*/
-        ,'T782XXA'                  /*Anaphylactic shock, unspecified, initial encounter*/
-        ,'T886XXA'                  /*Anaphylactic reaction due to adverse effect of correct drug or medicament properly administered, initial encounter*/
-        ,'T8110XA'                  /*Postprocedural shock unspecified, initial encounter*/
-        ,'T8111XA'                  /*Postprocedural cardiogenic shock, initial encounter*/
-        ,'T8119XA' = '1'            /*Other postprocedural shock, initial encounter*/
-        OTHER = '0';
+	/* 15. Shock */
+	value $DX_Shock
+		'O751'                 		/*Shock during or following labor and delivery*/
+		,'R570'                 	/*Cardiogenic shock*/
+		,'R571'                 	/*Hypovolemic shock*/
+		,'R578'                 	/*Other shock*/
+		,'R579'                 	/*Shock, unspecified*/
+		,'T782XXA'                  /*Anaphylactic shock, unspecified, initial encounter*/
+		,'T886XXA'                  /*Anaphylactic reaction due to adverse effect of correct drug or medicament properly administered, initial encounter*/
+		,'T8110XA'                  /*Postprocedural shock unspecified, initial encounter*/
+		,'T8111XA'                  /*Postprocedural cardiogenic shock, initial encounter*/
+		,'T8119XA' = '1'            /*Other postprocedural shock, initial encounter*/
+		OTHER = '0';
 
-    /* 16. Sickle cell disease with crisis */
-    value $DX_Sickle_Cell_Crisis
-        'D5700'                   /*Hb-SS disease with crisis, unspecified*/
-        ,'D5701'                  /*Hb-SS disease with acute chest syndrome*/
-        ,'D5702'                  /*Hb-SS disease with splenic sequestration*/
-        ,'D5703'                  /*Hb-SS disease with cerebral vascular involvement*/
-        ,'D5704'                  /*Hb-SS disease with dactylitis*/
+	/* 16. Sickle cell disease with crisis */
+	value $DX_Sickle_Cell_Crisis
+		'D5700'                   /*Hb-SS disease with crisis, unspecified*/
+		,'D5701'                  /*Hb-SS disease with acute chest syndrome*/
+		,'D5702'                  /*Hb-SS disease with splenic sequestration*/
+        ,'D5703'     	          /*Hb-SS disease with cerebral vascular involvement*/
+        ,'D5704'          	      /*Hb-SS disease with dactylitis*/
         ,'D5709'                  /*Hb-SS disease with crisis with other specified complication*/
-        ,'D57211'                 /*Sickle-cell/Hb-C disease with acute chest syndrome*/
-        ,'D57212'                 /*Sickle-cell/Hb-C disease with splenic sequestration*/
-        ,'D57219'                 /*Sickle-cell/Hb-C disease with crisis, unspecified*/
-        ,'D57411'                 /*Sickle-cell thalassemia, unspecified, with acute chest syndrome*/
-        ,'D57412'                 /*Sickle-cell thalassemia, unspecified, with splenic sequestration*/
-        ,'D57419'                 /*Sickle-cell thalassemia, unspecified, with crisis*/
-        ,'D57213'                 /*Sickle-cell/Hb-C disease with cerebral vascular involvement*/
-        ,'D57214'                 /*Sickle-cell/Hb-C disease with dactylitis*/
-        ,'D57218'                 /*Sickle-cell/Hb-C disease with crisis with other specified complication*/
-        ,'D57413'                 /*Sickle-cell thalassemia, unspecified, with cerebral vascular involvement*/
-        ,'D57414'                 /*Sickle-cell thalassemia, unspecified, with dactylitis*/
-        ,'D57418'                 /*Sickle-cell thalassemia, unspecified, with crisis with other specified complication*/
-        ,'D57431'                 /*Sickle-cell thalassemia beta zero with acute chest syndrome*/
-        ,'D57432'                 /*Sickle-cell thalassemia beta zero with splenic sequestration*/
-        ,'D57433'                 /*Sickle-cell thalassemia beta zero with cerebral vascular involvement*/
-        ,'D57434'                 /*Sickle-cell thalassemia beta zero with dactylitis*/
-        ,'D57438'                 /*Sickle-cell thalassemia beta zero with crisis with other specified complication*/
-        ,'D57439'                 /*Sickle-cell thalassemia beta zero with crisis, unspecified*/
-        ,'D57451'                 /*Sickle-cell thalassemia beta plus with acute chest syndrome*/
-        ,'D57452'                 /*Sickle-cell thalassemia beta plus with splenic sequestration*/
-        ,'D57453'                 /*Sickle-cell thalassemia beta plus with cerebral vascular involvement*/
-        ,'D57454'                 /*Sickle-cell thalassemia beta plus with dactylitis*/
-        ,'D57458'                 /*Sickle-cell thalassemia beta plus with crisis with other specified complication*/
-        ,'D57459'                 /*Sickle-cell thalassemia beta plus with crisis, unspecified*/
-        ,'D57811'                 /*Other sickle-cell disorders with acute chest syndrome*/
-        ,'D57812'                 /*Other sickle-cell disorders with splenic sequestration*/
-        ,'D57813'                 /*Other sickle-cell disorders with cerebral vascular involvement*/
-        ,'D57814'                 /*Other sickle-cell disorders with dactylitis*/
-        ,'D57818'                 /*Other sickle-cell disorders with crisis with other specified complication*/
-        ,'D57819' = '1'           /*Other sickle-cell disorders with crisis, unspecified*/
-        OTHER = '0';
+		,'D57211'                 /*Sickle-cell/Hb-C disease with acute chest syndrome*/
+		,'D57212'                 /*Sickle-cell/Hb-C disease with splenic sequestration*/
+		,'D57219'                 /*Sickle-cell/Hb-C disease with crisis, unspecified*/
+		,'D57411'                 /*Sickle-cell thalassemia, unspecified, with acute chest syndrome*/
+		,'D57412'                 /*Sickle-cell thalassemia, unspecified, with splenic sequestration*/
+		,'D57419'                 /*Sickle-cell thalassemia, unspecified, with crisis*/
+		,'D57213'		          /*Sickle-cell/Hb-C disease with cerebral vascular involvement*/
+		,'D57214'		          /*Sickle-cell/Hb-C disease with dactylitis*/
+		,'D57218'		          /*Sickle-cell/Hb-C disease with crisis with other specified complication*/
+		,'D57413'		          /*Sickle-cell thalassemia, unspecified, with cerebral vascular involvement*/
+		,'D57414'		          /*Sickle-cell thalassemia, unspecified, with dactylitis*/
+		,'D57418'		          /*Sickle-cell thalassemia, unspecified, with crisis with other specified complication*/
+		,'D57431'		          /*Sickle-cell thalassemia beta zero with acute chest syndrome*/
+		,'D57432'		          /*Sickle-cell thalassemia beta zero with splenic sequestration*/
+		,'D57433'		          /*Sickle-cell thalassemia beta zero with cerebral vascular involvement*/
+		,'D57434'		          /*Sickle-cell thalassemia beta zero with dactylitis*/
+		,'D57438'		          /*Sickle-cell thalassemia beta zero with crisis with other specified complication*/
+		,'D57439'		          /*Sickle-cell thalassemia beta zero with crisis, unspecified*/
+		,'D57451'		          /*Sickle-cell thalassemia beta plus with acute chest syndrome*/
+		,'D57452'		          /*Sickle-cell thalassemia beta plus with splenic sequestration*/
+		,'D57453'		          /*Sickle-cell thalassemia beta plus with cerebral vascular involvement*/
+		,'D57454'		          /*Sickle-cell thalassemia beta plus with dactylitis*/
+		,'D57458'		          /*Sickle-cell thalassemia beta plus with crisis with other specified complication*/
+		,'D57459'		          /*Sickle-cell thalassemia beta plus with crisis, unspecified*/
+		,'D57811'                 /*Other sickle-cell disorders with acute chest syndrome*/
+		,'D57812'                 /*Other sickle-cell disorders with splenic sequestration*/
+		,'D57813'		          /*Other sickle-cell disorders with cerebral vascular involvement*/
+		,'D57814'		          /*Other sickle-cell disorders with dactylitis*/
+		,'D57818'		          /*Other sickle-cell disorders with crisis with other specified complication*/
+		,'D57819' = '1'           /*Other sickle-cell disorders with crisis, unspecified*/
+		OTHER = '0';
 
-    /*17. Air and thrombotic embolism*/
-    value $DX_Air_Thrombotic_Embolism
-        'I2601'                  /*Septic pulmonary embolism with acute cor pulmonale*/
-        ,'I2602'                 /*Saddle embolus of pulmonary artery with acute cor pulmonale*/
-        ,'I2609'                 /*Other pulmonary embolism with acute cor pulmonale*/
-        ,'I2690'                 /*Septic pulmonary embolism without acute cor pulmonale*/
-        ,'I2692'                 /*Saddle embolus of pulmonary artery without acute cor pulmonale*/
-        ,'I2693'                 /*Single subsegmental pulmonary embolism without acute cor pulmonale*/
-        ,'I2694'                 /*Multiple subsegmental pulmonary emboli without acute cor pulmonale*/
-        ,'I2699'                 /*Other pulmonary embolism without acute cor pulmonale*/
-        ,'O88012'                /*Air embolism in pregnancy, second trimester*/
-        ,'O88013'                /*Air embolism in pregnancy, third trimester*/
-        ,'O88019'                /*Air embolism in pregnancy, unspecified trimester*/
-        ,'O8802'                 /*Air embolism in childbirth*/
-        ,'O8803'                 /*Air embolism in the puerperium*/
-        ,'O88212'                /*Thromboembolism in pregnancy, second trimester*/
-        ,'O88213'                /*Thromboembolism in pregnancy, third trimester*/
-        ,'O88219'                /*Thromboembolism in pregnancy, unspecified trimester*/
-        ,'O8822'                 /*Thromboembolism in childbirth*/
-        ,'O8823'                 /*Thromboembolism in the puerperium*/
-        ,'O88312'                /*Pyemic and septic embolism in pregnancy, second trimester*/
-        ,'O88313'                /*Pyemic and septic embolism in pregnancy, third trimester*/
-        ,'O88319'                /*Pyemic and septic embolism in pregnancy, unspecified trimester*/
-        ,'O8832'                 /*Pyemic and septic embolism in childbirth*/
-        ,'O8833'                 /*Pyemic and septic embolism in the puerperium*/
-        ,'O88812'                /*Other embolism in pregnancy, second trimester*/
-        ,'O88813'                /*Other embolism in pregnancy, third trimester*/
-        ,'O88819'                /*Other embolism in pregnancy, unspecified trimester*/
-        ,'O8882'                 /*Other embolism in childbirth*/
-        ,'O8883'                 /*Other embolism in the puerperium*/
-        ,'T800XXA' = '1'         /*Air embolism following infusion, transfusion and therapeutic injection, initial encounter*/
-        OTHER = '0';
+	/*17. Air and thrombotic embolism*/
+	value $DX_Air_Thrombotic_Embolism
+		'I2601'                  /*Septic pulmonary embolism with acute cor pulmonale*/
+		,'I2602'                 /*Saddle embolus of pulmonary artery with acute cor pulmonale*/
+		,'I2604'                 /*Fat embolism of pulmonary artery with acute cor pulmonale*/
+		,'I2609'                 /*Other pulmonary embolism with acute cor pulmonale*/
+		,'I2690'                 /*Septic pulmonary embolism without acute cor pulmonale*/
+		,'I2692'                 /*Saddle embolus of pulmonary artery without acute cor pulmonale*/
+		,'I2693'                 /*Single subsegmental pulmonary embolism without acute cor pulmonale*/
+		,'I2694'                 /*Multiple subsegmental pulmonary emboli without acute cor pulmonale*/
+		,'I2696'                 /*Fat embolism of pulmonary artery without acute cor pulmonale*/
+		,'I2699'                 /*Other pulmonary embolism without acute cor pulmonale*/
+		,'O88012'                /*Air embolism in pregnancy, second trimester*/
+		,'O88013'                /*Air embolism in pregnancy, third trimester*/
+		,'O88019'                /*Air embolism in pregnancy, unspecified trimester*/
+		,'O8802'                 /*Air embolism in childbirth*/
+		,'O8803'                 /*Air embolism in the puerperium*/
+		,'O88212'                /*Thromboembolism in pregnancy, second trimester*/
+		,'O88213'                /*Thromboembolism in pregnancy, third trimester*/
+		,'O88219'                /*Thromboembolism in pregnancy, unspecified trimester*/
+		,'O8822'                 /*Thromboembolism in childbirth*/
+		,'O8823'                 /*Thromboembolism in the puerperium*/
+		,'O88312'                /*Pyemic and septic embolism in pregnancy, second trimester*/
+		,'O88313'                /*Pyemic and septic embolism in pregnancy, third trimester*/
+		,'O88319'                /*Pyemic and septic embolism in pregnancy, unspecified trimester*/
+		,'O8832'                 /*Pyemic and septic embolism in childbirth*/
+		,'O8833'                 /*Pyemic and septic embolism in the puerperium*/
+		,'O88812'                /*Other embolism in pregnancy, second trimester*/
+		,'O88813'                /*Other embolism in pregnancy, third trimester*/
+		,'O88819'                /*Other embolism in pregnancy, unspecified trimester*/
+		,'O8882'                 /*Other embolism in childbirth*/
+		,'O8883'                 /*Other embolism in the puerperium*/
+		,'T800XXA' = '1'         /*Air embolism following infusion, transfusion and therapeutic injection, initial encounter*/
+		OTHER = '0';
 
-    /* 18. Hysterectomy */
-    Value $PR_Hysterectomy
-        '0UT90ZL'           /*Resection of Uterus, Supracervical, Open Approach */
-        ,'0UT90ZZ'          /*Resection of Uterus, Open Approach */
-        ,'0UT97ZL'          /*Resection of Uterus, Supracervical, Via Natural or Artificial Opening */
-        ,'0UT97ZZ' = '1'    /*Resection of Uterus, Via Natural or Artificial Opening */
-        OTHER = '0';
+	/* 18. Hysterectomy */
+	Value $PR_Hysterectomy
+		'0UT90ZL'			/*Resection of Uterus, Supracervical, Open Approach */
+		,'0UT90ZZ'			/*Resection of Uterus, Open Approach */
+		,'0UT97ZL'			/*Resection of Uterus, Supracervical, Via Natural or Artificial Opening */
+		,'0UT97ZZ' = '1'	/*Resection of Uterus, Via Natural or Artificial Opening */
+		OTHER = '0';
 
-    /* 19. Temporary tracheostomy */
-    value $PR_Temp_Tracheostomy
-        '0B110F4'           /*Bypass Trachea to Cutaneous with Tracheostomy Device, Open Approach*/
-        ,'0B113F4'          /*Bypass Trachea to Cutaneous with Tracheostomy Device, Percutaneous Approach*/
-        ,'0B114F4'  = '1'   /*Bypass Trachea to Cutaneous with Tracheostomy Device, Percutaneous Endoscopic Approach*/
-        OTHER = '0';
+	/* 19. Temporary tracheostomy */
+	value $PR_Temp_Tracheostomy
+		'0B110F4' 			/*Bypass Trachea to Cutaneous with Tracheostomy Device, Open Approach*/
+		,'0B113F4' 			/*Bypass Trachea to Cutaneous with Tracheostomy Device, Percutaneous Approach*/
+		,'0B114F4'  = '1'	/*Bypass Trachea to Cutaneous with Tracheostomy Device, Percutaneous Endoscopic Approach*/
+		OTHER = '0';
 
-    /* 20.Ventilation */
-    value $PR_Ventilation
-        '5A1935Z'           /* Ventilation, Less than 24 Consecutive Hours*/
-        ,'5A1945Z'          /* Ventilation, 24-96 Consecutive Hours*/
-        ,'5A1955Z' = '1'    /* Ventilation, Greater than 96 Consecutive Hours*/ 
-        OTHER = '0';
+	/* 20.Ventilation */
+	value $PR_Ventilation
+		'5A1935Z' 			/* Ventilation, Less than 24 Consecutive Hours*/
+		,'5A1945Z' 			/* Ventilation, 24-96 Consecutive Hours*/
+		,'5A1955Z' = '1'	/* Ventilation, Greater than 96 Consecutive Hours*/ 
+		OTHER = '0';
 
 /* FORMAT FOR Dialysis procedure codes */
-    Value $DIALYIP
-        '3E1M39Z' /*Irrigation of Peritoneal Cavity using Dialysate, Percutaneous Approach */
-        ,'5A1D00Z' /*Performance of Urinary Filtration, Single */ /*Code expires FY2025 */
-        ,'5A1D60Z' /*Performance of Urinary Filtration, Multiple */ /*Code expires FY2025 */
-        ,'5A1D70Z' /*Performance of Urinary Filtration, Intermittent, Less than 6 Hours Per Day */
-        ,'5A1D80Z' /*Performance of Urinary Filtration, Prolonged Intermittent, 6-18 hours Per Day */
-        ,'5A1D90Z' = '1' /*Performance of Urinary Filtration, Continuous, Greater than 18 hours Per Day */
-        OTHER = '0';
+	Value $DIALYIP
+		'3E1M39Z' /*Irrigation of Peritoneal Cavity using Dialysate, Percutaneous Approach */
+		,'5A1D00Z' /*Performance of Urinary Filtration, Single */ /*Code expires FY2025 */
+		,'5A1D60Z' /*Performance of Urinary Filtration, Multiple */ /*Code expires FY2025 */
+		,'5A1D70Z' /*Performance of Urinary Filtration, Intermittent, Less than 6 Hours Per Day */
+		,'5A1D80Z' /*Performance of Urinary Filtration, Prolonged Intermittent, 6-18 hours Per Day */
+		,'5A1D90Z' = '1' /*Performance of Urinary Filtration, Continuous, Greater than 18 hours Per Day */
+		OTHER = '0';
 
 /* Delivery codes */
 
-    /*ICD-10 Delivery DX */
-    value $DX_Delivery
-        "Z370" = '1' /*Single live birth */
-        "Z371" = '1' /*Single stillbirth */
-        "Z372" = '1' /*Twins, both liveborn */
-        "Z373" = '1' /*Twins, one liveborn and one stillborn */
-        "Z374" = '1' /*Twins, both stillborn */
-        "Z3750" = '1' /*Multiple births, unspecified, all liveborn */
-        "Z3751" = '1' /*Triplets, all liveborn */
-        "Z3752" = '1' /*Quadruplets, all liveborn */
-        "Z3753" = '1' /*Quintuplets, all liveborn */
-        "Z3754" = '1' /*Sextuplets, all liveborn */
-        "Z3759" = '1' /*Other multiple births, all liveborn */
-        "Z3760" = '1' /*Multiple births, unspecified, some liveborn */
-        "Z3761" = '1' /*Triplets, some liveborn */
-        "Z3762" = '1' /*Quadruplets, some liveborn */
-        "Z3763" = '1' /*Quintuplets, some liveborn */
-        "Z3764" = '1' /*Sextuplets, some liveborn */
-        "Z3769" = '1' /*Other multiple births, some liveborn */
-        "Z377" = '1' /*Other multiple births, all stillborn */
-        "Z379" = '1' /*Outcome of delivery, unspecified */
-        "O80" = '1' /*Encounter for full-term uncomplicated delivery*/
-        "O82" = '1' /*Encounter for cesarean delivery without indication*/
-        "O7582" = '1' /*Onset (spontaneous) of labor after 37 completed weeks of gestation but before 39 completed weeks gestation, with delivery by (planned) cesarean section */
-        OTHER = '0';
+	/*ICD-10 Delivery DX */
+	value $DX_Delivery
+		"Z370" = '1' /*Single live birth */
+		"Z371" = '1' /*Single stillbirth */
+		"Z372" = '1' /*Twins, both liveborn */
+		"Z373" = '1' /*Twins, one liveborn and one stillborn */
+		"Z374" = '1' /*Twins, both stillborn */
+		"Z3750" = '1' /*Multiple births, unspecified, all liveborn */
+		"Z3751" = '1' /*Triplets, all liveborn */
+		"Z3752" = '1' /*Quadruplets, all liveborn */
+		"Z3753" = '1' /*Quintuplets, all liveborn */
+		"Z3754" = '1' /*Sextuplets, all liveborn */
+		"Z3759" = '1' /*Other multiple births, all liveborn */
+		"Z3760" = '1' /*Multiple births, unspecified, some liveborn */
+		"Z3761" = '1' /*Triplets, some liveborn */
+		"Z3762" = '1' /*Quadruplets, some liveborn */
+		"Z3763" = '1' /*Quintuplets, some liveborn */
+		"Z3764" = '1' /*Sextuplets, some liveborn */
+		"Z3769" = '1' /*Other multiple births, some liveborn */
+		"Z377" = '1' /*Other multiple births, all stillborn */
+		"Z379" = '1' /*Outcome of delivery, unspecified */
+		"O80" = '1' /*Encounter for full-term uncomplicated delivery*/
+		"O82" = '1' /*Encounter for cesarean delivery without indication*/
+		"O7582" = '1' /*Onset (spontaneous) of labor after 37 completed weeks of gestation but before 39 completed weeks gestation, with delivery by (planned) cesarean section */
+		OTHER = '0';
 
-    /*Delivery ICD-10 procedure codes*/
-    value $PR_Delivery
-        "10D00Z0" = '1'      /*Extraction of Products of Conception, High, Open Approach*/
-        "10D00Z1" = '1'      /*Extraction of Products of Conception, Low, Open Approach*/
-        "10D00Z2" = '1'      /*Extraction of Products of Conception, Extraperitoneal, Open Approach*/
-        "10D07Z3" = '1'      /*Extraction of Products of Conception, Low Forceps, Via Natural or Artificial Opening*/
-        "10D07Z4" = '1'      /*Extraction of Products of Conception, Mid Forceps, Via Natural or Artificial Opening*/
-        "10D07Z5" = '1'      /*Extraction of Products of Conception, High Forceps, Via Natural or Artificial Opening*/
-        "10D07Z6" = '1'      /*Extraction of Products of Conception, Vacuum, Via Natural or Artificial Opening*/
-        "10D07Z7" = '1'      /*Extraction of Products of Conception, Internal Version, Via Natural or Artificial Opening*/
-        "10D07Z8" = '1'      /*Extraction of Products of Conception, Other, Via Natural or Artificial Opening*/
-        "10E0XZZ" = '1'      /*Delivery of Products of Conception, External Approach*/
-        OTHER = '0';
-    
+	/*Delivery ICD-10 procedure codes*/
+	value $PR_Delivery
+		"10D00Z0" = '1' 	 /*Extraction of Products of Conception, High, Open Approach*/
+		"10D00Z1" = '1' 	 /*Extraction of Products of Conception, Low, Open Approach*/
+		"10D00Z2" = '1' 	 /*Extraction of Products of Conception, Extraperitoneal, Open Approach*/
+		"10D07Z3" = '1' 	 /*Extraction of Products of Conception, Low Forceps, Via Natural or Artificial Opening*/
+		"10D07Z4" = '1' 	 /*Extraction of Products of Conception, Mid Forceps, Via Natural or Artificial Opening*/
+		"10D07Z5" = '1' 	 /*Extraction of Products of Conception, High Forceps, Via Natural or Artificial Opening*/
+		"10D07Z6" = '1' 	 /*Extraction of Products of Conception, Vacuum, Via Natural or Artificial Opening*/
+		"10D07Z7" = '1' 	 /*Extraction of Products of Conception, Internal Version, Via Natural or Artificial Opening*/
+		"10D07Z8" = '1' 	 /*Extraction of Products of Conception, Other, Via Natural or Artificial Opening*/
+		"10E0XZZ" = '1' 	 /*Delivery of Products of Conception, External Approach*/
+		OTHER = '0';
+	
 
   /* Abortion Codes */
-    value $DX_Abortion
-        "O000" = "1"        /*Abdominal pregnancy*/
-        "O0000" = "1"       /*Abdominal pregnancy without intrauterine pregnancy*/
-        "O0001" = "1"       /*Abdominal pregnancy with intrauterine pregnancy*/
-        "O001" = "1"        /*Tubal pregnancy*/
-        "O0010" = "1"       /*Tubal pregnancy without intrauterine pregnancy*/
-        "O00101" = "1"      /*Right tubal pregnancy without intrauterine pregnancy*/
-        "O00102" = "1"      /*Left tubal pregnancy without intrauterine pregnancy*/
-        "O00109" = "1"      /*Unspecified tubal pregnancy without intrauterine pregnancy*/
-        "O0011" = "1"       /*Tubal pregnancy with intrauterine pregnancy*/
-        "O00111" = "1"      /*Right tubal pregnancy with intrauterine pregnancy*/
-        "O00112" = "1"      /*Left tubal pregnancy with intrauterine pregnancy*/
-        "O00119" = "1"      /*Unspecified tubal pregnancy with intrauterine pregnancy*/
-        "O002" = "1"        /*Ovarian pregnancy*/
-        "O0020" = "1"       /*Ovarian pregnancy without intrauterine pregnancy*/
-        "O00201" = "1"      /*Right ovarian pregnancy without intrauterine pregnancy*/
-        "O00202" = "1"      /*Left ovarian pregnancy without intrauterine pregnancy*/
-        "O00209" = "1"      /*Unspecified ovarian pregnancy without intrauterine pregnancy*/
-        "O0021" = "1"       /*Ovarian pregnancy with intrauterine pregnancy*/
-        "O00211" = "1"      /*Right ovarian pregnancy with intrauterine pregnancy*/
-        "O00212" = "1"      /*Left ovarian pregnancy with intrauterine pregnancy*/
-        "O00219" = "1"      /*Unspecified ovarian pregnancy with intrauterine pregnancy*/
-        "O008" = "1"        /*Other ectopic pregnancy*/
-        "O0080" = "1"       /*Other ectopic pregnancy without intrauterine pregnancy*/
-        "O0081" = "1"       /*Other ectopic pregnancy with intrauterine pregnancy*/
-        "O009" = "1"        /*Ectopic pregnancy, unspecified*/
-        "O0090" = "1"       /*Unspecified ectopic pregnancy without intrauterine pregnancy*/
-        "O0091" = "1"       /*Unspecified ectopic pregnancy with intrauterine pregnancy*/
-        "O010" = "1"        /*Classical hydatidiform mole*/
-        "O011" = "1"        /*Incomplete and partial hydatidiform mole*/
-        "O019" = "1"        /*Hydatidiform mole, unspecified*/
-        "O020" = "1"        /*Blighted ovum and nonhydatidiform mole*/
-        "O021" = "1"        /*Missed abortion*/
-        "O0281" = "1"       /*Inapprop chg quantitav hCG in early pregnancy*/
-        "O0289" = "1"       /*Other abnormal products of conception*/
-        "O029" = "1"        /*Abnormal product of conception, unspecified*/
-        "O030" = "1"        /*Genitl trct and pelvic infection fol incmpl spon abortion*/
-        "O031" = "1"        /*Delayed or excessive hemor following incmpl spon abortion*/
-        "O032" = "1"        /*Embolism following incomplete spontaneous abortion*/
-        "O0330" = "1"       /*Unsp complication following incomplete spontaneous abortion*/
-        "O0331" = "1"       /*Shock following incomplete spontaneous abortion*/
-        "O0332" = "1"       /*Renal failure following incomplete spontaneous abortion*/
-        "O0333" = "1"       /*Metabolic disorder following incomplete spontaneous abortion*/
-        "O0334" = "1"       /*Damage to pelvic organs following incomplete spon abortion*/
-        "O0335" = "1"       /*Oth venous comp following incomplete spontaneous abortion*/
-        "O0336" = "1"       /*Cardiac arrest following incomplete spontaneous abortion*/
-        "O0337" = "1"       /*Sepsis following incomplete spontaneous abortion*/
-        "O0338" = "1"       /*Urinary tract infection following incomplete spon abortion*/
-        "O0339" = "1"       /*Incomplete spontaneous abortion with other complications*/
-        "O034" = "1"        /*Incomplete spontaneous abortion without complication*/
-        "O035" = "1"        /*Genitl trct and pelvic infct fol complete or unsp spon abort*/
-        "O036" = "1"        /*Delayed or excess hemor fol complete or unsp spon abortion*/
-        "O037" = "1"        /*Embolism following complete or unsp spontaneous abortion*/
-        "O0380" = "1"       /*Unsp comp following complete or unsp spontaneous abortion*/
-        "O0381" = "1"       /*Shock following complete or unspecified spontaneous abortion*/
-        "O0382" = "1"       /*Renal failure following complete or unsp spon abortion*/
-        "O0383" = "1"       /*Metabolic disorder following complete or unsp spon abortion*/
-        "O0384" = "1"       /*Damage to pelvic organs fol complete or unsp spon abortion*/
-        "O0385" = "1"       /*Oth venous comp following complete or unsp spon abortion*/
-        "O0386" = "1"       /*Cardiac arrest following complete or unsp spon abortion*/
-        "O0387" = "1"       /*Sepsis following complete or unsp spontaneous abortion*/
-        "O0388" = "1"       /*Urinary tract infection fol complete or unsp spon abortion*/
-        "O0389" = "1"       /*Complete or unsp spontaneous abortion with oth complications*/
-        "O039" = "1"        /*Complete or unsp spontaneous abortion without complication*/
-        "O045" = "1"        /*Genitl trct and pelvic infct fol (induced) term of pregnancy*/
-        "O046" = "1"        /*Delayed or excess hemor fol (induced) term of pregnancy*/
-        "O047" = "1"        /*Embolism following (induced) termination of pregnancy*/
-        "O0480" = "1"       /*(Induced) termination of pregnancy with unsp complications*/
-        "O0481" = "1"       /*Shock following (induced) termination of pregnancy*/
-        "O0482" = "1"       /*Renal failure following (induced) termination of pregnancy*/
-        "O0483" = "1"       /*Metabolic disorder following (induced) term of pregnancy*/
-        "O0484" = "1"       /*Damage to pelvic organs fol (induced) term of pregnancy*/
-        "O0485" = "1"       /*Oth venous comp following (induced) termination of pregnancy*/
-        "O0486" = "1"       /*Cardiac arrest following (induced) termination of pregnancy*/
-        "O0487" = "1"       /*Sepsis following (induced) termination of pregnancy*/
-        "O0488" = "1"       /*Urinary tract infection fol (induced) term of pregnancy*/
-        "O0489" = "1"       /*(Induced) termination of pregnancy with other complications*/
-        "O070" = "1"        /*Genitl trct and pelvic infct fol failed attempt term of preg*/
-        "O071" = "1"        /*Delayed or excess hemor fol failed attempt term of pregnancy*/
-        "O072" = "1"        /*Embolism following failed attempted termination of pregnancy*/
-        "O0730" = "1"       /*Failed attempted termination of pregnancy w unsp comp*/
-        "O0731" = "1"       /*Shock following failed attempted termination of pregnancy*/
-        "O0732" = "1"       /*Renal failure following failed attempted term of pregnancy*/
-        "O0733" = "1"       /*Metabolic disorder fol failed attempt term of pregnancy*/
-        "O0734" = "1"       /*Damage to pelvic organs fol failed attempt term of pregnancy*/
-        "O0735" = "1"       /*Oth venous comp following failed attempted term of pregnancy*/
-        "O0736" = "1"       /*Cardiac arrest following failed attempted term of pregnancy*/
-        "O0737" = "1"       /*Sepsis following failed attempted termination of pregnancy*/
-        "O0738" = "1"       /*Urinary tract infection fol failed attempt term of pregnancy*/
-        "O0739" = "1"       /*Failed attempted termination of pregnancy w oth comp*/
-        "O074" = "1"        /*Failed attempted termination of pregnancy w/o complication*/
-        "O080" = "1"        /*Genitl trct and pelvic infct fol ectopic and molar pregnancy*/
-        "O081" = "1"        /*Delayed or excess hemor fol ectopic and molar pregnancy*/
-        "O082" = "1"        /*Embolism following ectopic and molar pregnancy*/
-        "O083" = "1"        /*Shock following ectopic and molar pregnancy*/
-        "O084" = "1"        /*Renal failure following ectopic and molar pregnancy*/
-        "O085" = "1"        /*Metabolic disorders following an ectopic and molar pregnancy*/
-        "O086" = "1"        /*Damage to pelvic organs and tiss fol an ect and molar preg*/
-        "O087" = "1"        /*Oth venous comp following an ectopic and molar pregnancy*/
-        "O0881" = "1"       /*Cardiac arrest following an ectopic and molar pregnancy*/
-        "O0882" = "1"       /*Sepsis following ectopic and molar pregnancy*/
-        "O0883" = "1"       /*Urinary tract infection fol an ectopic and molar pregnancy*/
-        "O0889" = "1"       /*Other complications following an ectopic and molar pregnancy*/
-        "O089" = "1"        /*Unsp complication following an ectopic and molar pregnancy*/
-        OTHER = "0";
+	value $DX_Abortion
+		"O000" = "1"		/*Abdominal pregnancy*/
+		"O0000" = "1"		/*Abdominal pregnancy without intrauterine pregnancy*/
+		"O0001" = "1"		/*Abdominal pregnancy with intrauterine pregnancy*/
+		"O001" = "1"		/*Tubal pregnancy*/
+		"O0010" = "1"		/*Tubal pregnancy without intrauterine pregnancy*/
+		"O00101" = "1"		/*Right tubal pregnancy without intrauterine pregnancy*/
+		"O00102" = "1"		/*Left tubal pregnancy without intrauterine pregnancy*/
+		"O00109" = "1"		/*Unspecified tubal pregnancy without intrauterine pregnancy*/
+		"O0011" = "1"		/*Tubal pregnancy with intrauterine pregnancy*/
+		"O00111" = "1"		/*Right tubal pregnancy with intrauterine pregnancy*/
+		"O00112" = "1"		/*Left tubal pregnancy with intrauterine pregnancy*/
+		"O00119" = "1"		/*Unspecified tubal pregnancy with intrauterine pregnancy*/
+		"O002" = "1"		/*Ovarian pregnancy*/
+		"O0020" = "1"		/*Ovarian pregnancy without intrauterine pregnancy*/
+		"O00201" = "1"		/*Right ovarian pregnancy without intrauterine pregnancy*/
+		"O00202" = "1"		/*Left ovarian pregnancy without intrauterine pregnancy*/
+		"O00209" = "1"		/*Unspecified ovarian pregnancy without intrauterine pregnancy*/
+		"O0021" = "1"		/*Ovarian pregnancy with intrauterine pregnancy*/
+		"O00211" = "1"		/*Right ovarian pregnancy with intrauterine pregnancy*/
+		"O00212" = "1"		/*Left ovarian pregnancy with intrauterine pregnancy*/
+		"O00219" = "1"		/*Unspecified ovarian pregnancy with intrauterine pregnancy*/
+		"O008" = "1"		/*Other ectopic pregnancy*/
+		"O0080" = "1"		/*Other ectopic pregnancy without intrauterine pregnancy*/
+		"O0081" = "1"		/*Other ectopic pregnancy with intrauterine pregnancy*/
+		"O009" = "1"		/*Ectopic pregnancy, unspecified*/
+		"O0090" = "1"		/*Unspecified ectopic pregnancy without intrauterine pregnancy*/
+		"O0091" = "1"		/*Unspecified ectopic pregnancy with intrauterine pregnancy*/
+		"O010" = "1"		/*Classical hydatidiform mole*/
+		"O011" = "1"		/*Incomplete and partial hydatidiform mole*/
+		"O019" = "1"		/*Hydatidiform mole, unspecified*/
+		"O020" = "1"		/*Blighted ovum and nonhydatidiform mole*/
+		"O021" = "1"		/*Missed abortion*/
+		"O0281" = "1"		/*Inapprop chg quantitav hCG in early pregnancy*/
+		"O0289" = "1"		/*Other abnormal products of conception*/
+		"O029" = "1"		/*Abnormal product of conception, unspecified*/
+		"O030" = "1"		/*Genitl trct and pelvic infection fol incmpl spon abortion*/
+		"O031" = "1"		/*Delayed or excessive hemor following incmpl spon abortion*/
+		"O032" = "1"		/*Embolism following incomplete spontaneous abortion*/
+		"O0330" = "1"		/*Unsp complication following incomplete spontaneous abortion*/
+		"O0331" = "1"		/*Shock following incomplete spontaneous abortion*/
+		"O0332" = "1"		/*Renal failure following incomplete spontaneous abortion*/
+		"O0333" = "1"		/*Metabolic disorder following incomplete spontaneous abortion*/
+		"O0334" = "1"		/*Damage to pelvic organs following incomplete spon abortion*/
+		"O0335" = "1"		/*Oth venous comp following incomplete spontaneous abortion*/
+		"O0336" = "1"		/*Cardiac arrest following incomplete spontaneous abortion*/
+		"O0337" = "1"		/*Sepsis following incomplete spontaneous abortion*/
+		"O0338" = "1"		/*Urinary tract infection following incomplete spon abortion*/
+		"O0339" = "1"		/*Incomplete spontaneous abortion with other complications*/
+		"O034" = "1"		/*Incomplete spontaneous abortion without complication*/
+		"O035" = "1"		/*Genitl trct and pelvic infct fol complete or unsp spon abort*/
+		"O036" = "1"		/*Delayed or excess hemor fol complete or unsp spon abortion*/
+		"O037" = "1"		/*Embolism following complete or unsp spontaneous abortion*/
+		"O0380" = "1"		/*Unsp comp following complete or unsp spontaneous abortion*/
+		"O0381" = "1"		/*Shock following complete or unspecified spontaneous abortion*/
+		"O0382" = "1"		/*Renal failure following complete or unsp spon abortion*/
+		"O0383" = "1"		/*Metabolic disorder following complete or unsp spon abortion*/
+		"O0384" = "1"		/*Damage to pelvic organs fol complete or unsp spon abortion*/
+		"O0385" = "1"		/*Oth venous comp following complete or unsp spon abortion*/
+		"O0386" = "1"		/*Cardiac arrest following complete or unsp spon abortion*/
+		"O0387" = "1"		/*Sepsis following complete or unsp spontaneous abortion*/
+		"O0388" = "1"		/*Urinary tract infection fol complete or unsp spon abortion*/
+		"O0389" = "1"		/*Complete or unsp spontaneous abortion with oth complications*/
+		"O039" = "1"		/*Complete or unsp spontaneous abortion without complication*/
+		"O045" = "1"		/*Genitl trct and pelvic infct fol (induced) term of pregnancy*/
+		"O046" = "1"		/*Delayed or excess hemor fol (induced) term of pregnancy*/
+		"O047" = "1"		/*Embolism following (induced) termination of pregnancy*/
+		"O0480" = "1"		/*(Induced) termination of pregnancy with unsp complications*/
+		"O0481" = "1"		/*Shock following (induced) termination of pregnancy*/
+		"O0482" = "1"		/*Renal failure following (induced) termination of pregnancy*/
+		"O0483" = "1"		/*Metabolic disorder following (induced) term of pregnancy*/
+		"O0484" = "1"		/*Damage to pelvic organs fol (induced) term of pregnancy*/
+		"O0485" = "1"		/*Oth venous comp following (induced) termination of pregnancy*/
+		"O0486" = "1"		/*Cardiac arrest following (induced) termination of pregnancy*/
+		"O0487" = "1"		/*Sepsis following (induced) termination of pregnancy*/
+		"O0488" = "1"		/*Urinary tract infection fol (induced) term of pregnancy*/
+		"O0489" = "1"		/*(Induced) termination of pregnancy with other complications*/
+		"O070" = "1"		/*Genitl trct and pelvic infct fol failed attempt term of preg*/
+		"O071" = "1"		/*Delayed or excess hemor fol failed attempt term of pregnancy*/
+		"O072" = "1"		/*Embolism following failed attempted termination of pregnancy*/
+		"O0730" = "1"		/*Failed attempted termination of pregnancy w unsp comp*/
+		"O0731" = "1"		/*Shock following failed attempted termination of pregnancy*/
+		"O0732" = "1"		/*Renal failure following failed attempted term of pregnancy*/
+		"O0733" = "1"		/*Metabolic disorder fol failed attempt term of pregnancy*/
+		"O0734" = "1"		/*Damage to pelvic organs fol failed attempt term of pregnancy*/
+		"O0735" = "1"		/*Oth venous comp following failed attempted term of pregnancy*/
+		"O0736" = "1"		/*Cardiac arrest following failed attempted term of pregnancy*/
+		"O0737" = "1"		/*Sepsis following failed attempted termination of pregnancy*/
+		"O0738" = "1"		/*Urinary tract infection fol failed attempt term of pregnancy*/
+		"O0739" = "1"		/*Failed attempted termination of pregnancy w oth comp*/
+		"O074" = "1"		/*Failed attempted termination of pregnancy w/o complication*/
+		"O080" = "1"		/*Genitl trct and pelvic infct fol ectopic and molar pregnancy*/
+		"O081" = "1"		/*Delayed or excess hemor fol ectopic and molar pregnancy*/
+		"O082" = "1"		/*Embolism following ectopic and molar pregnancy*/
+		"O083" = "1"		/*Shock following ectopic and molar pregnancy*/
+		"O084" = "1"		/*Renal failure following ectopic and molar pregnancy*/
+		"O085" = "1"		/*Metabolic disorders following an ectopic and molar pregnancy*/
+		"O086" = "1"		/*Damage to pelvic organs and tiss fol an ect and molar preg*/
+		"O087" = "1"		/*Oth venous comp following an ectopic and molar pregnancy*/
+		"O0881" = "1"		/*Cardiac arrest following an ectopic and molar pregnancy*/
+		"O0882" = "1"		/*Sepsis following ectopic and molar pregnancy*/
+		"O0883" = "1"		/*Urinary tract infection fol an ectopic and molar pregnancy*/
+		"O0889" = "1"		/*Other complications following an ectopic and molar pregnancy*/
+		"O089" = "1"		/*Unsp complication following an ectopic and molar pregnancy*/
+		OTHER = "0";
 
-    value $PR_Abortion
-        '10A00ZZ' = '1'     /*Abortion of Products of Conception, Open Approach*/
-        '10A03ZZ' = '1'     /*Abortion of Products of Conception, Percutaneous Approach*/
-        '10A04ZZ' = '1'     /*Abortion of Products of Conception, Percutaneous Endoscopic Approach*/
-        '10A07Z6' = '1'     /*Abortion of Products of Conception, Vacuum, Via Natural or Artificial Opening*/
-        '10A07ZW' = '1'     /*Abortion of Products of Conception, Laminaria, Via Natural or Artificial Opening*/
-        '10A07ZX' = '1'     /*Abortion of Products of Conception, Abortifacient, Via Natural or Artificial Opening*/
-        '10A07ZZ' = '1'     /*Abortion of Products of Conception, Via Natural or Artificial Opening*/
-        '10A08ZZ' = '1'     /*Abortion of Products of Conception, Via Natural or Artificial Opening Endoscopic*/
-        OTHER = '0';
+	value $PR_Abortion
+		'10A00ZZ' = '1' 	/*Abortion of Products of Conception, Open Approach*/
+		'10A03ZZ' = '1' 	/*Abortion of Products of Conception, Percutaneous Approach*/
+		'10A04ZZ' = '1' 	/*Abortion of Products of Conception, Percutaneous Endoscopic Approach*/
+		'10A07Z6' = '1' 	/*Abortion of Products of Conception, Vacuum, Via Natural or Artificial Opening*/
+		'10A07ZW' = '1' 	/*Abortion of Products of Conception, Laminaria, Via Natural or Artificial Opening*/
+		'10A07ZX' = '1' 	/*Abortion of Products of Conception, Abortifacient, Via Natural or Artificial Opening*/
+		'10A07ZZ' = '1' 	/*Abortion of Products of Conception, Via Natural or Artificial Opening*/
+		'10A08ZZ' = '1' 	/*Abortion of Products of Conception, Via Natural or Artificial Opening Endoscopic*/
+		OTHER = '0';
 
 
 
@@ -832,33 +834,33 @@ Value PAYCAT
 6 = 'Other' /*Other */
 ;
 
-/* FORMAT FOR Labeling county deciles in printed output - Based on 2021 Census Data */
+/* FORMAT FOR Labeling county deciles in printed output - Based on 2022 Census Data */
 Value POVCATLBL
 0  = 'County not ranked'
-1  = 'County decile 1:         percent in poverty <= 7.4 '
-2  = 'County decile 2:   7.4 < percent in poverty <= 9.4 '
-3  = 'County decile 3:   9.4 < percent in poverty <= 10.5'
-4  = 'County decile 4:  10.5 < percent in poverty <= 11.6'
-5  = 'County decile 5:  11.6 < percent in poverty <= 12.9'
-6  = 'County decile 6:  12.9 < percent in poverty <= 14.4'
-7  = 'County decile 7:  14.4 < percent in poverty <= 15.7'
-8  = 'County decile 8:  15.7 < percent in poverty <= 16.9'
-9  = 'County decile 9:  16.9 < percent in poverty <= 20.1'
-10 = 'County decile 10: 20.1 < percent in poverty <= 43.5' 
+1  = 'Poverty category 1: Estimated percent of people of all ages in poverty less than or equal to 7.4'
+2  = 'Poverty category 2: Estimated percent of people of all ages in poverty larger than 7.4% and less than or equal to 8.7%'
+3  = 'Poverty category 3: Estimated percent of people of all ages in poverty larger than 8.7% and less than or equal to 10.1%'
+4  = 'Poverty category 4: Estimated percent of people of all ages in poverty larger than 10.1% and less than or equal to 10.9%'
+5  = 'Poverty category 5: Estimated percent of people of all ages in poverty larger than 10.9% and less than or equal to 12.2%'
+6  = 'Poverty category 6: Estimated percent of people of all ages in poverty larger than 12.2% and less than or equal to 13.5%'
+7  = 'Poverty category 7: Estimated percent of people of all ages in poverty larger than 13.5% and less than or equal to 14.2%'
+8  = 'Poverty category 8: Estimated percent of people of all ages in poverty larger than 14.2% and less than or equal to 15.9%'
+9  = 'Poverty category 9: Estimated percent of people of all ages in poverty larger than 15.9% and less than or equal to 18.4%'
+10 = 'Poverty category 10: Estimated percent of people of all ages in poverty larger than 18.4% and less than or equal to 42.4%'
 ;
 
-/* FORMAT FOR County Poverty Deciles - Based on 2021 Census Data */
+/* FORMAT FOR County Poverty Deciles - Based on 2022 Census Data */
 Value $POVCAT
-"01001" = 4
-"01003" = 4
+"01001" = 5
+"01003" = 6
 "01005" = 10
 "01007" = 10
-"01009" = 5
+"01009" = 7
 "01011" = 10
 "01013" = 10
 "01015" = 10
 "01017" = 10
-"01019" = 9
+"01019" = 8
 "01021" = 8
 "01023" = 10
 "01025" = 10
@@ -869,9 +871,9 @@ Value $POVCAT
 "01035" = 10
 "01037" = 9
 "01039" = 10
-"01041" = 9
-"01043" = 6
-"01045" = 8
+"01041" = 10
+"01043" = 9
+"01045" = 10
 "01047" = 10
 "01049" = 10
 "01051" = 5
@@ -883,23 +885,23 @@ Value $POVCAT
 "01063" = 10
 "01065" = 10
 "01067" = 8
-"01069" = 10
-"01071" = 10
+"01069" = 9
+"01071" = 9
 "01073" = 9
 "01075" = 9
-"01077" = 9
-"01079" = 7
-"01081" = 9
+"01077" = 6
+"01079" = 9
+"01081" = 8
 "01083" = 3
 "01085" = 10
 "01087" = 10
-"01089" = 4
+"01089" = 5
 "01091" = 10
 "01093" = 9
-"01095" = 8
-"01097" = 9
+"01095" = 9
+"01097" = 10
 "01099" = 10
-"01101" = 10
+"01101" = 9
 "01103" = 6
 "01105" = 10
 "01107" = 10
@@ -907,62 +909,62 @@ Value $POVCAT
 "01111" = 10
 "01113" = 10
 "01115" = 6
-"01117" = 2
+"01117" = 1
 "01119" = 10
-"01121" = 10
+"01121" = 9
 "01123" = 9
-"01125" = 8
-"01127" = 10
-"01129" = 10
+"01125" = 9
+"01127" = 9
+"01129" = 9
 "01131" = 10
-"01133" = 10
+"01133" = 9
 "02013" = 9
-"02016" = 4
-"02020" = 3
+"02016" = 3
+"02020" = 4
 "02050" = 10
-"02060" = 4
-"02068" = 2
+"02060" = 7
+"02068" = 1
 "02070" = 10
 "02090" = 2
 "02100" = 4
 "02105" = 9
 "02110" = 2
 "02122" = 5
-"02130" = 4
+"02130" = 2
 "02150" = 2
 "02158" = 10
 "02164" = 10
-"02170" = 4
+"02170" = 3
 "02180" = 10
-"02185" = 5
+"02185" = 7
 "02188" = 10
-"02195" = 2
+"02195" = 1
 "02198" = 8
 "02220" = 2
-"02230" = 1
+"02230" = 3
 "02240" = 6
 "02261" = 4
-"02275" = 4
+"02275" = 5
 "02282" = 5
 "02290" = 10
 "04001" = 10
 "04003" = 9
 "04005" = 9
-"04007" = 9
-"04009" = 10
+"04007" = 10
+"04009" = 8
 "04011" = 3
 "04012" = 10
 "04013" = 4
 "04015" = 9
 "04017" = 10
 "04019" = 8
-"04021" = 4
+"04021" = 5
 "04023" = 10
-"04025" = 6
-"04027" = 9
-"05001" = 9
+"04025" = 7
+"04027" = 8
+"05001" = 10
 "05003" = 10
-"05005" = 6
+"05005" = 7
 "05007" = 2
 "05009" = 6
 "05011" = 10
@@ -970,305 +972,306 @@ Value $POVCAT
 "05015" = 9
 "05017" = 10
 "05019" = 10
-"05021" = 9
-"05023" = 9
-"05025" = 7
+"05021" = 10
+"05023" = 6
+"05025" = 8
 "05027" = 10
 "05029" = 9
 "05031" = 9
-"05033" = 8
+"05033" = 9
 "05035" = 10
-"05037" = 9
+"05037" = 10
 "05039" = 10
 "05041" = 10
-"05043" = 9
-"05045" = 6
+"05043" = 10
+"05045" = 8
 "05047" = 9
 "05049" = 9
-"05051" = 7
-"05053" = 4
-"05055" = 6
+"05051" = 9
+"05053" = 6
+"05055" = 9
 "05057" = 10
 "05059" = 9
 "05061" = 9
-"05063" = 10
-"05065" = 9
+"05063" = 8
+"05065" = 10
 "05067" = 10
 "05069" = 10
-"05071" = 9
+"05071" = 10
 "05073" = 10
 "05075" = 10
 "05077" = 10
 "05079" = 10
-"05081" = 8
-"05083" = 8
-"05085" = 4
-"05087" = 8
-"05089" = 9
+"05081" = 9
+"05083" = 10
+"05085" = 5
+"05087" = 9
+"05089" = 8
 "05091" = 10
 "05093" = 10
 "05095" = 10
 "05097" = 10
 "05099" = 10
 "05101" = 10
-"05103" = 10
-"05105" = 8
+"05103" = 9
+"05105" = 9
 "05107" = 10
 "05109" = 10
 "05111" = 10
-"05113" = 10
-"05115" = 9
+"05113" = 9
+"05115" = 8
 "05117" = 8
 "05119" = 9
-"05121" = 9
+"05121" = 10
 "05123" = 10
-"05125" = 2
-"05127" = 9
+"05125" = 3
+"05127" = 10
 "05129" = 10
-"05131" = 10
-"05133" = 9
-"05135" = 9
+"05131" = 9
+"05133" = 10
+"05135" = 10
 "05137" = 10
-"05139" = 9
-"05141" = 9
-"05143" = 5
-"05145" = 9
+"05139" = 10
+"05141" = 10
+"05143" = 8
+"05145" = 8
 "05147" = 10
-"05149" = 8
+"05149" = 9
 "06001" = 3
-"06003" = 8
-"06005" = 4
+"06003" = 9
+"06005" = 3
 "06007" = 9
-"06009" = 6
-"06011" = 5
+"06009" = 5
+"06011" = 4
 "06013" = 2
-"06015" = 10
+"06015" = 9
 "06017" = 2
 "06019" = 10
-"06021" = 8
-"06023" = 10
-"06025" = 9
-"06027" = 6
+"06021" = 7
+"06023" = 9
+"06025" = 10
+"06027" = 5
 "06029" = 9
 "06031" = 9
 "06033" = 9
-"06035" = 10
+"06035" = 9
 "06037" = 7
 "06039" = 10
 "06041" = 2
-"06043" = 7
+"06043" = 8
 "06045" = 9
 "06047" = 10
-"06049" = 10
-"06051" = 3
+"06049" = 7
+"06051" = 4
 "06053" = 5
 "06055" = 2
-"06057" = 5
+"06057" = 4
 "06059" = 3
 "06061" = 1
 "06063" = 6
-"06065" = 5
-"06067" = 6
-"06069" = 2
+"06065" = 4
+"06067" = 5
+"06069" = 1
 "06071" = 6
 "06073" = 4
-"06075" = 5
-"06077" = 5
-"06079" = 6
+"06075" = 4
+"06077" = 6
+"06079" = 5
 "06081" = 1
-"06083" = 8
-"06085" = 1
-"06087" = 4
+"06083" = 7
+"06085" = 2
+"06087" = 6
 "06089" = 7
 "06091" = 5
-"06093" = 9
+"06093" = 8
 "06095" = 3
 "06097" = 3
-"06099" = 7
-"06101" = 8
+"06099" = 8
+"06101" = 7
 "06103" = 8
-"06105" = 10
-"06107" = 10
+"06105" = 9
+"06107" = 9
 "06109" = 6
-"06111" = 2
-"06113" = 8
+"06111" = 3
+"06113" = 9
 "06115" = 8
-"08001" = 3
+"08001" = 4
 "08003" = 9
 "08005" = 2
-"08007" = 5
+"08007" = 3
 "08009" = 10
 "08011" = 10
-"08013" = 4
+"08013" = 5
 "08014" = 1
-"08015" = 4
-"08017" = 6
-"08019" = 2
+"08015" = 3
+"08017" = 7
+"08019" = 1
 "08021" = 9
 "08023" = 10
 "08025" = 10
 "08027" = 4
-"08029" = 7
+"08029" = 8
 "08031" = 5
-"08033" = 7
+"08033" = 6
 "08035" = 1
 "08037" = 1
 "08039" = 1
-"08041" = 3
-"08043" = 8
-"08045" = 3
+"08041" = 2
+"08043" = 9
+"08045" = 2
 "08047" = 1
 "08049" = 1
-"08051" = 5
+"08051" = 3
 "08053" = 2
 "08055" = 10
-"08057" = 8
+"08057" = 6
 "08059" = 1
-"08061" = 6
+"08061" = 8
 "08063" = 5
-"08065" = 4
-"08067" = 4
-"08069" = 4
-"08071" = 10
-"08073" = 8
-"08075" = 9
+"08065" = 5
+"08067" = 5
+"08069" = 5
+"08071" = 9
+"08073" = 9
+"08075" = 8
 "08077" = 4
-"08079" = 3
-"08081" = 4
+"08079" = 2
+"08081" = 3
 "08083" = 8
-"08085" = 6
+"08085" = 5
 "08087" = 5
 "08089" = 10
 "08091" = 1
-"08093" = 1
+"08093" = 2
 "08095" = 5
 "08097" = 1
 "08099" = 10
-"08101" = 9
-"08103" = 4
+"08101" = 8
+"08103" = 3
 "08105" = 7
 "08107" = 1
 "08109" = 10
-"08111" = 7
-"08113" = 2
+"08111" = 6
+"08113" = 1
 "08115" = 7
-"08117" = 1
+"08117" = 2
 "08119" = 2
-"08121" = 5
+"08121" = 6
 "08123" = 3
 "08125" = 6
-"09001" = 3
-"09003" = 4
-"09005" = 2
-"09007" = 1
-"09009" = 5
-"09011" = 2
-"09013" = 4
-"09015" = 5
-"10001" = 5
-"10003" = 5
-"10005" = 5
-"11001" = 9
+"09110" = 4
+"09120" = 6
+"09130" = 1
+"09140" = 3
+"09150" = 2
+"09160" = 2
+"09170" = 5
+"09180" = 4
+"09190" = 1
+"10001" = 4
+"10003" = 3
+"10005" = 3
+"11001" = 7
 "12001" = 10
-"12003" = 9
-"12005" = 7
-"12007" = 10
-"12009" = 4
+"12003" = 6
+"12005" = 5
+"12007" = 9
+"12009" = 3
 "12011" = 6
 "12013" = 10
-"12015" = 4
-"12017" = 8
-"12019" = 2
+"12015" = 3
+"12017" = 9
+"12019" = 3
 "12021" = 4
-"12023" = 9
+"12023" = 10
 "12027" = 10
 "12029" = 10
-"12031" = 8
+"12031" = 7
 "12033" = 9
-"12035" = 4
-"12037" = 10
+"12035" = 3
+"12037" = 9
 "12039" = 10
 "12041" = 8
 "12043" = 10
-"12045" = 8
+"12045" = 9
 "12047" = 10
 "12049" = 10
 "12051" = 10
 "12053" = 5
 "12055" = 8
-"12057" = 7
+"12057" = 6
 "12059" = 10
 "12061" = 5
-"12063" = 10
+"12063" = 9
 "12065" = 9
 "12067" = 10
 "12069" = 3
 "12071" = 5
-"12073" = 9
-"12075" = 10
+"12073" = 10
+"12075" = 8
 "12077" = 10
 "12079" = 10
 "12081" = 3
-"12083" = 6
-"12085" = 5
+"12083" = 8
+"12085" = 3
 "12086" = 8
-"12087" = 4
-"12089" = 3
-"12091" = 3
-"12093" = 10
-"12095" = 8
+"12087" = 6
+"12089" = 1
+"12091" = 2
+"12093" = 9
+"12095" = 6
 "12097" = 6
 "12099" = 5
-"12101" = 5
-"12103" = 5
+"12101" = 4
+"12103" = 6
 "12105" = 8
 "12107" = 10
 "12109" = 1
-"12111" = 5
-"12113" = 2
+"12111" = 6
+"12113" = 3
 "12115" = 2
-"12117" = 3
+"12117" = 5
 "12119" = 3
 "12121" = 10
 "12123" = 10
-"12125" = 10
-"12127" = 7
-"12129" = 4
+"12125" = 9
+"12127" = 5
+"12129" = 5
 "12131" = 5
 "12133" = 10
-"13001" = 9
+"13001" = 10
 "13003" = 10
 "13005" = 10
 "13007" = 10
 "13009" = 10
-"13011" = 6
+"13011" = 5
 "13013" = 3
-"13015" = 5
+"13015" = 4
 "13017" = 10
-"13019" = 9
+"13019" = 10
 "13021" = 10
-"13023" = 10
+"13023" = 9
 "13025" = 9
 "13027" = 10
 "13029" = 2
 "13031" = 10
 "13033" = 10
-"13035" = 7
+"13035" = 6
 "13037" = 10
-"13039" = 5
+"13039" = 6
 "13043" = 10
-"13045" = 9
+"13045" = 6
 "13047" = 5
 "13049" = 10
 "13051" = 8
-"13053" = 9
-"13055" = 10
+"13053" = 8
+"13055" = 9
 "13057" = 1
 "13059" = 10
 "13061" = 10
-"13063" = 10
+"13063" = 8
 "13065" = 10
-"13067" = 3
+"13067" = 2
 "13069" = 10
 "13071" = 10
 "13073" = 1
@@ -1276,93 +1279,93 @@ Value $POVCAT
 "13077" = 2
 "13079" = 9
 "13081" = 10
-"13083" = 4
+"13083" = 5
 "13085" = 2
 "13087" = 10
-"13089" = 7
+"13089" = 6
 "13091" = 10
 "13093" = 10
 "13095" = 10
-"13097" = 6
+"13097" = 4
 "13099" = 10
 "13101" = 10
-"13103" = 3
-"13105" = 10
+"13103" = 2
+"13105" = 9
 "13107" = 10
 "13109" = 10
-"13111" = 6
+"13111" = 5
 "13113" = 1
-"13115" = 9
+"13115" = 8
 "13117" = 1
 "13119" = 9
 "13121" = 6
 "13123" = 7
-"13125" = 8
-"13127" = 9
-"13129" = 6
+"13125" = 7
+"13127" = 7
+"13129" = 5
 "13131" = 10
 "13133" = 7
-"13135" = 4
-"13137" = 6
+"13135" = 3
+"13137" = 7
 "13139" = 5
 "13141" = 10
 "13143" = 8
-"13145" = 2
-"13147" = 8
-"13149" = 9
-"13151" = 3
-"13153" = 5
+"13145" = 3
+"13147" = 7
+"13149" = 8
+"13151" = 2
+"13153" = 4
 "13155" = 10
-"13157" = 5
-"13159" = 8
+"13157" = 1
+"13159" = 6
 "13161" = 10
 "13163" = 10
 "13165" = 10
 "13167" = 10
-"13169" = 6
-"13171" = 7
+"13169" = 5
+"13171" = 6
 "13173" = 10
 "13175" = 10
-"13177" = 3
-"13179" = 9
-"13181" = 9
-"13183" = 8
-"13185" = 10
-"13187" = 6
-"13189" = 10
-"13191" = 10
+"13177" = 4
+"13179" = 8
+"13181" = 8
+"13183" = 7
+"13185" = 8
+"13187" = 5
+"13189" = 9
+"13191" = 9
 "13193" = 10
-"13195" = 8
+"13195" = 5
 "13197" = 10
-"13199" = 10
+"13199" = 9
 "13201" = 10
 "13205" = 10
 "13207" = 5
 "13209" = 10
-"13211" = 4
-"13213" = 8
-"13215" = 10
+"13211" = 5
+"13213" = 6
+"13215" = 9
 "13217" = 6
 "13219" = 1
 "13221" = 6
 "13223" = 2
-"13225" = 10
+"13225" = 9
 "13227" = 4
-"13229" = 8
-"13231" = 3
-"13233" = 9
+"13229" = 9
+"13231" = 2
+"13233" = 8
 "13235" = 10
-"13237" = 9
+"13237" = 6
 "13239" = 10
 "13241" = 6
 "13243" = 10
-"13245" = 10
-"13247" = 6
-"13249" = 9
+"13245" = 9
+"13247" = 5
+"13249" = 8
 "13251" = 10
 "13253" = 10
 "13255" = 10
-"13257" = 9
+"13257" = 7
 "13259" = 10
 "13261" = 10
 "13263" = 10
@@ -1372,501 +1375,501 @@ Value $POVCAT
 "13271" = 10
 "13273" = 10
 "13275" = 10
-"13277" = 10
+"13277" = 9
 "13279" = 10
 "13281" = 6
 "13283" = 10
-"13285" = 8
+"13285" = 9
 "13287" = 10
 "13289" = 10
-"13291" = 5
+"13291" = 4
 "13293" = 10
-"13295" = 7
-"13297" = 4
-"13299" = 10
+"13295" = 8
+"13297" = 5
+"13299" = 9
 "13301" = 10
 "13303" = 10
-"13305" = 10
-"13307" = 10
+"13305" = 9
+"13307" = 9
 "13309" = 10
-"13311" = 6
+"13311" = 5
 "13313" = 6
 "13315" = 10
 "13317" = 10
-"13319" = 10
+"13319" = 9
 "13321" = 10
 "15001" = 8
 "15003" = 3
 "15005" = 1
-"15007" = 4
-"15009" = 5
+"15007" = 3
+"15009" = 3
 "16001" = 2
-"16003" = 6
+"16003" = 5
 "16005" = 6
 "16007" = 3
-"16009" = 6
-"16011" = 4
+"16009" = 8
+"16011" = 5
 "16013" = 1
-"16015" = 5
-"16017" = 5
-"16019" = 3
-"16021" = 5
+"16015" = 3
+"16017" = 6
+"16019" = 4
+"16021" = 6
 "16023" = 8
 "16025" = 3
 "16027" = 4
 "16029" = 3
-"16031" = 4
-"16033" = 7
+"16031" = 5
+"16033" = 8
 "16035" = 8
 "16037" = 6
 "16039" = 4
 "16041" = 2
 "16043" = 5
-"16045" = 5
-"16047" = 4
+"16045" = 6
+"16047" = 6
 "16049" = 6
 "16051" = 2
-"16053" = 6
+"16053" = 5
 "16055" = 3
-"16057" = 6
-"16059" = 5
-"16061" = 6
+"16057" = 9
+"16059" = 7
+"16061" = 8
 "16063" = 4
-"16065" = 9
-"16067" = 7
-"16069" = 8
+"16065" = 10
+"16067" = 6
+"16069" = 4
 "16071" = 4
-"16073" = 7
+"16073" = 6
 "16075" = 5
-"16077" = 6
-"16079" = 9
+"16077" = 7
+"16079" = 6
 "16081" = 1
-"16083" = 6
+"16083" = 5
 "16085" = 2
-"16087" = 6
-"17001" = 5
+"16087" = 7
+"17001" = 6
 "17003" = 10
-"17005" = 6
-"17007" = 4
-"17009" = 9
-"17011" = 5
+"17005" = 5
+"17007" = 3
+"17009" = 7
+"17011" = 6
 "17013" = 4
 "17015" = 6
 "17017" = 5
-"17019" = 8
-"17021" = 5
-"17023" = 4
-"17025" = 7
-"17027" = 3
+"17019" = 10
+"17021" = 8
+"17023" = 5
+"17025" = 6
+"17027" = 2
 "17029" = 9
 "17031" = 7
-"17033" = 6
-"17035" = 4
-"17037" = 7
+"17033" = 5
+"17035" = 3
+"17037" = 6
 "17039" = 4
-"17041" = 3
+"17041" = 2
 "17043" = 1
-"17045" = 6
+"17045" = 7
 "17047" = 5
 "17049" = 3
-"17051" = 8
-"17053" = 4
-"17055" = 9
-"17057" = 8
-"17059" = 9
-"17061" = 7
+"17051" = 6
+"17053" = 5
+"17055" = 10
+"17057" = 6
+"17059" = 10
+"17061" = 6
 "17063" = 1
 "17065" = 6
-"17067" = 5
-"17069" = 10
+"17067" = 6
+"17069" = 9
 "17071" = 5
-"17073" = 3
-"17075" = 4
+"17073" = 2
+"17075" = 5
 "17077" = 10
-"17079" = 3
+"17079" = 4
 "17081" = 8
 "17083" = 3
 "17085" = 2
-"17087" = 6
+"17087" = 8
 "17089" = 2
-"17091" = 6
+"17091" = 7
 "17093" = 1
 "17095" = 8
 "17097" = 2
-"17099" = 6
-"17101" = 10
-"17103" = 6
+"17099" = 8
+"17101" = 9
+"17103" = 5
 "17105" = 5
-"17107" = 6
-"17109" = 9
+"17107" = 7
+"17109" = 10
 "17111" = 1
-"17113" = 6
-"17115" = 9
-"17117" = 8
-"17119" = 5
+"17113" = 5
+"17115" = 8
+"17117" = 5
+"17119" = 6
 "17121" = 8
-"17123" = 3
-"17125" = 5
-"17127" = 9
+"17123" = 5
+"17125" = 6
+"17127" = 8
 "17129" = 2
-"17131" = 4
+"17131" = 2
 "17133" = 1
-"17135" = 6
-"17137" = 7
-"17139" = 3
+"17135" = 8
+"17137" = 5
+"17139" = 4
 "17141" = 2
-"17143" = 9
-"17145" = 9
+"17143" = 7
+"17145" = 8
 "17147" = 1
-"17149" = 6
-"17151" = 9
+"17149" = 9
+"17151" = 8
 "17153" = 10
 "17155" = 2
 "17157" = 8
-"17159" = 7
-"17161" = 9
-"17163" = 6
-"17165" = 9
-"17167" = 7
-"17169" = 5
+"17159" = 8
+"17161" = 8
+"17163" = 8
+"17165" = 10
+"17167" = 5
+"17169" = 8
 "17171" = 5
-"17173" = 4
+"17173" = 5
 "17175" = 5
-"17177" = 5
+"17177" = 7
 "17179" = 3
-"17181" = 9
-"17183" = 10
+"17181" = 10
+"17183" = 9
 "17185" = 7
-"17187" = 6
+"17187" = 8
 "17189" = 2
 "17191" = 7
 "17193" = 8
 "17195" = 6
-"17197" = 2
-"17199" = 8
-"17201" = 7
+"17197" = 1
+"17199" = 6
+"17201" = 8
 "17203" = 1
-"18001" = 6
-"18003" = 6
-"18005" = 2
-"18007" = 4
+"18001" = 5
+"18003" = 5
+"18005" = 6
+"18007" = 3
 "18009" = 6
 "18011" = 1
-"18013" = 4
-"18015" = 2
-"18017" = 5
-"18019" = 4
-"18021" = 4
-"18023" = 4
-"18025" = 8
-"18027" = 6
-"18029" = 2
-"18031" = 3
-"18033" = 2
-"18035" = 9
+"18013" = 3
+"18015" = 4
+"18017" = 6
+"18019" = 3
+"18021" = 6
+"18023" = 5
+"18025" = 9
+"18027" = 4
+"18029" = 4
+"18031" = 4
+"18033" = 3
+"18035" = 10
 "18037" = 2
-"18039" = 4
-"18041" = 6
+"18039" = 6
+"18041" = 8
 "18043" = 3
-"18045" = 4
-"18047" = 2
-"18049" = 4
-"18051" = 5
+"18045" = 6
+"18047" = 3
+"18049" = 7
+"18051" = 3
 "18053" = 10
-"18055" = 7
+"18055" = 6
 "18057" = 1
 "18059" = 1
 "18061" = 2
 "18063" = 1
-"18065" = 8
-"18067" = 5
-"18069" = 4
-"18071" = 7
-"18073" = 2
-"18075" = 6
+"18065" = 7
+"18067" = 8
+"18069" = 6
+"18071" = 5
+"18073" = 3
+"18075" = 7
 "18077" = 5
-"18079" = 6
+"18079" = 5
 "18081" = 2
 "18083" = 8
-"18085" = 3
+"18085" = 4
 "18087" = 2
-"18089" = 7
-"18091" = 5
+"18089" = 8
+"18091" = 8
 "18093" = 6
 "18095" = 8
 "18097" = 8
-"18099" = 2
-"18101" = 5
-"18103" = 8
-"18105" = 10
+"18099" = 4
+"18101" = 6
+"18103" = 7
+"18105" = 9
 "18107" = 5
-"18109" = 4
-"18111" = 5
+"18109" = 3
+"18111" = 6
 "18113" = 3
 "18115" = 3
-"18117" = 7
-"18119" = 4
-"18121" = 9
-"18123" = 6
-"18125" = 4
+"18117" = 8
+"18119" = 7
+"18121" = 8
+"18123" = 9
+"18125" = 5
 "18127" = 3
 "18129" = 3
-"18131" = 5
-"18133" = 5
-"18135" = 7
-"18137" = 2
-"18139" = 4
-"18141" = 7
-"18143" = 7
-"18145" = 3
-"18147" = 2
-"18149" = 7
+"18131" = 6
+"18133" = 3
+"18135" = 8
+"18137" = 5
+"18139" = 5
+"18141" = 6
+"18143" = 8
+"18145" = 7
+"18147" = 3
+"18149" = 6
 "18151" = 3
-"18153" = 9
+"18153" = 6
 "18155" = 7
-"18157" = 9
-"18159" = 2
-"18161" = 4
-"18163" = 7
-"18165" = 5
+"18157" = 10
+"18159" = 3
+"18161" = 5
+"18163" = 8
+"18165" = 7
 "18167" = 10
-"18169" = 4
-"18171" = 2
+"18169" = 5
+"18171" = 3
 "18173" = 1
-"18175" = 4
-"18177" = 8
-"18179" = 2
+"18175" = 6
+"18177" = 9
+"18179" = 3
 "18181" = 3
-"18183" = 1
-"19001" = 4
-"19003" = 4
-"19005" = 3
-"19007" = 9
-"19009" = 4
+"18183" = 3
+"19001" = 3
+"19003" = 3
+"19005" = 5
+"19007" = 8
+"19009" = 5
 "19011" = 2
-"19013" = 6
+"19013" = 9
 "19015" = 2
 "19017" = 1
 "19019" = 3
 "19021" = 4
-"19023" = 2
-"19025" = 5
-"19027" = 3
+"19023" = 3
+"19025" = 2
+"19027" = 2
 "19029" = 7
-"19031" = 1
+"19031" = 2
 "19033" = 5
 "19035" = 4
 "19037" = 2
-"19039" = 3
+"19039" = 5
 "19041" = 3
-"19043" = 3
-"19045" = 5
+"19043" = 5
+"19045" = 6
 "19047" = 5
 "19049" = 1
-"19051" = 4
+"19051" = 5
 "19053" = 9
-"19055" = 3
-"19057" = 6
-"19059" = 2
-"19061" = 2
+"19055" = 2
+"19057" = 8
+"19059" = 1
+"19061" = 4
 "19063" = 5
-"19065" = 5
-"19067" = 4
-"19069" = 4
+"19065" = 6
+"19067" = 5
+"19069" = 5
 "19071" = 4
 "19073" = 4
 "19075" = 1
 "19077" = 3
-"19079" = 2
+"19079" = 3
 "19081" = 2
-"19083" = 3
-"19085" = 4
+"19083" = 4
+"19085" = 3
 "19087" = 5
 "19089" = 3
-"19091" = 3
-"19093" = 4
-"19095" = 2
-"19097" = 5
+"19091" = 2
+"19093" = 3
+"19095" = 1
+"19097" = 4
 "19099" = 3
-"19101" = 6
+"19101" = 7
 "19103" = 8
 "19105" = 4
-"19107" = 4
-"19109" = 4
-"19111" = 7
+"19107" = 5
+"19109" = 2
+"19111" = 6
 "19113" = 3
 "19115" = 4
-"19117" = 6
+"19117" = 9
 "19119" = 1
 "19121" = 1
-"19123" = 6
+"19123" = 4
 "19125" = 2
 "19127" = 5
-"19129" = 2
-"19131" = 2
+"19129" = 3
+"19131" = 5
 "19133" = 5
-"19135" = 4
+"19135" = 3
 "19137" = 5
-"19139" = 4
-"19141" = 4
-"19143" = 2
-"19145" = 9
+"19139" = 6
+"19141" = 2
+"19143" = 4
+"19145" = 6
 "19147" = 5
 "19149" = 1
-"19151" = 4
+"19151" = 5
 "19153" = 4
 "19155" = 5
-"19157" = 6
+"19157" = 3
 "19159" = 6
 "19161" = 3
-"19163" = 6
-"19165" = 2
-"19167" = 1
+"19163" = 5
+"19165" = 3
+"19167" = 2
 "19169" = 9
 "19171" = 6
 "19173" = 6
 "19175" = 6
 "19177" = 6
-"19179" = 8
+"19179" = 9
 "19181" = 1
-"19183" = 2
-"19185" = 6
-"19187" = 8
-"19189" = 4
-"19191" = 2
-"19193" = 8
+"19183" = 3
+"19185" = 8
+"19187" = 6
+"19189" = 3
+"19191" = 3
+"19193" = 6
 "19195" = 3
-"19197" = 4
-"20001" = 9
-"20003" = 5
+"19197" = 5
+"20001" = 8
+"20003" = 7
 "20005" = 8
-"20007" = 4
+"20007" = 5
 "20009" = 7
-"20011" = 8
-"20013" = 7
-"20015" = 3
-"20017" = 4
-"20019" = 8
-"20021" = 8
-"20023" = 7
-"20025" = 5
-"20027" = 3
+"20011" = 10
+"20013" = 8
+"20015" = 2
+"20017" = 5
+"20019" = 9
+"20021" = 9
+"20023" = 6
+"20025" = 6
+"20027" = 6
 "20029" = 6
 "20031" = 3
-"20033" = 3
-"20035" = 7
-"20037" = 10
-"20039" = 5
-"20041" = 3
-"20043" = 6
+"20033" = 5
+"20035" = 9
+"20037" = 9
+"20039" = 8
+"20041" = 4
+"20043" = 4
 "20045" = 8
 "20047" = 5
 "20049" = 9
-"20051" = 6
-"20053" = 4
-"20055" = 6
+"20051" = 7
+"20053" = 5
+"20055" = 5
 "20057" = 5
-"20059" = 4
+"20059" = 3
 "20061" = 6
-"20063" = 3
-"20065" = 5
-"20067" = 4
+"20063" = 5
+"20065" = 6
+"20067" = 5
 "20069" = 2
-"20071" = 3
+"20071" = 4
 "20073" = 8
-"20075" = 5
-"20077" = 9
+"20075" = 6
+"20077" = 7
 "20079" = 3
 "20081" = 3
 "20083" = 3
 "20085" = 3
 "20087" = 2
-"20089" = 6
+"20089" = 5
 "20091" = 1
 "20093" = 4
 "20095" = 5
-"20097" = 5
-"20099" = 9
-"20101" = 3
-"20103" = 2
-"20105" = 4
-"20107" = 5
-"20109" = 2
-"20111" = 7
-"20113" = 2
+"20097" = 6
+"20099" = 8
+"20101" = 4
+"20103" = 3
+"20105" = 5
+"20107" = 6
+"20109" = 3
+"20111" = 9
+"20113" = 4
 "20115" = 4
 "20117" = 4
 "20119" = 3
 "20121" = 1
-"20123" = 4
+"20123" = 5
 "20125" = 8
 "20127" = 4
-"20129" = 4
-"20131" = 2
+"20129" = 5
+"20131" = 3
 "20133" = 8
-"20135" = 3
-"20137" = 6
-"20139" = 4
-"20141" = 5
-"20143" = 4
+"20135" = 5
+"20137" = 9
+"20139" = 5
+"20141" = 7
+"20143" = 3
 "20145" = 8
-"20147" = 5
-"20149" = 2
-"20151" = 5
+"20147" = 6
+"20149" = 1
+"20151" = 4
 "20153" = 5
-"20155" = 6
-"20157" = 4
-"20159" = 6
-"20161" = 9
-"20163" = 3
-"20165" = 6
-"20167" = 7
+"20155" = 8
+"20157" = 3
+"20159" = 4
+"20161" = 10
+"20163" = 5
+"20165" = 8
+"20167" = 8
 "20169" = 6
-"20171" = 1
-"20173" = 6
-"20175" = 6
-"20177" = 8
+"20171" = 2
+"20173" = 8
+"20175" = 7
+"20177" = 7
 "20179" = 4
 "20181" = 6
 "20183" = 5
-"20185" = 5
+"20185" = 6
 "20187" = 4
 "20189" = 3
-"20191" = 5
-"20193" = 2
+"20191" = 6
+"20193" = 4
 "20195" = 4
 "20197" = 2
-"20199" = 5
+"20199" = 6
 "20201" = 3
-"20203" = 4
-"20205" = 9
-"20207" = 7
-"20209" = 9
+"20203" = 5
+"20205" = 7
+"20207" = 8
+"20209" = 8
 "21001" = 10
-"21003" = 9
-"21005" = 2
-"21007" = 7
-"21009" = 10
+"21003" = 8
+"21005" = 5
+"21007" = 8
+"21009" = 9
 "21011" = 10
 "21013" = 10
 "21015" = 1
-"21017" = 8
-"21019" = 10
+"21017" = 9
+"21019" = 9
 "21021" = 8
 "21023" = 8
 "21025" = 10
-"21027" = 9
-"21029" = 4
-"21031" = 9
+"21027" = 10
+"21029" = 3
+"21031" = 10
 "21033" = 9
-"21035" = 9
-"21037" = 4
-"21039" = 8
+"21035" = 10
+"21037" = 3
+"21039" = 9
 "21041" = 9
 "21043" = 10
 "21045" = 10
 "21047" = 9
-"21049" = 5
+"21049" = 8
 "21051" = 10
 "21053" = 10
 "21055" = 10
@@ -1876,62 +1879,62 @@ Value $POVCAT
 "21063" = 10
 "21065" = 10
 "21067" = 8
-"21069" = 9
+"21069" = 10
 "21071" = 10
-"21073" = 6
+"21073" = 7
 "21075" = 10
-"21077" = 8
-"21079" = 7
+"21077" = 6
+"21079" = 9
 "21081" = 6
-"21083" = 9
+"21083" = 10
 "21085" = 9
 "21087" = 10
-"21089" = 8
-"21091" = 6
-"21093" = 5
+"21089" = 9
+"21091" = 7
+"21093" = 6
 "21095" = 10
-"21097" = 7
+"21097" = 8
 "21099" = 10
-"21101" = 5
-"21103" = 7
-"21105" = 10
+"21101" = 9
+"21103" = 6
+"21105" = 9
 "21107" = 10
 "21109" = 10
-"21111" = 7
-"21113" = 7
+"21111" = 8
+"21113" = 6
 "21115" = 10
-"21117" = 6
+"21117" = 4
 "21119" = 10
 "21121" = 10
-"21123" = 8
+"21123" = 9
 "21125" = 10
 "21127" = 10
 "21129" = 10
 "21131" = 10
 "21133" = 10
 "21135" = 10
-"21137" = 10
-"21139" = 7
-"21141" = 9
+"21137" = 9
+"21139" = 8
+"21141" = 8
 "21143" = 8
-"21145" = 9
+"21145" = 8
 "21147" = 10
-"21149" = 6
-"21151" = 9
+"21149" = 7
+"21151" = 8
 "21153" = 10
-"21155" = 8
+"21155" = 10
 "21157" = 6
 "21159" = 10
-"21161" = 9
-"21163" = 8
+"21161" = 10
+"21163" = 5
 "21165" = 10
 "21167" = 6
 "21169" = 10
 "21171" = 10
-"21173" = 9
+"21173" = 8
 "21175" = 10
 "21177" = 10
-"21179" = 4
+"21179" = 5
 "21181" = 9
 "21183" = 9
 "21185" = 1
@@ -1942,34 +1945,34 @@ Value $POVCAT
 "21195" = 10
 "21197" = 10
 "21199" = 10
-"21201" = 9
+"21201" = 10
 "21203" = 10
 "21205" = 10
 "21207" = 10
-"21209" = 3
+"21209" = 2
 "21211" = 3
-"21213" = 6
-"21215" = 1
+"21213" = 8
+"21215" = 2
 "21217" = 9
-"21219" = 10
-"21221" = 9
-"21223" = 6
+"21219" = 9
+"21221" = 7
+"21223" = 5
 "21225" = 9
-"21227" = 8
-"21229" = 6
+"21227" = 9
+"21229" = 8
 "21231" = 10
 "21233" = 8
 "21235" = 10
 "21237" = 10
-"21239" = 2
+"21239" = 3
 "22001" = 10
 "22003" = 10
-"22005" = 5
-"22007" = 10
+"22005" = 4
+"22007" = 9
 "22009" = 10
 "22011" = 8
 "22013" = 10
-"22015" = 8
+"22015" = 6
 "22017" = 10
 "22019" = 9
 "22021" = 10
@@ -1980,27 +1983,27 @@ Value $POVCAT
 "22031" = 10
 "22033" = 10
 "22035" = 10
-"22037" = 10
+"22037" = 9
 "22039" = 10
 "22041" = 10
-"22043" = 10
+"22043" = 9
 "22045" = 10
 "22047" = 10
 "22049" = 10
-"22051" = 9
-"22053" = 9
+"22051" = 8
+"22053" = 10
 "22055" = 9
-"22057" = 8
+"22057" = 9
 "22059" = 10
 "22061" = 10
-"22063" = 5
+"22063" = 6
 "22065" = 10
 "22067" = 10
 "22069" = 10
 "22071" = 10
 "22073" = 10
-"22075" = 7
-"22077" = 10
+"22075" = 9
+"22077" = 9
 "22079" = 10
 "22081" = 10
 "22083" = 10
@@ -2008,13 +2011,13 @@ Value $POVCAT
 "22087" = 10
 "22089" = 5
 "22091" = 10
-"22093" = 9
-"22095" = 9
+"22093" = 8
+"22095" = 8
 "22097" = 10
 "22099" = 9
 "22101" = 10
-"22103" = 6
-"22105" = 9
+"22103" = 4
+"22105" = 10
 "22107" = 10
 "22109" = 9
 "22111" = 10
@@ -2022,56 +2025,56 @@ Value $POVCAT
 "22115" = 9
 "22117" = 10
 "22119" = 10
-"22121" = 8
+"22121" = 5
 "22123" = 10
 "22125" = 10
 "22127" = 10
-"23001" = 7
+"23001" = 6
 "23003" = 8
-"23005" = 2
-"23007" = 5
-"23009" = 4
-"23011" = 4
+"23005" = 1
+"23007" = 7
+"23009" = 5
+"23011" = 5
 "23013" = 4
 "23015" = 3
-"23017" = 8
+"23017" = 6
 "23019" = 8
-"23021" = 7
-"23023" = 2
+"23021" = 8
+"23023" = 3
 "23025" = 8
 "23027" = 6
-"23029" = 9
+"23029" = 8
 "23031" = 2
 "24001" = 9
 "24003" = 1
-"24005" = 3
+"24005" = 5
 "24009" = 1
 "24011" = 6
 "24013" = 1
-"24015" = 4
-"24017" = 1
+"24015" = 3
+"24017" = 2
 "24019" = 8
 "24021" = 1
-"24023" = 4
-"24025" = 2
+"24023" = 8
+"24025" = 1
 "24027" = 1
 "24029" = 5
 "24031" = 2
-"24033" = 5
-"24035" = 2
+"24033" = 4
+"24035" = 1
 "24037" = 2
 "24039" = 10
-"24041" = 3
-"24043" = 7
-"24045" = 7
-"24047" = 4
+"24041" = 4
+"24043" = 5
+"24045" = 6
+"24047" = 2
 "24510" = 10
 "25001" = 2
-"25003" = 4
+"25003" = 5
 "25005" = 5
 "25007" = 2
 "25009" = 3
-"25011" = 4
+"25011" = 6
 "25013" = 9
 "25015" = 5
 "25017" = 2
@@ -2079,175 +2082,175 @@ Value $POVCAT
 "25021" = 1
 "25023" = 2
 "25025" = 9
-"25027" = 3
+"25027" = 4
 "26001" = 6
-"26003" = 6
+"26003" = 5
 "26005" = 3
 "26007" = 8
-"26009" = 4
-"26011" = 8
-"26013" = 8
+"26009" = 3
+"26011" = 7
+"26013" = 7
 "26015" = 2
-"26017" = 6
+"26017" = 8
 "26019" = 3
-"26021" = 9
-"26023" = 6
-"26025" = 6
+"26021" = 8
+"26023" = 9
+"26025" = 7
 "26027" = 5
-"26029" = 3
-"26031" = 6
-"26033" = 9
-"26035" = 10
-"26037" = 2
-"26039" = 8
-"26041" = 5
-"26043" = 5
-"26045" = 2
-"26047" = 2
+"26029" = 2
+"26031" = 5
+"26033" = 6
+"26035" = 9
+"26037" = 3
+"26039" = 7
+"26041" = 6
+"26043" = 6
+"26045" = 3
+"26047" = 3
 "26049" = 9
-"26051" = 8
+"26051" = 7
 "26053" = 9
-"26055" = 2
-"26057" = 8
+"26055" = 3
+"26057" = 6
 "26059" = 7
-"26061" = 7
+"26061" = 8
 "26063" = 5
-"26065" = 8
+"26065" = 9
 "26067" = 5
-"26069" = 7
-"26071" = 8
-"26073" = 9
-"26075" = 5
-"26077" = 7
-"26079" = 4
-"26081" = 3
+"26069" = 9
+"26071" = 6
+"26073" = 10
+"26075" = 6
+"26077" = 5
+"26079" = 6
+"26081" = 4
 "26083" = 4
 "26085" = 10
 "26087" = 3
 "26089" = 1
-"26091" = 4
+"26091" = 5
 "26093" = 1
-"26095" = 10
-"26097" = 5
-"26099" = 5
+"26095" = 9
+"26097" = 8
+"26099" = 3
 "26101" = 6
-"26103" = 6
-"26105" = 7
-"26107" = 9
-"26109" = 4
-"26111" = 4
-"26113" = 5
+"26103" = 5
+"26105" = 4
+"26107" = 10
+"26109" = 5
+"26111" = 3
+"26113" = 6
 "26115" = 3
-"26117" = 6
+"26117" = 8
 "26119" = 9
-"26121" = 7
-"26123" = 7
+"26121" = 8
+"26123" = 6
 "26125" = 2
-"26127" = 7
+"26127" = 9
 "26129" = 9
-"26131" = 5
-"26133" = 6
+"26131" = 8
+"26133" = 8
 "26135" = 9
 "26137" = 4
 "26139" = 2
 "26141" = 6
 "26143" = 9
-"26145" = 10
-"26147" = 4
-"26149" = 5
-"26151" = 7
-"26153" = 7
-"26155" = 4
+"26145" = 9
+"26147" = 6
+"26149" = 6
+"26151" = 8
+"26153" = 6
+"26155" = 5
 "26157" = 6
-"26159" = 6
-"26161" = 5
+"26159" = 8
+"26161" = 7
 "26163" = 10
-"26165" = 8
-"27001" = 4
+"26165" = 6
+"27001" = 6
 "27003" = 1
-"27005" = 4
-"27007" = 8
-"27009" = 2
-"27011" = 6
-"27013" = 6
-"27015" = 3
+"27005" = 3
+"27007" = 9
+"27009" = 3
+"27011" = 5
+"27013" = 8
+"27015" = 2
 "27017" = 4
 "27019" = 1
-"27021" = 5
+"27021" = 7
 "27023" = 4
 "27025" = 1
-"27027" = 6
-"27029" = 7
+"27027" = 5
+"27029" = 4
 "27031" = 3
-"27033" = 5
+"27033" = 6
 "27035" = 4
 "27037" = 1
 "27039" = 1
-"27041" = 3
-"27043" = 5
-"27045" = 5
-"27047" = 4
-"27049" = 2
-"27051" = 3
-"27053" = 3
-"27055" = 1
-"27057" = 4
-"27059" = 2
+"27041" = 2
+"27043" = 4
+"27045" = 2
+"27047" = 5
+"27049" = 3
+"27051" = 5
+"27053" = 4
+"27055" = 2
+"27057" = 3
+"27059" = 1
 "27061" = 5
-"27063" = 4
-"27065" = 6
-"27067" = 5
-"27069" = 3
-"27071" = 6
+"27063" = 3
+"27065" = 3
+"27067" = 3
+"27069" = 4
+"27071" = 5
 "27073" = 3
 "27075" = 2
-"27077" = 4
+"27077" = 5
 "27079" = 1
-"27081" = 2
-"27083" = 4
-"27085" = 2
-"27087" = 10
-"27089" = 3
-"27091" = 4
-"27093" = 2
+"27081" = 3
+"27083" = 5
+"27085" = 1
+"27087" = 9
+"27089" = 2
+"27091" = 5
+"27093" = 3
 "27095" = 4
-"27097" = 4
-"27099" = 5
-"27101" = 2
+"27097" = 3
+"27099" = 3
+"27101" = 3
 "27103" = 3
 "27105" = 5
-"27107" = 5
-"27109" = 2
-"27111" = 3
+"27107" = 3
+"27109" = 3
+"27111" = 2
 "27113" = 3
-"27115" = 4
+"27115" = 5
 "27117" = 4
-"27119" = 5
-"27121" = 2
-"27123" = 6
+"27119" = 4
+"27121" = 4
+"27123" = 7
 "27125" = 3
-"27127" = 3
-"27129" = 4
-"27131" = 3
-"27133" = 3
+"27127" = 5
+"27129" = 5
+"27131" = 4
+"27133" = 2
 "27135" = 3
-"27137" = 7
+"27137" = 8
 "27139" = 1
 "27141" = 1
 "27143" = 2
-"27145" = 6
+"27145" = 5
 "27147" = 3
-"27149" = 5
-"27151" = 4
-"27153" = 6
-"27155" = 6
-"27157" = 1
-"27159" = 6
+"27149" = 4
+"27151" = 3
+"27153" = 3
+"27155" = 7
+"27157" = 2
+"27159" = 5
 "27161" = 2
 "27163" = 1
-"27165" = 5
-"27167" = 3
-"27169" = 5
+"27165" = 8
+"27167" = 4
+"27169" = 8
 "27171" = 1
 "27173" = 4
 "28001" = 10
@@ -2257,47 +2260,47 @@ Value $POVCAT
 "28009" = 10
 "28011" = 10
 "28013" = 10
-"28015" = 8
+"28015" = 10
 "28017" = 10
 "28019" = 10
 "28021" = 10
-"28023" = 9
+"28023" = 10
 "28025" = 10
 "28027" = 10
 "28029" = 10
 "28031" = 10
-"28033" = 4
+"28033" = 3
 "28035" = 10
 "28037" = 10
-"28039" = 9
+"28039" = 8
 "28041" = 10
 "28043" = 10
-"28045" = 9
-"28047" = 9
+"28045" = 8
+"28047" = 10
 "28049" = 10
 "28051" = 10
 "28053" = 10
 "28055" = 10
 "28057" = 6
 "28059" = 8
-"28061" = 9
+"28061" = 10
 "28063" = 10
 "28065" = 10
-"28067" = 10
+"28067" = 9
 "28069" = 10
 "28071" = 9
-"28073" = 5
+"28073" = 8
 "28075" = 10
 "28077" = 10
 "28079" = 10
-"28081" = 8
+"28081" = 6
 "28083" = 10
-"28085" = 9
-"28087" = 9
-"28089" = 5
+"28085" = 10
+"28087" = 10
+"28089" = 4
 "28091" = 10
 "28093" = 10
-"28095" = 9
+"28095" = 8
 "28097" = 10
 "28099" = 10
 "28101" = 10
@@ -2313,13 +2316,13 @@ Value $POVCAT
 "28121" = 4
 "28123" = 10
 "28125" = 10
-"28127" = 10
+"28127" = 9
 "28129" = 9
 "28131" = 9
 "28133" = 10
 "28135" = 10
-"28137" = 8
-"28139" = 10
+"28137" = 10
+"28139" = 9
 "28141" = 8
 "28143" = 10
 "28145" = 7
@@ -2327,332 +2330,332 @@ Value $POVCAT
 "28149" = 10
 "28151" = 10
 "28153" = 10
-"28155" = 9
+"28155" = 10
 "28157" = 10
 "28159" = 10
-"28161" = 10
+"28161" = 9
 "28163" = 10
 "29001" = 10
 "29003" = 2
 "29005" = 6
 "29007" = 9
-"29009" = 10
+"29009" = 9
 "29011" = 8
-"29013" = 6
+"29013" = 9
 "29015" = 8
-"29017" = 8
+"29017" = 5
 "29019" = 9
-"29021" = 10
+"29021" = 9
 "29023" = 10
 "29025" = 6
 "29027" = 4
 "29029" = 6
-"29031" = 5
-"29033" = 5
+"29031" = 7
+"29033" = 8
 "29035" = 10
-"29037" = 1
+"29037" = 2
 "29039" = 9
-"29041" = 5
+"29041" = 6
 "29043" = 2
 "29045" = 6
 "29047" = 2
-"29049" = 4
-"29051" = 5
-"29053" = 6
+"29049" = 6
+"29051" = 3
+"29053" = 5
 "29055" = 8
-"29057" = 8
-"29059" = 9
-"29061" = 6
+"29057" = 9
+"29059" = 8
+"29061" = 8
 "29063" = 6
 "29065" = 9
 "29067" = 10
 "29069" = 10
 "29071" = 3
-"29073" = 4
-"29075" = 7
-"29077" = 6
+"29073" = 7
+"29075" = 8
+"29077" = 8
 "29079" = 9
-"29081" = 8
+"29081" = 9
 "29083" = 7
-"29085" = 9
-"29087" = 7
-"29089" = 5
-"29091" = 9
+"29085" = 10
+"29087" = 5
+"29089" = 8
+"29091" = 10
 "29093" = 10
-"29095" = 6
+"29095" = 8
 "29097" = 9
-"29099" = 2
-"29101" = 5
-"29103" = 9
+"29099" = 3
+"29101" = 7
+"29103" = 8
 "29105" = 8
-"29107" = 4
-"29109" = 8
-"29111" = 8
+"29107" = 5
+"29109" = 6
+"29111" = 7
 "29113" = 3
-"29115" = 8
-"29117" = 7
-"29119" = 9
-"29121" = 6
-"29123" = 7
-"29125" = 4
-"29127" = 7
-"29129" = 6
-"29131" = 8
+"29115" = 6
+"29117" = 8
+"29119" = 8
+"29121" = 7
+"29123" = 9
+"29125" = 8
+"29127" = 6
+"29129" = 8
+"29131" = 6
 "29133" = 10
 "29135" = 5
-"29137" = 8
-"29139" = 6
-"29141" = 9
-"29143" = 10
+"29137" = 7
+"29139" = 8
+"29141" = 10
+"29143" = 9
 "29145" = 8
-"29147" = 8
+"29147" = 9
 "29149" = 10
 "29151" = 2
 "29153" = 10
 "29155" = 10
-"29157" = 4
-"29159" = 9
-"29161" = 9
-"29163" = 9
-"29165" = 1
-"29167" = 8
+"29157" = 5
+"29159" = 6
+"29161" = 8
+"29163" = 8
+"29165" = 2
+"29167" = 9
 "29169" = 6
-"29171" = 7
+"29171" = 9
 "29173" = 3
-"29175" = 8
-"29177" = 4
-"29179" = 9
+"29175" = 9
+"29177" = 6
+"29179" = 10
 "29181" = 10
 "29183" = 1
-"29185" = 9
-"29186" = 4
-"29187" = 9
+"29185" = 10
+"29186" = 3
+"29187" = 10
 "29189" = 4
-"29195" = 6
-"29197" = 6
-"29199" = 7
-"29201" = 8
+"29195" = 8
+"29197" = 8
+"29199" = 5
+"29201" = 9
 "29203" = 10
-"29205" = 7
-"29207" = 9
-"29209" = 8
-"29211" = 9
-"29213" = 8
+"29205" = 8
+"29207" = 8
+"29209" = 6
+"29211" = 8
+"29213" = 6
 "29215" = 10
-"29217" = 10
+"29217" = 9
 "29219" = 2
 "29221" = 10
 "29223" = 10
 "29225" = 8
-"29227" = 7
+"29227" = 9
 "29229" = 10
 "29510" = 10
-"30001" = 6
+"30001" = 5
 "30003" = 10
-"30005" = 10
+"30005" = 9
 "30007" = 2
 "30009" = 3
 "30011" = 6
-"30013" = 6
-"30015" = 7
-"30017" = 6
-"30019" = 4
-"30021" = 4
-"30023" = 8
-"30025" = 2
-"30027" = 5
-"30029" = 3
-"30031" = 2
+"30013" = 7
+"30015" = 8
+"30017" = 4
+"30019" = 3
+"30021" = 5
+"30023" = 7
+"30025" = 3
+"30027" = 6
+"30029" = 4
+"30031" = 3
 "30033" = 8
 "30035" = 10
-"30037" = 9
+"30037" = 10
 "30039" = 5
 "30041" = 9
-"30043" = 1
-"30045" = 8
+"30043" = 2
+"30045" = 5
 "30047" = 9
-"30049" = 2
+"30049" = 3
 "30051" = 9
 "30053" = 9
 "30055" = 7
 "30057" = 3
 "30059" = 8
-"30061" = 7
-"30063" = 6
-"30065" = 8
-"30067" = 3
+"30061" = 6
+"30063" = 3
+"30065" = 9
+"30067" = 4
 "30069" = 6
-"30071" = 7
-"30073" = 9
-"30075" = 4
-"30077" = 9
+"30071" = 8
+"30073" = 10
+"30075" = 5
+"30077" = 8
 "30079" = 6
-"30081" = 3
+"30081" = 5
 "30083" = 3
 "30085" = 10
 "30087" = 9
-"30089" = 8
-"30091" = 5
-"30093" = 6
-"30095" = 2
-"30097" = 3
+"30089" = 9
+"30091" = 6
+"30093" = 9
+"30095" = 3
+"30097" = 4
 "30099" = 6
-"30101" = 8
-"30103" = 5
+"30101" = 9
+"30103" = 6
 "30105" = 5
-"30107" = 9
-"30109" = 4
-"30111" = 4
-"31001" = 5
-"31003" = 3
-"31005" = 6
-"31007" = 4
-"31009" = 6
+"30107" = 10
+"30109" = 7
+"30111" = 3
+"31001" = 4
+"31003" = 5
+"31005" = 7
+"31007" = 5
+"31009" = 9
 "31011" = 3
-"31013" = 4
-"31015" = 7
-"31017" = 4
-"31019" = 4
-"31021" = 3
+"31013" = 5
+"31015" = 8
+"31017" = 5
+"31019" = 6
+"31021" = 5
 "31023" = 2
 "31025" = 1
 "31027" = 2
-"31029" = 2
-"31031" = 4
+"31029" = 3
+"31031" = 5
 "31033" = 5
 "31035" = 3
-"31037" = 2
-"31039" = 2
-"31041" = 4
-"31043" = 4
-"31045" = 8
-"31047" = 4
-"31049" = 4
-"31051" = 2
+"31037" = 3
+"31039" = 3
+"31041" = 5
+"31043" = 5
+"31045" = 9
+"31047" = 5
+"31049" = 5
+"31051" = 3
 "31053" = 4
 "31055" = 5
-"31057" = 7
-"31059" = 2
+"31057" = 6
+"31059" = 3
 "31061" = 6
-"31063" = 5
-"31065" = 5
-"31067" = 5
-"31069" = 8
-"31071" = 4
-"31073" = 2
-"31075" = 3
-"31077" = 6
+"31063" = 8
+"31065" = 7
+"31067" = 4
+"31069" = 9
+"31071" = 5
+"31073" = 3
+"31075" = 4
+"31077" = 4
 "31079" = 5
-"31081" = 1
-"31083" = 3
-"31085" = 7
-"31087" = 6
-"31089" = 4
-"31091" = 1
+"31081" = 2
+"31083" = 4
+"31085" = 9
+"31087" = 8
+"31089" = 6
+"31091" = 3
 "31093" = 2
-"31095" = 3
+"31095" = 4
 "31097" = 6
 "31099" = 2
 "31101" = 5
 "31103" = 10
-"31105" = 5
-"31107" = 5
-"31109" = 5
-"31111" = 4
-"31113" = 3
-"31115" = 8
-"31117" = 5
-"31119" = 3
-"31121" = 2
-"31123" = 6
-"31125" = 4
-"31127" = 5
-"31129" = 3
+"31105" = 6
+"31107" = 8
+"31109" = 6
+"31111" = 5
+"31113" = 4
+"31115" = 9
+"31117" = 8
+"31119" = 6
+"31121" = 3
+"31123" = 7
+"31125" = 5
+"31127" = 7
+"31129" = 4
 "31131" = 3
-"31133" = 5
-"31135" = 3
-"31137" = 2
-"31139" = 4
-"31141" = 2
-"31143" = 1
-"31145" = 4
-"31147" = 5
+"31133" = 6
+"31135" = 4
+"31137" = 3
+"31139" = 3
+"31141" = 3
+"31143" = 2
+"31145" = 5
+"31147" = 6
 "31149" = 7
-"31151" = 4
+"31151" = 3
 "31153" = 1
 "31155" = 1
-"31157" = 6
+"31157" = 8
 "31159" = 2
-"31161" = 6
-"31163" = 4
-"31165" = 8
-"31167" = 1
-"31169" = 2
-"31171" = 5
+"31161" = 8
+"31163" = 6
+"31165" = 9
+"31167" = 2
+"31169" = 5
+"31171" = 6
 "31173" = 10
-"31175" = 5
+"31175" = 6
 "31177" = 1
 "31179" = 6
 "31181" = 5
-"31183" = 4
-"31185" = 2
-"32001" = 4
-"32003" = 8
+"31183" = 8
+"31185" = 5
+"32001" = 3
+"32003" = 6
 "32005" = 2
 "32007" = 3
-"32009" = 7
-"32011" = 3
-"32013" = 4
+"32009" = 8
+"32011" = 4
+"32013" = 3
 "32015" = 4
-"32017" = 7
-"32019" = 3
+"32017" = 6
+"32019" = 5
 "32021" = 9
 "32023" = 8
-"32027" = 9
+"32027" = 8
 "32029" = 1
 "32031" = 4
-"32033" = 6
-"32510" = 5
+"32033" = 5
+"32510" = 6
 "33001" = 2
-"33003" = 2
-"33005" = 3
+"33003" = 3
+"33005" = 2
 "33007" = 6
-"33009" = 2
+"33009" = 4
 "33011" = 1
-"33013" = 2
+"33013" = 1
 "33015" = 1
-"33017" = 2
+"33017" = 3
 "33019" = 3
-"34001" = 8
-"34003" = 2
-"34005" = 2
-"34007" = 5
-"34009" = 2
-"34011" = 7
+"34001" = 5
+"34003" = 1
+"34005" = 1
+"34007" = 6
+"34009" = 3
+"34011" = 8
 "34013" = 8
 "34015" = 2
-"34017" = 8
+"34017" = 7
 "34019" = 1
 "34021" = 4
 "34023" = 2
 "34025" = 1
 "34027" = 1
 "34029" = 5
-"34031" = 7
-"34033" = 5
+"34031" = 6
+"34033" = 4
 "34035" = 1
 "34037" = 1
 "34039" = 3
-"34041" = 3
-"35001" = 8
+"34041" = 1
+"35001" = 7
 "35003" = 10
 "35005" = 10
 "35006" = 10
 "35007" = 10
-"35009" = 10
+"35009" = 9
 "35011" = 10
 "35013" = 10
-"35015" = 7
+"35015" = 6
 "35017" = 10
 "35019" = 10
 "35021" = 9
@@ -2665,137 +2668,137 @@ Value $POVCAT
 "35033" = 10
 "35035" = 10
 "35037" = 10
-"35039" = 10
-"35041" = 10
-"35043" = 3
+"35039" = 9
+"35041" = 9
+"35043" = 4
 "35045" = 10
 "35047" = 10
 "35049" = 5
 "35051" = 10
 "35053" = 10
-"35055" = 10
+"35055" = 9
 "35057" = 10
 "35059" = 10
 "35061" = 10
-"36001" = 5
-"36003" = 8
+"36001" = 7
+"36003" = 10
 "36005" = 10
-"36007" = 7
+"36007" = 10
 "36009" = 9
-"36011" = 8
+"36011" = 6
 "36013" = 9
 "36015" = 8
-"36017" = 6
-"36019" = 8
-"36021" = 4
-"36023" = 4
+"36017" = 5
+"36019" = 7
+"36021" = 5
+"36023" = 8
 "36025" = 8
 "36027" = 3
 "36029" = 6
-"36031" = 4
-"36033" = 9
+"36031" = 6
+"36033" = 8
 "36035" = 6
 "36037" = 3
 "36039" = 5
-"36041" = 3
+"36041" = 4
 "36043" = 6
-"36045" = 5
+"36045" = 7
 "36047" = 10
-"36049" = 6
-"36051" = 5
+"36049" = 7
+"36051" = 4
 "36053" = 4
-"36055" = 6
-"36057" = 8
+"36055" = 7
+"36057" = 7
 "36059" = 1
 "36061" = 9
-"36063" = 6
-"36065" = 7
+"36063" = 8
+"36065" = 8
 "36067" = 7
-"36069" = 2
-"36071" = 5
-"36073" = 9
-"36075" = 8
-"36077" = 7
+"36069" = 3
+"36071" = 8
+"36073" = 5
+"36075" = 9
+"36077" = 6
 "36079" = 1
 "36081" = 6
 "36083" = 5
 "36085" = 5
 "36087" = 8
-"36089" = 8
-"36091" = 2
-"36093" = 6
-"36095" = 6
-"36097" = 6
-"36099" = 6
+"36089" = 9
+"36091" = 1
+"36093" = 5
+"36095" = 3
+"36097" = 5
+"36099" = 7
 "36101" = 6
 "36103" = 1
 "36105" = 9
-"36107" = 5
+"36107" = 4
 "36109" = 9
-"36111" = 4
-"36113" = 4
-"36115" = 5
-"36117" = 3
+"36111" = 9
+"36113" = 3
+"36115" = 4
+"36117" = 5
 "36119" = 3
-"36121" = 3
-"36123" = 4
+"36121" = 5
+"36123" = 8
 "37001" = 6
-"37003" = 6
-"37005" = 9
+"37003" = 7
+"37005" = 8
 "37007" = 10
-"37009" = 7
-"37011" = 9
-"37013" = 10
+"37009" = 8
+"37011" = 8
+"37013" = 9
 "37015" = 10
 "37017" = 10
-"37019" = 3
-"37021" = 5
-"37023" = 7
-"37025" = 3
-"37027" = 8
-"37029" = 2
+"37019" = 2
+"37021" = 6
+"37023" = 6
+"37025" = 2
+"37027" = 9
+"37029" = 1
 "37031" = 5
-"37033" = 10
+"37033" = 9
 "37035" = 6
-"37037" = 5
-"37039" = 7
+"37037" = 3
+"37039" = 8
 "37041" = 9
 "37043" = 7
 "37045" = 9
 "37047" = 10
-"37049" = 6
+"37049" = 7
 "37051" = 8
-"37053" = 2
+"37053" = 3
 "37055" = 2
 "37057" = 6
-"37059" = 3
+"37059" = 5
 "37061" = 10
-"37063" = 6
+"37063" = 5
 "37065" = 10
-"37067" = 7
-"37069" = 6
-"37071" = 8
-"37073" = 6
-"37075" = 9
-"37077" = 7
+"37067" = 8
+"37069" = 4
+"37071" = 5
+"37073" = 7
+"37075" = 8
+"37077" = 5
 "37079" = 10
-"37081" = 6
+"37081" = 9
 "37083" = 10
 "37085" = 6
-"37087" = 6
-"37089" = 5
+"37087" = 5
+"37089" = 6
 "37091" = 10
 "37093" = 8
 "37095" = 10
 "37097" = 3
-"37099" = 10
-"37101" = 5
+"37099" = 9
+"37101" = 3
 "37103" = 9
 "37105" = 8
 "37107" = 10
-"37109" = 2
-"37111" = 7
-"37113" = 7
+"37109" = 3
+"37111" = 9
+"37113" = 6
 "37115" = 8
 "37117" = 10
 "37119" = 4
@@ -2805,247 +2808,247 @@ Value $POVCAT
 "37127" = 8
 "37129" = 5
 "37131" = 10
-"37133" = 7
-"37135" = 5
+"37133" = 6
+"37135" = 6
 "37137" = 8
 "37139" = 8
 "37141" = 4
-"37143" = 8
-"37145" = 9
+"37143" = 6
+"37145" = 7
 "37147" = 10
-"37149" = 5
-"37151" = 6
+"37149" = 6
+"37151" = 7
 "37153" = 10
 "37155" = 10
 "37157" = 9
-"37159" = 9
+"37159" = 8
 "37161" = 9
 "37163" = 10
 "37165" = 10
-"37167" = 7
-"37169" = 6
+"37167" = 6
+"37169" = 4
 "37171" = 9
-"37173" = 9
+"37173" = 6
 "37175" = 6
 "37177" = 10
-"37179" = 2
+"37179" = 1
 "37181" = 10
-"37183" = 3
+"37183" = 2
 "37185" = 10
 "37187" = 10
 "37189" = 10
-"37191" = 10
-"37193" = 9
+"37191" = 9
+"37193" = 10
 "37195" = 10
-"37197" = 6
-"37199" = 9
-"38001" = 5
-"38003" = 4
+"37197" = 5
+"37199" = 8
+"38001" = 6
+"38003" = 5
 "38005" = 10
-"38007" = 4
-"38009" = 4
-"38011" = 2
-"38013" = 2
-"38015" = 2
-"38017" = 4
-"38019" = 2
-"38021" = 4
+"38007" = 3
+"38009" = 3
+"38011" = 3
+"38013" = 3
+"38015" = 3
+"38017" = 5
+"38019" = 3
+"38021" = 6
 "38023" = 4
-"38025" = 4
+"38025" = 5
 "38027" = 5
-"38029" = 6
-"38031" = 2
-"38033" = 6
+"38029" = 5
+"38031" = 3
+"38033" = 8
 "38035" = 6
-"38037" = 9
-"38039" = 4
-"38041" = 7
-"38043" = 7
-"38045" = 4
-"38047" = 7
+"38037" = 10
+"38039" = 5
+"38041" = 5
+"38043" = 8
+"38045" = 3
+"38047" = 8
 "38049" = 5
-"38051" = 7
-"38053" = 3
-"38055" = 4
-"38057" = 2
+"38051" = 8
+"38053" = 2
+"38055" = 3
+"38057" = 1
 "38059" = 3
-"38061" = 4
+"38061" = 3
 "38063" = 4
-"38065" = 4
+"38065" = 3
 "38067" = 3
 "38069" = 5
-"38071" = 5
+"38071" = 6
 "38073" = 2
 "38075" = 2
-"38077" = 4
+"38077" = 3
 "38079" = 10
 "38081" = 2
 "38083" = 9
 "38085" = 10
-"38087" = 6
-"38089" = 4
+"38087" = 5
+"38089" = 3
 "38091" = 2
-"38093" = 5
-"38095" = 5
-"38097" = 3
-"38099" = 5
+"38093" = 4
+"38095" = 3
+"38097" = 2
+"38099" = 4
 "38101" = 3
-"38103" = 5
+"38103" = 6
 "38105" = 2
 "39001" = 10
-"39003" = 8
+"39003" = 6
 "39005" = 4
-"39007" = 8
+"39007" = 9
 "39009" = 10
 "39011" = 2
-"39013" = 8
+"39013" = 9
 "39015" = 9
 "39017" = 5
-"39019" = 6
-"39021" = 4
-"39023" = 9
+"39019" = 5
+"39021" = 3
+"39023" = 8
 "39025" = 3
 "39027" = 5
-"39029" = 9
-"39031" = 7
-"39033" = 6
+"39029" = 8
+"39031" = 8
+"39033" = 8
 "39035" = 9
 "39037" = 4
 "39039" = 4
 "39041" = 1
-"39043" = 6
-"39045" = 2
-"39047" = 9
-"39049" = 7
+"39043" = 5
+"39045" = 3
+"39047" = 8
+"39049" = 8
 "39051" = 2
-"39053" = 9
+"39053" = 10
 "39055" = 1
-"39057" = 4
+"39057" = 3
 "39059" = 8
 "39061" = 8
-"39063" = 3
-"39065" = 9
+"39063" = 2
+"39065" = 8
 "39067" = 7
-"39069" = 2
-"39071" = 7
-"39073" = 9
-"39075" = 4
-"39077" = 4
+"39069" = 3
+"39071" = 8
+"39073" = 8
+"39075" = 2
+"39077" = 6
 "39079" = 9
-"39081" = 9
-"39083" = 6
-"39085" = 1
+"39081" = 10
+"39083" = 5
+"39085" = 3
 "39087" = 9
 "39089" = 4
-"39091" = 4
+"39091" = 6
 "39093" = 6
 "39095" = 9
-"39097" = 6
+"39097" = 3
 "39099" = 10
-"39101" = 8
+"39101" = 9
 "39103" = 1
-"39105" = 10
-"39107" = 1
-"39109" = 2
+"39105" = 9
+"39107" = 2
+"39109" = 3
 "39111" = 7
 "39113" = 8
 "39115" = 9
 "39117" = 4
-"39119" = 8
-"39121" = 9
-"39123" = 2
-"39125" = 4
-"39127" = 7
-"39129" = 4
+"39119" = 7
+"39121" = 8
+"39123" = 3
+"39125" = 3
+"39127" = 8
+"39129" = 3
 "39131" = 10
-"39133" = 5
+"39133" = 6
 "39135" = 4
 "39137" = 1
-"39139" = 6
-"39141" = 10
-"39143" = 6
+"39139" = 8
+"39141" = 7
+"39143" = 5
 "39145" = 10
 "39147" = 5
-"39149" = 4
+"39149" = 3
 "39151" = 6
 "39153" = 6
-"39155" = 8
+"39155" = 9
 "39157" = 5
 "39159" = 1
-"39161" = 2
+"39161" = 3
 "39163" = 10
 "39165" = 1
-"39167" = 6
-"39169" = 3
-"39171" = 2
-"39173" = 4
-"39175" = 2
+"39167" = 8
+"39169" = 4
+"39171" = 6
+"39173" = 5
+"39175" = 3
 "40001" = 10
 "40003" = 9
-"40005" = 9
-"40007" = 5
-"40009" = 9
+"40005" = 10
+"40007" = 6
+"40009" = 10
 "40011" = 9
 "40013" = 9
 "40015" = 10
 "40017" = 2
-"40019" = 7
+"40019" = 8
 "40021" = 10
 "40023" = 10
-"40025" = 8
-"40027" = 5
+"40025" = 9
+"40027" = 6
 "40029" = 10
-"40031" = 10
-"40033" = 9
-"40035" = 9
-"40037" = 7
-"40039" = 9
+"40031" = 8
+"40033" = 10
+"40035" = 10
+"40037" = 8
+"40039" = 8
 "40041" = 9
-"40043" = 9
-"40045" = 6
-"40047" = 6
-"40049" = 8
-"40051" = 6
-"40053" = 7
+"40043" = 7
+"40045" = 8
+"40047" = 8
+"40049" = 9
+"40051" = 8
+"40053" = 8
 "40055" = 10
 "40057" = 10
-"40059" = 5
+"40059" = 4
 "40061" = 10
 "40063" = 10
-"40065" = 8
+"40065" = 9
 "40067" = 10
 "40069" = 10
-"40071" = 8
-"40073" = 4
+"40071" = 9
+"40073" = 5
 "40075" = 10
 "40077" = 10
 "40079" = 10
 "40081" = 8
-"40083" = 6
-"40085" = 8
+"40083" = 5
+"40085" = 6
 "40087" = 3
 "40089" = 10
-"40091" = 9
-"40093" = 4
+"40091" = 10
+"40093" = 5
 "40095" = 8
-"40097" = 8
+"40097" = 9
 "40099" = 6
 "40101" = 10
 "40103" = 5
 "40105" = 8
 "40107" = 10
 "40109" = 9
-"40111" = 9
-"40113" = 5
+"40111" = 10
+"40113" = 7
 "40115" = 10
-"40117" = 8
+"40117" = 9
 "40119" = 10
 "40121" = 9
-"40123" = 9
-"40125" = 7
-"40127" = 9
-"40129" = 8
-"40131" = 3
+"40123" = 7
+"40125" = 10
+"40127" = 10
+"40129" = 9
+"40131" = 4
 "40133" = 10
 "40135" = 10
 "40137" = 10
@@ -3053,447 +3056,447 @@ Value $POVCAT
 "40141" = 10
 "40143" = 8
 "40145" = 3
-"40147" = 9
-"40149" = 8
-"40151" = 8
-"40153" = 7
-"41001" = 9
+"40147" = 7
+"40149" = 9
+"40151" = 9
+"40153" = 8
+"41001" = 8
 "41003" = 9
 "41005" = 2
 "41007" = 6
-"41009" = 4
+"41009" = 5
 "41011" = 9
-"41013" = 5
-"41015" = 8
-"41017" = 2
+"41013" = 4
+"41015" = 7
+"41017" = 3
 "41019" = 9
-"41021" = 4
+"41021" = 5
 "41023" = 8
-"41025" = 9
-"41027" = 4
+"41025" = 8
+"41027" = 3
 "41029" = 6
-"41031" = 8
+"41031" = 5
 "41033" = 9
-"41035" = 10
-"41037" = 8
-"41039" = 7
+"41035" = 8
+"41037" = 9
+"41039" = 8
 "41041" = 8
-"41043" = 5
+"41043" = 6
 "41045" = 10
-"41047" = 6
-"41049" = 7
+"41047" = 7
+"41049" = 6
 "41051" = 5
-"41053" = 4
+"41053" = 6
 "41055" = 6
-"41057" = 8
-"41059" = 6
-"41061" = 9
-"41063" = 6
-"41065" = 6
+"41057" = 5
+"41059" = 5
+"41061" = 8
+"41063" = 5
+"41065" = 9
 "41067" = 2
-"41069" = 9
+"41069" = 8
 "41071" = 4
 "42001" = 2
-"42003" = 4
-"42005" = 5
+"42003" = 5
+"42005" = 6
 "42007" = 4
-"42009" = 5
-"42011" = 6
-"42013" = 5
+"42009" = 6
+"42011" = 4
+"42013" = 6
 "42015" = 6
 "42017" = 1
-"42019" = 2
-"42021" = 6
+"42019" = 3
+"42021" = 9
 "42023" = 6
-"42025" = 7
-"42027" = 8
+"42025" = 4
+"42027" = 9
 "42029" = 1
-"42031" = 5
-"42033" = 7
+"42031" = 7
+"42033" = 5
 "42035" = 6
-"42037" = 9
-"42039" = 8
+"42037" = 7
+"42039" = 7
 "42041" = 2
-"42043" = 5
-"42045" = 4
-"42047" = 4
+"42043" = 6
+"42045" = 3
+"42047" = 3
 "42049" = 8
-"42051" = 8
+"42051" = 9
 "42053" = 10
-"42055" = 3
+"42055" = 2
 "42057" = 5
-"42059" = 8
-"42061" = 7
-"42063" = 6
+"42059" = 6
+"42061" = 6
+"42063" = 7
 "42065" = 6
-"42067" = 3
+"42067" = 5
 "42069" = 6
-"42071" = 2
-"42073" = 5
-"42075" = 2
-"42077" = 4
-"42079" = 6
-"42081" = 4
-"42083" = 6
+"42071" = 3
+"42073" = 6
+"42075" = 5
+"42077" = 5
+"42079" = 8
+"42081" = 5
+"42083" = 8
 "42085" = 6
 "42087" = 8
-"42089" = 4
+"42089" = 6
 "42091" = 1
 "42093" = 3
-"42095" = 3
-"42097" = 5
+"42095" = 4
+"42097" = 7
 "42099" = 2
 "42101" = 10
-"42103" = 2
-"42105" = 9
-"42107" = 6
+"42103" = 3
+"42105" = 8
+"42107" = 5
 "42109" = 3
-"42111" = 6
+"42111" = 8
 "42113" = 6
 "42115" = 5
-"42117" = 6
+"42117" = 5
 "42119" = 5
-"42121" = 6
-"42123" = 5
-"42125" = 3
+"42121" = 7
+"42123" = 6
+"42125" = 5
 "42127" = 6
-"42129" = 4
+"42129" = 3
 "42131" = 5
 "42133" = 3
-"44001" = 2
-"44003" = 2
-"44005" = 3
+"44001" = 1
+"44003" = 1
+"44005" = 1
 "44007" = 7
-"44009" = 3
-"45001" = 8
-"45003" = 8
+"44009" = 1
+"45001" = 9
+"45003" = 9
 "45005" = 10
 "45007" = 8
 "45009" = 10
 "45011" = 10
-"45013" = 4
-"45015" = 4
-"45017" = 10
-"45019" = 7
-"45021" = 10
+"45013" = 3
+"45015" = 3
+"45017" = 8
+"45019" = 5
+"45021" = 9
 "45023" = 9
 "45025" = 10
 "45027" = 10
 "45029" = 10
 "45031" = 10
 "45033" = 10
-"45035" = 3
+"45035" = 4
 "45037" = 9
-"45039" = 10
+"45039" = 9
 "45041" = 10
 "45043" = 8
-"45045" = 4
-"45047" = 8
+"45045" = 3
+"45047" = 9
 "45049" = 10
 "45051" = 6
 "45053" = 9
-"45055" = 7
-"45057" = 5
+"45055" = 6
+"45057" = 4
 "45059" = 9
 "45061" = 10
-"45063" = 4
-"45065" = 10
+"45063" = 5
+"45065" = 9
 "45067" = 10
 "45069" = 10
-"45071" = 8
+"45071" = 9
 "45073" = 9
 "45075" = 10
 "45077" = 9
 "45079" = 9
-"45081" = 9
-"45083" = 6
-"45085" = 10
-"45087" = 10
+"45081" = 8
+"45083" = 8
+"45085" = 8
+"45087" = 9
 "45089" = 10
-"45091" = 3
-"46003" = 3
+"45091" = 2
+"46003" = 5
 "46005" = 6
 "46007" = 10
-"46009" = 7
+"46009" = 8
 "46011" = 6
 "46013" = 5
-"46015" = 6
+"46015" = 8
 "46017" = 10
-"46019" = 5
-"46021" = 4
+"46019" = 6
+"46021" = 6
 "46023" = 10
-"46025" = 4
-"46027" = 9
-"46029" = 3
+"46025" = 6
+"46027" = 10
+"46029" = 4
 "46031" = 10
 "46033" = 3
-"46035" = 5
-"46037" = 7
-"46039" = 3
+"46035" = 7
+"46037" = 8
+"46039" = 2
 "46041" = 10
 "46043" = 5
-"46045" = 4
-"46047" = 6
-"46049" = 8
-"46051" = 3
-"46053" = 7
-"46055" = 4
+"46045" = 3
+"46047" = 8
+"46049" = 9
+"46051" = 4
+"46053" = 9
+"46055" = 6
 "46057" = 2
-"46059" = 2
-"46061" = 2
+"46059" = 3
+"46061" = 3
 "46063" = 5
 "46065" = 3
 "46067" = 6
-"46069" = 4
+"46069" = 6
 "46071" = 10
-"46073" = 6
-"46075" = 6
+"46073" = 8
+"46075" = 8
 "46077" = 3
 "46079" = 3
-"46081" = 6
+"46081" = 4
 "46083" = 1
 "46085" = 10
 "46087" = 3
 "46089" = 9
-"46091" = 4
-"46093" = 3
+"46091" = 6
+"46093" = 2
 "46095" = 10
-"46097" = 4
+"46097" = 5
 "46099" = 3
-"46101" = 4
+"46101" = 5
 "46102" = 10
-"46103" = 5
-"46105" = 7
-"46107" = 4
+"46103" = 8
+"46105" = 8
+"46107" = 3
 "46109" = 9
-"46111" = 5
-"46115" = 4
+"46111" = 7
+"46115" = 5
 "46117" = 2
 "46119" = 2
 "46121" = 10
 "46123" = 10
-"46125" = 3
+"46125" = 2
 "46127" = 1
-"46129" = 9
-"46135" = 4
+"46129" = 8
+"46135" = 5
 "46137" = 10
-"47001" = 7
+"47001" = 6
 "47003" = 6
 "47005" = 9
 "47007" = 10
 "47009" = 3
-"47011" = 5
+"47011" = 6
 "47013" = 10
-"47015" = 8
-"47017" = 8
+"47015" = 4
+"47017" = 9
 "47019" = 9
 "47021" = 2
-"47023" = 9
-"47025" = 9
+"47023" = 8
+"47025" = 10
 "47027" = 10
 "47029" = 10
-"47031" = 8
-"47033" = 8
-"47035" = 8
-"47037" = 8
+"47031" = 9
+"47033" = 9
+"47035" = 7
+"47037" = 7
 "47039" = 9
 "47041" = 8
 "47043" = 5
 "47045" = 9
-"47047" = 5
+"47047" = 4
 "47049" = 10
-"47051" = 5
-"47053" = 6
-"47055" = 5
+"47051" = 6
+"47053" = 8
+"47055" = 8
 "47057" = 9
-"47059" = 6
+"47059" = 9
 "47061" = 10
-"47063" = 9
-"47065" = 6
+"47063" = 8
+"47065" = 5
 "47067" = 10
 "47069" = 10
-"47071" = 9
-"47073" = 9
+"47071" = 10
+"47073" = 8
 "47075" = 10
-"47077" = 6
-"47079" = 9
-"47081" = 9
-"47083" = 8
-"47085" = 5
+"47077" = 9
+"47079" = 8
+"47081" = 8
+"47083" = 7
+"47085" = 6
 "47087" = 10
-"47089" = 8
+"47089" = 5
 "47091" = 10
 "47093" = 5
 "47095" = 10
 "47097" = 10
-"47099" = 6
+"47099" = 7
 "47101" = 8
-"47103" = 8
-"47105" = 3
-"47107" = 7
-"47109" = 8
+"47103" = 7
+"47105" = 4
+"47107" = 8
+"47109" = 9
 "47111" = 8
-"47113" = 9
-"47115" = 9
-"47117" = 4
+"47113" = 8
+"47115" = 7
+"47117" = 5
 "47119" = 4
-"47121" = 8
+"47121" = 9
 "47123" = 8
-"47125" = 4
+"47125" = 5
 "47127" = 3
 "47129" = 9
-"47131" = 8
+"47131" = 9
 "47133" = 8
 "47135" = 9
-"47137" = 7
-"47139" = 6
-"47141" = 6
+"47137" = 9
+"47139" = 8
+"47141" = 10
 "47143" = 8
 "47145" = 6
-"47147" = 4
-"47149" = 2
+"47147" = 3
+"47149" = 3
 "47151" = 10
-"47153" = 6
-"47155" = 6
+"47153" = 9
+"47155" = 5
 "47157" = 9
-"47159" = 5
+"47159" = 6
 "47161" = 6
-"47163" = 9
+"47163" = 8
 "47165" = 2
-"47167" = 6
+"47167" = 7
 "47169" = 9
-"47171" = 7
-"47173" = 8
-"47175" = 9
+"47171" = 8
+"47173" = 9
+"47175" = 8
 "47177" = 8
 "47179" = 7
 "47181" = 10
 "47183" = 9
 "47185" = 9
 "47187" = 1
-"47189" = 2
+"47189" = 1
 "48001" = 10
 "48003" = 5
-"48005" = 9
-"48007" = 8
+"48005" = 8
+"48007" = 9
 "48009" = 3
-"48011" = 3
+"48011" = 4
 "48013" = 9
-"48015" = 4
+"48015" = 8
 "48017" = 9
 "48019" = 5
-"48021" = 5
-"48023" = 9
+"48021" = 6
+"48023" = 7
 "48025" = 10
 "48027" = 7
 "48029" = 8
 "48031" = 2
-"48033" = 3
+"48033" = 5
 "48035" = 6
-"48037" = 9
-"48039" = 2
+"48037" = 10
+"48039" = 3
 "48041" = 10
-"48043" = 6
+"48043" = 7
 "48045" = 8
 "48047" = 10
-"48049" = 8
-"48051" = 7
+"48049" = 9
+"48051" = 8
 "48053" = 3
-"48055" = 6
+"48055" = 8
 "48057" = 8
-"48059" = 5
+"48059" = 7
 "48061" = 10
 "48063" = 9
-"48065" = 3
+"48065" = 2
 "48067" = 9
 "48069" = 9
-"48071" = 4
+"48071" = 2
 "48073" = 9
 "48075" = 10
 "48077" = 4
 "48079" = 10
 "48081" = 8
-"48083" = 10
+"48083" = 9
 "48085" = 1
 "48087" = 9
-"48089" = 5
+"48089" = 8
 "48091" = 1
 "48093" = 9
-"48095" = 8
+"48095" = 10
 "48097" = 6
-"48099" = 6
+"48099" = 5
 "48101" = 10
-"48103" = 4
+"48103" = 5
 "48105" = 8
 "48107" = 10
 "48109" = 10
-"48111" = 4
+"48111" = 5
 "48113" = 7
 "48115" = 10
 "48117" = 9
-"48119" = 8
-"48121" = 1
-"48123" = 9
-"48125" = 10
+"48119" = 9
+"48121" = 2
+"48123" = 10
+"48125" = 9
 "48127" = 10
 "48129" = 9
 "48131" = 10
-"48133" = 9
+"48133" = 8
 "48135" = 9
 "48137" = 10
-"48139" = 2
+"48139" = 3
 "48141" = 10
-"48143" = 9
+"48143" = 6
 "48145" = 10
 "48147" = 7
 "48149" = 4
-"48151" = 8
-"48153" = 9
+"48151" = 9
+"48153" = 10
 "48155" = 9
-"48157" = 1
-"48159" = 8
+"48157" = 2
+"48159" = 7
 "48161" = 8
 "48163" = 10
-"48165" = 7
-"48167" = 5
+"48165" = 8
+"48167" = 6
 "48169" = 10
-"48171" = 2
-"48173" = 2
+"48171" = 3
+"48173" = 3
 "48175" = 8
-"48177" = 9
+"48177" = 8
 "48179" = 9
-"48181" = 4
+"48181" = 5
 "48183" = 9
-"48185" = 9
+"48185" = 8
 "48187" = 3
 "48189" = 10
 "48191" = 10
-"48193" = 8
+"48193" = 7
 "48195" = 5
 "48197" = 9
-"48199" = 3
+"48199" = 6
 "48201" = 9
 "48203" = 8
-"48205" = 4
+"48205" = 3
 "48207" = 10
-"48209" = 5
-"48211" = 4
-"48213" = 8
+"48209" = 3
+"48211" = 5
+"48213" = 6
 "48215" = 10
-"48217" = 7
-"48219" = 9
-"48221" = 4
-"48223" = 7
+"48217" = 8
+"48219" = 8
+"48221" = 3
+"48223" = 6
 "48225" = 10
 "48227" = 9
 "48229" = 10
-"48231" = 7
-"48233" = 6
+"48231" = 6
+"48233" = 5
 "48235" = 2
-"48237" = 9
-"48239" = 6
+"48237" = 8
+"48239" = 8
 "48241" = 10
-"48243" = 10
+"48243" = 6
 "48245" = 10
 "48247" = 10
 "48249" = 10
@@ -3502,137 +3505,137 @@ Value $POVCAT
 "48255" = 10
 "48257" = 2
 "48259" = 1
-"48261" = 7
+"48261" = 2
 "48263" = 5
-"48265" = 5
-"48267" = 8
-"48269" = 5
+"48265" = 6
+"48267" = 9
+"48269" = 4
 "48271" = 10
 "48273" = 10
-"48275" = 9
-"48277" = 9
-"48279" = 10
-"48281" = 5
+"48275" = 10
+"48277" = 8
+"48279" = 9
+"48281" = 6
 "48283" = 10
-"48285" = 5
+"48285" = 6
 "48287" = 6
-"48289" = 9
-"48291" = 8
-"48293" = 9
-"48295" = 6
-"48297" = 9
-"48299" = 5
+"48289" = 7
+"48291" = 10
+"48293" = 10
+"48295" = 7
+"48297" = 10
+"48299" = 6
 "48301" = 1
 "48303" = 9
-"48305" = 9
-"48307" = 9
-"48309" = 8
-"48311" = 5
+"48305" = 8
+"48307" = 10
+"48309" = 9
+"48311" = 6
 "48313" = 9
-"48315" = 10
-"48317" = 6
-"48319" = 5
+"48315" = 9
+"48317" = 7
+"48319" = 6
 "48321" = 10
 "48323" = 10
-"48325" = 7
+"48325" = 5
 "48327" = 10
-"48329" = 4
-"48331" = 8
-"48333" = 6
+"48329" = 5
+"48331" = 9
+"48333" = 8
 "48335" = 10
-"48337" = 7
-"48339" = 4
+"48337" = 8
+"48339" = 2
 "48341" = 5
-"48343" = 9
+"48343" = 10
 "48345" = 9
 "48347" = 10
-"48349" = 9
-"48351" = 10
+"48349" = 10
+"48351" = 9
 "48353" = 9
 "48355" = 9
 "48357" = 5
-"48359" = 8
-"48361" = 6
+"48359" = 6
+"48361" = 7
 "48363" = 8
-"48365" = 6
+"48365" = 7
 "48367" = 2
-"48369" = 8
-"48371" = 10
-"48373" = 9
+"48369" = 7
+"48371" = 9
+"48373" = 10
 "48375" = 10
 "48377" = 10
-"48379" = 6
-"48381" = 3
+"48379" = 7
+"48381" = 2
 "48383" = 5
-"48385" = 8
+"48385" = 9
 "48387" = 10
 "48389" = 10
-"48391" = 8
-"48393" = 1
+"48391" = 9
+"48393" = 3
 "48395" = 9
 "48397" = 1
-"48399" = 8
+"48399" = 9
 "48401" = 9
 "48403" = 9
 "48405" = 10
 "48407" = 9
 "48409" = 9
-"48411" = 9
-"48413" = 8
+"48411" = 10
+"48413" = 9
 "48415" = 8
-"48417" = 5
+"48417" = 6
 "48419" = 10
 "48421" = 5
-"48423" = 6
+"48423" = 5
 "48425" = 3
 "48427" = 10
-"48429" = 9
+"48429" = 10
 "48431" = 5
 "48433" = 8
 "48435" = 7
 "48437" = 10
-"48439" = 5
+"48439" = 4
 "48441" = 9
 "48443" = 9
 "48445" = 10
-"48447" = 8
+"48447" = 6
 "48449" = 9
 "48451" = 6
-"48453" = 4
-"48455" = 9
+"48453" = 3
+"48455" = 8
 "48457" = 9
 "48459" = 8
 "48461" = 8
 "48463" = 10
 "48465" = 10
-"48467" = 6
-"48469" = 9
+"48467" = 7
+"48469" = 8
 "48471" = 10
-"48473" = 6
-"48475" = 7
-"48477" = 7
+"48473" = 8
+"48475" = 8
+"48477" = 6
 "48479" = 10
 "48481" = 8
-"48483" = 7
+"48483" = 8
 "48485" = 8
-"48487" = 7
+"48487" = 9
 "48489" = 10
 "48491" = 1
-"48493" = 3
-"48495" = 8
-"48497" = 4
-"48499" = 7
-"48501" = 6
+"48493" = 4
+"48495" = 7
+"48497" = 2
+"48499" = 6
+"48501" = 7
 "48503" = 8
 "48505" = 10
 "48507" = 10
 "49001" = 3
 "49003" = 2
-"49005" = 4
-"49007" = 8
+"49005" = 5
+"49007" = 6
 "49009" = 1
 "49011" = 1
-"49013" = 6
+"49013" = 7
 "49015" = 5
 "49017" = 3
 "49019" = 4
@@ -3642,10 +3645,10 @@ Value $POVCAT
 "49027" = 4
 "49029" = 1
 "49031" = 8
-"49033" = 2
+"49033" = 3
 "49035" = 2
 "49037" = 10
-"49039" = 5
+"49039" = 8
 "49041" = 3
 "49043" = 1
 "49045" = 1
@@ -3653,38 +3656,38 @@ Value $POVCAT
 "49049" = 2
 "49051" = 1
 "49053" = 3
-"49055" = 4
-"49057" = 3
-"50001" = 2
-"50003" = 6
-"50005" = 6
+"49055" = 5
+"49057" = 2
+"50001" = 3
+"50003" = 5
+"50005" = 5
 "50007" = 3
-"50009" = 7
-"50011" = 3
+"50009" = 5
+"50011" = 2
 "50013" = 2
-"50015" = 2
-"50017" = 3
-"50019" = 6
-"50021" = 4
-"50023" = 2
+"50015" = 3
+"50017" = 4
+"50019" = 7
+"50021" = 6
+"50023" = 3
 "50025" = 4
-"50027" = 3
+"50027" = 2
 "51001" = 9
-"51003" = 1
+"51003" = 2
 "51005" = 6
-"51007" = 3
-"51009" = 5
+"51007" = 5
+"51009" = 6
 "51011" = 5
-"51013" = 2
+"51013" = 1
 "51015" = 2
-"51017" = 4
+"51017" = 6
 "51019" = 2
-"51021" = 7
+"51021" = 6
 "51023" = 1
 "51025" = 10
 "51027" = 10
 "51029" = 9
-"51031" = 4
+"51031" = 6
 "51033" = 4
 "51035" = 8
 "51036" = 5
@@ -3696,22 +3699,22 @@ Value $POVCAT
 "51049" = 8
 "51051" = 10
 "51053" = 5
-"51057" = 5
+"51057" = 6
 "51059" = 1
 "51061" = 1
-"51063" = 5
+"51063" = 6
 "51065" = 2
-"51067" = 4
-"51069" = 2
+"51067" = 6
+"51069" = 1
 "51071" = 5
 "51073" = 2
 "51075" = 1
-"51077" = 9
+"51077" = 10
 "51079" = 2
 "51081" = 10
 "51083" = 9
 "51085" = 1
-"51087" = 1
+"51087" = 3
 "51089" = 9
 "51091" = 6
 "51093" = 2
@@ -3719,148 +3722,148 @@ Value $POVCAT
 "51097" = 7
 "51099" = 1
 "51101" = 1
-"51103" = 5
+"51103" = 7
 "51105" = 10
 "51107" = 1
-"51109" = 3
+"51109" = 4
 "51111" = 10
-"51113" = 3
+"51113" = 4
 "51115" = 3
-"51117" = 8
-"51119" = 6
+"51117" = 10
+"51119" = 5
 "51121" = 10
-"51125" = 5
+"51125" = 6
 "51127" = 1
-"51131" = 9
+"51131" = 10
 "51133" = 6
 "51135" = 10
-"51137" = 2
+"51137" = 3
 "51139" = 6
-"51141" = 7
-"51143" = 6
+"51141" = 8
+"51143" = 8
 "51145" = 1
 "51147" = 10
-"51149" = 4
+"51149" = 5
 "51153" = 1
-"51155" = 6
+"51155" = 7
 "51157" = 3
 "51159" = 9
 "51161" = 2
-"51163" = 4
-"51165" = 2
+"51163" = 5
+"51165" = 4
 "51167" = 9
 "51169" = 10
-"51171" = 3
-"51173" = 9
-"51175" = 7
-"51177" = 1
+"51171" = 6
+"51173" = 10
+"51175" = 8
+"51177" = 2
 "51179" = 1
-"51181" = 5
+"51181" = 6
 "51183" = 10
-"51185" = 10
+"51185" = 9
 "51187" = 3
-"51191" = 6
-"51193" = 8
+"51191" = 5
+"51193" = 9
 "51195" = 10
-"51197" = 9
+"51197" = 8
 "51199" = 1
 "51510" = 3
-"51520" = 9
+"51520" = 10
 "51530" = 8
 "51540" = 10
 "51550" = 2
-"51570" = 3
+"51570" = 4
 "51580" = 9
 "51590" = 10
 "51595" = 10
-"51600" = 1
+"51600" = 2
 "51610" = 1
 "51620" = 10
-"51630" = 7
+"51630" = 8
 "51640" = 10
-"51650" = 5
+"51650" = 8
 "51660" = 10
-"51670" = 10
+"51670" = 9
 "51678" = 10
-"51680" = 9
-"51683" = 2
-"51685" = 1
+"51680" = 10
+"51683" = 3
+"51685" = 3
 "51690" = 10
-"51700" = 8
-"51710" = 9
+"51700" = 9
+"51710" = 10
 "51720" = 10
 "51730" = 10
 "51735" = 1
-"51740" = 9
+"51740" = 10
 "51750" = 10
 "51760" = 10
-"51770" = 9
+"51770" = 10
 "51775" = 4
-"51790" = 5
-"51800" = 4
+"51790" = 6
+"51800" = 5
 "51810" = 3
-"51820" = 5
+"51820" = 6
 "51830" = 10
-"51840" = 6
-"53001" = 9
-"53003" = 7
+"51840" = 9
+"53001" = 8
+"53003" = 9
 "53005" = 4
-"53007" = 4
+"53007" = 3
 "53009" = 5
 "53011" = 2
-"53013" = 6
+"53013" = 5
 "53015" = 6
-"53017" = 3
+"53017" = 2
 "53019" = 9
-"53021" = 5
+"53021" = 4
 "53023" = 6
-"53025" = 5
-"53027" = 6
-"53029" = 2
-"53031" = 4
-"53033" = 3
-"53035" = 2
-"53037" = 7
-"53039" = 6
-"53041" = 6
+"53025" = 7
+"53027" = 9
+"53029" = 1
+"53031" = 5
+"53033" = 2
+"53035" = 3
+"53037" = 5
+"53039" = 5
+"53041" = 5
 "53043" = 4
-"53045" = 6
+"53045" = 5
 "53047" = 9
-"53049" = 6
+"53049" = 7
 "53051" = 8
-"53053" = 2
-"53055" = 4
+"53053" = 3
+"53055" = 3
 "53057" = 5
-"53059" = 4
-"53061" = 1
-"53063" = 4
+"53059" = 3
+"53061" = 2
+"53063" = 5
 "53065" = 6
-"53067" = 3
+"53067" = 2
 "53069" = 5
-"53071" = 5
-"53073" = 6
-"53075" = 9
-"53077" = 8
+"53071" = 6
+"53073" = 5
+"53075" = 10
+"53077" = 9
 "54001" = 10
-"54003" = 3
+"54003" = 5
 "54005" = 10
 "54007" = 10
 "54009" = 6
 "54011" = 10
 "54013" = 10
 "54015" = 10
-"54017" = 9
+"54017" = 10
 "54019" = 10
 "54021" = 10
 "54023" = 8
-"54025" = 10
+"54025" = 9
 "54027" = 8
-"54029" = 8
-"54031" = 9
+"54029" = 5
+"54031" = 6
 "54033" = 8
-"54035" = 8
+"54035" = 9
 "54037" = 3
-"54039" = 8
+"54039" = 9
 "54041" = 9
 "54043" = 10
 "54045" = 10
@@ -3868,130 +3871,3159 @@ Value $POVCAT
 "54049" = 8
 "54051" = 9
 "54053" = 10
-"54055" = 9
-"54057" = 6
+"54055" = 10
+"54057" = 8
 "54059" = 10
-"54061" = 9
+"54061" = 10
 "54063" = 8
-"54065" = 6
+"54065" = 8
 "54067" = 10
 "54069" = 8
-"54071" = 9
-"54073" = 7
-"54075" = 9
+"54071" = 8
+"54073" = 8
+"54075" = 10
 "54077" = 7
 "54079" = 4
 "54081" = 10
 "54083" = 9
 "54085" = 10
-"54087" = 9
+"54087" = 10
 "54089" = 10
 "54091" = 9
-"54093" = 8
-"54095" = 7
+"54093" = 9
+"54095" = 8
 "54097" = 10
 "54099" = 9
 "54101" = 10
-"54103" = 9
-"54105" = 9
-"54107" = 8
+"54103" = 10
+"54105" = 10
+"54107" = 10
 "54109" = 10
 "55001" = 8
-"55003" = 8
-"55005" = 3
-"55007" = 5
+"55003" = 7
+"55005" = 6
+"55007" = 4
 "55009" = 3
-"55011" = 2
+"55011" = 3
 "55013" = 5
 "55015" = 1
 "55017" = 3
-"55019" = 5
+"55019" = 6
 "55021" = 2
 "55023" = 5
 "55025" = 4
-"55027" = 2
+"55027" = 3
 "55029" = 2
-"55031" = 7
-"55033" = 5
-"55035" = 6
-"55037" = 4
-"55039" = 2
-"55041" = 6
+"55031" = 5
+"55033" = 4
+"55035" = 5
+"55037" = 5
+"55039" = 3
+"55041" = 7
 "55043" = 6
 "55045" = 1
-"55047" = 6
+"55047" = 4
 "55049" = 2
 "55051" = 5
 "55053" = 6
 "55055" = 2
 "55057" = 7
-"55059" = 4
+"55059" = 3
 "55061" = 2
 "55063" = 5
-"55065" = 3
+"55065" = 4
 "55067" = 5
-"55069" = 4
+"55069" = 5
 "55071" = 4
-"55073" = 2
-"55075" = 3
+"55073" = 5
+"55075" = 5
 "55077" = 5
 "55078" = 10
 "55079" = 9
-"55081" = 5
-"55083" = 2
-"55085" = 3
+"55081" = 7
+"55083" = 3
+"55085" = 5
 "55087" = 1
 "55089" = 1
 "55091" = 3
 "55093" = 2
 "55095" = 2
-"55097" = 4
+"55097" = 3
 "55099" = 5
-"55101" = 5
-"55103" = 6
+"55101" = 3
+"55103" = 5
 "55105" = 4
-"55107" = 7
+"55107" = 6
 "55109" = 1
 "55111" = 3
-"55113" = 7
-"55115" = 3
-"55117" = 2
-"55119" = 4
+"55113" = 8
+"55115" = 5
+"55117" = 3
+"55119" = 5
 "55121" = 3
 "55123" = 8
-"55125" = 5
-"55127" = 4
+"55125" = 4
+"55127" = 3
 "55129" = 5
 "55131" = 1
 "55133" = 1
-"55135" = 3
-"55137" = 6
-"55139" = 4
-"55141" = 4
+"55135" = 5
+"55137" = 8
+"55139" = 5
+"55141" = 5
 "56001" = 9
-"56003" = 6
+"56003" = 8
 "56005" = 2
 "56007" = 5
-"56009" = 3
+"56009" = 5
 "56011" = 2
-"56013" = 8
-"56015" = 6
+"56013" = 9
+"56015" = 8
 "56017" = 6
-"56019" = 3
-"56021" = 3
+"56019" = 2
+"56021" = 4
 "56023" = 2
 "56025" = 4
-"56027" = 8
-"56029" = 5
+"56027" = 9
+"56029" = 4
 "56031" = 5
 "56033" = 3
-"56035" = 1
-"56037" = 3
+"56035" = 2
+"56037" = 6
 "56039" = 1
-"56041" = 3
+"56041" = 4
 "56043" = 4
-"56045" = 4
+"56045" = 5
 OTHER = 0
 ;
-run;
 
+/*BH/SUD FLAGS-DELIVERY*/
+Value $DX_BHSUD_DEL
+"F060" = "1"       /*Psychotic disorder with hallucinations due to known physiological condition*/
+"F061" = "1"       /*Catatonic disorder due to known physiological condition*/
+"F062" = "1"       /*Psychotic disorder with delusions due to known physiological condition*/
+"F0630" = "1"      /*Mood disorder due to known physiological condition, unspecified*/
+"F0631" = "1"      /*Mood disorder due to known physiological condition with depressive features*/
+"F0632" = "1"      /*Mood disorder due to known physiological condition with major depressive-like episode*/
+"F0633" = "1"      /*Mood disorder due to known physiologic condition with manic features*/
+"F0634" = "1"      /*Mood disorder due to known physiological condition with mixed features*/
+"F064" = "1"       /*Anxiety disorder due to known physiological condition*/
+"F1010" = "1"      /*Alcohol abuse, uncomplicated*/
+"F10120" = "1"     /*Alcohol abuse with intoxication, uncomplicated*/
+"F10121" = "1"     /*Alcohol abuse with intoxication delirium*/
+"F10129" = "1"     /*Alcohol abuse with intoxication, unspecified*/
+"F10130" = "1"     /*Alcohol abuse with withdrawal, uncomplicated*/
+"F10131" = "1"     /*Alcohol abuse with withdrawal delirium*/
+"F10132" = "1"     /*Alcohol abuse with withdrawal with perceptual disturbance*/
+"F10139" = "1"     /*Alcohol abuse with withdrawal, unspecified*/
+"F1014" = "1"      /*Alcohol abuse with alcohol-induced mood disorder*/
+"F10150" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with delusions*/
+"F10151" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with hallucinations*/
+"F10159" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder, unspecified*/
+"F10180" = "1"     /*Alcohol abuse with alcohol-induced anxiety disorder*/
+"F10181" = "1"     /*Alcohol abuse with alcohol-induced sexual dysfunction*/
+"F10182" = "1"     /*Alcohol abuse with alcohol-induced sleep disorder*/
+"F10188" = "1"     /*Alcohol abuse with other alcohol-induced disorder*/
+"F1019" = "1"      /*Alcohol abuse with unspecified alcohol-induced disorder*/
+"F1020" = "1"      /*Alcohol dependence, uncomplicated*/
+"F10220" = "1"     /*Alcohol dependence with intoxication, uncomplicated*/
+"F10221" = "1"     /*Alcohol dependence with intoxication delirium*/
+"F10229" = "1"     /*Alcohol dependence with intoxication, unspecified*/
+"F10230" = "1"     /*Alcohol dependence with withdrawal, uncomplicated*/
+"F10231" = "1"     /*Alcohol dependence with withdrawal delirium*/
+"F10232" = "1"     /*Alcohol dependence with withdrawal with perceptual disturbance*/
+"F10239" = "1"     /*Alcohol dependence with withdrawal, unspecified*/
+"F1024" = "1"      /*Alcohol dependence with alcohol-induced mood disorder*/
+"F10250" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with delusions*/
+"F10251" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with hallucinations*/
+"F10259" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder, unspecified*/
+"F1026" = "1"      /*Alcohol dependence with alcohol-induced persisting amnestic disorder*/
+"F1027" = "1"      /*Alcohol dependence with alcohol-induced persisting dementia*/
+"F10280" = "1"     /*Alcohol dependence with alcohol-induced anxiety disorder*/
+"F10281" = "1"     /*Alcohol dependence with alcohol-induced sexual dysfunction*/
+"F10282" = "1"     /*Alcohol dependence with alcohol-induced sleep disorder*/
+"F10288" = "1"     /*Alcohol dependence with other alcohol-induced disorder*/
+"F1029" = "1"      /*Alcohol dependence with unspecified alcohol-induced disorder*/
+"F1090" = "1"      /*Alcohol use, unspecified, uncomplicated*/
+"F10920" = "1"     /*Alcohol use, unspecified with intoxication, uncomplicated*/
+"F10921" = "1"     /*Alcohol use, unspecified with intoxication delirium*/
+"F10929" = "1"     /*Alcohol use, unspecified with intoxication, unspecified*/
+"F10930" = "1"     /*Alcohol use, unspecified with withdrawal, uncomplicated*/
+"F10931" = "1"     /*Alcohol use, unspecified with withdrawal delirium*/
+"F10932" = "1"     /*Alcohol use, unspecified with withdrawal with perceptual disturbance*/
+"F10939" = "1"     /*Alcohol use, unspecified with withdrawal, unspecified*/
+"F1094" = "1"      /*Alcohol use, unspecified with alcohol-induced mood disorder*/
+"F10950" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with delusions*/
+"F10951" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with hallucinations*/
+"F10959" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder, unspecified*/
+"F1096" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting amnestic disorder*/
+"F1097" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting dementia*/
+"F10980" = "1"     /*Alcohol use, unspecified with alcohol-induced anxiety disorder*/
+"F10981" = "1"     /*Alcohol use, unspecified with alcohol-induced sexual dysfunction*/
+"F10982" = "1"     /*Alcohol use, unspecified with alcohol-induced sleep disorder*/
+"F10988" = "1"     /*Alcohol use, unspecified with other alcohol-induced disorder*/
+"F1099" = "1"      /*Alcohol use, unspecified with unspecified alcohol-induced disorder*/
+"F1110" = "1"      /*Opioid abuse, uncomplicated*/
+"F11120" = "1"     /*Opioid abuse with intoxication, uncomplicated*/
+"F11121" = "1"     /*Opioid abuse with intoxication delirium*/
+"F11122" = "1"     /*Opioid abuse with intoxication with perceptual disturbance*/
+"F11129" = "1"     /*Opioid abuse with intoxication, unspecified*/
+"F1113" = "1"      /*Opioid abuse with withdrawal*/
+"F1114" = "1"      /*Opioid abuse with opioid-induced mood disorder*/
+"F11150" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with delusions*/
+"F11151" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with hallucinations*/
+"F11159" = "1"     /*Opioid abuse with opioid-induced psychotic disorder, unspecified*/
+"F11181" = "1"     /*Opioid abuse with opioid-induced sexual dysfunction*/
+"F11182" = "1"     /*Opioid abuse with opioid-induced sleep disorder*/
+"F11188" = "1"     /*Opioid abuse with other opioid-induced disorder*/
+"F1119" = "1"      /*Opioid abuse with unspecified opioid-induced disorder*/
+"F1120" = "1"      /*Opioid dependence, uncomplicated*/
+"F11220" = "1"     /*Opioid dependence with intoxication, uncomplicated*/
+"F11221" = "1"     /*Opioid dependence with intoxication delirium*/
+"F11222" = "1"     /*Opioid dependence with intoxication with perceptual disturbance*/
+"F11229" = "1"     /*Opioid dependence with intoxication, unspecified*/
+"F1123" = "1"      /*Opioid dependence with withdrawal*/
+"F1124" = "1"      /*Opioid dependence with opioid-induced mood disorder*/
+"F11250" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with delusions*/
+"F11251" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with hallucinations*/
+"F11259" = "1"     /*Opioid dependence with opioid-induced psychotic disorder, unspecified*/
+"F11281" = "1"     /*Opioid dependence with opioid-induced sexual dysfunction*/
+"F11282" = "1"     /*Opioid dependence with opioid-induced sleep disorder*/
+"F11288" = "1"     /*Opioid dependence with other opioid-induced disorder*/
+"F1129" = "1"      /*Opioid dependence with unspecified opioid-induced disorder*/
+"F1190" = "1"      /*Opioid use, unspecified, uncomplicated*/
+"F11920" = "1"     /*Opioid use, unspecified with intoxication, uncomplicated*/
+"F11921" = "1"     /*Opioid use, unspecified with intoxication delirium*/
+"F11922" = "1"     /*Opioid use, unspecified with intoxication with perceptual disturbance*/
+"F11929" = "1"     /*Opioid use, unspecified with intoxication, unspecified*/
+"F1193" = "1"      /*Opioid use, unspecified with withdrawal*/
+"F1194" = "1"      /*Opioid use, unspecified with opioid-induced mood disorder*/
+"F11950" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with delusions*/
+"F11951" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with hallucinations*/
+"F11959" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder, unspecified*/
+"F11981" = "1"     /*Opioid use, unspecified with opioid-induced sexual dysfunction*/
+"F11982" = "1"     /*Opioid use, unspecified with opioid-induced sleep disorder*/
+"F11988" = "1"     /*Opioid use, unspecified with other opioid-induced disorder*/
+"F1199" = "1"      /*Opioid use, unspecified with unspecified opioid-induced disorder*/
+"F1210" = "1"      /*Cannabis abuse, uncomplicated*/
+"F12120" = "1"     /*Cannabis abuse with intoxication, uncomplicated*/
+"F12121" = "1"     /*Cannabis abuse with intoxication delirium*/
+"F12122" = "1"     /*Cannabis abuse with intoxication with perceptual disturbance*/
+"F12129" = "1"     /*Cannabis abuse with intoxication, unspecified*/
+"F1213" = "1"      /*Cannabis abuse with withdrawal*/
+"F12150" = "1"     /*Cannabis abuse with psychotic disorder with delusions*/
+"F12151" = "1"     /*Cannabis abuse with psychotic disorder with hallucinations*/
+"F12159" = "1"     /*Cannabis abuse with psychotic disorder, unspecified*/
+"F12180" = "1"     /*Cannabis abuse with cannabis-induced anxiety disorder*/
+"F12188" = "1"     /*Cannabis abuse with other cannabis-induced disorder*/
+"F1219" = "1"      /*Cannabis abuse with unspecified cannabis-induced disorder*/
+"F1220" = "1"      /*Cannabis dependence, uncomplicated*/
+"F12220" = "1"     /*Cannabis dependence with intoxication, uncomplicated*/
+"F12221" = "1"     /*Cannabis dependence with intoxication delirium*/
+"F12222" = "1"     /*Cannabis dependence with intoxication with perceptual disturbance*/
+"F12229" = "1"     /*Cannabis dependence with intoxication, unspecified*/
+"F1223" = "1"      /*Cannabis dependence with withdrawal*/
+"F12250" = "1"     /*Cannabis dependence with psychotic disorder with delusions*/
+"F12251" = "1"     /*Cannabis dependence with psychotic disorder with hallucinations*/
+"F12259" = "1"     /*Cannabis dependence with psychotic disorder, unspecified*/
+"F12280" = "1"     /*Cannabis dependence with cannabis-induced anxiety disorder*/
+"F12288" = "1"     /*Cannabis dependence with other cannabis-induced disorder*/
+"F1229" = "1"      /*Cannabis dependence with unspecified cannabis-induced disorder*/
+"F1290" = "1"      /*Cannabis use, unspecified, uncomplicated*/
+"F12920" = "1"     /*Cannabis use, unspecified with intoxication, uncomplicated*/
+"F12921" = "1"     /*Cannabis use, unspecified with intoxication delirium*/
+"F12922" = "1"     /*Cannabis use, unspecified with intoxication with perceptual disturbance*/
+"F12929" = "1"     /*Cannabis use, unspecified with intoxication, unspecified*/
+"F1293" = "1"      /*Cannabis use, unspecified with withdrawal*/
+"F12950" = "1"     /*Cannabis use, unspecified with psychotic disorder with delusions*/
+"F12951" = "1"     /*Cannabis use, unspecified with psychotic disorder with hallucinations*/
+"F12959" = "1"     /*Cannabis use, unspecified with psychotic disorder, unspecified*/
+"F12980" = "1"     /*Cannabis use, unspecified with anxiety disorder*/
+"F12988" = "1"     /*Cannabis use, unspecified with other cannabis-induced disorder*/
+"F1299" = "1"      /*Cannabis use, unspecified with unspecified cannabis-induced disorder*/
+"F1310" = "1"      /*Sedative, hypnotic or anxiolytic abuse, uncomplicated*/
+"F13120" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, uncomplicated*/
+"F13121" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication delirium*/
+"F13129" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, unspecified*/
+"F13130" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, uncomplicated*/
+"F13131" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal delirium*/
+"F13132" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal with perceptual disturbance*/
+"F13139" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, unspecified*/
+"F1314" = "1"      /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13150" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13151" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13159" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F13180" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13181" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13182" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13188" = "1"     /*Sedative, hypnotic or anxiolytic abuse with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1319" = "1"      /*Sedative, hypnotic or anxiolytic abuse with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1320" = "1"      /*Sedative, hypnotic or anxiolytic dependence, uncomplicated*/
+"F13220" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, uncomplicated*/
+"F13221" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication delirium*/
+"F13229" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, unspecified*/
+"F13230" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, uncomplicated*/
+"F13231" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal delirium*/
+"F13232" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal with perceptual disturbance*/
+"F13239" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, unspecified*/
+"F1324" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13250" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13251" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13259" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1326" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1327" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13280" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13281" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13282" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13288" = "1"     /*Sedative, hypnotic or anxiolytic dependence with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1329" = "1"      /*Sedative, hypnotic or anxiolytic dependence with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1390" = "1"      /*Sedative, hypnotic, or anxiolytic use, unspecified, uncomplicated*/
+"F13920" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, uncomplicated*/
+"F13921" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication delirium*/
+"F13929" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, unspecified*/
+"F13930" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, uncomplicated*/
+"F13931" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal delirium*/
+"F13939" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, unspecified*/
+"F1394" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13950" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13951" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13959" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1396" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1397" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13980" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13981" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13982" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13988" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1399" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1410" = "1"      /*Cocaine abuse, uncomplicated*/
+"F14120" = "1"     /*Cocaine abuse with intoxication, uncomplicated*/
+"F14121" = "1"     /*Cocaine abuse with intoxication with delirium*/
+"F14122" = "1"     /*Cocaine abuse with intoxication with perceptual disturbance*/
+"F14129" = "1"     /*Cocaine abuse with intoxication, unspecified*/
+"F1413" = "1"      /*Cocaine abuse, unspecified with withdrawal*/
+"F1414" = "1"      /*Cocaine abuse with cocaine-induced mood disorder*/
+"F14150" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with delusions*/
+"F14151" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with hallucinations*/
+"F14159" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder, unspecified*/
+"F14180" = "1"     /*Cocaine abuse with cocaine-induced anxiety disorder*/
+"F14181" = "1"     /*Cocaine abuse with cocaine-induced sexual dysfunction*/
+"F14182" = "1"     /*Cocaine abuse with cocaine-induced sleep disorder*/
+"F14188" = "1"     /*Cocaine abuse with other cocaine-induced disorder*/
+"F1419" = "1"      /*Cocaine abuse with unspecified cocaine-induced disorder*/
+"F1420" = "1"      /*Cocaine dependence, uncomplicated*/
+"F14220" = "1"     /*Cocaine dependence with intoxication, uncomplicated*/
+"F14221" = "1"     /*Cocaine dependence with intoxication delirium*/
+"F14222" = "1"     /*Cocaine dependence with intoxication with perceptual disturbance*/
+"F14229" = "1"     /*Cocaine dependence with intoxication, unspecified*/
+"F1423" = "1"      /*Cocaine dependence with withdrawal*/
+"F1424" = "1"      /*Cocaine dependence with cocaine-induced mood disorder*/
+"F14250" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with delusions*/
+"F14251" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with hallucinations*/
+"F14259" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder, unspecified*/
+"F14280" = "1"     /*Cocaine dependence with cocaine-induced anxiety disorder*/
+"F14281" = "1"     /*Cocaine dependence with cocaine-induced sexual dysfunction*/
+"F14282" = "1"     /*Cocaine dependence with cocaine-induced sleep disorder*/
+"F14288" = "1"     /*Cocaine dependence with other cocaine-induced disorder*/
+"F1429" = "1"      /*Cocaine dependence with unspecified cocaine-induced disorder*/
+"F1490" = "1"      /*Cocaine use, unspecified, uncomplicated*/
+"F14920" = "1"     /*Cocaine use, unspecified with intoxication, uncomplicated*/
+"F14921" = "1"     /*Cocaine use, unspecified with intoxication delirium*/
+"F14922" = "1"     /*Cocaine use, unspecified with intoxication with perceptual disturbance*/
+"F14929" = "1"     /*Cocaine use, unspecified with intoxication, unspecified*/
+"F1493" = "1"      /*Cocaine use, unspecified with withdrawal*/
+"F1494" = "1"      /*Cocaine use, unspecified with cocaine-induced mood disorder*/
+"F14950" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with delusions*/
+"F14951" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with hallucinations*/
+"F14959" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder, unspecified*/
+"F14980" = "1"     /*Cocaine use, unspecified with cocaine-induced anxiety disorder*/
+"F14981" = "1"     /*Cocaine use, unspecified with cocaine-induced sexual dysfunction*/
+"F14982" = "1"     /*Cocaine use, unspecified with cocaine-induced sleep disorder*/
+"F14988" = "1"     /*Cocaine use, unspecified with other cocaine-induced disorder*/
+"F1499" = "1"      /*Cocaine use, unspecified with unspecified cocaine-induced disorder*/
+"F1510" = "1"      /*Other stimulant abuse, uncomplicated*/
+"F15120" = "1"     /*Other stimulant abuse with intoxication, uncomplicated*/
+"F15121" = "1"     /*Other stimulant abuse with intoxication delirium*/
+"F15122" = "1"     /*Other stimulant abuse with intoxication with perceptual disturbance*/
+"F15129" = "1"     /*Other stimulant abuse with intoxication, unspecified*/
+"F1513" = "1"      /*Other stimulant abuse with withdrawal*/
+"F1514" = "1"      /*Other stimulant abuse with stimulant-induced mood disorder*/
+"F15150" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with delusions*/
+"F15151" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with hallucinations*/
+"F15159" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder, unspecified*/
+"F15180" = "1"     /*Other stimulant abuse with stimulant-induced anxiety disorder*/
+"F15181" = "1"     /*Other stimulant abuse with stimulant-induced sexual dysfunction*/
+"F15182" = "1"     /*Other stimulant abuse with stimulant-induced sleep disorder*/
+"F15188" = "1"     /*Other stimulant abuse with other stimulant-induced disorder*/
+"F1519" = "1"      /*Other stimulant abuse with unspecified stimulant-induced disorder*/
+"F1520" = "1"      /*Other stimulant dependence, uncomplicated*/
+"F15220" = "1"     /*Other stimulant dependence with intoxication, uncomplicated*/
+"F15221" = "1"     /*Other stimulant dependence with intoxication delirium*/
+"F15222" = "1"     /*Other stimulant dependence with intoxication with perceptual disturbance*/
+"F15229" = "1"     /*Other stimulant dependence with intoxication, unspecified*/
+"F1523" = "1"      /*Other stimulant dependence with withdrawal*/
+"F1524" = "1"      /*Other stimulant dependence with stimulant-induced mood disorder*/
+"F15250" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with delusions*/
+"F15251" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with hallucinations*/
+"F15259" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder, unspecified*/
+"F15280" = "1"     /*Other stimulant dependence with stimulant-induced anxiety disorder*/
+"F15281" = "1"     /*Other stimulant dependence with stimulant-induced sexual dysfunction*/
+"F15282" = "1"     /*Other stimulant dependence with stimulant-induced sleep disorder*/
+"F15288" = "1"     /*Other stimulant dependence with other stimulant-induced disorder*/
+"F1529" = "1"      /*Other stimulant dependence with unspecified stimulant-induced disorder*/
+"F1590" = "1"      /*Other stimulant use, unspecified, uncomplicated*/
+"F15920" = "1"     /*Other stimulant use, unspecified with intoxication, uncomplicated*/
+"F15921" = "1"     /*Other stimulant use, unspecified with intoxication delirium*/
+"F15922" = "1"     /*Other stimulant use, unspecified with intoxication with perceptual disturbance*/
+"F15929" = "1"     /*Other stimulant use, unspecified with intoxication, unspecified*/
+"F1593" = "1"      /*Other stimulant use, unspecified with withdrawal*/
+"F1594" = "1"      /*Other stimulant use, unspecified with stimulant-induced mood disorder*/
+"F15950" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with delusions*/
+"F15951" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with hallucinations*/
+"F15959" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder, unspecified*/
+"F15980" = "1"     /*Other stimulant use, unspecified with stimulant-induced anxiety disorder*/
+"F15981" = "1"     /*Other stimulant use, unspecified with stimulant-induced sexual dysfunction*/
+"F15982" = "1"     /*Other stimulant use, unspecified with stimulant-induced sleep disorder*/
+"F15988" = "1"     /*Other stimulant use, unspecified with other stimulant-induced disorder*/
+"F1599" = "1"      /*Other stimulant use, unspecified with unspecified stimulant-induced disorder*/
+"F1610" = "1"      /*Hallucinogen abuse, uncomplicated*/
+"F16120" = "1"     /*Hallucinogen abuse with intoxication, uncomplicated*/
+"F16121" = "1"     /*Hallucinogen abuse with intoxication with delirium*/
+"F16122" = "1"     /*Hallucinogen abuse with intoxication with perceptual disturbance*/
+"F16129" = "1"     /*Hallucinogen abuse with intoxication, unspecified*/
+"F1614" = "1"      /*Hallucinogen abuse with hallucinogen-induced mood disorder*/
+"F16150" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with delusions*/
+"F16151" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16180" = "1"     /*Hallucinogen abuse with hallucinogen-induced anxiety disorder*/
+"F16183" = "1"     /*Hallucinogen abuse with hallucinogen persisting perception disorder (flashbacks)*/
+"F16188" = "1"     /*Hallucinogen abuse with other hallucinogen-induced disorder*/
+"F1619" = "1"      /*Hallucinogen abuse with unspecified hallucinogen-induced disorder*/
+"F1620" = "1"      /*Hallucinogen dependence, uncomplicated*/
+"F16220" = "1"     /*Hallucinogen dependence with intoxication, uncomplicated*/
+"F16221" = "1"     /*Hallucinogen dependence with intoxication with delirium*/
+"F16229" = "1"     /*Hallucinogen dependence with intoxication, unspecified*/
+"F1624" = "1"      /*Hallucinogen dependence with hallucinogen-induced mood disorder*/
+"F16250" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with delusions*/
+"F16251" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16259" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder, unspecified*/
+"F16280" = "1"     /*Hallucinogen dependence with hallucinogen-induced anxiety disorder*/
+"F16283" = "1"     /*Hallucinogen dependence with hallucinogen persisting perception disorder (flashbacks)*/
+"F16288" = "1"     /*Hallucinogen dependence with other hallucinogen-induced disorder*/
+"F1629" = "1"      /*Hallucinogen dependence with unspecified hallucinogen-induced disorder*/
+"F1690" = "1"      /*Hallucinogen use, unspecified, uncomplicated*/
+"F16920" = "1"     /*Hallucinogen use, unspecified with intoxication, uncomplicated*/
+"F16921" = "1"     /*Hallucinogen use, unspecified with intoxication with delirium*/
+"F16929" = "1"     /*Hallucinogen use, unspecified with intoxication, unspecified*/
+"F1694" = "1"      /*Hallucinogen use, unspecified with hallucinogen-induced mood disorder*/
+"F16951" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16959" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder, unspecified*/
+"F16980" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced anxiety disorder*/
+"F16983" = "1"     /*Hallucinogen use, unspecified with hallucinogen persisting perception disorder (flashbacks)*/
+"F16988" = "1"     /*Hallucinogen use, unspecified with other hallucinogen-induced disorder*/
+"F1699" = "1"      /*Hallucinogen use, unspecified with unspecified hallucinogen-induced disorder*/
+"F1810" = "1"      /*Inhalant abuse, uncomplicated*/
+"F18120" = "1"     /*Inhalant abuse with intoxication, uncomplicated*/
+"F18121" = "1"     /*Inhalant abuse with intoxication delirium*/
+"F18129" = "1"     /*Inhalant abuse with intoxication, unspecified*/
+"F1814" = "1"      /*Inhalant abuse with inhalant-induced mood disorder*/
+"F18150" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with delusions*/
+"F18151" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with hallucinations*/
+"F18159" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder, unspecified*/
+"F1817" = "1"      /*Inhalant abuse with inhalant-induced dementia*/
+"F18180" = "1"     /*Inhalant abuse with inhalant-induced anxiety disorder*/
+"F18188" = "1"     /*Inhalant abuse with other inhalant-induced disorder*/
+"F1819" = "1"      /*Inhalant abuse with unspecified inhalant-induced disorder*/
+"F1820" = "1"      /*Inhalant dependence, uncomplicated*/
+"F18220" = "1"     /*Inhalant dependence with intoxication, uncomplicated*/
+"F18221" = "1"     /*Inhalant dependence with intoxication delirium*/
+"F18229" = "1"     /*Inhalant dependence with intoxication, unspecified*/
+"F1824" = "1"      /*Inhalant dependence with inhalant-induced mood disorder*/
+"F18250" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with delusions*/
+"F18251" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with hallucinations*/
+"F18259" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder, unspecified*/
+"F1827" = "1"      /*Inhalant dependence with inhalant-induced dementia*/
+"F18280" = "1"     /*Inhalant dependence with inhalant-induced anxiety disorder*/
+"F18288" = "1"     /*Inhalant dependence with other inhalant-induced disorder*/
+"F1829" = "1"      /*Inhalant dependence with unspecified inhalant-induced disorder*/
+"F1890" = "1"      /*Inhalant use, unspecified, uncomplicated*/
+"F18920" = "1"     /*Inhalant use, unspecified with intoxication, uncomplicated*/
+"F18921" = "1"     /*Inhalant use, unspecified with intoxication with delirium*/
+"F18929" = "1"     /*Inhalant use, unspecified with intoxication, unspecified*/
+"F1894" = "1"      /*Inhalant use, unspecified with inhalant-induced mood disorder*/
+"F18950" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with delusions*/
+"F18951" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with hallucinations*/
+"F18959" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder, unspecified*/
+"F1897" = "1"      /*Inhalant use, unspecified with inhalant-induced persisting dementia*/
+"F18980" = "1"     /*Inhalant use, unspecified with inhalant-induced anxiety disorder*/
+"F18988" = "1"     /*Inhalant use, unspecified with other inhalant-induced disorder*/
+"F1899" = "1"      /*Inhalant use, unspecified with unspecified inhalant-induced disorder*/
+"F1910" = "1"      /*Other psychoactive substance abuse, uncomplicated*/
+"F19120" = "1"     /*Other psychoactive substance abuse with intoxication, uncomplicated*/
+"F19121" = "1"     /*Other psychoactive substance abuse with intoxication delirium*/
+"F19122" = "1"     /*Other psychoactive substance abuse with intoxication with perceptual disturbances*/
+"F19129" = "1"     /*Other psychoactive substance abuse with intoxication, unspecified*/
+"F19130" = "1"     /*Other psychoactive substance abuse with withdrawal, uncomplicated*/
+"F19131" = "1"     /*Other psychoactive substance abuse with withdrawal delirium*/
+"F19139" = "1"     /*Other psychoactive substance abuse with withdrawal, unspecified*/
+"F1914" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced mood disorder*/
+"F19150" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with delusions*/
+"F19151" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19159" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1916" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting amnestic disorder*/
+"F1917" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting dementia*/
+"F19180" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced anxiety disorder*/
+"F19181" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sexual dysfunction*/
+"F19182" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sleep disorder*/
+"F19188" = "1"     /*Other psychoactive substance abuse with other psychoactive substance-induced disorder*/
+"F1919" = "1"      /*Other psychoactive substance abuse with unspecified psychoactive substance-induced disorder*/
+"F1920" = "1"      /*Other psychoactive substance dependence, uncomplicated*/
+"F19220" = "1"     /*Other psychoactive substance dependence with intoxication, uncomplicated*/
+"F19221" = "1"     /*Other psychoactive substance dependence with intoxication delirium*/
+"F19222" = "1"     /*Other psychoactive substance dependence with intoxication with perceptual disturbance*/
+"F19229" = "1"     /*Other psychoactive substance dependence with intoxication, unspecified*/
+"F19230" = "1"     /*Other psychoactive substance dependence with withdrawal, uncomplicated*/
+"F19231" = "1"     /*Other psychoactive substance dependence with withdrawal delirium*/
+"F19232" = "1"     /*Other psychoactive substance dependence with withdrawal with perceptual disturbance*/
+"F19239" = "1"     /*Other psychoactive substance dependence with withdrawal, unspecified*/
+"F1924" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced mood disorder*/
+"F19251" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19259" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1926" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting amnestic disorder*/
+"F1927" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting dementia*/
+"F19280" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced anxiety disorder*/
+"F19281" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sexual dysfunction*/
+"F19282" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sleep disorder*/
+"F19288" = "1"     /*Other psychoactive substance dependence with other psychoactive substance-induced disorder*/
+"F1929" = "1"      /*Other psychoactive substance dependence with unspecified psychoactive substance-induced disorder*/
+"F1990" = "1"      /*Other psychoactive substance use, unspecified, uncomplicated*/
+"F19920" = "1"     /*Other psychoactive substance use, unspecified with intoxication, uncomplicated*/
+"F19921" = "1"     /*Other psychoactive substance use, unspecified with intoxication with delirium*/
+"F19922" = "1"     /*Other psychoactive substance use, unspecified with intoxication with perceptual disturbance*/
+"F19929" = "1"     /*Other psychoactive substance use, unspecified with intoxication, unspecified*/
+"F19930" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, uncomplicated*/
+"F19931" = "1"     /*Other psychoactive substance use, unspecified with withdrawal delirium*/
+"F19932" = "1"     /*Other psychoactive substance use, unspecified with withdrawal with perceptual disturbance*/
+"F19939" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, unspecified*/
+"F1994" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced mood disorder*/
+"F19950" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with delusions*/
+"F19951" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19959" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1996" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting amnestic disorder*/
+"F1997" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting dementia*/
+"F19980" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced anxiety disorder*/
+"F19981" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sexual dysfunction*/
+"F19982" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sleep disorder*/
+"F19988" = "1"     /*Other psychoactive substance use, unspecified with other psychoactive substance-induced disorder*/
+"F1999" = "1"      /*Other psychoactive substance use, unspecified with unspecified psychoactive substance-induced disorder*/
+"F200" = "1"       /*Paranoid schizophrenia*/
+"F201" = "1"       /*Disorganized schizophrenia*/
+"F202" = "1"       /*Catatonic schizophrenia*/
+"F203" = "1"       /*Undifferentiated schizophrenia*/
+"F205" = "1"       /*Residual schizophrenia*/
+"F2081" = "1"      /*Schizophreniform disorder*/
+"F2089" = "1"      /*Other schizophrenia*/
+"F209" = "1"       /*Schizophrenia, unspecified*/
+"F21" = "1"        /*Schizotypal disorder*/
+"F22" = "1"        /*Delusional disorders*/
+"F23" = "1"        /*Brief psychotic disorder*/
+"F24" = "1"        /*Shared psychotic disorder*/
+"F250" = "1"       /*Schizoaffective disorder, bipolar type*/
+"F251" = "1"       /*Schizoaffective disorder, depressive type*/
+"F258" = "1"       /*Other schizoaffective disorders*/
+"F259" = "1"       /*Schizoaffective disorder, unspecified*/
+"F28" = "1"        /*Other psychotic disorder not due to a substance or known physiological condition*/
+"F29" = "1"        /*Unspecified psychosis not due to a substance or known physiological condition*/
+"F3010" = "1"      /*Manic episode without psychotic symptoms, unspecified*/
+"F3011" = "1"      /*Manic episode without psychotic symptoms, mild*/
+"F3012" = "1"      /*Manic episode without psychotic symptoms, moderate*/
+"F3013" = "1"      /*Manic episode, severe, without psychotic symptoms*/
+"F302" = "1"       /*Manic episode, severe with psychotic symptoms*/
+"F303" = "1"       /*Manic episode in partial remission*/
+"F308" = "1"       /*Other manic episodes*/
+"F309" = "1"       /*Manic episode, unspecified*/
+"F310" = "1"       /*Bipolar disorder, current episode hypomanic*/
+"F3110" = "1"      /*Bipolar disorder, current episode manic without psychotic features, unspecified*/
+"F3111" = "1"      /*Bipolar disorder, current episode manic without psychotic features, mild*/
+"F3112" = "1"      /*Bipolar disorder, current episode manic without psychotic features, moderate*/
+"F3113" = "1"      /*Bipolar disorder, current episode manic without psychotic features, severe*/
+"F312" = "1"       /*Bipolar disorder, current episode manic severe with psychotic features*/
+"F3130" = "1"      /*Bipolar disorder, current episode depressed, mild or moderate severity, unspecified*/
+"F3131" = "1"      /*Bipolar disorder, current episode depressed, mild*/
+"F3132" = "1"      /*Bipolar disorder, current episode depressed, moderate*/
+"F314" = "1"       /*Bipolar disorder, current episode depressed, severe, without psychotic features*/
+"F315" = "1"       /*Bipolar disorder, current episode depressed, severe, with psychotic features*/
+"F3160" = "1"      /*Bipolar disorder, current episode mixed, unspecified*/
+"F3161" = "1"      /*Bipolar disorder, current episode mixed, mild*/
+"F3162" = "1"      /*Bipolar disorder, current episode mixed, moderate*/
+"F3163" = "1"      /*Bipolar disorder, current episode mixed, severe, without psychotic features*/
+"F3164" = "1"      /*Bipolar disorder, current episode mixed, severe, with psychotic features*/
+"F3171" = "1"      /*Bipolar disorder, in partial remission, most recent episode hypomanic*/
+"F3173" = "1"      /*Bipolar disorder, in partial remission, most recent episode manic*/
+"F3175" = "1"      /*Bipolar disorder, in partial remission, most recent episode depressed*/
+"F3177" = "1"      /*Bipolar disorder, in partial remission, most recent episode mixed*/
+"F3181" = "1"      /*Bipolar II disorder*/
+"F3189" = "1"      /*Other bipolar disorder*/
+"F319" = "1"       /*Bipolar disorder, unspecified*/
+"F320" = "1"       /*Major depressive disorder, single episode, mild*/
+"F321" = "1"       /*Major depressive disorder, single episode, moderate*/
+"F322" = "1"       /*Major depressive disorder, single episode, severe without psychotic features*/
+"F323" = "1"       /*Major depressive disorder, single episode, severe with psychotic features*/
+"F324" = "1"       /*Major depressive disorder, single episode, in partial remission*/
+"F3289" = "1"      /*Other specified depressive episodes*/
+"F329" = "1"       /*Major depressive disorder, single episode, unspecified*/
+"F32A" = "1"       /*Depression, unspecified*/
+"F330" = "1"       /*Major depressive disorder, recurrent, mild*/
+"F331" = "1"       /*Major depressive disorder, recurrent, moderate*/
+"F332" = "1"       /*Major depressive disorder, recurrent severe without psychotic features*/
+"F333" = "1"       /*Major depressive disorder, recurrent, severe with psychotic symptoms*/
+"F3341" = "1"      /*Major depressive disorder, recurrent, in partial remission*/
+"F338" = "1"       /*Other recurrent depressive disorders*/
+"F339" = "1"       /*Major depressive disorder, recurrent, unspecified*/
+"F340" = "1"       /*Cyclothymic disorder*/
+"F341" = "1"       /*Dysthymic disorder*/
+"F3481" = "1"      /*Disruptive mood dysregulation disorder*/
+"F3489" = "1"      /*Other specified persistent mood disorders*/
+"F349" = "1"       /*Persistent mood [affective] disorder, unspecified*/
+"F39" = "1"        /*Unspecified mood [affective] disorder*/
+"F4000" = "1"      /*Agoraphobia, unspecified*/
+"F4001" = "1"      /*Agoraphobia with panic disorder*/
+"F4002" = "1"      /*Agoraphobia without panic disorder*/
+"F4010" = "1"      /*Social phobia, unspecified*/
+"F4011" = "1"      /*Social phobia, generalized*/
+"F40210" = "1"     /*Arachnophobia*/
+"F40218" = "1"     /*Other animal type phobia*/
+"F40220" = "1"     /*Fear of thunderstorms*/
+"F40228" = "1"     /*Other natural environment type phobia*/
+"F40230" = "1"     /*Fear of blood*/
+"F40231" = "1"     /*Fear of injections and transfusions*/
+"F40232" = "1"     /*Fear of other medical care*/
+"F40233" = "1"     /*Fear of injury*/
+"F40240" = "1"     /*Claustrophobia*/
+"F40241" = "1"     /*Acrophobia*/
+"F40242" = "1"     /*Fear of bridges*/
+"F40243" = "1"     /*Fear of flying*/
+"F40248" = "1"     /*Other situational type phobia*/
+"F40290" = "1"     /*Androphobia*/
+"F40291" = "1"     /*Gynephobia*/
+"F40298" = "1"     /*Other specified phobia*/
+"F408" = "1"       /*Other phobic anxiety disorders*/
+"F409" = "1"       /*Phobic anxiety disorder, unspecified*/
+"F410" = "1"       /*Panic disorder [episodic paroxysmal anxiety]*/
+"F411" = "1"       /*Generalized anxiety disorder*/
+"F413" = "1"       /*Other mixed anxiety disorders*/
+"F418" = "1"       /*Other specified anxiety disorders*/
+"F419" = "1"       /*Anxiety disorder, unspecified*/
+"F422" = "1"       /*Mixed obsessional thoughts and acts*/
+"F423" = "1"       /*Hoarding disorder*/
+"F424" = "1"       /*Excoriation (skin-picking) disorder*/
+"F428" = "1"       /*Other obsessive-compulsive disorder*/
+"F429" = "1"       /*Obsessive-compulsive disorder, unspecified*/
+"F4310" = "1"      /*Post-traumatic stress disorder, unspecified*/
+"F4311" = "1"      /*Post-traumatic stress disorder, acute*/
+"F4312" = "1"      /*Post-traumatic stress disorder, chronic*/
+"F4381" = "1"      /*Prolonged grief disorder*/
+"F440" = "1"       /*Dissociative amnesia*/
+"F441" = "1"       /*Dissociative fugue*/
+"F442" = "1"       /*Dissociative stupor*/
+"F444" = "1"       /*Conversion disorder with motor symptom or deficit*/
+"F445" = "1"       /*Conversion disorder with seizures or convulsions*/
+"F446" = "1"       /*Conversion disorder with sensory symptom or deficit*/
+"F447" = "1"       /*Conversion disorder with mixed symptom presentation*/
+"F4481" = "1"      /*Dissociative identity disorder*/
+"F4489" = "1"      /*Other dissociative and conversion disorders*/
+"F449" = "1"       /*Dissociative and conversion disorder, unspecified*/
+"F450" = "1"       /*Somatization disorder*/
+"F451" = "1"       /*Undifferentiated somatoform disorder*/
+"F4520" = "1"      /*Hypochondriacal disorder, unspecified*/
+"F4521" = "1"      /*Hypochondriasis*/
+"F4522" = "1"      /*Body dysmorphic disorder*/
+"F4529" = "1"      /*Other hypochondriacal disorders*/
+"F4541" = "1"      /*Pain disorder exclusively related to psychological factors*/
+"F4542" = "1"      /*Pain disorder with related psychological factors*/
+"F458" = "1"       /*Other somatoform disorders*/
+"F459" = "1"       /*Somatoform disorder, unspecified*/
+"F481" = "1"       /*Depersonalization-derealization syndrome*/
+"F482" = "1"       /*Pseudobulbar affect*/
+"F488" = "1"       /*Other specified nonpsychotic mental disorders*/
+"F489" = "1"       /*Nonpsychotic mental disorder*/
+"F5000" = "1"      /*Anorexia nervosa, unspecified*/
+"F50010" = "1"     /*Anorexia nervosa, restricting type, mild*/
+"F50011" = "1"     /*Anorexia nervosa, restricting type, moderate*/
+"F50012" = "1"     /*Anorexia nervosa, restricting type, severe*/
+"F50013" = "1"     /*Anorexia nervosa, restricting type, extreme*/
+"F50019" = "1"     /*Anorexia nervosa, restricting type, unspecified*/
+"F50020" = "1"     /*Anorexia nervosa, binge eating/purging type, mild*/
+"F50021" = "1"     /*Anorexia nervosa, binge eating/purging type, moderate*/
+"F50022" = "1"     /*Anorexia nervosa, binge eating/purging type, severe*/
+"F50023" = "1"     /*Anorexia nervosa, binge eating/purging type, extreme*/
+"F50029" = "1"     /*Anorexia nervosa, binge eating/purging type, unspecified*/
+"F5020" = "1"      /*Bulimia nervosa, unspecified*/
+"F5021" = "1"      /*Bulimia nervosa, mild*/
+"F5022" = "1"      /*Bulimia nervosa, moderate*/
+"F5023" = "1"      /*Bulimia nervosa, severe*/
+"F5024" = "1"      /*Bulimia nervosa, extreme*/
+"F50810" = "1"     /*Binge eating disorder, mild*/
+"F50811" = "1"     /*Binge eating disorder, moderate*/
+"F50812" = "1"     /*Binge eating disorder, severe*/
+"F50813" = "1"     /*Binge eating disorder, extreme*/
+"F50819" = "1"     /*Binge eating disorder, unspecified*/
+"F5082" = "1"      /*Avoidant/restrictive food intake disorder*/
+"F5089" = "1"      /*Other specified eating disorder*/
+"F509" = "1"       /*Eating disorder, unspecified*/
+"F5105" = "1"      /*Insomnia due to other mental disorder*/
+"F5113" = "1"      /*Hypersomnia due to other mental disorder*/
+"F530" = "1"       /*Postpartum depression*/
+"F54" = "1"        /*Psychological and behavioral factors associated with disorders or diseases classified elsewhere*/
+"F59" = "1"        /*Unspecified behavioral syndromes associated with physiological disturbances and physical factors*/
+"O99310" = "1"     /*Alcohol use complicating pregnancy, unspecified trimester*/
+"O99311" = "1"     /*Alcohol use complicating pregnancy, first trimester*/
+"O99312" = "1"     /*Alcohol use complicating pregnancy, second trimester*/
+"O99313" = "1"     /*Alcohol use complicating pregnancy, third trimester*/
+"O99314" = "1"     /*Alcohol use complicating childbirth*/
+"O99340" = "1"     /*Other mental disorders complicating pregnancy, unspecified trimester*/
+"O99341" = "1"     /*Other mental disorders complicating pregnancy, first trimester*/
+"O99342" = "1"     /*Other mental disorders complicating pregnancy, second trimester*/
+"O99343" = "1"     /*Other mental disorders complicating pregnancy, third trimester*/
+"O99344" = "1"     /*Other mental disorders complicating childbirth*/
+"R457" = "1"       /*State of emotional shocl and stress*/
+"R45850" = "1"     /*Homicidal ideations*/
+"R45851" = "1"     /*Suicidal ideations*/
+"R4588" = "1"      /*Nonsuicidal self-harm*/
+"R4681" = "1"      /*Obsessive-compulsive behavior*/
+"T1491" = "1"      /*Suicide attempt*/
+"T1491XA" = "1"    /*Suicide attempt, initial encounter*/
+"T360X2A" = "1"    /*Poisoning by penicillins, intentional self-harm, initial encounter*/
+"T361X2A" = "1"    /*Poisoning by cephalosporins and other beta-lactam antibiotics, intentional self-harm, initial encounter*/
+"T362X2A" = "1"    /*Poisoning by chloramphenicol group, intentional self-harm, initial encounter*/
+"T363X2A" = "1"    /*Poisoning by macrolides, intentional self-harm, initial encounter*/
+"T364X2A" = "1"    /*Poisoning by tetracyclines, intentional self-harm, initial encounter*/
+"T365X2A" = "1"    /*Poisoning by aminoglycosides, intentional self-harm, initial encounter*/
+"T366X2A" = "1"    /*Poisoning by rifampicins, intentional self-harm, initial encounter*/
+"T367X2A" = "1"    /*Poisoning by antifungal antibiotics, systemically used, intentional self-harm, initial encounter*/
+"T368X2A" = "1"    /*Poisoning by other systemic antibiotics, intentional self-harm, initial encounter*/
+"T3692XA" = "1"    /*Poisoning by unspecified systemic antibiotic, intentional self-harm, initial encounter*/
+"T370X2A" = "1"    /*Poisoning by sulfonamides, intentional self-harm, initial encounter*/
+"T371X2A" = "1"    /*Poisoning by antimycobacterial drugs, intentional self-harm, initial encounter*/
+"T372X2A" = "1"    /*Poisoning by antimalarials and drugs acting on other blood protozoa, intentional self-harm, initial encounter*/
+"T373X2A" = "1"    /*Poisoning by other antiprotozoal drugs, intentional self-harm, initial encounter*/
+"T374X2A" = "1"    /*Poisoning by anthelminthics, intentional self-harm, initial encounter*/
+"T375X2A" = "1"    /*Poisoning by antiviral drugs, intentional self-harm, initial encounter*/
+"T378X2A" = "1"    /*Poisoning by other specified systemic anti-infectives and antiparasitics, intentional self-harm, initial encounter*/
+"T3792XA" = "1"    /*Poisoning by unspecified systemic anti-infective and antiparasitics, intentional self-harm, initial encounter*/
+"T380X2A" = "1"    /*Poisoning by glucocorticoids and synthetic analogues, intentional self-harm, initial encounter*/
+"T381X2A" = "1"    /*Poisoning by thyroid hormones and substitutes, intentional self-harm, initial encounter*/
+"T382X2A" = "1"    /*Poisoning by antithyroid drugs, intentional self-harm, initial encounter*/
+"T383X2A" = "1"    /*Poisoning by insulin and oral hypoglycemic [antidiabetic] drugs, intentional self-harm, initial encounter*/
+"T384X2A" = "1"    /*Poisoning by oral contraceptives, intentional self-harm, initial encounter*/
+"T385X2A" = "1"    /*Poisoning by other estrogens and progestogens, intentional self-harm, initial encounter*/
+"T386X2A" = "1"    /*Poisoning by antigonadotrophins, antiestrogens, antiandrogens, not elsewhere classified, intentional self-harm, initial encounter*/
+"T387X2A" = "1"    /*Poisoning by androgens and anabolic congeners, intentional self-harm, initial encounter*/
+"T38802A" = "1"    /*Poisoning by unspecified hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38812A" = "1"    /*Poisoning by anterior pituitary [adenohypophyseal] hormones, intentional self-harm, initial encounter*/
+"T38892A" = "1"    /*Poisoning by other hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38902A" = "1"    /*Poisoning by unspecified hormone antagonists, intentional self-harm, initial encounter*/
+"T38992A" = "1"    /*Poisoning by other hormone antagonists, intentional self-harm, initial encounter*/
+"T39011A" = "1"    /*Poisoning by aspirin, accidental (unintentional), initial encounter*/
+"T39012A" = "1"    /*Poisoning by aspirin, intentional self-harm, initial encounter*/
+"T39014A" = "1"    /*Poisoning by aspirin, undetermined, initial encounter*/
+"T39092A" = "1"    /*Poisoning by salicylates, intentional self-harm, initial encounter*/
+"T391X2A" = "1"    /*Poisoning by 4-Aminophenol derivatives, intentional self-harm, initial encounter*/
+"T392X2A" = "1"    /*Poisoning by pyrazolone derivatives, intentional self-harm, initial encounter*/
+"T39312A" = "1"    /*Poisoning by propionic acid derivatives, intentional self-harm, initial encounter*/
+"T39391A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], accidental (unintentional), initial encounter*/
+"T39392A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], intentional self-harm, initial encounter*/
+"T39394A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], undetermined, initial encounter*/
+"T394X2A" = "1"    /*Poisoning by antirheumatics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T398X1A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, accidental (unintentional), initial encounter*/
+"T398X2A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T3992XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, intentional self-harm, initial encounter*/
+"T3994XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, undetermined, initial encounter*/
+"T400X1A" = "1"    /*Poisoning by opium, accidental (unintentional), initial encounter*/
+"T400X2A" = "1"    /*Poisoning by opium, intentional self-harm, initial encounter*/
+"T400X4A" = "1"    /*Poisoning by opium, undetermined, initial encounter*/
+"T401X1A" = "1"    /*Poisoning by heroin, accidental (unintentional), initial encounter*/
+"T401X2A" = "1"    /*Poisoning by heroin, intentional self-harm, initial encounter*/
+"T401X4A" = "1"    /*Poisoning by heroin, undetermined, initial encounter*/
+"T402X1A" = "1"    /*Poisoning by other opioids, accidental (unintentional), initial encounter*/
+"T402X2A" = "1"    /*Poisoning by other opioids, intentional self-harm, initial encounter*/
+"T402X4A" = "1"    /*Poisoning by other opioids, undetermined, initial encounter*/
+"T403X1A" = "1"    /*Poisoning by methadone, accidental (unintentional), initial encounter*/
+"T403X2A" = "1"    /*Poisoning by methadone, intentional self-harm, initial encounter*/
+"T403X4A" = "1"    /*Poisoning by methadone, undetermined, initial encounter*/
+"T40411A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), initial encounter*/
+"T40412A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, intentional self-harm, initial encounter*/
+"T40414A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, undetermined, initial encounter*/
+"T40421A" = "1"    /*Poisoning by tramadol, accidental (unintentional), initial encounter*/
+"T40422A" = "1"    /*Poisoning by tramadol, intentional self-harm, initial encounter*/
+"T40424A" = "1"    /*Poisoning by tramadol, undetermined, initial encounter*/
+"T40491A" = "1"    /*Poisoning by other synthetic narcotics, accidental (unintentional), initial encounter*/
+"T40492A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T40494A" = "1"    /*Poisoning by other synthetic narcotics, undetermined, initial encounter*/
+"T404X2A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T405X1A" = "1"    /*Poisoning by cocaine, accidental (unintentional), initial encounter*/
+"T405X2A" = "1"    /*Poisoning by cocaine, intentional self-harm, initial encounter*/
+"T405X4A" = "1"    /*Poisoning by cocaine, undetermined, initial encounter*/
+"T40601A" = "1"    /*Poisoning by unspecified narcotics, accidental (unintentional), initial encounter*/
+"T40602A" = "1"    /*Poisoning by unspecified narcotics, intentional self-harm, initial encounter*/
+"T40604A" = "1"    /*Poisoning by unspecified narcotics, undetermined, initial encounter*/
+"T40691A" = "1"    /*Poisoning by other narcotics, accidental (unintentional), initial encounter*/
+"T40692A" = "1"    /*Poisoning by other narcotics, intentional self-harm, initial encounter*/
+"T40694A" = "1"    /*Poisoning by other narcotics, undetermined, initial encounter*/
+"T40711A" = "1"    /*Poisoning by cannabis, accidental (unintentional), initial encounter*/
+"T40712A" = "1"    /*Poisoning by cannabis, intentional self-harm, initial encounter*/
+"T40714A" = "1"    /*Poisoning by cannabis, undetermined, initial encounter*/
+"T40721A" = "1"    /*Poisoning by synthetic cannabinoids, accidental (unintentional), initial encounter*/
+"T40722A" = "1"    /*Poisoning by synthetic cannabinoids, intentional self-harm, initial encounter*/
+"T40724A" = "1"    /*Poisoning by synthetic cannabinoids, undetermined, initial encounter*/
+"T407X2A" = "1"    /*Poisoning by cannabis (derivatives), intentional self-harm, initial encounter*/
+"T408X1A" = "1"    /*Poisoning by lysergide [LSD], accidental (unintentional), initial encounter*/
+"T408X2A" = "1"    /*Poisoning by lysergide [LSD], intentional self-harm, initial encounter*/
+"T408X4A" = "1"    /*Poisoning by lysergide [LSD], undetermined, initial encounter*/
+"T40901A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40902A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T40904A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T40991A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40992A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T40994A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T410X1A" = "1"    /*Poisoning by inhaled anesthetics, accidental (unintentional), initial encounter*/
+"T410X2A" = "1"    /*Poisoning by inhaled anesthetics, intentional self-harm, initial encounter*/
+"T411X1A" = "1"    /*Poisoning by intravenous anesthetics, accidental (unintentional), initial encounter*/
+"T411X2A" = "1"    /*Poisoning by intravenous anesthetics, intentional self-harm, initial encounter*/
+"T41201A" = "1"    /*Poisoning by unspecified general anesthetics, accidental (unintentional), initial encounter*/
+"T41202A" = "1"    /*Poisoning by unspecified general anesthetics, intentional self-harm, initial encounter*/
+"T41291A" = "1"    /*Poisoning by other general anesthetics, accidental (unintentional), initial encounter*/
+"T41292A" = "1"    /*Poisoning by other general anesthetics, intentional self-harm, initial encounter*/
+"T413X1A" = "1"    /*Poisoning by local anesthetics, accidental (unintentional), initial encounter*/
+"T413X2A" = "1"    /*Poisoning by local anesthetics, intentional self-harm, initial encounter*/
+"T4142XA" = "1"    /*Poisoning by unspecified anesthetic, intentional self-harm, initial encounter*/
+"T415X2A" = "1"    /*Poisoning by therapeutic gases, intentional self-harm, initial encounter*/
+"T420X2A" = "1"    /*Poisoning by hydantoin derivatives, intentional self-harm, initial encounter*/
+"T421X2A" = "1"    /*Poisoning by iminostilbenes, intentional self-harm, initial encounter*/
+"T422X2A" = "1"    /*Poisoning by succinimides and oxazolidinediones, intentional self-harm, initial encounter*/
+"T423X1A" = "1"    /*Poisoning by barbiturates, accidental (unintentional), initial encounter*/
+"T423X2A" = "1"    /*Poisoning by barbiturates, intentional self-harm, initial encounter*/
+"T423X4A" = "1"    /*Poisoning by barbiturates, undetermined, initial encounter*/
+"T424X1A" = "1"    /*Poisoning by benzodiazepines, accidental (unintentional), initial encounter*/
+"T424X2A" = "1"    /*Poisoning by benzodiazepines, intentional self-harm, initial encounter*/
+"T424X4A" = "1"    /*Poisoning by benzodiazepines, undetermined, initial encounter*/
+"T425X2A" = "1"    /*Poisoning by mixed antiepileptics, intentional self-harm, initial encounter*/
+"T426X2A" = "1"    /*Poisoning by other antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T4272XA" = "1"    /*Poisoning by unspecified antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T428X2A" = "1"    /*Poisoning by antiparkinsonism drugs and other central muscle-tone depressants, intentional self-harm, initial encounter*/
+"T43011A" = "1"    /*Poisoning by tricyclic antidepressants, accidental (unintentional), initial encounter*/
+"T43012A" = "1"    /*Poisoning by tricyclic antidepressants, intentional self-harm, initial encounter*/
+"T43014A" = "1"    /*Poisoning by tricyclic antidepressants, undetermined, initial encounter*/
+"T43021A" = "1"    /*Poisoning by tetracyclic antidepressants, accidental (unintentional), initial encounter*/
+"T43022A" = "1"    /*Poisoning by tetracyclic antidepressants, intentional self-harm, initial encounter*/
+"T43024A" = "1"    /*Poisoning by tetracyclic antidepressants, undetermined, initial encounter*/
+"T431X1A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, accidental (unintentional), initial encounter*/
+"T431X2A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, intentional self-harm, initial encounter*/
+"T431X4A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, undetermined, initial encounter*/
+"T43201A" = "1"    /*Poisoning by unspecified antidepressants, accidental (unintentional), initial encounter*/
+"T43202A" = "1"    /*Poisoning by unspecified antidepressants, intentional self-harm, initial encounter*/
+"T43204A" = "1"    /*Poisoning by unspecified antidepressants, undetermined, initial encounter*/
+"T43211A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43212A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43214A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, undetermined, initial encounter*/
+"T43221A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43222A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43224A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, undetermined, initial encounter*/
+"T43291A" = "1"    /*Poisoning by other antidepressants, accidental (unintentional), initial encounter*/
+"T43292A" = "1"    /*Poisoning by other antidepressants, intentional self-harm, initial encounter*/
+"T43294A" = "1"    /*Poisoning by other antidepressants, undetermined, initial encounter*/
+"T433X2A" = "1"    /*Poisoning by phenothiazine antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T434X2A" = "1"    /*Poisoning by butyrophenone and thiothixene neuroleptics, intentional self-harm, initial encounter*/
+"T43502A" = "1"    /*Poisoning by unspecified antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43592A" = "1"    /*Poisoning by other antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43601A" = "1"    /*Poisoning by unspecified psychostimulants, accidental (unintentional), initial encounter*/
+"T43602A" = "1"    /*Poisoning by unspecified psychostimulants, intentional self-harm, initial encounter*/
+"T43612A" = "1"    /*Poisoning by caffeine, intentional self-harm, initial encounter*/
+"T43621A" = "1"    /*Poisoning by amphetamines, accidental (unintentional), initial encounter*/
+"T43622A" = "1"    /*Poisoning by amphetamines, intentional self-harm, initial encounter*/
+"T43623A" = "1"    /*Poisoning by amphetamines, assault, initial encounter*/
+"T43624A" = "1"    /*Poisoning by amphetamines, undetermined, initial encounter*/
+"T43631A" = "1"    /*Poisoning by methylphenidate, accidental (unintentional), initial encounter*/
+"T43632A" = "1"    /*Poisoning by methylphenidate, intentional self-harm, initial encounter*/
+"T43641A" = "1"    /*Poisoning by ecstasy, accidental (unintentional), initial encounter*/
+"T43642A" = "1"    /*Poisoning by ecstasy, intentional self-harm, initial encounter*/
+"T43644A" = "1"    /*Poisoning by ecstasy, undetermined, initial encounter*/
+"T43651A" = "1"    /*Poisoning by methamphetamines accidental (unintentional), initial encounter*/
+"T43654A" = "1"    /*Poisoning by methamphetamines, undetermined, initial encounter*/
+"T43691A" = "1"    /*Poisoning by other psychostimulants, accidental (unintentional), initial encounter*/
+"T43692A" = "1"    /*Poisoning by other psychostimulants, intentional self-harm, initial encounter*/
+"T43694A" = "1"    /*Poisoning by other psychostimulants, undetermined, initial encounter*/
+"T438X1A" = "1"    /*Poisoning by other psychotropic drugs, accidental (unintentional), initial encounter*/
+"T438X2A" = "1"    /*Poisoning by other psychotropic drugs, intentional self-harm, initial encounter*/
+"T438X4A" = "1"    /*Poisoning by other psychotropic drugs, undetermined, initial encounter*/
+"T4391XA" = "1"    /*Poisoning by unspecified psychotropic drug, accidental (unintentional), initial encounter*/
+"T4392XA" = "1"    /*Poisoning by unspecified psychotropic drug, intentional self-harm, initial encounter*/
+"T4394XA" = "1"    /*Poisoning by unspecified psychotropic drug, undetermined, initial encounter*/
+"T440X2A" = "1"    /*Poisoning by anticholinesterase agents, intentional self-harm, initial encounter*/
+"T441X2A" = "1"    /*Poisoning by other parasympathomimetics [cholinergics], intentional self-harm, initial encounter*/
+"T442X2A" = "1"    /*Poisoning by ganglionic blocking drugs, intentional self-harm, initial encounter*/
+"T443X2A" = "1"    /*Poisoning by other parasympatholytics [anticholinergics and antimuscarinics] and spasmolytics, intentional self-harm, initial encounte*/
+"T444X2A" = "1"    /*Poisoning by predominantly alpha-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T445X2A" = "1"    /*Poisoning by predominantly beta-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T446X2A" = "1"    /*Poisoning by alpha-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T447X2A" = "1"    /*Poisoning by beta-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T448X2A" = "1"    /*Poisoning by centrally-acting and adrenergic-neuron-blocking agents, intentional self-harm, initial encounter*/
+"T44902A" = "1"    /*Poisoning by unspecified drugs primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T44992A" = "1"    /*Poisoning by other drug primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T450X2A" = "1"    /*Poisoning by antiallergic and antiemetic drugs, intentional self-harm, initial encounter*/
+"T451X2A" = "1"    /*Poisoning by antineoplastic and immunosuppressive drugs, intentional self-harm, initial encounter*/
+"T452X2A" = "1"    /*Poisoning by vitamins, intentional self-harm, initial encounter*/
+"T453X2A" = "1"    /*Poisoning by enzymes, intentional self-harm, initial encounter*/
+"T454X2A" = "1"    /*Poisoning by iron and its compounds, intentional self-harm, initial encounter*/
+"T45512A" = "1"    /*Poisoning by anticoagulants, intentional self-harm, initial encounter*/
+"T45522A" = "1"    /*Poisoning by antithrombotic drugs, intentional self-harm, initial encounter*/
+"T45602A" = "1"    /*Poisoning by unspecified fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T45612A" = "1"    /*Poisoning by thrombolytic drug, intentional self-harm, initial encounter*/
+"T45622A" = "1"    /*Poisoning by hemostatic drug, intentional self-harm, initial encounter*/
+"T45692A" = "1"    /*Poisoning by other fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T457X2A" = "1"    /*Poisoning by anticoagulant antagonists, vitamin K and other coagulants, intentional self-harm, initial encounter*/
+"T458X2A" = "1"    /*Poisoning by other primarily systemic and hematological agents, intentional self-harm, initial encounter*/
+"T4592XA" = "1"    /*Poisoning by unspecified primarily systemic and hematological agent, intentional self-harm, initial encounter*/
+"T460X2A" = "1"    /*Poisoning by cardiac-stimulant glycosides and drugs of similar action, intentional self-harm, initial encounter*/
+"T461X2A" = "1"    /*Poisoning by calcium-channel blockers, intentional self-harm, initial encounter*/
+"T462X2A" = "1"    /*Poisoning by other antidysrhythmic drugs, intentional self-harm, initial encounter*/
+"T463X2A" = "1"    /*Poisoning by coronary vasodilators, intentional self-harm, initial encounter*/
+"T464X2A" = "1"    /*Poisoning by angiotensin-converting-enzyme inhibitors, intentional self-harm, initial encounter*/
+"T465X2A" = "1"    /*Poisoning by other antihypertensive drugs, intentional self-harm, initial encounter*/
+"T466X2A" = "1"    /*Poisoning by antihyperlipidemic and antiarteriosclerotic drugs, intentional self-harm, initial encounter*/
+"T467X2A" = "1"    /*Poisoning by peripheral vasodilators, intentional self-harm, initial encounter*/
+"T468X2A" = "1"    /*Poisoning by antivaricose drugs, including sclerosing agents, intentional self-harm, initial encounter*/
+"T46902A" = "1"    /*Poisoning by unspecified agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T46992A" = "1"    /*Poisoning by other agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T470X2A" = "1"    /*Poisoning by histamine H2-receptor blockers, intentional self-harm, initial encounter*/
+"T471X2A" = "1"    /*Poisoning by other antacids and anti-gastric-secretion drugs, intentional self-harm, initial encounter*/
+"T472X2A" = "1"    /*Poisoning by stimulant laxatives, intentional self-harm, initial encounter*/
+"T473X2A" = "1"    /*Poisoning by saline and osmotic laxatives, intentional self-harm, initial encounter*/
+"T474X2A" = "1"    /*Poisoning by other laxatives, intentional self-harm, initial encounter*/
+"T475X2A" = "1"    /*Poisoning by digestants, intentional self-harm, initial encounter*/
+"T476X2A" = "1"    /*Poisoning by antidiarrheal drugs, intentional self-harm, initial encounter*/
+"T477X2A" = "1"    /*Poisoning by emetics, intentional self-harm, initial encounter*/
+"T478X2A" = "1"    /*Poisoning by other agents primarily affecting gastrointestinal system, intentional self-harm, initial encounter*/
+"T4792XA" = "1"    /*Poisoning by unspecified agents primarily affecting the gastrointestinal system, intentional self-harm, initial encounter*/
+"T480X2A" = "1"    /*Poisoning by oxytocic drugs, intentional self-harm, initial encounter*/
+"T481X2A" = "1"    /*Poisoning by skeletal muscle relaxants [neuromuscular blocking agents], intentional self-harm, initial encounter*/
+"T48201A" = "1"    /*Poisoning by unspecified drugs acting on muscles, accidental (unintentional), initial encounter*/
+"T48202A" = "1"    /*Poisoning by unspecified drugs acting on muscles, intentional self-harm, initial encounter*/
+"T48291A" = "1"    /*Poisoning by other drugs acting on muscles, accidental (unintentional), initial encounter*/
+"T48292A" = "1"    /*Poisoning by other drugs acting on muscles, intentional self-harm, initial encounter*/
+"T483X2A" = "1"    /*Poisoning by antitussives, intentional self-harm, initial encounter*/
+"T484X2A" = "1"    /*Poisoning by expectorants, intentional self-harm, initial encounter*/
+"T485X2A" = "1"    /*Poisoning by other anti-common-cold drugs, intentional self-harm, initial encounter*/
+"T486X2A" = "1"    /*Poisoning by antiasthmatics, intentional self-harm, initial encounter*/
+"T48902A" = "1"    /*Poisoning by unspecified agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T48992A" = "1"    /*Poisoning by other agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T490X2A" = "1"    /*Poisoning by local antifungal, anti-infective and anti-inflammatory drugs, intentional self-harm, initial encounter*/
+"T491X2A" = "1"    /*Poisoning by antipruritics, intentional self-harm, initial encounter*/
+"T492X2A" = "1"    /*Poisoning by local astringents and local detergents, intentional self-harm, initial encounter*/
+"T493X2A" = "1"    /*Poisoning by emollients, demulcents and protectants, intentional self-harm, initial encounter*/
+"T494X2A" = "1"    /*Poisoning by keratolytics, keratoplastics, and other hair treatment drugs and preparations, intentional self-harm, initial encounter*/
+"T495X2A" = "1"    /*Poisoning by ophthalmological drugs and preparations, intentional self-harm, initial encounter*/
+"T496X2A" = "1"    /*Poisoning by otorhinolaryngological drugs and preparations, intentional self-harm, initial encounter*/
+"T497X2A" = "1"    /*Poisoning by dental drugs, topically applied, intentional self-harm, initial encounter*/
+"T498X2A" = "1"    /*Poisoning by other topical agents, intentional self-harm, initial encounter*/
+"T4992XA" = "1"    /*Poisoning by unspecified topical agent, intentional self-harm, initial encounter*/
+"T500X2A" = "1"    /*Poisoning by mineralocorticoids and their antagonists, intentional self-harm, initial encounter*/
+"T501X2A" = "1"    /*Poisoning by loop [high-ceiling] diuretics, intentional self-harm, initial encounter*/
+"T502X2A" = "1"    /*Poisoning by carbonic-anhydrase inhibitors, benzothiadiazides and other diuretics, intentional self-harm, initial encounter*/
+"T503X2A" = "1"    /*Poisoning by electrolytic, caloric and water-balance agents, intentional self-harm, initial encounter*/
+"T504X2A" = "1"    /*Poisoning by drugs affecting uric acid metabolism, intentional self-harm, initial encounter*/
+"T505X2A" = "1"    /*Poisoning by appetite depressants, intentional self-harm, initial encounter*/
+"T506X2A" = "1"    /*Poisoning by antidotes and chelating agents, intentional self-harm, initial encounter*/
+"T507X2A" = "1"    /*Poisoning by analeptics and opioid receptor antagonists, intentional self-harm, initial encounter*/
+"T508X2A" = "1"    /*Poisoning by diagnostic agents, intentional self-harm, initial encounter*/
+"T50902A" = "1"    /*Poisoning by unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50912A" = "1"    /*Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50992A" = "1"    /*Poisoning by other drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50A12A" = "1"    /*Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm, initial encounter*/
+"T50A22A" = "1"    /*Poisoning by mixed bacterial vaccines without a pertussis component, intentional self-harm, initial encounter*/
+"T50A92A" = "1"    /*Poisoning by other bacterial vaccines, intentional self-harm, initial encounter*/
+"T50B12A" = "1"    /*Poisoning by smallpox vaccines, intentional self-harm, initial encounter*/
+"T50B92A" = "1"    /*Poisoning by other viral vaccines, intentional self-harm, initial encounter*/
+"T50Z12A" = "1"    /*Poisoning by immunoglobulin, intentional self-harm, initial encounter*/
+"T50Z92A" = "1"    /*Poisoning by other vaccines and biological substances, intentional self-harm, initial encounter*/
+"T510X2A" = "1"    /*Toxic effect of ethanol, intentional self-harm, initial encounter*/
+"T511X2A" = "1"    /*Toxic effect of methanol, intentional self-harm, initial encounter*/
+"T512X2A" = "1"    /*Toxic effect of 2-Propanol, intentional self-harm, initial encounter*/
+"T513X2A" = "1"    /*Toxic effect of fusel oil, intentional self-harm, initial encounter*/
+"T518X2A" = "1"    /*Toxic effect of other alcohols, intentional self-harm, initial encounter*/
+"T5192XA" = "1"    /*Toxic effect of unspecified alcohol, intentional self-harm, initial encounter*/
+"T520X2A" = "1"    /*Toxic effect of petroleum products, intentional self-harm, initial encounter*/
+"T521X2A" = "1"    /*Toxic effect of benzene, intentional self-harm, initial encounter*/
+"T522X2A" = "1"    /*Toxic effect of homologues of benzene, intentional self-harm, initial encounter*/
+"T523X2A" = "1"    /*Toxic effect of glycols, intentional self-harm, initial encounter*/
+"T524X2A" = "1"    /*Toxic effect of ketones, intentional self-harm, initial encounter*/
+"T528X2A" = "1"    /*Toxic effect of other organic solvents, intentional self-harm, initial encounter*/
+"T5292XA" = "1"    /*Toxic effect of unspecified organic solvent, intentional self-harm, initial encounter*/
+"T530X2A" = "1"    /*Toxic effect of carbon tetrachloride, intentional self-harm, initial encounter*/
+"T531X2A" = "1"    /*Toxic effect of chloroform, intentional self-harm, initial encounter*/
+"T532X2A" = "1"    /*Toxic effect of trichloroethylene, intentional self-harm, initial encounter*/
+"T533X2A" = "1"    /*Toxic effect of tetrachloroethylene, intentional self-harm, initial encounter*/
+"T534X2A" = "1"    /*Toxic effect of dichloromethane, intentional self-harm, initial encounter*/
+"T535X2A" = "1"    /*Toxic effect of chlorofluorocarbons, intentional self-harm, initial encounter*/
+"T536X2A" = "1"    /*Toxic effect of other halogen derivatives of aliphatic hydrocarbons, intentional self-harm, initial encounter*/
+"T537X2A" = "1"    /*Toxic effect of other halogen derivatives of aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T5392XA" = "1"    /*Toxic effect of unspecified halogen derivatives of aliphatic and aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T540X2A" = "1"    /*Toxic effect of phenol and phenol homologues, intentional self-harm, initial encounter*/
+"T541X2A" = "1"    /*Toxic effect of other corrosive organic compounds, intentional self-harm, initial encounter*/
+"T542X2A" = "1"    /*Toxic effect of corrosive acids and acid-like substances, intentional self-harm, initial encounter*/
+"T543X2A" = "1"    /*Toxic effect of corrosive alkalis and alkali-like substances, intentional self-harm, initial encounter*/
+"T5492XA" = "1"    /*Toxic effect of unspecified corrosive substance, intentional self-harm, initial encounter*/
+"T550X2A" = "1"    /*Toxic effect of soaps, intentional self-harm, initial encounter*/
+"T551X2A" = "1"    /*Toxic effect of detergents, intentional self-harm, initial encounter*/
+"T560X2A" = "1"    /*Toxic effect of lead and its compounds, intentional self-harm, initial encounter*/
+"T561X2A" = "1"    /*Toxic effect of mercury and its compounds, intentional self-harm, initial encounter*/
+"T562X2A" = "1"    /*Toxic effect of chromium and its compounds, intentional self-harm, initial encounter*/
+"T563X2A" = "1"    /*Toxic effect of cadmium and its compounds, intentional self-harm, initial encounter*/
+"T564X2A" = "1"    /*Toxic effect of copper and its compounds, intentional self-harm, initial encounter*/
+"T565X2A" = "1"    /*Toxic effect of zinc and its compounds, intentional self-harm, initial encounter*/
+"T566X2A" = "1"    /*Toxic effect of tin and its compounds, intentional self-harm, initial encounter*/
+"T567X2A" = "1"    /*Toxic effect of beryllium and its compounds, intentional self-harm, initial encounter*/
+"T56812A" = "1"    /*Toxic effect of thallium, intentional self-harm, initial encounter*/
+"T56892A" = "1"    /*Toxic effect of other metals, intentional self-harm, initial encounter*/
+"T5692XA" = "1"    /*Toxic effect of unspecified metal, intentional self-harm, initial encounter*/
+"T570X2A" = "1"    /*Toxic effect of arsenic and its compounds, intentional self-harm, initial encounter*/
+"T571X2A" = "1"    /*Toxic effect of phosphorus and its compounds, intentional self-harm, initial encounter*/
+"T572X2A" = "1"    /*Toxic effect of manganese and its compounds, intentional self-harm, initial encounter*/
+"T573X2A" = "1"    /*Toxic effect of hydrogen cyanide, intentional self-harm, initial encounter*/
+"T578X2A" = "1"    /*Toxic effect of other specified inorganic substances, intentional self-harm, initial encounter*/
+"T5792XA" = "1"    /*Toxic effect of unspecified inorganic substance, intentional self-harm, initial encounter*/
+"T5802XA" = "1"    /*Toxic effect of carbon monoxide from motor vehicle exhaust, intentional self-harm, initial encounter*/
+"T5812XA" = "1"    /*Toxic effect of carbon monoxide from utility gas, intentional self-harm, initial encounter*/
+"T582X2A" = "1"    /*Toxic effect of carbon monoxide from incomplete combustion of other domestic fuels, intentional self-harm, initial encounter*/
+"T588X2A" = "1"    /*Toxic effect of carbon monoxide from other source, intentional self-harm, initial encounter*/
+"T5892XA" = "1"    /*Toxic effect of carbon monoxide from unspecified source, intentional self-harm, initial encounter*/
+"T590X2A" = "1"    /*Toxic effect of nitrogen oxides, intentional self-harm, initial encounter*/
+"T591X2A" = "1"    /*Toxic effect of sulfur dioxide, intentional self-harm, initial encounter*/
+"T592X2A" = "1"    /*Toxic effect of formaldehyde, intentional self-harm, initial encounter*/
+"T593X2A" = "1"    /*Toxic effect of lacrimogenic gas, intentional self-harm, initial encounter*/
+"T594X2A" = "1"    /*Toxic effect of chlorine gas, intentional self-harm, initial encounter*/
+"T595X2A" = "1"    /*Toxic effect of fluorine gas and hydrogen fluoride, intentional self-harm, initial encounter*/
+"T596X2A" = "1"    /*Toxic effect of hydrogen sulfide, intentional self-harm, initial encounter*/
+"T597X2A" = "1"    /*Toxic effect of carbon dioxide, intentional self-harm, initial encounter*/
+"T59812A" = "1"    /*Toxic effect of smoke, intentional self-harm, initial encounter*/
+"T59892A" = "1"    /*Toxic effect of other specified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T5992XA" = "1"    /*Toxic effect of unspecified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T600X2A" = "1"    /*Toxic effect of organophosphate and carbamate insecticides, intentional self-harm, initial encounter*/
+"T601X2A" = "1"    /*Toxic effect of halogenated insecticides, intentional self-harm, initial encounter*/
+"T602X2A" = "1"    /*Toxic effect of other insecticides, intentional self-harm, initial encounter*/
+"T603X2A" = "1"    /*Toxic effect of herbicides and fungicides, intentional self-harm, initial encounter*/
+"T604X2A" = "1"    /*Toxic effect of rodenticides, intentional self-harm, initial encounter*/
+"T608X2A" = "1"    /*Toxic effect of other pesticides, intentional self-harm, initial encounter*/
+"T6092XA" = "1"    /*Toxic effect of unspecified pesticide, intentional self-harm, initial encounter*/
+"T6102XA" = "1"    /*Ciguatera fish poisoning, intentional self-harm, initial encounter*/
+"T6112XA" = "1"    /*Scombroid fish poisoning, intentional self-harm, initial encounter*/
+"T61772A" = "1"    /*Other fish poisoning, intentional self-harm, initial encounter*/
+"T61782A" = "1"    /*Other shellfish poisoning, intentional self-harm, initial encounter*/
+"T618X2A" = "1"    /*Toxic effect of other seafood, intentional self-harm, initial encounter*/
+"T6192XA" = "1"    /*Toxic effect of unspecified seafood, intentional self-harm, initial encounter*/
+"T620X2A" = "1"    /*Toxic effect of ingested mushrooms, intentional self-harm, initial encounter*/
+"T621X2A" = "1"    /*Toxic effect of ingested berries, intentional self-harm, initial encounter*/
+"T622X2A" = "1"    /*Toxic effect of other ingested (parts of) plant(s), intentional self-harm, initial encounter*/
+"T628X2A" = "1"    /*Toxic effect of other specified noxious substances eaten as food, intentional self-harm, initial encounter*/
+"T6292XA" = "1"    /*Toxic effect of unspecified noxious substance eaten as food, intentional self-harm, initial encounter*/
+"T63002A" = "1"    /*Toxic effect of unspecified snake venom, intentional self-harm, initial encounter*/
+"T63012A" = "1"    /*Toxic effect of rattlesnake venom, intentional self-harm, initial encounter*/
+"T63022A" = "1"    /*Toxic effect of coral snake venom, intentional self-harm, initial encounter*/
+"T63032A" = "1"    /*Toxic effect of taipan venom, intentional self-harm, initial encounter*/
+"T63042A" = "1"    /*Toxic effect of cobra venom, intentional self-harm, initial encounter*/
+"T63062A" = "1"    /*Toxic effect of venom of other North and South American snake, intentional self-harm, initial encounter*/
+"T63072A" = "1"    /*Toxic effect of venom of other Australian snake, intentional self-harm, initial encounter*/
+"T63082A" = "1"    /*Toxic effect of venom of other African and Asian snake, intentional self-harm, initial encounter*/
+"T63092A" = "1"    /*Toxic effect of venom of other snake, intentional self-harm, initial encounter*/
+"T63112A" = "1"    /*Toxic effect of venom of gila monster, intentional self-harm, initial encounter*/
+"T63122A" = "1"    /*Toxic effect of venom of other venomous lizard, intentional self-harm, initial encounter*/
+"T63192A" = "1"    /*Toxic effect of venom of other reptiles, intentional self-harm, initial encounter*/
+"T632X2A" = "1"    /*Toxic effect of venom of scorpion, intentional self-harm, initial encounter*/
+"T63302A" = "1"    /*Toxic effect of unspecified spider venom, intentional self-harm, initial encounter*/
+"T63312A" = "1"    /*Toxic effect of venom of black widow spider, intentional self-harm, initial encounter*/
+"T63322A" = "1"    /*Toxic effect of venom of tarantula, intentional self-harm, initial encounter*/
+"T63332A" = "1"    /*Toxic effect of venom of brown recluse spider, intentional self-harm, initial encounter*/
+"T63392A" = "1"    /*Toxic effect of venom of other spider, intentional self-harm, initial encounter*/
+"T63412A" = "1"    /*Toxic effect of venom of centipedes and venomous millipedes, intentional self-harm, initial encounter*/
+"T63422A" = "1"    /*Toxic effect of venom of ants, intentional self-harm, initial encounter*/
+"T63432A" = "1"    /*Toxic effect of venom of caterpillars, intentional self-harm, initial encounter*/
+"T63442A" = "1"    /*Toxic effect of venom of bees, intentional self-harm, initial encounter*/
+"T63452A" = "1"    /*Toxic effect of venom of hornets, intentional self-harm, initial encounter*/
+"T63462A" = "1"    /*Toxic effect of venom of wasps, intentional self-harm, initial encounter*/
+"T63482A" = "1"    /*Toxic effect of venom of other arthropod, intentional self-harm, initial encounter*/
+"T63512A" = "1"    /*Toxic effect of contact with stingray, intentional self-harm, initial encounter*/
+"T63592A" = "1"    /*Toxic effect of contact with other venomous fish, intentional self-harm, initial encounter*/
+"T63612A" = "1"    /*Toxic effect of contact with Portuguese Man-o-war, intentional self-harm, initial encounter*/
+"T63622A" = "1"    /*Toxic effect of contact with other jellyfish, intentional self-harm, initial encounter*/
+"T63632A" = "1"    /*Toxic effect of contact with sea anemone, intentional self-harm, initial encounter*/
+"T63692A" = "1"    /*Toxic effect of contact with other venomous marine animals, intentional self-harm, initial encounter*/
+"T63712A" = "1"    /*Toxic effect of contact with venomous marine plant, intentional self-harm, initial encounter*/
+"T63792A" = "1"    /*Toxic effect of contact with other venomous plant, intentional self-harm, initial encounter*/
+"T63812A" = "1"    /*Toxic effect of contact with venomous frog, intentional self-harm, initial encounter*/
+"T63822A" = "1"    /*Toxic effect of contact with venomous toad, intentional self-harm, initial encounter*/
+"T63832A" = "1"    /*Toxic effect of contact with other venomous amphibian, intentional self-harm, initial encounter*/
+"T63892A" = "1"    /*Toxic effect of contact with other venomous animals, intentional self-harm, initial encounter*/
+"T6392XA" = "1"    /*Toxic effect of contact with unspecified venomous animal, intentional self-harm, initial encounter*/
+"T6402XA" = "1"    /*Toxic effect of aflatoxin, intentional self-harm, initial encounter*/
+"T6482XA" = "1"    /*Toxic effect of other mycotoxin food contaminants, intentional self-harm, initial encounter*/
+"T650X2A" = "1"    /*Toxic effect of cyanides, intentional self-harm, initial encounter*/
+"T651X2A" = "1"    /*Toxic effect of strychnine and its salts, intentional self-harm, initial encounter*/
+"T65212A" = "1"    /*Toxic effect of chewing tobacco, intentional self-harm, initial encounter*/
+"T65222A" = "1"    /*Toxic effect of tobacco cigarettes, intentional self-harm, initial encounter*/
+"T65292A" = "1"    /*Toxic effect of other tobacco and nicotine, intentional self-harm, initial encounter*/
+"T653X2A" = "1"    /*Toxic effect of nitroderivatives and aminoderivatives of benzene and its homologues, intentional self-harm, initial encounter*/
+"T654X2A" = "1"    /*Toxic effect of carbon disulfide, intentional self-harm, initial encounter*/
+"T655X2A" = "1"    /*Toxic effect of nitroglycerin and other nitric acids and esters, intentional self-harm, initial encounter*/
+"T656X2A" = "1"    /*Toxic effect of paints and dyes, not elsewhere classified, intentional self-harm, initial encounter*/
+"T65812A" = "1"    /*Toxic effect of latex, intentional self-harm, initial encounter*/
+"T65822A" = "1"    /*Toxic effect of harmful algae and algae toxins, intentional self-harm, initial encounter*/
+"T65832A" = "1"    /*Toxic effect of fiberglass, intentional self-harm, initial encounter*/
+"T65892A" = "1"    /*Toxic effect of other specified substances, intentional self-harm, initial encounter*/
+"T6592XA" = "1"    /*Toxic effect of unspecified substance, intentional self-harm, initial encounter*/
+"T71112A" = "1"    /*Asphyxiation due to smothering under pillow, intentional self-harm, initial encounter*/
+"T71122A" = "1"    /*Asphyxiation due to plastic bag, intentional self-harm, initial encounter*/
+"T71132A" = "1"    /*Asphyxiation due to being trapped in bed linens, intentional self-harm, initial encounter*/
+"T71152A" = "1"    /*Asphyxiation due to smothering in furniture, intentional self-harm, initial encounter*/
+"T71162A" = "1"    /*Asphyxiation due to hanging, intentional self-harm, initial encounter*/
+"T71192A" = "1"    /*Asphyxiation due to mechanical threat to breathing due to other causes, intentional self-harm, initial encounter*/
+"T71222A" = "1"    /*Asphyxiation due to being trapped in a car trunk, intentional self-harm, initial encounter*/
+"T71232A" = "1"    /*Asphyxiation due to being trapped in a (discarded) refrigerator, intentional self-harm, initial encounter*/
+"X710XXA" = "1"    /*Intentional self-harm by drowning and submersion while in bathtub, initial encounter*/
+"X711XXA" = "1"    /*Intentional self-harm by drowning and submersion while in swimming pool, initial encounter*/
+"X712XXA" = "1"    /*Intentional self-harm by drowning and submersion after jump into swimming pool, initial encounter*/
+"X713XXA" = "1"    /*Intentional self-harm by drowning and submersion in natural water, initial encounter*/
+"X718XXA" = "1"    /*Other intentional self-harm by drowning and submersion, initial encounter*/
+"X719XXA" = "1"    /*Intentional self-harm by drowning and submersion, unspecified, initial encounter*/
+"X72XXXA" = "1"    /*Intentional self-harm by handgun discharge, initial encounter*/
+"X730XXA" = "1"    /*Intentional self-harm by shotgun discharge, initial encounter*/
+"X731XXA" = "1"    /*Intentional self-harm by hunting rifle discharge, initial encounter*/
+"X732XXA" = "1"    /*Intentional self-harm by machine gun discharge, initial encounter*/
+"X738XXA" = "1"    /*Intentional self-harm by other larger firearm discharge, initial encounter*/
+"X739XXA" = "1"    /*Intentional self-harm by unspecified larger firearm discharge, initial encounter*/
+"X7401XA" = "1"    /*Intentional self-harm by airgun, initial encounter*/
+"X7402XA" = "1"    /*Intentional self-harm by paintball gun, initial encounter*/
+"X7409XA" = "1"    /*Intentional self-harm by other gas, air or spring-operated gun, initial encounter*/
+"X748XXA" = "1"    /*Intentional self-harm by other firearm discharge, initial encounter*/
+"X749XXA" = "1"    /*Intentional self-harm by unspecified firearm discharge, initial encounter*/
+"X75XXXA" = "1"    /*Intentional self-harm by explosive material, initial encounter*/
+"X76XXXA" = "1"    /*Intentional self-harm by smoke, fire and flames, initial encounter*/
+"X770XXA" = "1"    /*Intentional self-harm by steam or hot vapors, initial encounter*/
+"X771XXA" = "1"    /*Intentional self-harm by hot tap water, initial encounter*/
+"X772XXA" = "1"    /*Intentional self-harm by other hot fluids, initial encounter*/
+"X773XXA" = "1"    /*Intentional self-harm by hot household appliances, initial encounter*/
+"X778XXA" = "1"    /*Intentional self-harm by other hot objects, initial encounter*/
+"X779XXA" = "1"    /*Intentional self-harm by unspecified hot objects, initial encounter*/
+"X780XXA" = "1"    /*Intentional self-harm by sharp glass, initial encounter*/
+"X781XXA" = "1"    /*Intentional self-harm by knife, initial encounter*/
+"X782XXA" = "1"    /*Intentional self-harm by sword or dagger, initial encounter*/
+"X788XXA" = "1"    /*Intentional self-harm by other sharp object, initial encounter*/
+"X789XXA" = "1"    /*Intentional self-harm by unspecified sharp object, initial encounter*/
+"X79XXXA" = "1"    /*Intentional self-harm by blunt object, initial encounter*/
+"X80XXXA" = "1"    /*Intentional self-harm by jumping from a high place, initial encounter*/
+"X810XXA" = "1"    /*Intentional self-harm by jumping or lying in front of motor vehicle, initial encounter*/
+"X811XXA" = "1"    /*Intentional self-harm by jumping or lying in front of (subway) train, initial encounter*/
+"X818XXA" = "1"    /*Intentional self-harm by jumping or lying in front of other moving object, initial encounter*/
+"X820XXA" = "1"    /*Intentional collision of motor vehicle with other motor vehicle, initial encounter*/
+"X821XXA" = "1"    /*Intentional collision of motor vehicle with train, initial encounter*/
+"X822XXA" = "1"    /*Intentional collision of motor vehicle with tree, initial encounter*/
+"X828XXA" = "1"    /*Other intentional self-harm by crashing of motor vehicle, initial encounter*/
+"X830XXA" = "1"    /*Intentional self-harm by crashing of aircraft, initial encounter*/
+"X831XXA" = "1"    /*Intentional self-harm by electrocution, initial encounter*/
+"X832XXA" = "1"    /*Intentional self-harm by exposure to extremes of cold, initial encounter*/
+"X838XXA" = "1"    /*Intentional self-harm by other specified means, initial encounter*/
+Other = "0";
+
+
+/*BH/SUD FLAGS-POST DISCHARGE*/
+value $DX_BHSUD_POST
+"F060" = "1"       /*Psychotic disorder with hallucinations due to known physiological condition*/
+"F061" = "1"       /*Catatonic disorder due to known physiological condition*/
+"F062" = "1"       /*Psychotic disorder with delusions due to known physiological condition*/
+"F0630" = "1"      /*Mood disorder due to known physiological condition, unspecified*/
+"F0631" = "1"      /*Mood disorder due to known physiological condition with depressive features*/
+"F0632" = "1"      /*Mood disorder due to known physiological condition with major depressive-like episode*/
+"F0633" = "1"      /*Mood disorder due to known physiologic condition with manic features*/
+"F0634" = "1"      /*Mood disorder due to known physiological condition with mixed features*/
+"F064" = "1"       /*Anxiety disorder due to known physiological condition*/
+"F1010" = "1"      /*Alcohol abuse, uncomplicated*/
+"F10120" = "1"     /*Alcohol abuse with intoxication, uncomplicated*/
+"F10121" = "1"     /*Alcohol abuse with intoxication delirium*/
+"F10129" = "1"     /*Alcohol abuse with intoxication, unspecified*/
+"F10130" = "1"     /*Alcohol abuse with withdrawal, uncomplicated*/
+"F10131" = "1"     /*Alcohol abuse with withdrawal delirium*/
+"F10132" = "1"     /*Alcohol abuse with withdrawal with perceptual disturbance*/
+"F10139" = "1"     /*Alcohol abuse with withdrawal, unspecified*/
+"F1014" = "1"      /*Alcohol abuse with alcohol-induced mood disorder*/
+"F10150" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with delusions*/
+"F10151" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with hallucinations*/
+"F10159" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder, unspecified*/
+"F10180" = "1"     /*Alcohol abuse with alcohol-induced anxiety disorder*/
+"F10181" = "1"     /*Alcohol abuse with alcohol-induced sexual dysfunction*/
+"F10182" = "1"     /*Alcohol abuse with alcohol-induced sleep disorder*/
+"F10188" = "1"     /*Alcohol abuse with other alcohol-induced disorder*/
+"F1019" = "1"      /*Alcohol abuse with unspecified alcohol-induced disorder*/
+"F1020" = "1"      /*Alcohol dependence, uncomplicated*/
+"F10220" = "1"     /*Alcohol dependence with intoxication, uncomplicated*/
+"F10221" = "1"     /*Alcohol dependence with intoxication delirium*/
+"F10229" = "1"     /*Alcohol dependence with intoxication, unspecified*/
+"F10230" = "1"     /*Alcohol dependence with withdrawal, uncomplicated*/
+"F10231" = "1"     /*Alcohol dependence with withdrawal delirium*/
+"F10232" = "1"     /*Alcohol dependence with withdrawal with perceptual disturbance*/
+"F10239" = "1"     /*Alcohol dependence with withdrawal, unspecified*/
+"F1024" = "1"      /*Alcohol dependence with alcohol-induced mood disorder*/
+"F10250" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with delusions*/
+"F10251" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with hallucinations*/
+"F10259" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder, unspecified*/
+"F1026" = "1"      /*Alcohol dependence with alcohol-induced persisting amnestic disorder*/
+"F1027" = "1"      /*Alcohol dependence with alcohol-induced persisting dementia*/
+"F10280" = "1"     /*Alcohol dependence with alcohol-induced anxiety disorder*/
+"F10281" = "1"     /*Alcohol dependence with alcohol-induced sexual dysfunction*/
+"F10282" = "1"     /*Alcohol dependence with alcohol-induced sleep disorder*/
+"F10288" = "1"     /*Alcohol dependence with other alcohol-induced disorder*/
+"F1029" = "1"      /*Alcohol dependence with unspecified alcohol-induced disorder*/
+"F1090" = "1"      /*Alcohol use, unspecified, uncomplicated*/
+"F10920" = "1"     /*Alcohol use, unspecified with intoxication, uncomplicated*/
+"F10921" = "1"     /*Alcohol use, unspecified with intoxication delirium*/
+"F10929" = "1"     /*Alcohol use, unspecified with intoxication, unspecified*/
+"F10930" = "1"     /*Alcohol use, unspecified with withdrawal, uncomplicated*/
+"F10931" = "1"     /*Alcohol use, unspecified with withdrawal delirium*/
+"F10932" = "1"     /*Alcohol use, unspecified with withdrawal with perceptual disturbance*/
+"F10939" = "1"     /*Alcohol use, unspecified with withdrawal, unspecified*/
+"F1094" = "1"      /*Alcohol use, unspecified with alcohol-induced mood disorder*/
+"F10950" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with delusions*/
+"F10951" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with hallucinations*/
+"F10959" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder, unspecified*/
+"F1096" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting amnestic disorder*/
+"F1097" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting dementia*/
+"F10980" = "1"     /*Alcohol use, unspecified with alcohol-induced anxiety disorder*/
+"F10981" = "1"     /*Alcohol use, unspecified with alcohol-induced sexual dysfunction*/
+"F10982" = "1"     /*Alcohol use, unspecified with alcohol-induced sleep disorder*/
+"F10988" = "1"     /*Alcohol use, unspecified with other alcohol-induced disorder*/
+"F1099" = "1"      /*Alcohol use, unspecified with unspecified alcohol-induced disorder*/
+"F1110" = "1"      /*Opioid abuse, uncomplicated*/
+"F11120" = "1"     /*Opioid abuse with intoxication, uncomplicated*/
+"F11121" = "1"     /*Opioid abuse with intoxication delirium*/
+"F11122" = "1"     /*Opioid abuse with intoxication with perceptual disturbance*/
+"F11129" = "1"     /*Opioid abuse with intoxication, unspecified*/
+"F1113" = "1"      /*Opioid abuse with withdrawal*/
+"F1114" = "1"      /*Opioid abuse with opioid-induced mood disorder*/
+"F11150" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with delusions*/
+"F11151" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with hallucinations*/
+"F11159" = "1"     /*Opioid abuse with opioid-induced psychotic disorder, unspecified*/
+"F11181" = "1"     /*Opioid abuse with opioid-induced sexual dysfunction*/
+"F11182" = "1"     /*Opioid abuse with opioid-induced sleep disorder*/
+"F11188" = "1"     /*Opioid abuse with other opioid-induced disorder*/
+"F1119" = "1"      /*Opioid abuse with unspecified opioid-induced disorder*/
+"F1120" = "1"      /*Opioid dependence, uncomplicated*/
+"F11220" = "1"     /*Opioid dependence with intoxication, uncomplicated*/
+"F11221" = "1"     /*Opioid dependence with intoxication delirium*/
+"F11222" = "1"     /*Opioid dependence with intoxication with perceptual disturbance*/
+"F11229" = "1"     /*Opioid dependence with intoxication, unspecified*/
+"F1123" = "1"      /*Opioid dependence with withdrawal*/
+"F1124" = "1"      /*Opioid dependence with opioid-induced mood disorder*/
+"F11250" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with delusions*/
+"F11251" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with hallucinations*/
+"F11259" = "1"     /*Opioid dependence with opioid-induced psychotic disorder, unspecified*/
+"F11281" = "1"     /*Opioid dependence with opioid-induced sexual dysfunction*/
+"F11282" = "1"     /*Opioid dependence with opioid-induced sleep disorder*/
+"F11288" = "1"     /*Opioid dependence with other opioid-induced disorder*/
+"F1129" = "1"      /*Opioid dependence with unspecified opioid-induced disorder*/
+"F1190" = "1"      /*Opioid use, unspecified, uncomplicated*/
+"F11920" = "1"     /*Opioid use, unspecified with intoxication, uncomplicated*/
+"F11921" = "1"     /*Opioid use, unspecified with intoxication delirium*/
+"F11922" = "1"     /*Opioid use, unspecified with intoxication with perceptual disturbance*/
+"F11929" = "1"     /*Opioid use, unspecified with intoxication, unspecified*/
+"F1193" = "1"      /*Opioid use, unspecified with withdrawal*/
+"F1194" = "1"      /*Opioid use, unspecified with opioid-induced mood disorder*/
+"F11950" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with delusions*/
+"F11951" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with hallucinations*/
+"F11959" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder, unspecified*/
+"F11981" = "1"     /*Opioid use, unspecified with opioid-induced sexual dysfunction*/
+"F11982" = "1"     /*Opioid use, unspecified with opioid-induced sleep disorder*/
+"F11988" = "1"     /*Opioid use, unspecified with other opioid-induced disorder*/
+"F1199" = "1"      /*Opioid use, unspecified with unspecified opioid-induced disorder*/
+"F1210" = "1"      /*Cannabis abuse, uncomplicated*/
+"F12120" = "1"     /*Cannabis abuse with intoxication, uncomplicated*/
+"F12121" = "1"     /*Cannabis abuse with intoxication delirium*/
+"F12122" = "1"     /*Cannabis abuse with intoxication with perceptual disturbance*/
+"F12129" = "1"     /*Cannabis abuse with intoxication, unspecified*/
+"F1213" = "1"      /*Cannabis abuse with withdrawal*/
+"F12150" = "1"     /*Cannabis abuse with psychotic disorder with delusions*/
+"F12151" = "1"     /*Cannabis abuse with psychotic disorder with hallucinations*/
+"F12159" = "1"     /*Cannabis abuse with psychotic disorder, unspecified*/
+"F12180" = "1"     /*Cannabis abuse with cannabis-induced anxiety disorder*/
+"F12188" = "1"     /*Cannabis abuse with other cannabis-induced disorder*/
+"F1219" = "1"      /*Cannabis abuse with unspecified cannabis-induced disorder*/
+"F1220" = "1"      /*Cannabis dependence, uncomplicated*/
+"F12220" = "1"     /*Cannabis dependence with intoxication, uncomplicated*/
+"F12221" = "1"     /*Cannabis dependence with intoxication delirium*/
+"F12222" = "1"     /*Cannabis dependence with intoxication with perceptual disturbance*/
+"F12229" = "1"     /*Cannabis dependence with intoxication, unspecified*/
+"F1223" = "1"      /*Cannabis dependence with withdrawal*/
+"F12250" = "1"     /*Cannabis dependence with psychotic disorder with delusions*/
+"F12251" = "1"     /*Cannabis dependence with psychotic disorder with hallucinations*/
+"F12259" = "1"     /*Cannabis dependence with psychotic disorder, unspecified*/
+"F12280" = "1"     /*Cannabis dependence with cannabis-induced anxiety disorder*/
+"F12288" = "1"     /*Cannabis dependence with other cannabis-induced disorder*/
+"F1229" = "1"      /*Cannabis dependence with unspecified cannabis-induced disorder*/
+"F1290" = "1"      /*Cannabis use, unspecified, uncomplicated*/
+"F12920" = "1"     /*Cannabis use, unspecified with intoxication, uncomplicated*/
+"F12921" = "1"     /*Cannabis use, unspecified with intoxication delirium*/
+"F12922" = "1"     /*Cannabis use, unspecified with intoxication with perceptual disturbance*/
+"F12929" = "1"     /*Cannabis use, unspecified with intoxication, unspecified*/
+"F1293" = "1"      /*Cannabis use, unspecified with withdrawal*/
+"F12950" = "1"     /*Cannabis use, unspecified with psychotic disorder with delusions*/
+"F12951" = "1"     /*Cannabis use, unspecified with psychotic disorder with hallucinations*/
+"F12959" = "1"     /*Cannabis use, unspecified with psychotic disorder, unspecified*/
+"F12980" = "1"     /*Cannabis use, unspecified with anxiety disorder*/
+"F12988" = "1"     /*Cannabis use, unspecified with other cannabis-induced disorder*/
+"F1299" = "1"      /*Cannabis use, unspecified with unspecified cannabis-induced disorder*/
+"F1310" = "1"      /*Sedative, hypnotic or anxiolytic abuse, uncomplicated*/
+"F13120" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, uncomplicated*/
+"F13121" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication delirium*/
+"F13129" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, unspecified*/
+"F13130" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, uncomplicated*/
+"F13131" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal delirium*/
+"F13132" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal with perceptual disturbance*/
+"F13139" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, unspecified*/
+"F1314" = "1"      /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13150" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13151" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13159" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F13180" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13181" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13182" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13188" = "1"     /*Sedative, hypnotic or anxiolytic abuse with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1319" = "1"      /*Sedative, hypnotic or anxiolytic abuse with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1320" = "1"      /*Sedative, hypnotic or anxiolytic dependence, uncomplicated*/
+"F13220" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, uncomplicated*/
+"F13221" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication delirium*/
+"F13229" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, unspecified*/
+"F13230" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, uncomplicated*/
+"F13231" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal delirium*/
+"F13232" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal with perceptual disturbance*/
+"F13239" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, unspecified*/
+"F1324" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13250" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13251" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13259" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1326" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1327" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13280" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13281" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13282" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13288" = "1"     /*Sedative, hypnotic or anxiolytic dependence with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1329" = "1"      /*Sedative, hypnotic or anxiolytic dependence with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1390" = "1"      /*Sedative, hypnotic, or anxiolytic use, unspecified, uncomplicated*/
+"F13920" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, uncomplicated*/
+"F13921" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication delirium*/
+"F13929" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, unspecified*/
+"F13930" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, uncomplicated*/
+"F13931" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal delirium*/
+"F13939" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, unspecified*/
+"F1394" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13950" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13951" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13959" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1396" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1397" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13980" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13981" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13982" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13988" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1399" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1410" = "1"      /*Cocaine abuse, uncomplicated*/
+"F14120" = "1"     /*Cocaine abuse with intoxication, uncomplicated*/
+"F14121" = "1"     /*Cocaine abuse with intoxication with delirium*/
+"F14122" = "1"     /*Cocaine abuse with intoxication with perceptual disturbance*/
+"F14129" = "1"     /*Cocaine abuse with intoxication, unspecified*/
+"F1413" = "1"      /*Cocaine abuse, unspecified with withdrawal*/
+"F1414" = "1"      /*Cocaine abuse with cocaine-induced mood disorder*/
+"F14150" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with delusions*/
+"F14151" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with hallucinations*/
+"F14159" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder, unspecified*/
+"F14180" = "1"     /*Cocaine abuse with cocaine-induced anxiety disorder*/
+"F14181" = "1"     /*Cocaine abuse with cocaine-induced sexual dysfunction*/
+"F14182" = "1"     /*Cocaine abuse with cocaine-induced sleep disorder*/
+"F14188" = "1"     /*Cocaine abuse with other cocaine-induced disorder*/
+"F1419" = "1"      /*Cocaine abuse with unspecified cocaine-induced disorder*/
+"F1420" = "1"      /*Cocaine dependence, uncomplicated*/
+"F14220" = "1"     /*Cocaine dependence with intoxication, uncomplicated*/
+"F14221" = "1"     /*Cocaine dependence with intoxication delirium*/
+"F14222" = "1"     /*Cocaine dependence with intoxication with perceptual disturbance*/
+"F14229" = "1"     /*Cocaine dependence with intoxication, unspecified*/
+"F1423" = "1"      /*Cocaine dependence with withdrawal*/
+"F1424" = "1"      /*Cocaine dependence with cocaine-induced mood disorder*/
+"F14250" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with delusions*/
+"F14251" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with hallucinations*/
+"F14259" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder, unspecified*/
+"F14280" = "1"     /*Cocaine dependence with cocaine-induced anxiety disorder*/
+"F14281" = "1"     /*Cocaine dependence with cocaine-induced sexual dysfunction*/
+"F14282" = "1"     /*Cocaine dependence with cocaine-induced sleep disorder*/
+"F14288" = "1"     /*Cocaine dependence with other cocaine-induced disorder*/
+"F1429" = "1"      /*Cocaine dependence with unspecified cocaine-induced disorder*/
+"F1490" = "1"      /*Cocaine use, unspecified, uncomplicated*/
+"F14920" = "1"     /*Cocaine use, unspecified with intoxication, uncomplicated*/
+"F14921" = "1"     /*Cocaine use, unspecified with intoxication delirium*/
+"F14922" = "1"     /*Cocaine use, unspecified with intoxication with perceptual disturbance*/
+"F14929" = "1"     /*Cocaine use, unspecified with intoxication, unspecified*/
+"F1493" = "1"      /*Cocaine use, unspecified with withdrawal*/
+"F1494" = "1"      /*Cocaine use, unspecified with cocaine-induced mood disorder*/
+"F14950" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with delusions*/
+"F14951" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with hallucinations*/
+"F14959" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder, unspecified*/
+"F14980" = "1"     /*Cocaine use, unspecified with cocaine-induced anxiety disorder*/
+"F14981" = "1"     /*Cocaine use, unspecified with cocaine-induced sexual dysfunction*/
+"F14982" = "1"     /*Cocaine use, unspecified with cocaine-induced sleep disorder*/
+"F14988" = "1"     /*Cocaine use, unspecified with other cocaine-induced disorder*/
+"F1499" = "1"      /*Cocaine use, unspecified with unspecified cocaine-induced disorder*/
+"F1510" = "1"      /*Other stimulant abuse, uncomplicated*/
+"F15120" = "1"     /*Other stimulant abuse with intoxication, uncomplicated*/
+"F15121" = "1"     /*Other stimulant abuse with intoxication delirium*/
+"F15122" = "1"     /*Other stimulant abuse with intoxication with perceptual disturbance*/
+"F15129" = "1"     /*Other stimulant abuse with intoxication, unspecified*/
+"F1513" = "1"      /*Other stimulant abuse with withdrawal*/
+"F1514" = "1"      /*Other stimulant abuse with stimulant-induced mood disorder*/
+"F15150" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with delusions*/
+"F15151" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with hallucinations*/
+"F15159" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder, unspecified*/
+"F15180" = "1"     /*Other stimulant abuse with stimulant-induced anxiety disorder*/
+"F15181" = "1"     /*Other stimulant abuse with stimulant-induced sexual dysfunction*/
+"F15182" = "1"     /*Other stimulant abuse with stimulant-induced sleep disorder*/
+"F15188" = "1"     /*Other stimulant abuse with other stimulant-induced disorder*/
+"F1519" = "1"      /*Other stimulant abuse with unspecified stimulant-induced disorder*/
+"F1520" = "1"      /*Other stimulant dependence, uncomplicated*/
+"F15220" = "1"     /*Other stimulant dependence with intoxication, uncomplicated*/
+"F15221" = "1"     /*Other stimulant dependence with intoxication delirium*/
+"F15222" = "1"     /*Other stimulant dependence with intoxication with perceptual disturbance*/
+"F15229" = "1"     /*Other stimulant dependence with intoxication, unspecified*/
+"F1523" = "1"      /*Other stimulant dependence with withdrawal*/
+"F1524" = "1"      /*Other stimulant dependence with stimulant-induced mood disorder*/
+"F15250" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with delusions*/
+"F15251" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with hallucinations*/
+"F15259" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder, unspecified*/
+"F15280" = "1"     /*Other stimulant dependence with stimulant-induced anxiety disorder*/
+"F15281" = "1"     /*Other stimulant dependence with stimulant-induced sexual dysfunction*/
+"F15282" = "1"     /*Other stimulant dependence with stimulant-induced sleep disorder*/
+"F15288" = "1"     /*Other stimulant dependence with other stimulant-induced disorder*/
+"F1529" = "1"      /*Other stimulant dependence with unspecified stimulant-induced disorder*/
+"F1590" = "1"      /*Other stimulant use, unspecified, uncomplicated*/
+"F15920" = "1"     /*Other stimulant use, unspecified with intoxication, uncomplicated*/
+"F15921" = "1"     /*Other stimulant use, unspecified with intoxication delirium*/
+"F15922" = "1"     /*Other stimulant use, unspecified with intoxication with perceptual disturbance*/
+"F15929" = "1"     /*Other stimulant use, unspecified with intoxication, unspecified*/
+"F1593" = "1"      /*Other stimulant use, unspecified with withdrawal*/
+"F1594" = "1"      /*Other stimulant use, unspecified with stimulant-induced mood disorder*/
+"F15950" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with delusions*/
+"F15951" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with hallucinations*/
+"F15959" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder, unspecified*/
+"F15980" = "1"     /*Other stimulant use, unspecified with stimulant-induced anxiety disorder*/
+"F15981" = "1"     /*Other stimulant use, unspecified with stimulant-induced sexual dysfunction*/
+"F15982" = "1"     /*Other stimulant use, unspecified with stimulant-induced sleep disorder*/
+"F15988" = "1"     /*Other stimulant use, unspecified with other stimulant-induced disorder*/
+"F1599" = "1"      /*Other stimulant use, unspecified with unspecified stimulant-induced disorder*/
+"F1610" = "1"      /*Hallucinogen abuse, uncomplicated*/
+"F16120" = "1"     /*Hallucinogen abuse with intoxication, uncomplicated*/
+"F16121" = "1"     /*Hallucinogen abuse with intoxication with delirium*/
+"F16122" = "1"     /*Hallucinogen abuse with intoxication with perceptual disturbance*/
+"F16129" = "1"     /*Hallucinogen abuse with intoxication, unspecified*/
+"F1614" = "1"      /*Hallucinogen abuse with hallucinogen-induced mood disorder*/
+"F16150" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with delusions*/
+"F16151" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16180" = "1"     /*Hallucinogen abuse with hallucinogen-induced anxiety disorder*/
+"F16183" = "1"     /*Hallucinogen abuse with hallucinogen persisting perception disorder (flashbacks)*/
+"F16188" = "1"     /*Hallucinogen abuse with other hallucinogen-induced disorder*/
+"F1619" = "1"      /*Hallucinogen abuse with unspecified hallucinogen-induced disorder*/
+"F1620" = "1"      /*Hallucinogen dependence, uncomplicated*/
+"F16220" = "1"     /*Hallucinogen dependence with intoxication, uncomplicated*/
+"F16221" = "1"     /*Hallucinogen dependence with intoxication with delirium*/
+"F16229" = "1"     /*Hallucinogen dependence with intoxication, unspecified*/
+"F1624" = "1"      /*Hallucinogen dependence with hallucinogen-induced mood disorder*/
+"F16250" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with delusions*/
+"F16251" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16259" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder, unspecified*/
+"F16280" = "1"     /*Hallucinogen dependence with hallucinogen-induced anxiety disorder*/
+"F16283" = "1"     /*Hallucinogen dependence with hallucinogen persisting perception disorder (flashbacks)*/
+"F16288" = "1"     /*Hallucinogen dependence with other hallucinogen-induced disorder*/
+"F1629" = "1"      /*Hallucinogen dependence with unspecified hallucinogen-induced disorder*/
+"F1690" = "1"      /*Hallucinogen use, unspecified, uncomplicated*/
+"F16920" = "1"     /*Hallucinogen use, unspecified with intoxication, uncomplicated*/
+"F16921" = "1"     /*Hallucinogen use, unspecified with intoxication with delirium*/
+"F16929" = "1"     /*Hallucinogen use, unspecified with intoxication, unspecified*/
+"F1694" = "1"      /*Hallucinogen use, unspecified with hallucinogen-induced mood disorder*/
+"F16951" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16959" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder, unspecified*/
+"F16980" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced anxiety disorder*/
+"F16983" = "1"     /*Hallucinogen use, unspecified with hallucinogen persisting perception disorder (flashbacks)*/
+"F16988" = "1"     /*Hallucinogen use, unspecified with other hallucinogen-induced disorder*/
+"F1699" = "1"      /*Hallucinogen use, unspecified with unspecified hallucinogen-induced disorder*/
+"F1810" = "1"      /*Inhalant abuse, uncomplicated*/
+"F18120" = "1"     /*Inhalant abuse with intoxication, uncomplicated*/
+"F18121" = "1"     /*Inhalant abuse with intoxication delirium*/
+"F18129" = "1"     /*Inhalant abuse with intoxication, unspecified*/
+"F1814" = "1"      /*Inhalant abuse with inhalant-induced mood disorder*/
+"F18150" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with delusions*/
+"F18151" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with hallucinations*/
+"F18159" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder, unspecified*/
+"F1817" = "1"      /*Inhalant abuse with inhalant-induced dementia*/
+"F18180" = "1"     /*Inhalant abuse with inhalant-induced anxiety disorder*/
+"F18188" = "1"     /*Inhalant abuse with other inhalant-induced disorder*/
+"F1819" = "1"      /*Inhalant abuse with unspecified inhalant-induced disorder*/
+"F1820" = "1"      /*Inhalant dependence, uncomplicated*/
+"F18220" = "1"     /*Inhalant dependence with intoxication, uncomplicated*/
+"F18221" = "1"     /*Inhalant dependence with intoxication delirium*/
+"F18229" = "1"     /*Inhalant dependence with intoxication, unspecified*/
+"F1824" = "1"      /*Inhalant dependence with inhalant-induced mood disorder*/
+"F18250" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with delusions*/
+"F18251" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with hallucinations*/
+"F18259" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder, unspecified*/
+"F1827" = "1"      /*Inhalant dependence with inhalant-induced dementia*/
+"F18280" = "1"     /*Inhalant dependence with inhalant-induced anxiety disorder*/
+"F18288" = "1"     /*Inhalant dependence with other inhalant-induced disorder*/
+"F1829" = "1"      /*Inhalant dependence with unspecified inhalant-induced disorder*/
+"F1890" = "1"      /*Inhalant use, unspecified, uncomplicated*/
+"F18920" = "1"     /*Inhalant use, unspecified with intoxication, uncomplicated*/
+"F18921" = "1"     /*Inhalant use, unspecified with intoxication with delirium*/
+"F18929" = "1"     /*Inhalant use, unspecified with intoxication, unspecified*/
+"F1894" = "1"      /*Inhalant use, unspecified with inhalant-induced mood disorder*/
+"F18950" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with delusions*/
+"F18951" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with hallucinations*/
+"F18959" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder, unspecified*/
+"F1897" = "1"      /*Inhalant use, unspecified with inhalant-induced persisting dementia*/
+"F18980" = "1"     /*Inhalant use, unspecified with inhalant-induced anxiety disorder*/
+"F18988" = "1"     /*Inhalant use, unspecified with other inhalant-induced disorder*/
+"F1899" = "1"      /*Inhalant use, unspecified with unspecified inhalant-induced disorder*/
+"F1910" = "1"      /*Other psychoactive substance abuse, uncomplicated*/
+"F19120" = "1"     /*Other psychoactive substance abuse with intoxication, uncomplicated*/
+"F19121" = "1"     /*Other psychoactive substance abuse with intoxication delirium*/
+"F19122" = "1"     /*Other psychoactive substance abuse with intoxication with perceptual disturbances*/
+"F19129" = "1"     /*Other psychoactive substance abuse with intoxication, unspecified*/
+"F19130" = "1"     /*Other psychoactive substance abuse with withdrawal, uncomplicated*/
+"F19131" = "1"     /*Other psychoactive substance abuse with withdrawal delirium*/
+"F19139" = "1"     /*Other psychoactive substance abuse with withdrawal, unspecified*/
+"F1914" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced mood disorder*/
+"F19150" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with delusions*/
+"F19151" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19159" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1916" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting amnestic disorder*/
+"F1917" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting dementia*/
+"F19180" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced anxiety disorder*/
+"F19181" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sexual dysfunction*/
+"F19182" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sleep disorder*/
+"F19188" = "1"     /*Other psychoactive substance abuse with other psychoactive substance-induced disorder*/
+"F1919" = "1"      /*Other psychoactive substance abuse with unspecified psychoactive substance-induced disorder*/
+"F1920" = "1"      /*Other psychoactive substance dependence, uncomplicated*/
+"F19220" = "1"     /*Other psychoactive substance dependence with intoxication, uncomplicated*/
+"F19221" = "1"     /*Other psychoactive substance dependence with intoxication delirium*/
+"F19222" = "1"     /*Other psychoactive substance dependence with intoxication with perceptual disturbance*/
+"F19229" = "1"     /*Other psychoactive substance dependence with intoxication, unspecified*/
+"F19230" = "1"     /*Other psychoactive substance dependence with withdrawal, uncomplicated*/
+"F19231" = "1"     /*Other psychoactive substance dependence with withdrawal delirium*/
+"F19232" = "1"     /*Other psychoactive substance dependence with withdrawal with perceptual disturbance*/
+"F19239" = "1"     /*Other psychoactive substance dependence with withdrawal, unspecified*/
+"F1924" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced mood disorder*/
+"F19251" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19259" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1926" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting amnestic disorder*/
+"F1927" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting dementia*/
+"F19280" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced anxiety disorder*/
+"F19281" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sexual dysfunction*/
+"F19282" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sleep disorder*/
+"F19288" = "1"     /*Other psychoactive substance dependence with other psychoactive substance-induced disorder*/
+"F1929" = "1"      /*Other psychoactive substance dependence with unspecified psychoactive substance-induced disorder*/
+"F1990" = "1"      /*Other psychoactive substance use, unspecified, uncomplicated*/
+"F19920" = "1"     /*Other psychoactive substance use, unspecified with intoxication, uncomplicated*/
+"F19921" = "1"     /*Other psychoactive substance use, unspecified with intoxication with delirium*/
+"F19922" = "1"     /*Other psychoactive substance use, unspecified with intoxication with perceptual disturbance*/
+"F19929" = "1"     /*Other psychoactive substance use, unspecified with intoxication, unspecified*/
+"F19930" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, uncomplicated*/
+"F19931" = "1"     /*Other psychoactive substance use, unspecified with withdrawal delirium*/
+"F19932" = "1"     /*Other psychoactive substance use, unspecified with withdrawal with perceptual disturbance*/
+"F19939" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, unspecified*/
+"F1994" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced mood disorder*/
+"F19950" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with delusions*/
+"F19951" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19959" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1996" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting amnestic disorder*/
+"F1997" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting dementia*/
+"F19980" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced anxiety disorder*/
+"F19981" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sexual dysfunction*/
+"F19982" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sleep disorder*/
+"F19988" = "1"     /*Other psychoactive substance use, unspecified with other psychoactive substance-induced disorder*/
+"F1999" = "1"      /*Other psychoactive substance use, unspecified with unspecified psychoactive substance-induced disorder*/
+"F200" = "1"       /*Paranoid schizophrenia*/
+"F201" = "1"       /*Disorganized schizophrenia*/
+"F202" = "1"       /*Catatonic schizophrenia*/
+"F203" = "1"       /*Undifferentiated schizophrenia*/
+"F205" = "1"       /*Residual schizophrenia*/
+"F2081" = "1"      /*Schizophreniform disorder*/
+"F2089" = "1"      /*Other schizophrenia*/
+"F209" = "1"       /*Schizophrenia, unspecified*/
+"F21" = "1"        /*Schizotypal disorder*/
+"F22" = "1"        /*Delusional disorders*/
+"F23" = "1"        /*Brief psychotic disorder*/
+"F24" = "1"        /*Shared psychotic disorder*/
+"F250" = "1"       /*Schizoaffective disorder, bipolar type*/
+"F251" = "1"       /*Schizoaffective disorder, depressive type*/
+"F258" = "1"       /*Other schizoaffective disorders*/
+"F259" = "1"       /*Schizoaffective disorder, unspecified*/
+"F28" = "1"        /*Other psychotic disorder not due to a substance or known physiological condition*/
+"F29" = "1"        /*Unspecified psychosis not due to a substance or known physiological condition*/
+"F3010" = "1"      /*Manic episode without psychotic symptoms, unspecified*/
+"F3011" = "1"      /*Manic episode without psychotic symptoms, mild*/
+"F3012" = "1"      /*Manic episode without psychotic symptoms, moderate*/
+"F3013" = "1"      /*Manic episode, severe, without psychotic symptoms*/
+"F302" = "1"       /*Manic episode, severe with psychotic symptoms*/
+"F303" = "1"       /*Manic episode in partial remission*/
+"F308" = "1"       /*Other manic episodes*/
+"F309" = "1"       /*Manic episode, unspecified*/
+"F310" = "1"       /*Bipolar disorder, current episode hypomanic*/
+"F3110" = "1"      /*Bipolar disorder, current episode manic without psychotic features, unspecified*/
+"F3111" = "1"      /*Bipolar disorder, current episode manic without psychotic features, mild*/
+"F3112" = "1"      /*Bipolar disorder, current episode manic without psychotic features, moderate*/
+"F3113" = "1"      /*Bipolar disorder, current episode manic without psychotic features, severe*/
+"F312" = "1"       /*Bipolar disorder, current episode manic severe with psychotic features*/
+"F3130" = "1"      /*Bipolar disorder, current episode depressed, mild or moderate severity, unspecified*/
+"F3131" = "1"      /*Bipolar disorder, current episode depressed, mild*/
+"F3132" = "1"      /*Bipolar disorder, current episode depressed, moderate*/
+"F314" = "1"       /*Bipolar disorder, current episode depressed, severe, without psychotic features*/
+"F315" = "1"       /*Bipolar disorder, current episode depressed, severe, with psychotic features*/
+"F3160" = "1"      /*Bipolar disorder, current episode mixed, unspecified*/
+"F3161" = "1"      /*Bipolar disorder, current episode mixed, mild*/
+"F3162" = "1"      /*Bipolar disorder, current episode mixed, moderate*/
+"F3163" = "1"      /*Bipolar disorder, current episode mixed, severe, without psychotic features*/
+"F3164" = "1"      /*Bipolar disorder, current episode mixed, severe, with psychotic features*/
+"F3171" = "1"      /*Bipolar disorder, in partial remission, most recent episode hypomanic*/
+"F3173" = "1"      /*Bipolar disorder, in partial remission, most recent episode manic*/
+"F3175" = "1"      /*Bipolar disorder, in partial remission, most recent episode depressed*/
+"F3177" = "1"      /*Bipolar disorder, in partial remission, most recent episode mixed*/
+"F3181" = "1"      /*Bipolar II disorder*/
+"F3189" = "1"      /*Other bipolar disorder*/
+"F319" = "1"       /*Bipolar disorder, unspecified*/
+"F320" = "1"       /*Major depressive disorder, single episode, mild*/
+"F321" = "1"       /*Major depressive disorder, single episode, moderate*/
+"F322" = "1"       /*Major depressive disorder, single episode, severe without psychotic features*/
+"F323" = "1"       /*Major depressive disorder, single episode, severe with psychotic features*/
+"F324" = "1"       /*Major depressive disorder, single episode, in partial remission*/
+"F3289" = "1"      /*Other specified depressive episodes*/
+"F329" = "1"       /*Major depressive disorder, single episode, unspecified*/
+"F32A" = "1"       /*Depression, unspecified*/
+"F330" = "1"       /*Major depressive disorder, recurrent, mild*/
+"F331" = "1"       /*Major depressive disorder, recurrent, moderate*/
+"F332" = "1"       /*Major depressive disorder, recurrent severe without psychotic features*/
+"F333" = "1"       /*Major depressive disorder, recurrent, severe with psychotic symptoms*/
+"F3341" = "1"      /*Major depressive disorder, recurrent, in partial remission*/
+"F338" = "1"       /*Other recurrent depressive disorders*/
+"F339" = "1"       /*Major depressive disorder, recurrent, unspecified*/
+"F340" = "1"       /*Cyclothymic disorder*/
+"F341" = "1"       /*Dysthymic disorder*/
+"F3481" = "1"      /*Disruptive mood dysregulation disorder*/
+"F3489" = "1"      /*Other specified persistent mood disorders*/
+"F349" = "1"       /*Persistent mood [affective] disorder, unspecified*/
+"F39" = "1"        /*Unspecified mood [affective] disorder*/
+"F4000" = "1"      /*Agoraphobia, unspecified*/
+"F4001" = "1"      /*Agoraphobia with panic disorder*/
+"F4002" = "1"      /*Agoraphobia without panic disorder*/
+"F4010" = "1"      /*Social phobia, unspecified*/
+"F4011" = "1"      /*Social phobia, generalized*/
+"F40210" = "1"     /*Arachnophobia*/
+"F40218" = "1"     /*Other animal type phobia*/
+"F40220" = "1"     /*Fear of thunderstorms*/
+"F40228" = "1"     /*Other natural environment type phobia*/
+"F40230" = "1"     /*Fear of blood*/
+"F40231" = "1"     /*Fear of injections and transfusions*/
+"F40232" = "1"     /*Fear of other medical care*/
+"F40233" = "1"     /*Fear of injury*/
+"F40240" = "1"     /*Claustrophobia*/
+"F40241" = "1"     /*Acrophobia*/
+"F40242" = "1"     /*Fear of bridges*/
+"F40243" = "1"     /*Fear of flying*/
+"F40248" = "1"     /*Other situational type phobia*/
+"F40290" = "1"     /*Androphobia*/
+"F40291" = "1"     /*Gynephobia*/
+"F40298" = "1"     /*Other specified phobia*/
+"F408" = "1"       /*Other phobic anxiety disorders*/
+"F409" = "1"       /*Phobic anxiety disorder, unspecified*/
+"F410" = "1"       /*Panic disorder [episodic paroxysmal anxiety]*/
+"F411" = "1"       /*Generalized anxiety disorder*/
+"F413" = "1"       /*Other mixed anxiety disorders*/
+"F418" = "1"       /*Other specified anxiety disorders*/
+"F419" = "1"       /*Anxiety disorder, unspecified*/
+"F422" = "1"       /*Mixed obsessional thoughts and acts*/
+"F423" = "1"       /*Hoarding disorder*/
+"F424" = "1"       /*Excoriation (skin-picking) disorder*/
+"F428" = "1"       /*Other obsessive-compulsive disorder*/
+"F429" = "1"       /*Obsessive-compulsive disorder, unspecified*/
+"F4310" = "1"      /*Post-traumatic stress disorder, unspecified*/
+"F4311" = "1"      /*Post-traumatic stress disorder, acute*/
+"F4312" = "1"      /*Post-traumatic stress disorder, chronic*/
+"F4381" = "1"      /*Prolonged grief disorder*/
+"F440" = "1"       /*Dissociative amnesia*/
+"F441" = "1"       /*Dissociative fugue*/
+"F442" = "1"       /*Dissociative stupor*/
+"F444" = "1"       /*Conversion disorder with motor symptom or deficit*/
+"F445" = "1"       /*Conversion disorder with seizures or convulsions*/
+"F446" = "1"       /*Conversion disorder with sensory symptom or deficit*/
+"F447" = "1"       /*Conversion disorder with mixed symptom presentation*/
+"F4481" = "1"      /*Dissociative identity disorder*/
+"F4489" = "1"      /*Other dissociative and conversion disorders*/
+"F449" = "1"       /*Dissociative and conversion disorder, unspecified*/
+"F450" = "1"       /*Somatization disorder*/
+"F451" = "1"       /*Undifferentiated somatoform disorder*/
+"F4520" = "1"      /*Hypochondriacal disorder, unspecified*/
+"F4521" = "1"      /*Hypochondriasis*/
+"F4522" = "1"      /*Body dysmorphic disorder*/
+"F4529" = "1"      /*Other hypochondriacal disorders*/
+"F4541" = "1"      /*Pain disorder exclusively related to psychological factors*/
+"F4542" = "1"      /*Pain disorder with related psychological factors*/
+"F458" = "1"       /*Other somatoform disorders*/
+"F459" = "1"       /*Somatoform disorder, unspecified*/
+"F481" = "1"       /*Depersonalization-derealization syndrome*/
+"F482" = "1"       /*Pseudobulbar affect*/
+"F488" = "1"       /*Other specified nonpsychotic mental disorders*/
+"F489" = "1"       /*Nonpsychotic mental disorder*/
+"F5000" = "1"      /*Anorexia nervosa, unspecified*/
+"F50010" = "1"     /*Anorexia nervosa, restricting type, mild*/
+"F50011" = "1"     /*Anorexia nervosa, restricting type, moderate*/
+"F50012" = "1"     /*Anorexia nervosa, restricting type, severe*/
+"F50013" = "1"     /*Anorexia nervosa, restricting type, extreme*/
+"F50019" = "1"     /*Anorexia nervosa, restricting type, unspecified*/
+"F50020" = "1"     /*Anorexia nervosa, binge eating/purging type, mild*/
+"F50021" = "1"     /*Anorexia nervosa, binge eating/purging type, moderate*/
+"F50022" = "1"     /*Anorexia nervosa, binge eating/purging type, severe*/
+"F50023" = "1"     /*Anorexia nervosa, binge eating/purging type, extreme*/
+"F50029" = "1"     /*Anorexia nervosa, binge eating/purging type, unspecified*/
+"F5020" = "1"      /*Bulimia nervosa, unspecified*/
+"F5021" = "1"      /*Bulimia nervosa, mild*/
+"F5022" = "1"      /*Bulimia nervosa, moderate*/
+"F5023" = "1"      /*Bulimia nervosa, severe*/
+"F5024" = "1"      /*Bulimia nervosa, extreme*/
+"F50810" = "1"     /*Binge eating disorder, mild*/
+"F50811" = "1"     /*Binge eating disorder, moderate*/
+"F50812" = "1"     /*Binge eating disorder, severe*/
+"F50813" = "1"     /*Binge eating disorder, extreme*/
+"F50819" = "1"     /*Binge eating disorder, unspecified*/
+"F5082" = "1"      /*Avoidant/restrictive food intake disorder*/
+"F5089" = "1"      /*Other specified eating disorder*/
+"F509" = "1"       /*Eating disorder, unspecified*/
+"F5105" = "1"      /*Insomnia due to other mental disorder*/
+"F5113" = "1"      /*Hypersomnia due to other mental disorder*/
+"F530" = "1"       /*Postpartum depression*/
+"F531" = "1"       /*Puerperal psychosis*/
+"F54" = "1"        /*Psychological and behavioral factors associated with disorders or diseases classified elsewhere*/
+"F59" = "1"        /*Unspecified behavioral syndromes associated with physiological disturbances and physical factors*/
+"O99315" = "1"     /*Alcohol use complicating the puerperium*/
+"O99344" = "1"     /*Other mental disorders complicating childbirth*/
+"O99345" = "1"     /*Other mental disorders complicating the puerperium*/
+"R457" = "1"       /*State of emotional shocl and stress*/
+"R45850" = "1"     /*Homicidal ideations*/
+"R45851" = "1"     /*Suicidal ideations*/
+"R4588" = "1"      /*Nonsuicidal self-harm*/
+"R4681" = "1"      /*Obsessive-compulsive behavior*/
+"T1491" = "1"      /*Suicide attempt*/
+"T1491XA" = "1"    /*Suicide attempt, initial encounter*/
+"T360X2A" = "1"    /*Poisoning by penicillins, intentional self-harm, initial encounter*/
+"T361X2A" = "1"    /*Poisoning by cephalosporins and other beta-lactam antibiotics, intentional self-harm, initial encounter*/
+"T362X2A" = "1"    /*Poisoning by chloramphenicol group, intentional self-harm, initial encounter*/
+"T363X2A" = "1"    /*Poisoning by macrolides, intentional self-harm, initial encounter*/
+"T364X2A" = "1"    /*Poisoning by tetracyclines, intentional self-harm, initial encounter*/
+"T365X2A" = "1"    /*Poisoning by aminoglycosides, intentional self-harm, initial encounter*/
+"T366X2A" = "1"    /*Poisoning by rifampicins, intentional self-harm, initial encounter*/
+"T367X2A" = "1"    /*Poisoning by antifungal antibiotics, systemically used, intentional self-harm, initial encounter*/
+"T368X2A" = "1"    /*Poisoning by other systemic antibiotics, intentional self-harm, initial encounter*/
+"T3692XA" = "1"    /*Poisoning by unspecified systemic antibiotic, intentional self-harm, initial encounter*/
+"T370X2A" = "1"    /*Poisoning by sulfonamides, intentional self-harm, initial encounter*/
+"T371X2A" = "1"    /*Poisoning by antimycobacterial drugs, intentional self-harm, initial encounter*/
+"T372X2A" = "1"    /*Poisoning by antimalarials and drugs acting on other blood protozoa, intentional self-harm, initial encounter*/
+"T373X2A" = "1"    /*Poisoning by other antiprotozoal drugs, intentional self-harm, initial encounter*/
+"T374X2A" = "1"    /*Poisoning by anthelminthics, intentional self-harm, initial encounter*/
+"T375X2A" = "1"    /*Poisoning by antiviral drugs, intentional self-harm, initial encounter*/
+"T378X2A" = "1"    /*Poisoning by other specified systemic anti-infectives and antiparasitics, intentional self-harm, initial encounter*/
+"T3792XA" = "1"    /*Poisoning by unspecified systemic anti-infective and antiparasitics, intentional self-harm, initial encounter*/
+"T380X2A" = "1"    /*Poisoning by glucocorticoids and synthetic analogues, intentional self-harm, initial encounter*/
+"T381X2A" = "1"    /*Poisoning by thyroid hormones and substitutes, intentional self-harm, initial encounter*/
+"T382X2A" = "1"    /*Poisoning by antithyroid drugs, intentional self-harm, initial encounter*/
+"T383X2A" = "1"    /*Poisoning by insulin and oral hypoglycemic [antidiabetic] drugs, intentional self-harm, initial encounter*/
+"T384X2A" = "1"    /*Poisoning by oral contraceptives, intentional self-harm, initial encounter*/
+"T385X2A" = "1"    /*Poisoning by other estrogens and progestogens, intentional self-harm, initial encounter*/
+"T386X2A" = "1"    /*Poisoning by antigonadotrophins, antiestrogens, antiandrogens, not elsewhere classified, intentional self-harm, initial encounter*/
+"T387X2A" = "1"    /*Poisoning by androgens and anabolic congeners, intentional self-harm, initial encounter*/
+"T38802A" = "1"    /*Poisoning by unspecified hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38812A" = "1"    /*Poisoning by anterior pituitary [adenohypophyseal] hormones, intentional self-harm, initial encounter*/
+"T38892A" = "1"    /*Poisoning by other hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38902A" = "1"    /*Poisoning by unspecified hormone antagonists, intentional self-harm, initial encounter*/
+"T38992A" = "1"    /*Poisoning by other hormone antagonists, intentional self-harm, initial encounter*/
+"T39011A" = "1"    /*Poisoning by aspirin, accidental (unintentional), initial encounter*/
+"T39012A" = "1"    /*Poisoning by aspirin, intentional self-harm, initial encounter*/
+"T39014A" = "1"    /*Poisoning by aspirin, undetermined, initial encounter*/
+"T39092A" = "1"    /*Poisoning by salicylates, intentional self-harm, initial encounter*/
+"T391X2A" = "1"    /*Poisoning by 4-Aminophenol derivatives, intentional self-harm, initial encounter*/
+"T392X2A" = "1"    /*Poisoning by pyrazolone derivatives, intentional self-harm, initial encounter*/
+"T39312A" = "1"    /*Poisoning by propionic acid derivatives, intentional self-harm, initial encounter*/
+"T39391A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], accidental (unintentional), initial encounter*/
+"T39392A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], intentional self-harm, initial encounter*/
+"T39394A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], undetermined, initial encounter*/
+"T394X2A" = "1"    /*Poisoning by antirheumatics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T398X1A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, accidental (unintentional), initial encounter*/
+"T398X2A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T3992XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, intentional self-harm, initial encounter*/
+"T3994XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, undetermined, initial encounter*/
+"T400X1A" = "1"    /*Poisoning by opium, accidental (unintentional), initial encounter*/
+"T400X2A" = "1"    /*Poisoning by opium, intentional self-harm, initial encounter*/
+"T400X4A" = "1"    /*Poisoning by opium, undetermined, initial encounter*/
+"T401X1A" = "1"    /*Poisoning by heroin, accidental (unintentional), initial encounter*/
+"T401X2A" = "1"    /*Poisoning by heroin, intentional self-harm, initial encounter*/
+"T401X4A" = "1"    /*Poisoning by heroin, undetermined, initial encounter*/
+"T402X1A" = "1"    /*Poisoning by other opioids, accidental (unintentional), initial encounter*/
+"T402X2A" = "1"    /*Poisoning by other opioids, intentional self-harm, initial encounter*/
+"T402X4A" = "1"    /*Poisoning by other opioids, undetermined, initial encounter*/
+"T403X1A" = "1"    /*Poisoning by methadone, accidental (unintentional), initial encounter*/
+"T403X2A" = "1"    /*Poisoning by methadone, intentional self-harm, initial encounter*/
+"T403X4A" = "1"    /*Poisoning by methadone, undetermined, initial encounter*/
+"T40411A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), initial encounter*/
+"T40412A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, intentional self-harm, initial encounter*/
+"T40414A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, undetermined, initial encounter*/
+"T40421A" = "1"    /*Poisoning by tramadol, accidental (unintentional), initial encounter*/
+"T40422A" = "1"    /*Poisoning by tramadol, intentional self-harm, initial encounter*/
+"T40424A" = "1"    /*Poisoning by tramadol, undetermined, initial encounter*/
+"T40491A" = "1"    /*Poisoning by other synthetic narcotics, accidental (unintentional), initial encounter*/
+"T40492A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T40494A" = "1"    /*Poisoning by other synthetic narcotics, undetermined, initial encounter*/
+"T404X2A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T405X1A" = "1"    /*Poisoning by cocaine, accidental (unintentional), initial encounter*/
+"T405X2A" = "1"    /*Poisoning by cocaine, intentional self-harm, initial encounter*/
+"T405X4A" = "1"    /*Poisoning by cocaine, undetermined, initial encounter*/
+"T40601A" = "1"    /*Poisoning by unspecified narcotics, accidental (unintentional), initial encounter*/
+"T40602A" = "1"    /*Poisoning by unspecified narcotics, intentional self-harm, initial encounter*/
+"T40604A" = "1"    /*Poisoning by unspecified narcotics, undetermined, initial encounter*/
+"T40691A" = "1"    /*Poisoning by other narcotics, accidental (unintentional), initial encounter*/
+"T40692A" = "1"    /*Poisoning by other narcotics, intentional self-harm, initial encounter*/
+"T40694A" = "1"    /*Poisoning by other narcotics, undetermined, initial encounter*/
+"T40711A" = "1"    /*Poisoning by cannabis, accidental (unintentional), initial encounter*/
+"T40712A" = "1"    /*Poisoning by cannabis, intentional self-harm, initial encounter*/
+"T40714A" = "1"    /*Poisoning by cannabis, undetermined, initial encounter*/
+"T40721A" = "1"    /*Poisoning by synthetic cannabinoids, accidental (unintentional), initial encounter*/
+"T40722A" = "1"    /*Poisoning by synthetic cannabinoids, intentional self-harm, initial encounter*/
+"T40724A" = "1"    /*Poisoning by synthetic cannabinoids, undetermined, initial encounter*/
+"T407X2A" = "1"    /*Poisoning by cannabis (derivatives), intentional self-harm, initial encounter*/
+"T408X1A" = "1"    /*Poisoning by lysergide [LSD], accidental (unintentional), initial encounter*/
+"T408X2A" = "1"    /*Poisoning by lysergide [LSD], intentional self-harm, initial encounter*/
+"T408X4A" = "1"    /*Poisoning by lysergide [LSD], undetermined, initial encounter*/
+"T40901A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40902A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T40904A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T40991A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40992A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T40994A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T410X1A" = "1"    /*Poisoning by inhaled anesthetics, accidental (unintentional), initial encounter*/
+"T410X2A" = "1"    /*Poisoning by inhaled anesthetics, intentional self-harm, initial encounter*/
+"T411X1A" = "1"    /*Poisoning by intravenous anesthetics, accidental (unintentional), initial encounter*/
+"T411X2A" = "1"    /*Poisoning by intravenous anesthetics, intentional self-harm, initial encounter*/
+"T41201A" = "1"    /*Poisoning by unspecified general anesthetics, accidental (unintentional), initial encounter*/
+"T41202A" = "1"    /*Poisoning by unspecified general anesthetics, intentional self-harm, initial encounter*/
+"T41291A" = "1"    /*Poisoning by other general anesthetics, accidental (unintentional), initial encounter*/
+"T41292A" = "1"    /*Poisoning by other general anesthetics, intentional self-harm, initial encounter*/
+"T413X1A" = "1"    /*Poisoning by local anesthetics, accidental (unintentional), initial encounter*/
+"T413X2A" = "1"    /*Poisoning by local anesthetics, intentional self-harm, initial encounter*/
+"T4142XA" = "1"    /*Poisoning by unspecified anesthetic, intentional self-harm, initial encounter*/
+"T415X2A" = "1"    /*Poisoning by therapeutic gases, intentional self-harm, initial encounter*/
+"T420X2A" = "1"    /*Poisoning by hydantoin derivatives, intentional self-harm, initial encounter*/
+"T421X2A" = "1"    /*Poisoning by iminostilbenes, intentional self-harm, initial encounter*/
+"T422X2A" = "1"    /*Poisoning by succinimides and oxazolidinediones, intentional self-harm, initial encounter*/
+"T423X1A" = "1"    /*Poisoning by barbiturates, accidental (unintentional), initial encounter*/
+"T423X2A" = "1"    /*Poisoning by barbiturates, intentional self-harm, initial encounter*/
+"T423X4A" = "1"    /*Poisoning by barbiturates, undetermined, initial encounter*/
+"T424X1A" = "1"    /*Poisoning by benzodiazepines, accidental (unintentional), initial encounter*/
+"T424X2A" = "1"    /*Poisoning by benzodiazepines, intentional self-harm, initial encounter*/
+"T424X4A" = "1"    /*Poisoning by benzodiazepines, undetermined, initial encounter*/
+"T425X2A" = "1"    /*Poisoning by mixed antiepileptics, intentional self-harm, initial encounter*/
+"T426X2A" = "1"    /*Poisoning by other antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T4272XA" = "1"    /*Poisoning by unspecified antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T428X2A" = "1"    /*Poisoning by antiparkinsonism drugs and other central muscle-tone depressants, intentional self-harm, initial encounter*/
+"T43011A" = "1"    /*Poisoning by tricyclic antidepressants, accidental (unintentional), initial encounter*/
+"T43012A" = "1"    /*Poisoning by tricyclic antidepressants, intentional self-harm, initial encounter*/
+"T43014A" = "1"    /*Poisoning by tricyclic antidepressants, undetermined, initial encounter*/
+"T43021A" = "1"    /*Poisoning by tetracyclic antidepressants, accidental (unintentional), initial encounter*/
+"T43022A" = "1"    /*Poisoning by tetracyclic antidepressants, intentional self-harm, initial encounter*/
+"T43024A" = "1"    /*Poisoning by tetracyclic antidepressants, undetermined, initial encounter*/
+"T431X1A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, accidental (unintentional), initial encounter*/
+"T431X2A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, intentional self-harm, initial encounter*/
+"T431X4A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, undetermined, initial encounter*/
+"T43201A" = "1"    /*Poisoning by unspecified antidepressants, accidental (unintentional), initial encounter*/
+"T43202A" = "1"    /*Poisoning by unspecified antidepressants, intentional self-harm, initial encounter*/
+"T43204A" = "1"    /*Poisoning by unspecified antidepressants, undetermined, initial encounter*/
+"T43211A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43212A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43214A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, undetermined, initial encounter*/
+"T43221A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43222A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43224A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, undetermined, initial encounter*/
+"T43291A" = "1"    /*Poisoning by other antidepressants, accidental (unintentional), initial encounter*/
+"T43292A" = "1"    /*Poisoning by other antidepressants, intentional self-harm, initial encounter*/
+"T43294A" = "1"    /*Poisoning by other antidepressants, undetermined, initial encounter*/
+"T433X2A" = "1"    /*Poisoning by phenothiazine antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T434X2A" = "1"    /*Poisoning by butyrophenone and thiothixene neuroleptics, intentional self-harm, initial encounter*/
+"T43502A" = "1"    /*Poisoning by unspecified antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43592A" = "1"    /*Poisoning by other antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43601A" = "1"    /*Poisoning by unspecified psychostimulants, accidental (unintentional), initial encounter*/
+"T43602A" = "1"    /*Poisoning by unspecified psychostimulants, intentional self-harm, initial encounter*/
+"T43612A" = "1"    /*Poisoning by caffeine, intentional self-harm, initial encounter*/
+"T43621A" = "1"    /*Poisoning by amphetamines, accidental (unintentional), initial encounter*/
+"T43622A" = "1"    /*Poisoning by amphetamines, intentional self-harm, initial encounter*/
+"T43623A" = "1"    /*Poisoning by amphetamines, assault, initial encounter*/
+"T43624A" = "1"    /*Poisoning by amphetamines, undetermined, initial encounter*/
+"T43631A" = "1"    /*Poisoning by methylphenidate, accidental (unintentional), initial encounter*/
+"T43632A" = "1"    /*Poisoning by methylphenidate, intentional self-harm, initial encounter*/
+"T43641A" = "1"    /*Poisoning by ecstasy, accidental (unintentional), initial encounter*/
+"T43642A" = "1"    /*Poisoning by ecstasy, intentional self-harm, initial encounter*/
+"T43644A" = "1"    /*Poisoning by ecstasy, undetermined, initial encounter*/
+"T43651A" = "1"    /*Poisoning by methamphetamines accidental (unintentional), initial encounter*/
+"T43654A" = "1"    /*Poisoning by methamphetamines, undetermined, initial encounter*/
+"T43691A" = "1"    /*Poisoning by other psychostimulants, accidental (unintentional), initial encounter*/
+"T43692A" = "1"    /*Poisoning by other psychostimulants, intentional self-harm, initial encounter*/
+"T43694A" = "1"    /*Poisoning by other psychostimulants, undetermined, initial encounter*/
+"T438X1A" = "1"    /*Poisoning by other psychotropic drugs, accidental (unintentional), initial encounter*/
+"T438X2A" = "1"    /*Poisoning by other psychotropic drugs, intentional self-harm, initial encounter*/
+"T438X4A" = "1"    /*Poisoning by other psychotropic drugs, undetermined, initial encounter*/
+"T4391XA" = "1"    /*Poisoning by unspecified psychotropic drug, accidental (unintentional), initial encounter*/
+"T4392XA" = "1"    /*Poisoning by unspecified psychotropic drug, intentional self-harm, initial encounter*/
+"T4394XA" = "1"    /*Poisoning by unspecified psychotropic drug, undetermined, initial encounter*/
+"T440X2A" = "1"    /*Poisoning by anticholinesterase agents, intentional self-harm, initial encounter*/
+"T441X2A" = "1"    /*Poisoning by other parasympathomimetics [cholinergics], intentional self-harm, initial encounter*/
+"T442X2A" = "1"    /*Poisoning by ganglionic blocking drugs, intentional self-harm, initial encounter*/
+"T443X2A" = "1"    /*Poisoning by other parasympatholytics [anticholinergics and antimuscarinics] and spasmolytics, intentional self-harm, initial encounter*/
+"T444X2A" = "1"    /*Poisoning by predominantly alpha-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T445X2A" = "1"    /*Poisoning by predominantly beta-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T446X2A" = "1"    /*Poisoning by alpha-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T447X2A" = "1"    /*Poisoning by beta-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T448X2A" = "1"    /*Poisoning by centrally-acting and adrenergic-neuron-blocking agents, intentional self-harm, initial encounter*/
+"T44902A" = "1"    /*Poisoning by unspecified drugs primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T44992A" = "1"    /*Poisoning by other drug primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T450X2A" = "1"    /*Poisoning by antiallergic and antiemetic drugs, intentional self-harm, initial encounter*/
+"T451X2A" = "1"    /*Poisoning by antineoplastic and immunosuppressive drugs, intentional self-harm, initial encounter*/
+"T452X2A" = "1"    /*Poisoning by vitamins, intentional self-harm, initial encounter*/
+"T453X2A" = "1"    /*Poisoning by enzymes, intentional self-harm, initial encounter*/
+"T454X2A" = "1"    /*Poisoning by iron and its compounds, intentional self-harm, initial encounter*/
+"T45512A" = "1"    /*Poisoning by anticoagulants, intentional self-harm, initial encounter*/
+"T45522A" = "1"    /*Poisoning by antithrombotic drugs, intentional self-harm, initial encounter*/
+"T45602A" = "1"    /*Poisoning by unspecified fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T45612A" = "1"    /*Poisoning by thrombolytic drug, intentional self-harm, initial encounter*/
+"T45622A" = "1"    /*Poisoning by hemostatic drug, intentional self-harm, initial encounter*/
+"T45692A" = "1"    /*Poisoning by other fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T457X2A" = "1"    /*Poisoning by anticoagulant antagonists, vitamin K and other coagulants, intentional self-harm, initial encounter*/
+"T458X2A" = "1"    /*Poisoning by other primarily systemic and hematological agents, intentional self-harm, initial encounter*/
+"T4592XA" = "1"    /*Poisoning by unspecified primarily systemic and hematological agent, intentional self-harm, initial encounter*/
+"T460X2A" = "1"    /*Poisoning by cardiac-stimulant glycosides and drugs of similar action, intentional self-harm, initial encounter*/
+"T461X2A" = "1"    /*Poisoning by calcium-channel blockers, intentional self-harm, initial encounter*/
+"T462X2A" = "1"    /*Poisoning by other antidysrhythmic drugs, intentional self-harm, initial encounter*/
+"T463X2A" = "1"    /*Poisoning by coronary vasodilators, intentional self-harm, initial encounter*/
+"T464X2A" = "1"    /*Poisoning by angiotensin-converting-enzyme inhibitors, intentional self-harm, initial encounter*/
+"T465X2A" = "1"    /*Poisoning by other antihypertensive drugs, intentional self-harm, initial encounter*/
+"T466X2A" = "1"    /*Poisoning by antihyperlipidemic and antiarteriosclerotic drugs, intentional self-harm, initial encounter*/
+"T467X2A" = "1"    /*Poisoning by peripheral vasodilators, intentional self-harm, initial encounter*/
+"T468X2A" = "1"    /*Poisoning by antivaricose drugs, including sclerosing agents, intentional self-harm, initial encounter*/
+"T46902A" = "1"    /*Poisoning by unspecified agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T46992A" = "1"    /*Poisoning by other agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T470X2A" = "1"    /*Poisoning by histamine H2-receptor blockers, intentional self-harm, initial encounter*/
+"T471X2A" = "1"    /*Poisoning by other antacids and anti-gastric-secretion drugs, intentional self-harm, initial encounter*/
+"T472X2A" = "1"    /*Poisoning by stimulant laxatives, intentional self-harm, initial encounter*/
+"T473X2A" = "1"    /*Poisoning by saline and osmotic laxatives, intentional self-harm, initial encounter*/
+"T474X2A" = "1"    /*Poisoning by other laxatives, intentional self-harm, initial encounter*/
+"T475X2A" = "1"    /*Poisoning by digestants, intentional self-harm, initial encounter*/
+"T476X2A" = "1"    /*Poisoning by antidiarrheal drugs, intentional self-harm, initial encounter*/
+"T477X2A" = "1"    /*Poisoning by emetics, intentional self-harm, initial encounter*/
+"T478X2A" = "1"    /*Poisoning by other agents primarily affecting gastrointestinal system, intentional self-harm, initial encounter*/
+"T4792XA" = "1"    /*Poisoning by unspecified agents primarily affecting the gastrointestinal system, intentional self-harm, initial encounter*/
+"T480X2A" = "1"    /*Poisoning by oxytocic drugs, intentional self-harm, initial encounter*/
+"T481X2A" = "1"    /*Poisoning by skeletal muscle relaxants [neuromuscular blocking agents], intentional self-harm, initial encounter*/
+"T48201A" = "1"    /*Poisoning by unspecified drugs acting on muscles, accidental (unintentional), initial encounter*/
+"T48202A" = "1"    /*Poisoning by unspecified drugs acting on muscles, intentional self-harm, initial encounter*/
+"T48291A" = "1"    /*Poisoning by other drugs acting on muscles, accidental (unintentional), initial encounter*/
+"T48292A" = "1"    /*Poisoning by other drugs acting on muscles, intentional self-harm, initial encounter*/
+"T483X2A" = "1"    /*Poisoning by antitussives, intentional self-harm, initial encounter*/
+"T484X2A" = "1"    /*Poisoning by expectorants, intentional self-harm, initial encounter*/
+"T485X2A" = "1"    /*Poisoning by other anti-common-cold drugs, intentional self-harm, initial encounter*/
+"T486X2A" = "1"    /*Poisoning by antiasthmatics, intentional self-harm, initial encounter*/
+"T48902A" = "1"    /*Poisoning by unspecified agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T48992A" = "1"    /*Poisoning by other agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T490X2A" = "1"    /*Poisoning by local antifungal, anti-infective and anti-inflammatory drugs, intentional self-harm, initial encounter*/
+"T491X2A" = "1"    /*Poisoning by antipruritics, intentional self-harm, initial encounter*/
+"T492X2A" = "1"    /*Poisoning by local astringents and local detergents, intentional self-harm, initial encounter*/
+"T493X2A" = "1"    /*Poisoning by emollients, demulcents and protectants, intentional self-harm, initial encounter*/
+"T494X2A" = "1"    /*Poisoning by keratolytics, keratoplastics, and other hair treatment drugs and preparations, intentional self-harm, initial encounter*/
+"T495X2A" = "1"    /*Poisoning by ophthalmological drugs and preparations, intentional self-harm, initial encounter*/
+"T496X2A" = "1"    /*Poisoning by otorhinolaryngological drugs and preparations, intentional self-harm, initial encounter*/
+"T497X2A" = "1"    /*Poisoning by dental drugs, topically applied, intentional self-harm, initial encounter*/
+"T498X2A" = "1"    /*Poisoning by other topical agents, intentional self-harm, initial encounter*/
+"T4992XA" = "1"    /*Poisoning by unspecified topical agent, intentional self-harm, initial encounter*/
+"T500X2A" = "1"    /*Poisoning by mineralocorticoids and their antagonists, intentional self-harm, initial encounter*/
+"T501X2A" = "1"    /*Poisoning by loop [high-ceiling] diuretics, intentional self-harm, initial encounter*/
+"T502X2A" = "1"    /*Poisoning by carbonic-anhydrase inhibitors, benzothiadiazides and other diuretics, intentional self-harm, initial encounter*/
+"T503X2A" = "1"    /*Poisoning by electrolytic, caloric and water-balance agents, intentional self-harm, initial encounter*/
+"T504X2A" = "1"    /*Poisoning by drugs affecting uric acid metabolism, intentional self-harm, initial encounter*/
+"T505X2A" = "1"    /*Poisoning by appetite depressants, intentional self-harm, initial encounter*/
+"T506X2A" = "1"    /*Poisoning by antidotes and chelating agents, intentional self-harm, initial encounter*/
+"T507X2A" = "1"    /*Poisoning by analeptics and opioid receptor antagonists, intentional self-harm, initial encounter*/
+"T508X2A" = "1"    /*Poisoning by diagnostic agents, intentional self-harm, initial encounter*/
+"T50902A" = "1"    /*Poisoning by unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50912A" = "1"    /*Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50992A" = "1"    /*Poisoning by other drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50A12A" = "1"    /*Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm, initial encounter*/
+"T50A22A" = "1"    /*Poisoning by mixed bacterial vaccines without a pertussis component, intentional self-harm, initial encounter*/
+"T50A92A" = "1"    /*Poisoning by other bacterial vaccines, intentional self-harm, initial encounter*/
+"T50B12A" = "1"    /*Poisoning by smallpox vaccines, intentional self-harm, initial encounter*/
+"T50B92A" = "1"    /*Poisoning by other viral vaccines, intentional self-harm, initial encounter*/
+"T50Z12A" = "1"    /*Poisoning by immunoglobulin, intentional self-harm, initial encounter*/
+"T50Z92A" = "1"    /*Poisoning by other vaccines and biological substances, intentional self-harm, initial encounter*/
+"T510X2A" = "1"    /*Toxic effect of ethanol, intentional self-harm, initial encounter*/
+"T511X2A" = "1"    /*Toxic effect of methanol, intentional self-harm, initial encounter*/
+"T512X2A" = "1"    /*Toxic effect of 2-Propanol, intentional self-harm, initial encounter*/
+"T513X2A" = "1"    /*Toxic effect of fusel oil, intentional self-harm, initial encounter*/
+"T518X2A" = "1"    /*Toxic effect of other alcohols, intentional self-harm, initial encounter*/
+"T5192XA" = "1"    /*Toxic effect of unspecified alcohol, intentional self-harm, initial encounter*/
+"T520X2A" = "1"    /*Toxic effect of petroleum products, intentional self-harm, initial encounter*/
+"T521X2A" = "1"    /*Toxic effect of benzene, intentional self-harm, initial encounter*/
+"T522X2A" = "1"    /*Toxic effect of homologues of benzene, intentional self-harm, initial encounter*/
+"T523X2A" = "1"    /*Toxic effect of glycols, intentional self-harm, initial encounter*/
+"T524X2A" = "1"    /*Toxic effect of ketones, intentional self-harm, initial encounter*/
+"T528X2A" = "1"    /*Toxic effect of other organic solvents, intentional self-harm, initial encounter*/
+"T5292XA" = "1"    /*Toxic effect of unspecified organic solvent, intentional self-harm, initial encounter*/
+"T530X2A" = "1"    /*Toxic effect of carbon tetrachloride, intentional self-harm, initial encounter*/
+"T531X2A" = "1"    /*Toxic effect of chloroform, intentional self-harm, initial encounter*/
+"T532X2A" = "1"    /*Toxic effect of trichloroethylene, intentional self-harm, initial encounter*/
+"T533X2A" = "1"    /*Toxic effect of tetrachloroethylene, intentional self-harm, initial encounter*/
+"T534X2A" = "1"    /*Toxic effect of dichloromethane, intentional self-harm, initial encounter*/
+"T535X2A" = "1"    /*Toxic effect of chlorofluorocarbons, intentional self-harm, initial encounter*/
+"T536X2A" = "1"    /*Toxic effect of other halogen derivatives of aliphatic hydrocarbons, intentional self-harm, initial encounter*/
+"T537X2A" = "1"    /*Toxic effect of other halogen derivatives of aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T5392XA" = "1"    /*Toxic effect of unspecified halogen derivatives of aliphatic and aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T540X2A" = "1"    /*Toxic effect of phenol and phenol homologues, intentional self-harm, initial encounter*/
+"T541X2A" = "1"    /*Toxic effect of other corrosive organic compounds, intentional self-harm, initial encounter*/
+"T542X2A" = "1"    /*Toxic effect of corrosive acids and acid-like substances, intentional self-harm, initial encounter*/
+"T543X2A" = "1"    /*Toxic effect of corrosive alkalis and alkali-like substances, intentional self-harm, initial encounter*/
+"T5492XA" = "1"    /*Toxic effect of unspecified corrosive substance, intentional self-harm, initial encounter*/
+"T550X2A" = "1"    /*Toxic effect of soaps, intentional self-harm, initial encounter*/
+"T551X2A" = "1"    /*Toxic effect of detergents, intentional self-harm, initial encounter*/
+"T560X2A" = "1"    /*Toxic effect of lead and its compounds, intentional self-harm, initial encounter*/
+"T561X2A" = "1"    /*Toxic effect of mercury and its compounds, intentional self-harm, initial encounter*/
+"T562X2A" = "1"    /*Toxic effect of chromium and its compounds, intentional self-harm, initial encounter*/
+"T563X2A" = "1"    /*Toxic effect of cadmium and its compounds, intentional self-harm, initial encounter*/
+"T564X2A" = "1"    /*Toxic effect of copper and its compounds, intentional self-harm, initial encounter*/
+"T565X2A" = "1"    /*Toxic effect of zinc and its compounds, intentional self-harm, initial encounter*/
+"T566X2A" = "1"    /*Toxic effect of tin and its compounds, intentional self-harm, initial encounter*/
+"T567X2A" = "1"    /*Toxic effect of beryllium and its compounds, intentional self-harm, initial encounter*/
+"T56812A" = "1"    /*Toxic effect of thallium, intentional self-harm, initial encounter*/
+"T56892A" = "1"    /*Toxic effect of other metals, intentional self-harm, initial encounter*/
+"T5692XA" = "1"    /*Toxic effect of unspecified metal, intentional self-harm, initial encounter*/
+"T570X2A" = "1"    /*Toxic effect of arsenic and its compounds, intentional self-harm, initial encounter*/
+"T571X2A" = "1"    /*Toxic effect of phosphorus and its compounds, intentional self-harm, initial encounter*/
+"T572X2A" = "1"    /*Toxic effect of manganese and its compounds, intentional self-harm, initial encounter*/
+"T573X2A" = "1"    /*Toxic effect of hydrogen cyanide, intentional self-harm, initial encounter*/
+"T578X2A" = "1"    /*Toxic effect of other specified inorganic substances, intentional self-harm, initial encounter*/
+"T5792XA" = "1"    /*Toxic effect of unspecified inorganic substance, intentional self-harm, initial encounter*/
+"T5802XA" = "1"    /*Toxic effect of carbon monoxide from motor vehicle exhaust, intentional self-harm, initial encounter*/
+"T5812XA" = "1"    /*Toxic effect of carbon monoxide from utility gas, intentional self-harm, initial encounter*/
+"T582X2A" = "1"    /*Toxic effect of carbon monoxide from incomplete combustion of other domestic fuels, intentional self-harm, initial encounter*/
+"T588X2A" = "1"    /*Toxic effect of carbon monoxide from other source, intentional self-harm, initial encounter*/
+"T5892XA" = "1"    /*Toxic effect of carbon monoxide from unspecified source, intentional self-harm, initial encounter*/
+"T590X2A" = "1"    /*Toxic effect of nitrogen oxides, intentional self-harm, initial encounter*/
+"T591X2A" = "1"    /*Toxic effect of sulfur dioxide, intentional self-harm, initial encounter*/
+"T592X2A" = "1"    /*Toxic effect of formaldehyde, intentional self-harm, initial encounter*/
+"T593X2A" = "1"    /*Toxic effect of lacrimogenic gas, intentional self-harm, initial encounter*/
+"T594X2A" = "1"    /*Toxic effect of chlorine gas, intentional self-harm, initial encounter*/
+"T595X2A" = "1"    /*Toxic effect of fluorine gas and hydrogen fluoride, intentional self-harm, initial encounter*/
+"T596X2A" = "1"    /*Toxic effect of hydrogen sulfide, intentional self-harm, initial encounter*/
+"T597X2A" = "1"    /*Toxic effect of carbon dioxide, intentional self-harm, initial encounter*/
+"T59812A" = "1"    /*Toxic effect of smoke, intentional self-harm, initial encounter*/
+"T59892A" = "1"    /*Toxic effect of other specified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T5992XA" = "1"    /*Toxic effect of unspecified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T600X2A" = "1"    /*Toxic effect of organophosphate and carbamate insecticides, intentional self-harm, initial encounter*/
+"T601X2A" = "1"    /*Toxic effect of halogenated insecticides, intentional self-harm, initial encounter*/
+"T602X2A" = "1"    /*Toxic effect of other insecticides, intentional self-harm, initial encounter*/
+"T603X2A" = "1"    /*Toxic effect of herbicides and fungicides, intentional self-harm, initial encounter*/
+"T604X2A" = "1"    /*Toxic effect of rodenticides, intentional self-harm, initial encounter*/
+"T608X2A" = "1"    /*Toxic effect of other pesticides, intentional self-harm, initial encounter*/
+"T6092XA" = "1"    /*Toxic effect of unspecified pesticide, intentional self-harm, initial encounter*/
+"T6102XA" = "1"    /*Ciguatera fish poisoning, intentional self-harm, initial encounter*/
+"T6112XA" = "1"    /*Scombroid fish poisoning, intentional self-harm, initial encounter*/
+"T61772A" = "1"    /*Other fish poisoning, intentional self-harm, initial encounter*/
+"T61782A" = "1"    /*Other shellfish poisoning, intentional self-harm, initial encounter*/
+"T618X2A" = "1"    /*Toxic effect of other seafood, intentional self-harm, initial encounter*/
+"T6192XA" = "1"    /*Toxic effect of unspecified seafood, intentional self-harm, initial encounter*/
+"T620X2A" = "1"    /*Toxic effect of ingested mushrooms, intentional self-harm, initial encounter*/
+"T621X2A" = "1"    /*Toxic effect of ingested berries, intentional self-harm, initial encounter*/
+"T622X2A" = "1"    /*Toxic effect of other ingested (parts of) plant(s), intentional self-harm, initial encounter*/
+"T628X2A" = "1"    /*Toxic effect of other specified noxious substances eaten as food, intentional self-harm, initial encounter*/
+"T6292XA" = "1"    /*Toxic effect of unspecified noxious substance eaten as food, intentional self-harm, initial encounter*/
+"T63002A" = "1"    /*Toxic effect of unspecified snake venom, intentional self-harm, initial encounter*/
+"T63012A" = "1"    /*Toxic effect of rattlesnake venom, intentional self-harm, initial encounter*/
+"T63022A" = "1"    /*Toxic effect of coral snake venom, intentional self-harm, initial encounter*/
+"T63032A" = "1"    /*Toxic effect of taipan venom, intentional self-harm, initial encounter*/
+"T63042A" = "1"    /*Toxic effect of cobra venom, intentional self-harm, initial encounter*/
+"T63062A" = "1"    /*Toxic effect of venom of other North and South American snake, intentional self-harm, initial encounter*/
+"T63072A" = "1"    /*Toxic effect of venom of other Australian snake, intentional self-harm, initial encounter*/
+"T63082A" = "1"    /*Toxic effect of venom of other African and Asian snake, intentional self-harm, initial encounter*/
+"T63092A" = "1"    /*Toxic effect of venom of other snake, intentional self-harm, initial encounter*/
+"T63112A" = "1"    /*Toxic effect of venom of gila monster, intentional self-harm, initial encounter*/
+"T63122A" = "1"    /*Toxic effect of venom of other venomous lizard, intentional self-harm, initial encounter*/
+"T63192A" = "1"    /*Toxic effect of venom of other reptiles, intentional self-harm, initial encounter*/
+"T632X2A" = "1"    /*Toxic effect of venom of scorpion, intentional self-harm, initial encounter*/
+"T63302A" = "1"    /*Toxic effect of unspecified spider venom, intentional self-harm, initial encounter*/
+"T63312A" = "1"    /*Toxic effect of venom of black widow spider, intentional self-harm, initial encounter*/
+"T63322A" = "1"    /*Toxic effect of venom of tarantula, intentional self-harm, initial encounter*/
+"T63332A" = "1"    /*Toxic effect of venom of brown recluse spider, intentional self-harm, initial encounter*/
+"T63392A" = "1"    /*Toxic effect of venom of other spider, intentional self-harm, initial encounter*/
+"T63412A" = "1"    /*Toxic effect of venom of centipedes and venomous millipedes, intentional self-harm, initial encounter*/
+"T63422A" = "1"    /*Toxic effect of venom of ants, intentional self-harm, initial encounter*/
+"T63432A" = "1"    /*Toxic effect of venom of caterpillars, intentional self-harm, initial encounter*/
+"T63442A" = "1"    /*Toxic effect of venom of bees, intentional self-harm, initial encounter*/
+"T63452A" = "1"    /*Toxic effect of venom of hornets, intentional self-harm, initial encounter*/
+"T63462A" = "1"    /*Toxic effect of venom of wasps, intentional self-harm, initial encounter*/
+"T63482A" = "1"    /*Toxic effect of venom of other arthropod, intentional self-harm, initial encounter*/
+"T63512A" = "1"    /*Toxic effect of contact with stingray, intentional self-harm, initial encounter*/
+"T63592A" = "1"    /*Toxic effect of contact with other venomous fish, intentional self-harm, initial encounter*/
+"T63612A" = "1"    /*Toxic effect of contact with Portuguese Man-o-war, intentional self-harm, initial encounter*/
+"T63622A" = "1"    /*Toxic effect of contact with other jellyfish, intentional self-harm, initial encounter*/
+"T63632A" = "1"    /*Toxic effect of contact with sea anemone, intentional self-harm, initial encounter*/
+"T63692A" = "1"    /*Toxic effect of contact with other venomous marine animals, intentional self-harm, initial encounter*/
+"T63712A" = "1"    /*Toxic effect of contact with venomous marine plant, intentional self-harm, initial encounter*/
+"T63792A" = "1"    /*Toxic effect of contact with other venomous plant, intentional self-harm, initial encounter*/
+"T63812A" = "1"    /*Toxic effect of contact with venomous frog, intentional self-harm, initial encounter*/
+"T63822A" = "1"    /*Toxic effect of contact with venomous toad, intentional self-harm, initial encounter*/
+"T63832A" = "1"    /*Toxic effect of contact with other venomous amphibian, intentional self-harm, initial encounter*/
+"T63892A" = "1"    /*Toxic effect of contact with other venomous animals, intentional self-harm, initial encounter*/
+"T6392XA" = "1"    /*Toxic effect of contact with unspecified venomous animal, intentional self-harm, initial encounter*/
+"T6402XA" = "1"    /*Toxic effect of aflatoxin, intentional self-harm, initial encounter*/
+"T6482XA" = "1"    /*Toxic effect of other mycotoxin food contaminants, intentional self-harm, initial encounter*/
+"T650X2A" = "1"    /*Toxic effect of cyanides, intentional self-harm, initial encounter*/
+"T651X2A" = "1"    /*Toxic effect of strychnine and its salts, intentional self-harm, initial encounter*/
+"T65212A" = "1"    /*Toxic effect of chewing tobacco, intentional self-harm, initial encounter*/
+"T65222A" = "1"    /*Toxic effect of tobacco cigarettes, intentional self-harm, initial encounter*/
+"T65292A" = "1"    /*Toxic effect of other tobacco and nicotine, intentional self-harm, initial encounter*/
+"T653X2A" = "1"    /*Toxic effect of nitroderivatives and aminoderivatives of benzene and its homologues, intentional self-harm, initial encounter*/
+"T654X2A" = "1"    /*Toxic effect of carbon disulfide, intentional self-harm, initial encounter*/
+"T655X2A" = "1"    /*Toxic effect of nitroglycerin and other nitric acids and esters, intentional self-harm, initial encounter*/
+"T656X2A" = "1"    /*Toxic effect of paints and dyes, not elsewhere classified, intentional self-harm, initial encounter*/
+"T65812A" = "1"    /*Toxic effect of latex, intentional self-harm, initial encounter*/
+"T65822A" = "1"    /*Toxic effect of harmful algae and algae toxins, intentional self-harm, initial encounter*/
+"T65832A" = "1"    /*Toxic effect of fiberglass, intentional self-harm, initial encounter*/
+"T65892A" = "1"    /*Toxic effect of other specified substances, intentional self-harm, initial encounter*/
+"T6592XA" = "1"    /*Toxic effect of unspecified substance, intentional self-harm, initial encounter*/
+"T71112A" = "1"    /*Asphyxiation due to smothering under pillow, intentional self-harm, initial encounter*/
+"T71122A" = "1"    /*Asphyxiation due to plastic bag, intentional self-harm, initial encounter*/
+"T71132A" = "1"    /*Asphyxiation due to being trapped in bed linens, intentional self-harm, initial encounter*/
+"T71152A" = "1"    /*Asphyxiation due to smothering in furniture, intentional self-harm, initial encounter*/
+"T71162A" = "1"    /*Asphyxiation due to hanging, intentional self-harm, initial encounter*/
+"T71192A" = "1"    /*Asphyxiation due to mechanical threat to breathing due to other causes, intentional self-harm, initial encounter*/
+"T71222A" = "1"    /*Asphyxiation due to being trapped in a car trunk, intentional self-harm, initial encounter*/
+"T71232A" = "1"    /*Asphyxiation due to being trapped in a (discarded) refrigerator, intentional self-harm, initial encounter*/
+"X710XXA" = "1"    /*Intentional self-harm by drowning and submersion while in bathtub, initial encounter*/
+"X711XXA" = "1"    /*Intentional self-harm by drowning and submersion while in swimming pool, initial encounter*/
+"X712XXA" = "1"    /*Intentional self-harm by drowning and submersion after jump into swimming pool, initial encounter*/
+"X713XXA" = "1"    /*Intentional self-harm by drowning and submersion in natural water, initial encounter*/
+"X718XXA" = "1"    /*Other intentional self-harm by drowning and submersion, initial encounter*/
+"X719XXA" = "1"    /*Intentional self-harm by drowning and submersion, unspecified, initial encounter*/
+"X72XXXA" = "1"    /*Intentional self-harm by handgun discharge, initial encounter*/
+"X730XXA" = "1"    /*Intentional self-harm by shotgun discharge, initial encounter*/
+"X731XXA" = "1"    /*Intentional self-harm by hunting rifle discharge, initial encounter*/
+"X732XXA" = "1"    /*Intentional self-harm by machine gun discharge, initial encounter*/
+"X738XXA" = "1"    /*Intentional self-harm by other larger firearm discharge, initial encounter*/
+"X739XXA" = "1"    /*Intentional self-harm by unspecified larger firearm discharge, initial encounter*/
+"X7401XA" = "1"    /*Intentional self-harm by airgun, initial encounter*/
+"X7402XA" = "1"    /*Intentional self-harm by paintball gun, initial encounter*/
+"X7409XA" = "1"    /*Intentional self-harm by other gas, air or spring-operated gun, initial encounter*/
+"X748XXA" = "1"    /*Intentional self-harm by other firearm discharge, initial encounter*/
+"X749XXA" = "1"    /*Intentional self-harm by unspecified firearm discharge, initial encounter*/
+"X75XXXA" = "1"    /*Intentional self-harm by explosive material, initial encounter*/
+"X76XXXA" = "1"    /*Intentional self-harm by smoke, fire and flames, initial encounter*/
+"X770XXA" = "1"    /*Intentional self-harm by steam or hot vapors, initial encounter*/
+"X771XXA" = "1"    /*Intentional self-harm by hot tap water, initial encounter*/
+"X772XXA" = "1"    /*Intentional self-harm by other hot fluids, initial encounter*/
+"X773XXA" = "1"    /*Intentional self-harm by hot household appliances, initial encounter*/
+"X778XXA" = "1"    /*Intentional self-harm by other hot objects, initial encounter*/
+"X779XXA" = "1"    /*Intentional self-harm by unspecified hot objects, initial encounter*/
+"X780XXA" = "1"    /*Intentional self-harm by sharp glass, initial encounter*/
+"X781XXA" = "1"    /*Intentional self-harm by knife, initial encounter*/
+"X782XXA" = "1"    /*Intentional self-harm by sword or dagger, initial encounter*/
+"X788XXA" = "1"    /*Intentional self-harm by other sharp object, initial encounter*/
+"X789XXA" = "1"    /*Intentional self-harm by unspecified sharp object, initial encounter*/
+"X79XXXA" = "1"    /*Intentional self-harm by blunt object, initial encounter*/
+"X80XXXA" = "1"    /*Intentional self-harm by jumping from a high place, initial encounter*/
+"X810XXA" = "1"    /*Intentional self-harm by jumping or lying in front of motor vehicle, initial encounter*/
+"X811XXA" = "1"    /*Intentional self-harm by jumping or lying in front of (subway) train, initial encounter*/
+"X818XXA" = "1"    /*Intentional self-harm by jumping or lying in front of other moving object, initial encounter*/
+"X820XXA" = "1"    /*Intentional collision of motor vehicle with other motor vehicle, initial encounter*/
+"X821XXA" = "1"    /*Intentional collision of motor vehicle with train, initial encounter*/
+"X822XXA" = "1"    /*Intentional collision of motor vehicle with tree, initial encounter*/
+"X828XXA" = "1"    /*Other intentional self-harm by crashing of motor vehicle, initial encounter*/
+"X830XXA" = "1"    /*Intentional self-harm by crashing of aircraft, initial encounter*/
+"X831XXA" = "1"    /*Intentional self-harm by electrocution, initial encounter*/
+"X832XXA" = "1"    /*Intentional self-harm by exposure to extremes of cold, initial encounter*/
+"X838XXA" = "1"    /*Intentional self-harm by other specified means, initial encounter*/
+Other = "0"
+;
+
+/*SSH FLAGS-POST DISCHARGE*/
+value $DX_SSH_POST
+"R45851" = "1"     /*Suicidal ideations*/
+"R4588" = "1"      /*Nonsuicidal self-harm*/
+"T1491" = "1"      /*Suicide attempt*/
+"T1491XA" = "1"    /*Suicide attempt, initial encounter*/
+"T360X2A" = "1"    /*Poisoning by penicillins, intentional self-harm, initial encounter*/
+"T361X2A" = "1"    /*Poisoning by cephalosporins and other beta-lactam antibiotics, intentional self-harm, initial encounter*/
+"T362X2A" = "1"    /*Poisoning by chloramphenicol group, intentional self-harm, initial encounter*/
+"T363X2A" = "1"    /*Poisoning by macrolides, intentional self-harm, initial encounter*/
+"T364X2A" = "1"    /*Poisoning by tetracyclines, intentional self-harm, initial encounter*/
+"T365X2A" = "1"    /*Poisoning by aminoglycosides, intentional self-harm, initial encounter*/
+"T366X2A" = "1"    /*Poisoning by rifampicins, intentional self-harm, initial encounter*/
+"T367X2A" = "1"    /*Poisoning by antifungal antibiotics, systemically used, intentional self-harm, initial encounter*/
+"T368X2A" = "1"    /*Poisoning by other systemic antibiotics, intentional self-harm, initial encounter*/
+"T3692XA" = "1"    /*Poisoning by unspecified systemic antibiotic, intentional self-harm, initial encounter*/
+"T370X2A" = "1"    /*Poisoning by sulfonamides, intentional self-harm, initial encounter*/
+"T371X2A" = "1"    /*Poisoning by antimycobacterial drugs, intentional self-harm, initial encounter*/
+"T372X2A" = "1"    /*Poisoning by antimalarials and drugs acting on other blood protozoa, intentional self-harm, initial encounter*/
+"T373X2A" = "1"    /*Poisoning by other antiprotozoal drugs, intentional self-harm, initial encounter*/
+"T374X2A" = "1"    /*Poisoning by anthelminthics, intentional self-harm, initial encounter*/
+"T375X2A" = "1"    /*Poisoning by antiviral drugs, intentional self-harm, initial encounter*/
+"T378X2A" = "1"    /*Poisoning by other specified systemic anti-infectives and antiparasitics, intentional self-harm, initial encounter*/
+"T3792XA" = "1"    /*Poisoning by unspecified systemic anti-infective and antiparasitics, intentional self-harm, initial encounter*/
+"T380X2A" = "1"    /*Poisoning by glucocorticoids and synthetic analogues, intentional self-harm, initial encounter*/
+"T381X2A" = "1"    /*Poisoning by thyroid hormones and substitutes, intentional self-harm, initial encounter*/
+"T382X2A" = "1"    /*Poisoning by antithyroid drugs, intentional self-harm, initial encounter*/
+"T383X2A" = "1"    /*Poisoning by insulin and oral hypoglycemic [antidiabetic] drugs, intentional self-harm, initial encounter*/
+"T384X2A" = "1"    /*Poisoning by oral contraceptives, intentional self-harm, initial encounter*/
+"T385X2A" = "1"    /*Poisoning by other estrogens and progestogens, intentional self-harm, initial encounter*/
+"T386X2A" = "1"    /*Poisoning by antigonadotrophins, antiestrogens, antiandrogens, not elsewhere classified, intentional self-harm, initial encounter*/
+"T387X2A" = "1"    /*Poisoning by androgens and anabolic congeners, intentional self-harm, initial encounter*/
+"T38802A" = "1"    /*Poisoning by unspecified hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38812A" = "1"    /*Poisoning by anterior pituitary [adenohypophyseal] hormones, intentional self-harm, initial encounter*/
+"T38892A" = "1"    /*Poisoning by other hormones and synthetic substitutes, intentional self-harm, initial encounter*/
+"T38902A" = "1"    /*Poisoning by unspecified hormone antagonists, intentional self-harm, initial encounter*/
+"T38992A" = "1"    /*Poisoning by other hormone antagonists, intentional self-harm, initial encounter*/
+"T39012A" = "1"    /*Poisoning by aspirin, intentional self-harm, initial encounter*/
+"T39014A" = "1"    /*Poisoning by aspirin, undetermined, initial encounter*/
+"T39092A" = "1"    /*Poisoning by salicylates, intentional self-harm, initial encounter*/
+"T391X2A" = "1"    /*Poisoning by 4-Aminophenol derivatives, intentional self-harm, initial encounter*/
+"T392X2A" = "1"    /*Poisoning by pyrazolone derivatives, intentional self-harm, initial encounter*/
+"T39312A" = "1"    /*Poisoning by propionic acid derivatives, intentional self-harm, initial encounter*/
+"T39392A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], intentional self-harm, initial encounter*/
+"T39394A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], undetermined, initial encounter*/
+"T394X2A" = "1"    /*Poisoning by antirheumatics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T398X2A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, intentional self-harm, initial encounter*/
+"T3992XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, intentional self-harm, initial encounter*/
+"T3994XA" = "1"    /*Poisoning by unspecified nonopioid analgesic, antipyretic and antirheumatic, undetermined, initial encounter*/
+"T400X2A" = "1"    /*Poisoning by opium, intentional self-harm, initial encounter*/
+"T401X2A" = "1"    /*Poisoning by heroin, intentional self-harm, initial encounter*/
+"T402X2A" = "1"    /*Poisoning by other opioids, intentional self-harm, initial encounter*/
+"T403X2A" = "1"    /*Poisoning by methadone, intentional self-harm, initial encounter*/
+"T40412A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, intentional self-harm, initial encounter*/
+"T40422A" = "1"    /*Poisoning by tramadol, intentional self-harm, initial encounter*/
+"T40492A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T404X2A" = "1"    /*Poisoning by other synthetic narcotics, intentional self-harm, initial encounter*/
+"T405X2A" = "1"    /*Poisoning by cocaine, intentional self-harm, initial encounter*/
+"T40602A" = "1"    /*Poisoning by unspecified narcotics, intentional self-harm, initial encounter*/
+"T40692A" = "1"    /*Poisoning by other narcotics, intentional self-harm, initial encounter*/
+"T40712A" = "1"    /*Poisoning by cannabis, intentional self-harm, initial encounter*/
+"T40722A" = "1"    /*Poisoning by synthetic cannabinoids, intentional self-harm, initial encounter*/
+"T407X2A" = "1"    /*Poisoning by cannabis (derivatives), intentional self-harm, initial encounter*/
+"T408X2A" = "1"    /*Poisoning by lysergide [LSD], intentional self-harm, initial encounter*/
+"T40902A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T40992A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], intentional self-harm, initial encounter*/
+"T410X2A" = "1"    /*Poisoning by inhaled anesthetics, intentional self-harm, initial encounter*/
+"T411X2A" = "1"    /*Poisoning by intravenous anesthetics, intentional self-harm, initial encounter*/
+"T41202A" = "1"    /*Poisoning by unspecified general anesthetics, intentional self-harm, initial encounter*/
+"T41292A" = "1"    /*Poisoning by other general anesthetics, intentional self-harm, initial encounter*/
+"T413X2A" = "1"    /*Poisoning by local anesthetics, intentional self-harm, initial encounter*/
+"T4142XA" = "1"    /*Poisoning by unspecified anesthetic, intentional self-harm, initial encounter*/
+"T415X2A" = "1"    /*Poisoning by therapeutic gases, intentional self-harm, initial encounter*/
+"T420X2A" = "1"    /*Poisoning by hydantoin derivatives, intentional self-harm, initial encounter*/
+"T421X2A" = "1"    /*Poisoning by iminostilbenes, intentional self-harm, initial encounter*/
+"T422X2A" = "1"    /*Poisoning by succinimides and oxazolidinediones, intentional self-harm, initial encounter*/
+"T423X2A" = "1"    /*Poisoning by barbiturates, intentional self-harm, initial encounter*/
+"T423X4A" = "1"    /*Poisoning by barbiturates, undetermined, initial encounter*/
+"T424X2A" = "1"    /*Poisoning by benzodiazepines, intentional self-harm, initial encounter*/
+"T425X2A" = "1"    /*Poisoning by mixed antiepileptics, intentional self-harm, initial encounter*/
+"T426X2A" = "1"    /*Poisoning by other antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T4272XA" = "1"    /*Poisoning by unspecified antiepileptic and sedative-hypnotic drugs, intentional self-harm, initial encounter*/
+"T428X2A" = "1"    /*Poisoning by antiparkinsonism drugs and other central muscle-tone depressants, intentional self-harm, initial encounter*/
+"T43012A" = "1"    /*Poisoning by tricyclic antidepressants, intentional self-harm, initial encounter*/
+"T43014A" = "1"    /*Poisoning by tricyclic antidepressants, undetermined, initial encounter*/
+"T43022A" = "1"    /*Poisoning by tetracyclic antidepressants, intentional self-harm, initial encounter*/
+"T43024A" = "1"    /*Poisoning by tetracyclic antidepressants, undetermined, initial encounter*/
+"T431X2A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, intentional self-harm, initial encounter*/
+"T431X4A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, undetermined, initial encounter*/
+"T43202A" = "1"    /*Poisoning by unspecified antidepressants, intentional self-harm, initial encounter*/
+"T43204A" = "1"    /*Poisoning by unspecified antidepressants, undetermined, initial encounter*/
+"T43212A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43214A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, undetermined, initial encounter*/
+"T43222A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, intentional self-harm, initial encounter*/
+"T43224A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, undetermined, initial encounter*/
+"T43292A" = "1"    /*Poisoning by other antidepressants, intentional self-harm, initial encounter*/
+"T43294A" = "1"    /*Poisoning by other antidepressants, undetermined, initial encounter*/
+"T433X2A" = "1"    /*Poisoning by phenothiazine antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T434X2A" = "1"    /*Poisoning by butyrophenone and thiothixene neuroleptics, intentional self-harm, initial encounter*/
+"T43502A" = "1"    /*Poisoning by unspecified antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43592A" = "1"    /*Poisoning by other antipsychotics and neuroleptics, intentional self-harm, initial encounter*/
+"T43602A" = "1"    /*Poisoning by unspecified psychostimulants, intentional self-harm, initial encounter*/
+"T43612A" = "1"    /*Poisoning by caffeine, intentional self-harm, initial encounter*/
+"T43622A" = "1"    /*Poisoning by amphetamines, intentional self-harm, initial encounter*/
+"T43632A" = "1"    /*Poisoning by methylphenidate, intentional self-harm, initial encounter*/
+"T43642A" = "1"    /*Poisoning by ecstasy, intentional self-harm, initial encounter*/
+"T43692A" = "1"    /*Poisoning by other psychostimulants, intentional self-harm, initial encounter*/
+"T438X2A" = "1"    /*Poisoning by other psychotropic drugs, intentional self-harm, initial encounter*/
+"T4392XA" = "1"    /*Poisoning by unspecified psychotropic drug, intentional self-harm, initial encounter*/
+"T440X2A" = "1"    /*Poisoning by anticholinesterase agents, intentional self-harm, initial encounter*/
+"T441X2A" = "1"    /*Poisoning by other parasympathomimetics [cholinergics], intentional self-harm, initial encounter*/
+"T442X2A" = "1"    /*Poisoning by ganglionic blocking drugs, intentional self-harm, initial encounter*/
+"T443X2A" = "1"    /*Poisoning by other parasympatholytics [anticholinergics and antimuscarinics] and spasmolytics, intentional self-harm, initial encounter*/
+"T444X2A" = "1"    /*Poisoning by predominantly alpha-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T445X2A" = "1"    /*Poisoning by predominantly beta-adrenoreceptor agonists, intentional self-harm, initial encounter*/
+"T446X2A" = "1"    /*Poisoning by alpha-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T447X2A" = "1"    /*Poisoning by beta-adrenoreceptor antagonists, intentional self-harm, initial encounter*/
+"T448X2A" = "1"    /*Poisoning by centrally-acting and adrenergic-neuron-blocking agents, intentional self-harm, initial encounter*/
+"T44902A" = "1"    /*Poisoning by unspecified drugs primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T44992A" = "1"    /*Poisoning by other drug primarily affecting the autonomic nervous system, intentional self-harm, initial encounter*/
+"T450X2A" = "1"    /*Poisoning by antiallergic and antiemetic drugs, intentional self-harm, initial encounter*/
+"T451X2A" = "1"    /*Poisoning by antineoplastic and immunosuppressive drugs, intentional self-harm, initial encounter*/
+"T452X2A" = "1"    /*Poisoning by vitamins, intentional self-harm, initial encounter*/
+"T453X2A" = "1"    /*Poisoning by enzymes, intentional self-harm, initial encounter*/
+"T454X2A" = "1"    /*Poisoning by iron and its compounds, intentional self-harm, initial encounter*/
+"T45512A" = "1"    /*Poisoning by anticoagulants, intentional self-harm, initial encounter*/
+"T45522A" = "1"    /*Poisoning by antithrombotic drugs, intentional self-harm, initial encounter*/
+"T45602A" = "1"    /*Poisoning by unspecified fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T45612A" = "1"    /*Poisoning by thrombolytic drug, intentional self-harm, initial encounter*/
+"T45622A" = "1"    /*Poisoning by hemostatic drug, intentional self-harm, initial encounter*/
+"T45692A" = "1"    /*Poisoning by other fibrinolysis-affecting drugs, intentional self-harm, initial encounter*/
+"T457X2A" = "1"    /*Poisoning by anticoagulant antagonists, vitamin K and other coagulants, intentional self-harm, initial encounter*/
+"T458X2A" = "1"    /*Poisoning by other primarily systemic and hematological agents, intentional self-harm, initial encounter*/
+"T4592XA" = "1"    /*Poisoning by unspecified primarily systemic and hematological agent, intentional self-harm, initial encounter*/
+"T460X2A" = "1"    /*Poisoning by cardiac-stimulant glycosides and drugs of similar action, intentional self-harm, initial encounter*/
+"T461X2A" = "1"    /*Poisoning by calcium-channel blockers, intentional self-harm, initial encounter*/
+"T462X2A" = "1"    /*Poisoning by other antidysrhythmic drugs, intentional self-harm, initial encounter*/
+"T463X2A" = "1"    /*Poisoning by coronary vasodilators, intentional self-harm, initial encounter*/
+"T464X2A" = "1"    /*Poisoning by angiotensin-converting-enzyme inhibitors, intentional self-harm, initial encounter*/
+"T465X2A" = "1"    /*Poisoning by other antihypertensive drugs, intentional self-harm, initial encounter*/
+"T466X2A" = "1"    /*Poisoning by antihyperlipidemic and antiarteriosclerotic drugs, intentional self-harm, initial encounter*/
+"T467X2A" = "1"    /*Poisoning by peripheral vasodilators, intentional self-harm, initial encounter*/
+"T468X2A" = "1"    /*Poisoning by antivaricose drugs, including sclerosing agents, intentional self-harm, initial encounter*/
+"T46902A" = "1"    /*Poisoning by unspecified agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T46992A" = "1"    /*Poisoning by other agents primarily affecting the cardiovascular system, intentional self-harm, initial encounter*/
+"T470X2A" = "1"    /*Poisoning by histamine H2-receptor blockers, intentional self-harm, initial encounter*/
+"T471X2A" = "1"    /*Poisoning by other antacids and anti-gastric-secretion drugs, intentional self-harm, initial encounter*/
+"T472X2A" = "1"    /*Poisoning by stimulant laxatives, intentional self-harm, initial encounter*/
+"T473X2A" = "1"    /*Poisoning by saline and osmotic laxatives, intentional self-harm, initial encounter*/
+"T474X2A" = "1"    /*Poisoning by other laxatives, intentional self-harm, initial encounter*/
+"T475X2A" = "1"    /*Poisoning by digestants, intentional self-harm, initial encounter*/
+"T476X2A" = "1"    /*Poisoning by antidiarrheal drugs, intentional self-harm, initial encounter*/
+"T477X2A" = "1"    /*Poisoning by emetics, intentional self-harm, initial encounter*/
+"T478X2A" = "1"    /*Poisoning by other agents primarily affecting gastrointestinal system, intentional self-harm, initial encounter*/
+"T4792XA" = "1"    /*Poisoning by unspecified agents primarily affecting the gastrointestinal system, intentional self-harm, initial encounter*/
+"T480X2A" = "1"    /*Poisoning by oxytocic drugs, intentional self-harm, initial encounter*/
+"T481X2A" = "1"    /*Poisoning by skeletal muscle relaxants [neuromuscular blocking agents], intentional self-harm, initial encounter*/
+"T48202A" = "1"    /*Poisoning by unspecified drugs acting on muscles, intentional self-harm, initial encounter*/
+"T48292A" = "1"    /*Poisoning by other drugs acting on muscles, intentional self-harm, initial encounter*/
+"T483X2A" = "1"    /*Poisoning by antitussives, intentional self-harm, initial encounter*/
+"T484X2A" = "1"    /*Poisoning by expectorants, intentional self-harm, initial encounter*/
+"T485X2A" = "1"    /*Poisoning by other anti-common-cold drugs, intentional self-harm, initial encounter*/
+"T486X2A" = "1"    /*Poisoning by antiasthmatics, intentional self-harm, initial encounter*/
+"T48902A" = "1"    /*Poisoning by unspecified agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T48992A" = "1"    /*Poisoning by other agents primarily acting on the respiratory system, intentional self-harm, initial encounter*/
+"T490X2A" = "1"    /*Poisoning by local antifungal, anti-infective and anti-inflammatory drugs, intentional self-harm, initial encounter*/
+"T491X2A" = "1"    /*Poisoning by antipruritics, intentional self-harm, initial encounter*/
+"T492X2A" = "1"    /*Poisoning by local astringents and local detergents, intentional self-harm, initial encounter*/
+"T493X2A" = "1"    /*Poisoning by emollients, demulcents and protectants, intentional self-harm, initial encounter*/
+"T494X2A" = "1"    /*Poisoning by keratolytics, keratoplastics, and other hair treatment drugs and preparations, intentional self-harm, initial encounter*/
+"T495X2A" = "1"    /*Poisoning by ophthalmological drugs and preparations, intentional self-harm, initial encounter*/
+"T496X2A" = "1"    /*Poisoning by otorhinolaryngological drugs and preparations, intentional self-harm, initial encounter*/
+"T497X2A" = "1"    /*Poisoning by dental drugs, topically applied, intentional self-harm, initial encounter*/
+"T498X2A" = "1"    /*Poisoning by other topical agents, intentional self-harm, initial encounter*/
+"T4992XA" = "1"    /*Poisoning by unspecified topical agent, intentional self-harm, initial encounter*/
+"T500X2A" = "1"    /*Poisoning by mineralocorticoids and their antagonists, intentional self-harm, initial encounter*/
+"T501X2A" = "1"    /*Poisoning by loop [high-ceiling] diuretics, intentional self-harm, initial encounter*/
+"T502X2A" = "1"    /*Poisoning by carbonic-anhydrase inhibitors, benzothiadiazides and other diuretics, intentional self-harm, initial encounter*/
+"T503X2A" = "1"    /*Poisoning by electrolytic, caloric and water-balance agents, intentional self-harm, initial encounter*/
+"T504X2A" = "1"    /*Poisoning by drugs affecting uric acid metabolism, intentional self-harm, initial encounter*/
+"T505X2A" = "1"    /*Poisoning by appetite depressants, intentional self-harm, initial encounter*/
+"T506X2A" = "1"    /*Poisoning by antidotes and chelating agents, intentional self-harm, initial encounter*/
+"T507X2A" = "1"    /*Poisoning by analeptics and opioid receptor antagonists, intentional self-harm, initial encounter*/
+"T508X2A" = "1"    /*Poisoning by diagnostic agents, intentional self-harm, initial encounter*/
+"T50902A" = "1"    /*Poisoning by unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50912A" = "1"    /*Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50992A" = "1"    /*Poisoning by other drugs, medicaments and biological substances, intentional self-harm, initial encounter*/
+"T50A12A" = "1"    /*Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm, initial encounter*/
+"T50A22A" = "1"    /*Poisoning by mixed bacterial vaccines without a pertussis component, intentional self-harm, initial encounter*/
+"T50A92A" = "1"    /*Poisoning by other bacterial vaccines, intentional self-harm, initial encounter*/
+"T50B12A" = "1"    /*Poisoning by smallpox vaccines, intentional self-harm, initial encounter*/
+"T50B92A" = "1"    /*Poisoning by other viral vaccines, intentional self-harm, initial encounter*/
+"T50Z12A" = "1"    /*Poisoning by immunoglobulin, intentional self-harm, initial encounter*/
+"T50Z92A" = "1"    /*Poisoning by other vaccines and biological substances, intentional self-harm, initial encounter*/
+"T510X2A" = "1"    /*Toxic effect of ethanol, intentional self-harm, initial encounter*/
+"T511X2A" = "1"    /*Toxic effect of methanol, intentional self-harm, initial encounter*/
+"T512X2A" = "1"    /*Toxic effect of 2-Propanol, intentional self-harm, initial encounter*/
+"T513X2A" = "1"    /*Toxic effect of fusel oil, intentional self-harm, initial encounter*/
+"T518X2A" = "1"    /*Toxic effect of other alcohols, intentional self-harm, initial encounter*/
+"T5192XA" = "1"    /*Toxic effect of unspecified alcohol, intentional self-harm, initial encounter*/
+"T520X2A" = "1"    /*Toxic effect of petroleum products, intentional self-harm, initial encounter*/
+"T521X2A" = "1"    /*Toxic effect of benzene, intentional self-harm, initial encounter*/
+"T522X2A" = "1"    /*Toxic effect of homologues of benzene, intentional self-harm, initial encounter*/
+"T523X2A" = "1"    /*Toxic effect of glycols, intentional self-harm, initial encounter*/
+"T524X2A" = "1"    /*Toxic effect of ketones, intentional self-harm, initial encounter*/
+"T528X2A" = "1"    /*Toxic effect of other organic solvents, intentional self-harm, initial encounter*/
+"T5292XA" = "1"    /*Toxic effect of unspecified organic solvent, intentional self-harm, initial encounter*/
+"T530X2A" = "1"    /*Toxic effect of carbon tetrachloride, intentional self-harm, initial encounter*/
+"T531X2A" = "1"    /*Toxic effect of chloroform, intentional self-harm, initial encounter*/
+"T532X2A" = "1"    /*Toxic effect of trichloroethylene, intentional self-harm, initial encounter*/
+"T533X2A" = "1"    /*Toxic effect of tetrachloroethylene, intentional self-harm, initial encounter*/
+"T534X2A" = "1"    /*Toxic effect of dichloromethane, intentional self-harm, initial encounter*/
+"T535X2A" = "1"    /*Toxic effect of chlorofluorocarbons, intentional self-harm, initial encounter*/
+"T536X2A" = "1"    /*Toxic effect of other halogen derivatives of aliphatic hydrocarbons, intentional self-harm, initial encounter*/
+"T537X2A" = "1"    /*Toxic effect of other halogen derivatives of aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T5392XA" = "1"    /*Toxic effect of unspecified halogen derivatives of aliphatic and aromatic hydrocarbons, intentional self-harm, initial encounter*/
+"T540X2A" = "1"    /*Toxic effect of phenol and phenol homologues, intentional self-harm, initial encounter*/
+"T541X2A" = "1"    /*Toxic effect of other corrosive organic compounds, intentional self-harm, initial encounter*/
+"T542X2A" = "1"    /*Toxic effect of corrosive acids and acid-like substances, intentional self-harm, initial encounter*/
+"T543X2A" = "1"    /*Toxic effect of corrosive alkalis and alkali-like substances, intentional self-harm, initial encounter*/
+"T5492XA" = "1"    /*Toxic effect of unspecified corrosive substance, intentional self-harm, initial encounter*/
+"T550X2A" = "1"    /*Toxic effect of soaps, intentional self-harm, initial encounter*/
+"T551X2A" = "1"    /*Toxic effect of detergents, intentional self-harm, initial encounter*/
+"T560X2A" = "1"    /*Toxic effect of lead and its compounds, intentional self-harm, initial encounter*/
+"T561X2A" = "1"    /*Toxic effect of mercury and its compounds, intentional self-harm, initial encounter*/
+"T562X2A" = "1"    /*Toxic effect of chromium and its compounds, intentional self-harm, initial encounter*/
+"T563X2A" = "1"    /*Toxic effect of cadmium and its compounds, intentional self-harm, initial encounter*/
+"T564X2A" = "1"    /*Toxic effect of copper and its compounds, intentional self-harm, initial encounter*/
+"T565X2A" = "1"    /*Toxic effect of zinc and its compounds, intentional self-harm, initial encounter*/
+"T566X2A" = "1"    /*Toxic effect of tin and its compounds, intentional self-harm, initial encounter*/
+"T567X2A" = "1"    /*Toxic effect of beryllium and its compounds, intentional self-harm, initial encounter*/
+"T56812A" = "1"    /*Toxic effect of thallium, intentional self-harm, initial encounter*/
+"T56892A" = "1"    /*Toxic effect of other metals, intentional self-harm, initial encounter*/
+"T5692XA" = "1"    /*Toxic effect of unspecified metal, intentional self-harm, initial encounter*/
+"T570X2A" = "1"    /*Toxic effect of arsenic and its compounds, intentional self-harm, initial encounter*/
+"T571X2A" = "1"    /*Toxic effect of phosphorus and its compounds, intentional self-harm, initial encounter*/
+"T572X2A" = "1"    /*Toxic effect of manganese and its compounds, intentional self-harm, initial encounter*/
+"T573X2A" = "1"    /*Toxic effect of hydrogen cyanide, intentional self-harm, initial encounter*/
+"T578X2A" = "1"    /*Toxic effect of other specified inorganic substances, intentional self-harm, initial encounter*/
+"T5792XA" = "1"    /*Toxic effect of unspecified inorganic substance, intentional self-harm, initial encounter*/
+"T5802XA" = "1"    /*Toxic effect of carbon monoxide from motor vehicle exhaust, intentional self-harm, initial encounter*/
+"T5812XA" = "1"    /*Toxic effect of carbon monoxide from utility gas, intentional self-harm, initial encounter*/
+"T582X2A" = "1"    /*Toxic effect of carbon monoxide from incomplete combustion of other domestic fuels, intentional self-harm, initial encounter*/
+"T588X2A" = "1"    /*Toxic effect of carbon monoxide from other source, intentional self-harm, initial encounter*/
+"T5892XA" = "1"    /*Toxic effect of carbon monoxide from unspecified source, intentional self-harm, initial encounter*/
+"T590X2A" = "1"    /*Toxic effect of nitrogen oxides, intentional self-harm, initial encounter*/
+"T591X2A" = "1"    /*Toxic effect of sulfur dioxide, intentional self-harm, initial encounter*/
+"T592X2A" = "1"    /*Toxic effect of formaldehyde, intentional self-harm, initial encounter*/
+"T593X2A" = "1"    /*Toxic effect of lacrimogenic gas, intentional self-harm, initial encounter*/
+"T594X2A" = "1"    /*Toxic effect of chlorine gas, intentional self-harm, initial encounter*/
+"T595X2A" = "1"    /*Toxic effect of fluorine gas and hydrogen fluoride, intentional self-harm, initial encounter*/
+"T596X2A" = "1"    /*Toxic effect of hydrogen sulfide, intentional self-harm, initial encounter*/
+"T597X2A" = "1"    /*Toxic effect of carbon dioxide, intentional self-harm, initial encounter*/
+"T59812A" = "1"    /*Toxic effect of smoke, intentional self-harm, initial encounter*/
+"T59892A" = "1"    /*Toxic effect of other specified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T5992XA" = "1"    /*Toxic effect of unspecified gases, fumes and vapors, intentional self-harm, initial encounter*/
+"T600X2A" = "1"    /*Toxic effect of organophosphate and carbamate insecticides, intentional self-harm, initial encounter*/
+"T601X2A" = "1"    /*Toxic effect of halogenated insecticides, intentional self-harm, initial encounter*/
+"T602X2A" = "1"    /*Toxic effect of other insecticides, intentional self-harm, initial encounter*/
+"T603X2A" = "1"    /*Toxic effect of herbicides and fungicides, intentional self-harm, initial encounter*/
+"T604X2A" = "1"    /*Toxic effect of rodenticides, intentional self-harm, initial encounter*/
+"T608X2A" = "1"    /*Toxic effect of other pesticides, intentional self-harm, initial encounter*/
+"T6092XA" = "1"    /*Toxic effect of unspecified pesticide, intentional self-harm, initial encounter*/
+"T6102XA" = "1"    /*Ciguatera fish poisoning, intentional self-harm, initial encounter*/
+"T6112XA" = "1"    /*Scombroid fish poisoning, intentional self-harm, initial encounter*/
+"T61772A" = "1"    /*Other fish poisoning, intentional self-harm, initial encounter*/
+"T61782A" = "1"    /*Other shellfish poisoning, intentional self-harm, initial encounter*/
+"T618X2A" = "1"    /*Toxic effect of other seafood, intentional self-harm, initial encounter*/
+"T6192XA" = "1"    /*Toxic effect of unspecified seafood, intentional self-harm, initial encounter*/
+"T620X2A" = "1"    /*Toxic effect of ingested mushrooms, intentional self-harm, initial encounter*/
+"T621X2A" = "1"    /*Toxic effect of ingested berries, intentional self-harm, initial encounter*/
+"T622X2A" = "1"    /*Toxic effect of other ingested (parts of) plant(s), intentional self-harm, initial encounter*/
+"T628X2A" = "1"    /*Toxic effect of other specified noxious substances eaten as food, intentional self-harm, initial encounter*/
+"T6292XA" = "1"    /*Toxic effect of unspecified noxious substance eaten as food, intentional self-harm, initial encounter*/
+"T63002A" = "1"    /*Toxic effect of unspecified snake venom, intentional self-harm, initial encounter*/
+"T63012A" = "1"    /*Toxic effect of rattlesnake venom, intentional self-harm, initial encounter*/
+"T63022A" = "1"    /*Toxic effect of coral snake venom, intentional self-harm, initial encounter*/
+"T63032A" = "1"    /*Toxic effect of taipan venom, intentional self-harm, initial encounter*/
+"T63042A" = "1"    /*Toxic effect of cobra venom, intentional self-harm, initial encounter*/
+"T63062A" = "1"    /*Toxic effect of venom of other North and South American snake, intentional self-harm, initial encounter*/
+"T63072A" = "1"    /*Toxic effect of venom of other Australian snake, intentional self-harm, initial encounter*/
+"T63082A" = "1"    /*Toxic effect of venom of other African and Asian snake, intentional self-harm, initial encounter*/
+"T63092A" = "1"    /*Toxic effect of venom of other snake, intentional self-harm, initial encounter*/
+"T63112A" = "1"    /*Toxic effect of venom of gila monster, intentional self-harm, initial encounter*/
+"T63122A" = "1"    /*Toxic effect of venom of other venomous lizard, intentional self-harm, initial encounter*/
+"T63192A" = "1"    /*Toxic effect of venom of other reptiles, intentional self-harm, initial encounter*/
+"T632X2A" = "1"    /*Toxic effect of venom of scorpion, intentional self-harm, initial encounter*/
+"T63302A" = "1"    /*Toxic effect of unspecified spider venom, intentional self-harm, initial encounter*/
+"T63312A" = "1"    /*Toxic effect of venom of black widow spider, intentional self-harm, initial encounter*/
+"T63322A" = "1"    /*Toxic effect of venom of tarantula, intentional self-harm, initial encounter*/
+"T63332A" = "1"    /*Toxic effect of venom of brown recluse spider, intentional self-harm, initial encounter*/
+"T63392A" = "1"    /*Toxic effect of venom of other spider, intentional self-harm, initial encounter*/
+"T63412A" = "1"    /*Toxic effect of venom of centipedes and venomous millipedes, intentional self-harm, initial encounter*/
+"T63422A" = "1"    /*Toxic effect of venom of ants, intentional self-harm, initial encounter*/
+"T63432A" = "1"    /*Toxic effect of venom of caterpillars, intentional self-harm, initial encounter*/
+"T63442A" = "1"    /*Toxic effect of venom of bees, intentional self-harm, initial encounter*/
+"T63452A" = "1"    /*Toxic effect of venom of hornets, intentional self-harm, initial encounter*/
+"T63462A" = "1"    /*Toxic effect of venom of wasps, intentional self-harm, initial encounter*/
+"T63482A" = "1"    /*Toxic effect of venom of other arthropod, intentional self-harm, initial encounter*/
+"T63512A" = "1"    /*Toxic effect of contact with stingray, intentional self-harm, initial encounter*/
+"T63592A" = "1"    /*Toxic effect of contact with other venomous fish, intentional self-harm, initial encounter*/
+"T63612A" = "1"    /*Toxic effect of contact with Portuguese Man-o-war, intentional self-harm, initial encounter*/
+"T63622A" = "1"    /*Toxic effect of contact with other jellyfish, intentional self-harm, initial encounter*/
+"T63632A" = "1"    /*Toxic effect of contact with sea anemone, intentional self-harm, initial encounter*/
+"T63692A" = "1"    /*Toxic effect of contact with other venomous marine animals, intentional self-harm, initial encounter*/
+"T63712A" = "1"    /*Toxic effect of contact with venomous marine plant, intentional self-harm, initial encounter*/
+"T63792A" = "1"    /*Toxic effect of contact with other venomous plant, intentional self-harm, initial encounter*/
+"T63812A" = "1"    /*Toxic effect of contact with venomous frog, intentional self-harm, initial encounter*/
+"T63822A" = "1"    /*Toxic effect of contact with venomous toad, intentional self-harm, initial encounter*/
+"T63832A" = "1"    /*Toxic effect of contact with other venomous amphibian, intentional self-harm, initial encounter*/
+"T63892A" = "1"    /*Toxic effect of contact with other venomous animals, intentional self-harm, initial encounter*/
+"T6392XA" = "1"    /*Toxic effect of contact with unspecified venomous animal, intentional self-harm, initial encounter*/
+"T6402XA" = "1"    /*Toxic effect of aflatoxin, intentional self-harm, initial encounter*/
+"T6482XA" = "1"    /*Toxic effect of other mycotoxin food contaminants, intentional self-harm, initial encounter*/
+"T650X2A" = "1"    /*Toxic effect of cyanides, intentional self-harm, initial encounter*/
+"T651X2A" = "1"    /*Toxic effect of strychnine and its salts, intentional self-harm, initial encounter*/
+"T65212A" = "1"    /*Toxic effect of chewing tobacco, intentional self-harm, initial encounter*/
+"T65222A" = "1"    /*Toxic effect of tobacco cigarettes, intentional self-harm, initial encounter*/
+"T65292A" = "1"    /*Toxic effect of other tobacco and nicotine, intentional self-harm, initial encounter*/
+"T653X2A" = "1"    /*Toxic effect of nitroderivatives and aminoderivatives of benzene and its homologues, intentional self-harm, initial encounter*/
+"T654X2A" = "1"    /*Toxic effect of carbon disulfide, intentional self-harm, initial encounter*/
+"T655X2A" = "1"    /*Toxic effect of nitroglycerin and other nitric acids and esters, intentional self-harm, initial encounter*/
+"T656X2A" = "1"    /*Toxic effect of paints and dyes, not elsewhere classified, intentional self-harm, initial encounter*/
+"T65812A" = "1"    /*Toxic effect of latex, intentional self-harm, initial encounter*/
+"T65822A" = "1"    /*Toxic effect of harmful algae and algae toxins, intentional self-harm, initial encounter*/
+"T65832A" = "1"    /*Toxic effect of fiberglass, intentional self-harm, initial encounter*/
+"T65892A" = "1"    /*Toxic effect of other specified substances, intentional self-harm, initial encounter*/
+"T6592XA" = "1"    /*Toxic effect of unspecified substance, intentional self-harm, initial encounter*/
+"T71112A" = "1"    /*Asphyxiation due to smothering under pillow, intentional self-harm, initial encounter*/
+"T71122A" = "1"    /*Asphyxiation due to plastic bag, intentional self-harm, initial encounter*/
+"T71132A" = "1"    /*Asphyxiation due to being trapped in bed linens, intentional self-harm, initial encounter*/
+"T71152A" = "1"    /*Asphyxiation due to smothering in furniture, intentional self-harm, initial encounter*/
+"T71162A" = "1"    /*Asphyxiation due to hanging, intentional self-harm, initial encounter*/
+"T71192A" = "1"    /*Asphyxiation due to mechanical threat to breathing due to other causes, intentional self-harm, initial encounter*/
+"T71222A" = "1"    /*Asphyxiation due to being trapped in a car trunk, intentional self-harm, initial encounter*/
+"T71232A" = "1"    /*Asphyxiation due to being trapped in a (discarded) refrigerator, intentional self-harm, initial encounter*/
+"X710XXA" = "1"    /*Intentional self-harm by drowning and submersion while in bathtub, initial encounter*/
+"X711XXA" = "1"    /*Intentional self-harm by drowning and submersion while in swimming pool, initial encounter*/
+"X712XXA" = "1"    /*Intentional self-harm by drowning and submersion after jump into swimming pool, initial encounter*/
+"X713XXA" = "1"    /*Intentional self-harm by drowning and submersion in natural water, initial encounter*/
+"X718XXA" = "1"    /*Other intentional self-harm by drowning and submersion, initial encounter*/
+"X719XXA" = "1"    /*Intentional self-harm by drowning and submersion, unspecified, initial encounter*/
+"X72XXXA" = "1"    /*Intentional self-harm by handgun discharge, initial encounter*/
+"X730XXA" = "1"    /*Intentional self-harm by shotgun discharge, initial encounter*/
+"X731XXA" = "1"    /*Intentional self-harm by hunting rifle discharge, initial encounter*/
+"X732XXA" = "1"    /*Intentional self-harm by machine gun discharge, initial encounter*/
+"X738XXA" = "1"    /*Intentional self-harm by other larger firearm discharge, initial encounter*/
+"X739XXA" = "1"    /*Intentional self-harm by unspecified larger firearm discharge, initial encounter*/
+"X7401XA" = "1"    /*Intentional self-harm by airgun, initial encounter*/
+"X7402XA" = "1"    /*Intentional self-harm by paintball gun, initial encounter*/
+"X7409XA" = "1"    /*Intentional self-harm by other gas, air or spring-operated gun, initial encounter*/
+"X748XXA" = "1"    /*Intentional self-harm by other firearm discharge, initial encounter*/
+"X749XXA" = "1"    /*Intentional self-harm by unspecified firearm discharge, initial encounter*/
+"X75XXXA" = "1"    /*Intentional self-harm by explosive material, initial encounter*/
+"X76XXXA" = "1"    /*Intentional self-harm by smoke, fire and flames, initial encounter*/
+"X770XXA" = "1"    /*Intentional self-harm by steam or hot vapors, initial encounter*/
+"X771XXA" = "1"    /*Intentional self-harm by hot tap water, initial encounter*/
+"X772XXA" = "1"    /*Intentional self-harm by other hot fluids, initial encounter*/
+"X773XXA" = "1"    /*Intentional self-harm by hot household appliances, initial encounter*/
+"X778XXA" = "1"    /*Intentional self-harm by other hot objects, initial encounter*/
+"X779XXA" = "1"    /*Intentional self-harm by unspecified hot objects, initial encounter*/
+"X780XXA" = "1"    /*Intentional self-harm by sharp glass, initial encounter*/
+"X781XXA" = "1"    /*Intentional self-harm by knife, initial encounter*/
+"X782XXA" = "1"    /*Intentional self-harm by sword or dagger, initial encounter*/
+"X788XXA" = "1"    /*Intentional self-harm by other sharp object, initial encounter*/
+"X789XXA" = "1"    /*Intentional self-harm by unspecified sharp object, initial encounter*/
+"X79XXXA" = "1"    /*Intentional self-harm by blunt object, initial encounter*/
+"X80XXXA" = "1"    /*Intentional self-harm by jumping from a high place, initial encounter*/
+"X810XXA" = "1"    /*Intentional self-harm by jumping or lying in front of motor vehicle, initial encounter*/
+"X811XXA" = "1"    /*Intentional self-harm by jumping or lying in front of (subway) train, initial encounter*/
+"X818XXA" = "1"    /*Intentional self-harm by jumping or lying in front of other moving object, initial encounter*/
+"X820XXA" = "1"    /*Intentional collision of motor vehicle with other motor vehicle, initial encounter*/
+"X821XXA" = "1"    /*Intentional collision of motor vehicle with train, initial encounter*/
+"X822XXA" = "1"    /*Intentional collision of motor vehicle with tree, initial encounter*/
+"X828XXA" = "1"    /*Other intentional self-harm by crashing of motor vehicle, initial encounter*/
+"X830XXA" = "1"    /*Intentional self-harm by crashing of aircraft, initial encounter*/
+"X831XXA" = "1"    /*Intentional self-harm by electrocution, initial encounter*/
+"X832XXA" = "1"    /*Intentional self-harm by exposure to extremes of cold, initial encounter*/
+"X838XXA" = "1"    /*Intentional self-harm by other specified means, initial encounter*/
+Other = "0"
+;
+
+/*SUD FLAGS-POST DISCHARGE*/
+value $DX_SUD_POST
+"F1010" = "1"      /*Alcohol abuse, uncomplicated*/
+"F10120" = "1"     /*Alcohol abuse with intoxication, uncomplicated*/
+"F10121" = "1"     /*Alcohol abuse with intoxication delirium*/
+"F10129" = "1"     /*Alcohol abuse with intoxication, unspecified*/
+"F10130" = "1"     /*Alcohol abuse with withdrawal, uncomplicated*/
+"F10131" = "1"     /*Alcohol abuse with withdrawal delirium*/
+"F10132" = "1"     /*Alcohol abuse with withdrawal with perceptual disturbance*/
+"F10139" = "1"     /*Alcohol abuse with withdrawal, unspecified*/
+"F1014" = "1"      /*Alcohol abuse with alcohol-induced mood disorder*/
+"F10150" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with delusions*/
+"F10151" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder with hallucinations*/
+"F10159" = "1"     /*Alcohol abuse with alcohol-induced psychotic disorder, unspecified*/
+"F10180" = "1"     /*Alcohol abuse with alcohol-induced anxiety disorder*/
+"F10181" = "1"     /*Alcohol abuse with alcohol-induced sexual dysfunction*/
+"F10182" = "1"     /*Alcohol abuse with alcohol-induced sleep disorder*/
+"F10188" = "1"     /*Alcohol abuse with other alcohol-induced disorder*/
+"F1019" = "1"      /*Alcohol abuse with unspecified alcohol-induced disorder*/
+"F1020" = "1"      /*Alcohol dependence, uncomplicated*/
+"F10220" = "1"     /*Alcohol dependence with intoxication, uncomplicated*/
+"F10221" = "1"     /*Alcohol dependence with intoxication delirium*/
+"F10229" = "1"     /*Alcohol dependence with intoxication, unspecified*/
+"F10230" = "1"     /*Alcohol dependence with withdrawal, uncomplicated*/
+"F10231" = "1"     /*Alcohol dependence with withdrawal delirium*/
+"F10232" = "1"     /*Alcohol dependence with withdrawal with perceptual disturbance*/
+"F10239" = "1"     /*Alcohol dependence with withdrawal, unspecified*/
+"F1024" = "1"      /*Alcohol dependence with alcohol-induced mood disorder*/
+"F10250" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with delusions*/
+"F10251" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder with hallucinations*/
+"F10259" = "1"     /*Alcohol dependence with alcohol-induced psychotic disorder, unspecified*/
+"F1026" = "1"      /*Alcohol dependence with alcohol-induced persisting amnestic disorder*/
+"F1027" = "1"      /*Alcohol dependence with alcohol-induced persisting dementia*/
+"F10280" = "1"     /*Alcohol dependence with alcohol-induced anxiety disorder*/
+"F10281" = "1"     /*Alcohol dependence with alcohol-induced sexual dysfunction*/
+"F10282" = "1"     /*Alcohol dependence with alcohol-induced sleep disorder*/
+"F10288" = "1"     /*Alcohol dependence with other alcohol-induced disorder*/
+"F1029" = "1"      /*Alcohol dependence with unspecified alcohol-induced disorder*/
+"F1090" = "1"      /*Alcohol use, unspecified, uncomplicated*/
+"F10920" = "1"     /*Alcohol use, unspecified with intoxication, uncomplicated*/
+"F10921" = "1"     /*Alcohol use, unspecified with intoxication delirium*/
+"F10929" = "1"     /*Alcohol use, unspecified with intoxication, unspecified*/
+"F10930" = "1"     /*Alcohol use, unspecified with withdrawal, uncomplicated*/
+"F10931" = "1"     /*Alcohol use, unspecified with withdrawal delirium*/
+"F10932" = "1"     /*Alcohol use, unspecified with withdrawal with perceptual disturbance*/
+"F10939" = "1"     /*Alcohol use, unspecified with withdrawal, unspecified*/
+"F1094" = "1"      /*Alcohol use, unspecified with alcohol-induced mood disorder*/
+"F10950" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with delusions*/
+"F10951" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder with hallucinations*/
+"F10959" = "1"     /*Alcohol use, unspecified with alcohol-induced psychotic disorder, unspecified*/
+"F1096" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting amnestic disorder*/
+"F1097" = "1"      /*Alcohol use, unspecified with alcohol-induced persisting dementia*/
+"F10980" = "1"     /*Alcohol use, unspecified with alcohol-induced anxiety disorder*/
+"F10981" = "1"     /*Alcohol use, unspecified with alcohol-induced sexual dysfunction*/
+"F10982" = "1"     /*Alcohol use, unspecified with alcohol-induced sleep disorder*/
+"F10988" = "1"     /*Alcohol use, unspecified with other alcohol-induced disorder*/
+"F1099" = "1"      /*Alcohol use, unspecified with unspecified alcohol-induced disorder*/
+"F1110" = "1"      /*Opioid abuse, uncomplicated*/
+"F11120" = "1"     /*Opioid abuse with intoxication, uncomplicated*/
+"F11121" = "1"     /*Opioid abuse with intoxication delirium*/
+"F11122" = "1"     /*Opioid abuse with intoxication with perceptual disturbance*/
+"F11129" = "1"     /*Opioid abuse with intoxication, unspecified*/
+"F1113" = "1"      /*Opioid abuse with withdrawal*/
+"F1114" = "1"      /*Opioid abuse with opioid-induced mood disorder*/
+"F11150" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with delusions*/
+"F11151" = "1"     /*Opioid abuse with opioid-induced psychotic disorder with hallucinations*/
+"F11159" = "1"     /*Opioid abuse with opioid-induced psychotic disorder, unspecified*/
+"F11181" = "1"     /*Opioid abuse with opioid-induced sexual dysfunction*/
+"F11182" = "1"     /*Opioid abuse with opioid-induced sleep disorder*/
+"F11188" = "1"     /*Opioid abuse with other opioid-induced disorder*/
+"F1119" = "1"      /*Opioid abuse with unspecified opioid-induced disorder*/
+"F1120" = "1"      /*Opioid dependence, uncomplicated*/
+"F11220" = "1"     /*Opioid dependence with intoxication, uncomplicated*/
+"F11221" = "1"     /*Opioid dependence with intoxication delirium*/
+"F11222" = "1"     /*Opioid dependence with intoxication with perceptual disturbance*/
+"F11229" = "1"     /*Opioid dependence with intoxication, unspecified*/
+"F1123" = "1"      /*Opioid dependence with withdrawal*/
+"F1124" = "1"      /*Opioid dependence with opioid-induced mood disorder*/
+"F11250" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with delusions*/
+"F11251" = "1"     /*Opioid dependence with opioid-induced psychotic disorder with hallucinations*/
+"F11259" = "1"     /*Opioid dependence with opioid-induced psychotic disorder, unspecified*/
+"F11281" = "1"     /*Opioid dependence with opioid-induced sexual dysfunction*/
+"F11282" = "1"     /*Opioid dependence with opioid-induced sleep disorder*/
+"F11288" = "1"     /*Opioid dependence with other opioid-induced disorder*/
+"F1129" = "1"      /*Opioid dependence with unspecified opioid-induced disorder*/
+"F1190" = "1"      /*Opioid use, unspecified, uncomplicated*/
+"F11920" = "1"     /*Opioid use, unspecified with intoxication, uncomplicated*/
+"F11921" = "1"     /*Opioid use, unspecified with intoxication delirium*/
+"F11922" = "1"     /*Opioid use, unspecified with intoxication with perceptual disturbance*/
+"F11929" = "1"     /*Opioid use, unspecified with intoxication, unspecified*/
+"F1193" = "1"      /*Opioid use, unspecified with withdrawal*/
+"F1194" = "1"      /*Opioid use, unspecified with opioid-induced mood disorder*/
+"F11950" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with delusions*/
+"F11951" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder with hallucinations*/
+"F11959" = "1"     /*Opioid use, unspecified with opioid-induced psychotic disorder, unspecified*/
+"F11981" = "1"     /*Opioid use, unspecified with opioid-induced sexual dysfunction*/
+"F11982" = "1"     /*Opioid use, unspecified with opioid-induced sleep disorder*/
+"F11988" = "1"     /*Opioid use, unspecified with other opioid-induced disorder*/
+"F1199" = "1"      /*Opioid use, unspecified with unspecified opioid-induced disorder*/
+"F1210" = "1"      /*Cannabis abuse, uncomplicated*/
+"F12120" = "1"     /*Cannabis abuse with intoxication, uncomplicated*/
+"F12121" = "1"     /*Cannabis abuse with intoxication delirium*/
+"F12122" = "1"     /*Cannabis abuse with intoxication with perceptual disturbance*/
+"F12129" = "1"     /*Cannabis abuse with intoxication, unspecified*/
+"F1213" = "1"      /*Cannabis abuse with withdrawal*/
+"F12150" = "1"     /*Cannabis abuse with psychotic disorder with delusions*/
+"F12151" = "1"     /*Cannabis abuse with psychotic disorder with hallucinations*/
+"F12159" = "1"     /*Cannabis abuse with psychotic disorder, unspecified*/
+"F12180" = "1"     /*Cannabis abuse with cannabis-induced anxiety disorder*/
+"F12188" = "1"     /*Cannabis abuse with other cannabis-induced disorder*/
+"F1219" = "1"      /*Cannabis abuse with unspecified cannabis-induced disorder*/
+"F1220" = "1"      /*Cannabis dependence, uncomplicated*/
+"F12220" = "1"     /*Cannabis dependence with intoxication, uncomplicated*/
+"F12221" = "1"     /*Cannabis dependence with intoxication delirium*/
+"F12222" = "1"     /*Cannabis dependence with intoxication with perceptual disturbance*/
+"F12229" = "1"     /*Cannabis dependence with intoxication, unspecified*/
+"F1223" = "1"      /*Cannabis dependence with withdrawal*/
+"F12250" = "1"     /*Cannabis dependence with psychotic disorder with delusions*/
+"F12251" = "1"     /*Cannabis dependence with psychotic disorder with hallucinations*/
+"F12259" = "1"     /*Cannabis dependence with psychotic disorder, unspecified*/
+"F12280" = "1"     /*Cannabis dependence with cannabis-induced anxiety disorder*/
+"F12288" = "1"     /*Cannabis dependence with other cannabis-induced disorder*/
+"F1229" = "1"      /*Cannabis dependence with unspecified cannabis-induced disorder*/
+"F1290" = "1"      /*Cannabis use, unspecified, uncomplicated*/
+"F12920" = "1"     /*Cannabis use, unspecified with intoxication, uncomplicated*/
+"F12921" = "1"     /*Cannabis use, unspecified with intoxication delirium*/
+"F12922" = "1"     /*Cannabis use, unspecified with intoxication with perceptual disturbance*/
+"F12929" = "1"     /*Cannabis use, unspecified with intoxication, unspecified*/
+"F1293" = "1"      /*Cannabis use, unspecified with withdrawal*/
+"F12950" = "1"     /*Cannabis use, unspecified with psychotic disorder with delusions*/
+"F12951" = "1"     /*Cannabis use, unspecified with psychotic disorder with hallucinations*/
+"F12959" = "1"     /*Cannabis use, unspecified with psychotic disorder, unspecified*/
+"F12980" = "1"     /*Cannabis use, unspecified with anxiety disorder*/
+"F12988" = "1"     /*Cannabis use, unspecified with other cannabis-induced disorder*/
+"F1299" = "1"      /*Cannabis use, unspecified with unspecified cannabis-induced disorder*/
+"F1310" = "1"      /*Sedative, hypnotic or anxiolytic abuse, uncomplicated*/
+"F13120" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, uncomplicated*/
+"F13121" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication delirium*/
+"F13129" = "1"     /*Sedative, hypnotic or anxiolytic abuse with intoxication, unspecified*/
+"F13130" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, uncomplicated*/
+"F13131" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal delirium*/
+"F13132" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal with perceptual disturbance*/
+"F13139" = "1"     /*Sedative, hypnotic or anxiolytic abuse with withdrawal, unspecified*/
+"F1314" = "1"      /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13150" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13151" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13159" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F13180" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13181" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13182" = "1"     /*Sedative, hypnotic or anxiolytic abuse with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13188" = "1"     /*Sedative, hypnotic or anxiolytic abuse with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1319" = "1"      /*Sedative, hypnotic or anxiolytic abuse with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1320" = "1"      /*Sedative, hypnotic or anxiolytic dependence, uncomplicated*/
+"F13220" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, uncomplicated*/
+"F13221" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication delirium*/
+"F13229" = "1"     /*Sedative, hypnotic or anxiolytic dependence with intoxication, unspecified*/
+"F13230" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, uncomplicated*/
+"F13231" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal delirium*/
+"F13232" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal with perceptual disturbance*/
+"F13239" = "1"     /*Sedative, hypnotic or anxiolytic dependence with withdrawal, unspecified*/
+"F1324" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13250" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13251" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13259" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1326" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1327" = "1"      /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13280" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13281" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13282" = "1"     /*Sedative, hypnotic or anxiolytic dependence with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13288" = "1"     /*Sedative, hypnotic or anxiolytic dependence with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1329" = "1"      /*Sedative, hypnotic or anxiolytic dependence with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1390" = "1"      /*Sedative, hypnotic, or anxiolytic use, unspecified, uncomplicated*/
+"F13920" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, uncomplicated*/
+"F13921" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication delirium*/
+"F13929" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with intoxication, unspecified*/
+"F13930" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, uncomplicated*/
+"F13931" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal delirium*/
+"F13939" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with withdrawal, unspecified*/
+"F1394" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced mood disorder*/
+"F13950" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with delusions*/
+"F13951" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder with hallucinations*/
+"F13959" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced psychotic disorder, unspecified*/
+"F1396" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting amnestic disorder*/
+"F1397" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced persisting dementia*/
+"F13980" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced anxiety disorder*/
+"F13981" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sexual dysfunction*/
+"F13982" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with sedative, hypnotic or anxiolytic-induced sleep disorder*/
+"F13988" = "1"     /*Sedative, hypnotic or anxiolytic use, unspecified with other sedative, hypnotic or anxiolytic-induced disorder*/
+"F1399" = "1"      /*Sedative, hypnotic or anxiolytic use, unspecified with unspecified sedative, hypnotic or anxiolytic-induced disorder*/
+"F1410" = "1"      /*Cocaine abuse, uncomplicated*/
+"F14120" = "1"     /*Cocaine abuse with intoxication, uncomplicated*/
+"F14121" = "1"     /*Cocaine abuse with intoxication with delirium*/
+"F14122" = "1"     /*Cocaine abuse with intoxication with perceptual disturbance*/
+"F14129" = "1"     /*Cocaine abuse with intoxication, unspecified*/
+"F1413" = "1"      /*Cocaine abuse, unspecified with withdrawal*/
+"F1414" = "1"      /*Cocaine abuse with cocaine-induced mood disorder*/
+"F14150" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with delusions*/
+"F14151" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder with hallucinations*/
+"F14159" = "1"     /*Cocaine abuse with cocaine-induced psychotic disorder, unspecified*/
+"F14180" = "1"     /*Cocaine abuse with cocaine-induced anxiety disorder*/
+"F14181" = "1"     /*Cocaine abuse with cocaine-induced sexual dysfunction*/
+"F14182" = "1"     /*Cocaine abuse with cocaine-induced sleep disorder*/
+"F14188" = "1"     /*Cocaine abuse with other cocaine-induced disorder*/
+"F1419" = "1"      /*Cocaine abuse with unspecified cocaine-induced disorder*/
+"F1420" = "1"      /*Cocaine dependence, uncomplicated*/
+"F14220" = "1"     /*Cocaine dependence with intoxication, uncomplicated*/
+"F14221" = "1"     /*Cocaine dependence with intoxication delirium*/
+"F14222" = "1"     /*Cocaine dependence with intoxication with perceptual disturbance*/
+"F14229" = "1"     /*Cocaine dependence with intoxication, unspecified*/
+"F1423" = "1"      /*Cocaine dependence with withdrawal*/
+"F1424" = "1"      /*Cocaine dependence with cocaine-induced mood disorder*/
+"F14250" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with delusions*/
+"F14251" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder with hallucinations*/
+"F14259" = "1"     /*Cocaine dependence with cocaine-induced psychotic disorder, unspecified*/
+"F14280" = "1"     /*Cocaine dependence with cocaine-induced anxiety disorder*/
+"F14281" = "1"     /*Cocaine dependence with cocaine-induced sexual dysfunction*/
+"F14282" = "1"     /*Cocaine dependence with cocaine-induced sleep disorder*/
+"F14288" = "1"     /*Cocaine dependence with other cocaine-induced disorder*/
+"F1429" = "1"      /*Cocaine dependence with unspecified cocaine-induced disorder*/
+"F1490" = "1"      /*Cocaine use, unspecified, uncomplicated*/
+"F14920" = "1"     /*Cocaine use, unspecified with intoxication, uncomplicated*/
+"F14921" = "1"     /*Cocaine use, unspecified with intoxication delirium*/
+"F14922" = "1"     /*Cocaine use, unspecified with intoxication with perceptual disturbance*/
+"F14929" = "1"     /*Cocaine use, unspecified with intoxication, unspecified*/
+"F1493" = "1"      /*Cocaine use, unspecified with withdrawal*/
+"F1494" = "1"      /*Cocaine use, unspecified with cocaine-induced mood disorder*/
+"F14950" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with delusions*/
+"F14951" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder with hallucinations*/
+"F14959" = "1"     /*Cocaine use, unspecified with cocaine-induced psychotic disorder, unspecified*/
+"F14980" = "1"     /*Cocaine use, unspecified with cocaine-induced anxiety disorder*/
+"F14981" = "1"     /*Cocaine use, unspecified with cocaine-induced sexual dysfunction*/
+"F14982" = "1"     /*Cocaine use, unspecified with cocaine-induced sleep disorder*/
+"F14988" = "1"     /*Cocaine use, unspecified with other cocaine-induced disorder*/
+"F1499" = "1"      /*Cocaine use, unspecified with unspecified cocaine-induced disorder*/
+"F1510" = "1"      /*Other stimulant abuse, uncomplicated*/
+"F15120" = "1"     /*Other stimulant abuse with intoxication, uncomplicated*/
+"F15121" = "1"     /*Other stimulant abuse with intoxication delirium*/
+"F15122" = "1"     /*Other stimulant abuse with intoxication with perceptual disturbance*/
+"F15129" = "1"     /*Other stimulant abuse with intoxication, unspecified*/
+"F1513" = "1"      /*Other stimulant abuse with withdrawal*/
+"F1514" = "1"      /*Other stimulant abuse with stimulant-induced mood disorder*/
+"F15150" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with delusions*/
+"F15151" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder with hallucinations*/
+"F15159" = "1"     /*Other stimulant abuse with stimulant-induced psychotic disorder, unspecified*/
+"F15180" = "1"     /*Other stimulant abuse with stimulant-induced anxiety disorder*/
+"F15181" = "1"     /*Other stimulant abuse with stimulant-induced sexual dysfunction*/
+"F15182" = "1"     /*Other stimulant abuse with stimulant-induced sleep disorder*/
+"F15188" = "1"     /*Other stimulant abuse with other stimulant-induced disorder*/
+"F1519" = "1"      /*Other stimulant abuse with unspecified stimulant-induced disorder*/
+"F1520" = "1"      /*Other stimulant dependence, uncomplicated*/
+"F15220" = "1"     /*Other stimulant dependence with intoxication, uncomplicated*/
+"F15221" = "1"     /*Other stimulant dependence with intoxication delirium*/
+"F15222" = "1"     /*Other stimulant dependence with intoxication with perceptual disturbance*/
+"F15229" = "1"     /*Other stimulant dependence with intoxication, unspecified*/
+"F1523" = "1"      /*Other stimulant dependence with withdrawal*/
+"F1524" = "1"      /*Other stimulant dependence with stimulant-induced mood disorder*/
+"F15250" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with delusions*/
+"F15251" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder with hallucinations*/
+"F15259" = "1"     /*Other stimulant dependence with stimulant-induced psychotic disorder, unspecified*/
+"F15280" = "1"     /*Other stimulant dependence with stimulant-induced anxiety disorder*/
+"F15281" = "1"     /*Other stimulant dependence with stimulant-induced sexual dysfunction*/
+"F15282" = "1"     /*Other stimulant dependence with stimulant-induced sleep disorder*/
+"F15288" = "1"     /*Other stimulant dependence with other stimulant-induced disorder*/
+"F1529" = "1"      /*Other stimulant dependence with unspecified stimulant-induced disorder*/
+"F1590" = "1"      /*Other stimulant use, unspecified, uncomplicated*/
+"F15920" = "1"     /*Other stimulant use, unspecified with intoxication, uncomplicated*/
+"F15921" = "1"     /*Other stimulant use, unspecified with intoxication delirium*/
+"F15922" = "1"     /*Other stimulant use, unspecified with intoxication with perceptual disturbance*/
+"F15929" = "1"     /*Other stimulant use, unspecified with intoxication, unspecified*/
+"F1593" = "1"      /*Other stimulant use, unspecified with withdrawal*/
+"F1594" = "1"      /*Other stimulant use, unspecified with stimulant-induced mood disorder*/
+"F15950" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with delusions*/
+"F15951" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder with hallucinations*/
+"F15959" = "1"     /*Other stimulant use, unspecified with stimulant-induced psychotic disorder, unspecified*/
+"F15980" = "1"     /*Other stimulant use, unspecified with stimulant-induced anxiety disorder*/
+"F15981" = "1"     /*Other stimulant use, unspecified with stimulant-induced sexual dysfunction*/
+"F15982" = "1"     /*Other stimulant use, unspecified with stimulant-induced sleep disorder*/
+"F15988" = "1"     /*Other stimulant use, unspecified with other stimulant-induced disorder*/
+"F1599" = "1"      /*Other stimulant use, unspecified with unspecified stimulant-induced disorder*/
+"F1610" = "1"      /*Hallucinogen abuse, uncomplicated*/
+"F16120" = "1"     /*Hallucinogen abuse with intoxication, uncomplicated*/
+"F16121" = "1"     /*Hallucinogen abuse with intoxication with delirium*/
+"F16122" = "1"     /*Hallucinogen abuse with intoxication with perceptual disturbance*/
+"F16129" = "1"     /*Hallucinogen abuse with intoxication, unspecified*/
+"F1614" = "1"      /*Hallucinogen abuse with hallucinogen-induced mood disorder*/
+"F16150" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with delusions*/
+"F16151" = "1"     /*Hallucinogen abuse with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16180" = "1"     /*Hallucinogen abuse with hallucinogen-induced anxiety disorder*/
+"F16183" = "1"     /*Hallucinogen abuse with hallucinogen persisting perception disorder (flashbacks)*/
+"F16188" = "1"     /*Hallucinogen abuse with other hallucinogen-induced disorder*/
+"F1619" = "1"      /*Hallucinogen abuse with unspecified hallucinogen-induced disorder*/
+"F1620" = "1"      /*Hallucinogen dependence, uncomplicated*/
+"F16220" = "1"     /*Hallucinogen dependence with intoxication, uncomplicated*/
+"F16221" = "1"     /*Hallucinogen dependence with intoxication with delirium*/
+"F16229" = "1"     /*Hallucinogen dependence with intoxication, unspecified*/
+"F1624" = "1"      /*Hallucinogen dependence with hallucinogen-induced mood disorder*/
+"F16250" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with delusions*/
+"F16251" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16259" = "1"     /*Hallucinogen dependence with hallucinogen-induced psychotic disorder, unspecified*/
+"F16280" = "1"     /*Hallucinogen dependence with hallucinogen-induced anxiety disorder*/
+"F16283" = "1"     /*Hallucinogen dependence with hallucinogen persisting perception disorder (flashbacks)*/
+"F16288" = "1"     /*Hallucinogen dependence with other hallucinogen-induced disorder*/
+"F1629" = "1"      /*Hallucinogen dependence with unspecified hallucinogen-induced disorder*/
+"F1690" = "1"      /*Hallucinogen use, unspecified, uncomplicated*/
+"F16920" = "1"     /*Hallucinogen use, unspecified with intoxication, uncomplicated*/
+"F16921" = "1"     /*Hallucinogen use, unspecified with intoxication with delirium*/
+"F16929" = "1"     /*Hallucinogen use, unspecified with intoxication, unspecified*/
+"F1694" = "1"      /*Hallucinogen use, unspecified with hallucinogen-induced mood disorder*/
+"F16951" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder with hallucinations*/
+"F16959" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced psychotic disorder, unspecified*/
+"F16980" = "1"     /*Hallucinogen use, unspecified with hallucinogen-induced anxiety disorder*/
+"F16983" = "1"     /*Hallucinogen use, unspecified with hallucinogen persisting perception disorder (flashbacks)*/
+"F16988" = "1"     /*Hallucinogen use, unspecified with other hallucinogen-induced disorder*/
+"F1699" = "1"      /*Hallucinogen use, unspecified with unspecified hallucinogen-induced disorder*/
+"F1810" = "1"      /*Inhalant abuse, uncomplicated*/
+"F18120" = "1"     /*Inhalant abuse with intoxication, uncomplicated*/
+"F18121" = "1"     /*Inhalant abuse with intoxication delirium*/
+"F18129" = "1"     /*Inhalant abuse with intoxication, unspecified*/
+"F1814" = "1"      /*Inhalant abuse with inhalant-induced mood disorder*/
+"F18150" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with delusions*/
+"F18151" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder with hallucinations*/
+"F18159" = "1"     /*Inhalant abuse with inhalant-induced psychotic disorder, unspecified*/
+"F1817" = "1"      /*Inhalant abuse with inhalant-induced dementia*/
+"F18180" = "1"     /*Inhalant abuse with inhalant-induced anxiety disorder*/
+"F18188" = "1"     /*Inhalant abuse with other inhalant-induced disorder*/
+"F1819" = "1"      /*Inhalant abuse with unspecified inhalant-induced disorder*/
+"F1820" = "1"      /*Inhalant dependence, uncomplicated*/
+"F18220" = "1"     /*Inhalant dependence with intoxication, uncomplicated*/
+"F18221" = "1"     /*Inhalant dependence with intoxication delirium*/
+"F18229" = "1"     /*Inhalant dependence with intoxication, unspecified*/
+"F1824" = "1"      /*Inhalant dependence with inhalant-induced mood disorder*/
+"F18250" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with delusions*/
+"F18251" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder with hallucinations*/
+"F18259" = "1"     /*Inhalant dependence with inhalant-induced psychotic disorder, unspecified*/
+"F1827" = "1"      /*Inhalant dependence with inhalant-induced dementia*/
+"F18280" = "1"     /*Inhalant dependence with inhalant-induced anxiety disorder*/
+"F18288" = "1"     /*Inhalant dependence with other inhalant-induced disorder*/
+"F1829" = "1"      /*Inhalant dependence with unspecified inhalant-induced disorder*/
+"F1890" = "1"      /*Inhalant use, unspecified, uncomplicated*/
+"F18920" = "1"     /*Inhalant use, unspecified with intoxication, uncomplicated*/
+"F18921" = "1"     /*Inhalant use, unspecified with intoxication with delirium*/
+"F18929" = "1"     /*Inhalant use, unspecified with intoxication, unspecified*/
+"F1894" = "1"      /*Inhalant use, unspecified with inhalant-induced mood disorder*/
+"F18950" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with delusions*/
+"F18951" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder with hallucinations*/
+"F18959" = "1"     /*Inhalant use, unspecified with inhalant-induced psychotic disorder, unspecified*/
+"F1897" = "1"      /*Inhalant use, unspecified with inhalant-induced persisting dementia*/
+"F18980" = "1"     /*Inhalant use, unspecified with inhalant-induced anxiety disorder*/
+"F18988" = "1"     /*Inhalant use, unspecified with other inhalant-induced disorder*/
+"F1899" = "1"      /*Inhalant use, unspecified with unspecified inhalant-induced disorder*/
+"F1910" = "1"      /*Other psychoactive substance abuse, uncomplicated*/
+"F19120" = "1"     /*Other psychoactive substance abuse with intoxication, uncomplicated*/
+"F19121" = "1"     /*Other psychoactive substance abuse with intoxication delirium*/
+"F19122" = "1"     /*Other psychoactive substance abuse with intoxication with perceptual disturbances*/
+"F19129" = "1"     /*Other psychoactive substance abuse with intoxication, unspecified*/
+"F19130" = "1"     /*Other psychoactive substance abuse with withdrawal, uncomplicated*/
+"F19131" = "1"     /*Other psychoactive substance abuse with withdrawal delirium*/
+"F19139" = "1"     /*Other psychoactive substance abuse with withdrawal, unspecified*/
+"F1914" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced mood disorder*/
+"F19150" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with delusions*/
+"F19151" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19159" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1916" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting amnestic disorder*/
+"F1917" = "1"      /*Other psychoactive substance abuse with psychoactive substance-induced persisting dementia*/
+"F19180" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced anxiety disorder*/
+"F19181" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sexual dysfunction*/
+"F19182" = "1"     /*Other psychoactive substance abuse with psychoactive substance-induced sleep disorder*/
+"F19188" = "1"     /*Other psychoactive substance abuse with other psychoactive substance-induced disorder*/
+"F1919" = "1"      /*Other psychoactive substance abuse with unspecified psychoactive substance-induced disorder*/
+"F1920" = "1"      /*Other psychoactive substance dependence, uncomplicated*/
+"F19220" = "1"     /*Other psychoactive substance dependence with intoxication, uncomplicated*/
+"F19221" = "1"     /*Other psychoactive substance dependence with intoxication delirium*/
+"F19222" = "1"     /*Other psychoactive substance dependence with intoxication with perceptual disturbance*/
+"F19229" = "1"     /*Other psychoactive substance dependence with intoxication, unspecified*/
+"F19230" = "1"     /*Other psychoactive substance dependence with withdrawal, uncomplicated*/
+"F19231" = "1"     /*Other psychoactive substance dependence with withdrawal delirium*/
+"F19232" = "1"     /*Other psychoactive substance dependence with withdrawal with perceptual disturbance*/
+"F19239" = "1"     /*Other psychoactive substance dependence with withdrawal, unspecified*/
+"F1924" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced mood disorder*/
+"F19251" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19259" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1926" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting amnestic disorder*/
+"F1927" = "1"      /*Other psychoactive substance dependence with psychoactive substance-induced persisting dementia*/
+"F19280" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced anxiety disorder*/
+"F19281" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sexual dysfunction*/
+"F19282" = "1"     /*Other psychoactive substance dependence with psychoactive substance-induced sleep disorder*/
+"F19288" = "1"     /*Other psychoactive substance dependence with other psychoactive substance-induced disorder*/
+"F1929" = "1"      /*Other psychoactive substance dependence with unspecified psychoactive substance-induced disorder*/
+"F1990" = "1"      /*Other psychoactive substance use, unspecified, uncomplicated*/
+"F19920" = "1"     /*Other psychoactive substance use, unspecified with intoxication, uncomplicated*/
+"F19921" = "1"     /*Other psychoactive substance use, unspecified with intoxication with delirium*/
+"F19922" = "1"     /*Other psychoactive substance use, unspecified with intoxication with perceptual disturbance*/
+"F19929" = "1"     /*Other psychoactive substance use, unspecified with intoxication, unspecified*/
+"F19930" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, uncomplicated*/
+"F19931" = "1"     /*Other psychoactive substance use, unspecified with withdrawal delirium*/
+"F19932" = "1"     /*Other psychoactive substance use, unspecified with withdrawal with perceptual disturbance*/
+"F19939" = "1"     /*Other psychoactive substance use, unspecified with withdrawal, unspecified*/
+"F1994" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced mood disorder*/
+"F19950" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with delusions*/
+"F19951" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder with hallucinations*/
+"F19959" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced psychotic disorder, unspecified*/
+"F1996" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting amnestic disorder*/
+"F1997" = "1"      /*Other psychoactive substance use, unspecified with psychoactive substance-induced persisting dementia*/
+"F19980" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced anxiety disorder*/
+"F19981" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sexual dysfunction*/
+"F19982" = "1"     /*Other psychoactive substance use, unspecified with psychoactive substance-induced sleep disorder*/
+"F19988" = "1"     /*Other psychoactive substance use, unspecified with other psychoactive substance-induced disorder*/
+"F1999" = "1"      /*Other psychoactive substance use, unspecified with unspecified psychoactive substance-induced disorder*/
+"O99310" = "1"     /*Alcohol use complicating pregnancy, unspecified trimester*/
+"O99311" = "1"     /*Alcohol use complicating pregnancy, first trimester*/
+"O99312" = "1"     /*Alcohol use complicating pregnancy, second trimester*/
+"O99313" = "1"     /*Alcohol use complicating pregnancy, third trimester*/
+"O99314" = "1"     /*Alcohol use complicating childbirth*/
+"O99315" = "1"     /*Alcohol use complicating the puerperium*/
+Other = "0"
+;
+
+/*OD FLAGS-POST DISCHARGE*/
+value $DX_OD_POST
+"T39011A" = "1"    /*Poisoning by aspirin, accidental (unintentional), initial encounter*/
+"T39391A" = "1"    /*Poisoning by other nonsteroidal anti-inflammatory drugs [NSAID], accidental (unintentional), initial encounter*/
+"T398X1A" = "1"    /*Poisoning by other nonopioid analgesics and antipyretics, not elsewhere classified, accidental (unintentional), initial encounter*/
+"T400X1A" = "1"    /*Poisoning by opium, accidental (unintentional), initial encounter*/
+"T400X4A" = "1"    /*Poisoning by opium, undetermined, initial encounter*/
+"T401X1A" = "1"    /*Poisoning by heroin, accidental (unintentional), initial encounter*/
+"T401X4A" = "1"    /*Poisoning by heroin, undetermined, initial encounter*/
+"T402X1A" = "1"    /*Poisoning by other opioids, accidental (unintentional), initial encounter*/
+"T402X4A" = "1"    /*Poisoning by other opioids, undetermined, initial encounter*/
+"T403X1A" = "1"    /*Poisoning by methadone, accidental (unintentional), initial encounter*/
+"T403X4A" = "1"    /*Poisoning by methadone, undetermined, initial encounter*/
+"T40411A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), initial encounter*/
+"T40414A" = "1"    /*Poisoning by fentanyl or fentanyl analogs, undetermined, initial encounter*/
+"T40421A" = "1"    /*Poisoning by tramadol, accidental (unintentional), initial encounter*/
+"T40424A" = "1"    /*Poisoning by tramadol, undetermined, initial encounter*/
+"T40491A" = "1"    /*Poisoning by other synthetic narcotics, accidental (unintentional), initial encounter*/
+"T40494A" = "1"    /*Poisoning by other synthetic narcotics, undetermined, initial encounter*/
+"T405X1A" = "1"    /*Poisoning by cocaine, accidental (unintentional), initial encounter*/
+"T405X4A" = "1"    /*Poisoning by cocaine, undetermined, initial encounter*/
+"T40601A" = "1"    /*Poisoning by unspecified narcotics, accidental (unintentional), initial encounter*/
+"T40604A" = "1"    /*Poisoning by unspecified narcotics, undetermined, initial encounter*/
+"T40691A" = "1"    /*Poisoning by other narcotics, accidental (unintentional), initial encounter*/
+"T40694A" = "1"    /*Poisoning by other narcotics, undetermined, initial encounter*/
+"T40711A" = "1"    /*Poisoning by cannabis, accidental (unintentional), initial encounter*/
+"T40714A" = "1"    /*Poisoning by cannabis, undetermined, initial encounter*/
+"T40721A" = "1"    /*Poisoning by synthetic cannabinoids, accidental (unintentional), initial encounter*/
+"T40724A" = "1"    /*Poisoning by synthetic cannabinoids, undetermined, initial encounter*/
+"T408X1A" = "1"    /*Poisoning by lysergide [LSD], accidental (unintentional), initial encounter*/
+"T408X4A" = "1"    /*Poisoning by lysergide [LSD], undetermined, initial encounter*/
+"T40901A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40904A" = "1"    /*Poisoning by unspecified psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T40991A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], accidental (unintentional), initial encounter*/
+"T40994A" = "1"    /*Poisoning by other psychodysleptics [hallucinogens], undetermined, initial encounter*/
+"T410X1A" = "1"    /*Poisoning by inhaled anesthetics, accidental (unintentional), initial encounter*/
+"T411X1A" = "1"    /*Poisoning by intravenous anesthetics, accidental (unintentional), initial encounter*/
+"T41201A" = "1"    /*Poisoning by unspecified general anesthetics, accidental (unintentional), initial encounter*/
+"T41291A" = "1"    /*Poisoning by other general anesthetics, accidental (unintentional), initial encounter*/
+"T413X1A" = "1"    /*Poisoning by local anesthetics, accidental (unintentional), initial encounter*/
+"T423X1A" = "1"    /*Poisoning by barbiturates, accidental (unintentional), initial encounter*/
+"T424X1A" = "1"    /*Poisoning by benzodiazepines, accidental (unintentional), initial encounter*/
+"T424X4A" = "1"    /*Poisoning by benzodiazepines, undetermined, initial encounter*/
+"T43011A" = "1"    /*Poisoning by tricyclic antidepressants, accidental (unintentional), initial encounter*/
+"T43021A" = "1"    /*Poisoning by tetracyclic antidepressants, accidental (unintentional), initial encounter*/
+"T431X1A" = "1"    /*Poisoning by monoamine-oxidase-inhibitor antidepressants, accidental (unintentional), initial encounter*/
+"T43201A" = "1"    /*Poisoning by unspecified antidepressants, accidental (unintentional), initial encounter*/
+"T43211A" = "1"    /*Poisoning by selective serotonin and norepinephrine reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43221A" = "1"    /*Poisoning by selective serotonin reuptake inhibitors, accidental (unintentional), initial encounter*/
+"T43291A" = "1"    /*Poisoning by other antidepressants, accidental (unintentional), initial encounter*/
+"T43601A" = "1"    /*Poisoning by unspecified psychostimulants, accidental (unintentional), initial encounter*/
+"T43621A" = "1"    /*Poisoning by amphetamines, accidental (unintentional), initial encounter*/
+"T43623A" = "1"    /*Poisoning by amphetamines, assault, initial encounter*/
+"T43624A" = "1"    /*Poisoning by amphetamines, undetermined, initial encounter*/
+"T43631A" = "1"    /*Poisoning by methylphenidate, accidental (unintentional), initial encounter*/
+"T43641A" = "1"    /*Poisoning by ecstasy, accidental (unintentional), initial encounter*/
+"T43644A" = "1"    /*Poisoning by ecstasy, undetermined, initial encounter*/
+"T43651A" = "1"    /*Poisoning by methamphetamines accidental (unintentional), initial encounter*/
+"T43654A" = "1"    /*Poisoning by methamphetamines, undetermined, initial encounter*/
+"T43691A" = "1"    /*Poisoning by other psychostimulants, accidental (unintentional), initial encounter*/
+"T43694A" = "1"    /*Poisoning by other psychostimulants, undetermined, initial encounter*/
+"T438X1A" = "1"    /*Poisoning by other psychotropic drugs, accidental (unintentional), initial encounter*/
+"T438X4A" = "1"    /*Poisoning by other psychotropic drugs, undetermined, initial encounter*/
+"T4391XA" = "1"    /*Poisoning by unspecified psychotropic drug, accidental (unintentional), initial encounter*/
+"T4394XA" = "1"    /*Poisoning by unspecified psychotropic drug, undetermined, initial encounter*/
+"T48201A" = "1"    /*Poisoning by unspecified drugs acting on muscles, accidental (unintentional), initial encounter*/
+"T48291A" = "1"    /*Poisoning by other drugs acting on muscles, accidental (unintentional), initial encounter*/
+Other = "0"
+;
+
+/*PMAD FLAGS-POST DISCHARGE*/
+value $DX_PMAD_POST
+"F0630" = "1"      /*Mood disorder due to known physiological condition, unspecified*/
+"F0631" = "1"      /*Mood disorder due to known physiological condition with depressive features*/
+"F0632" = "1"      /*Mood disorder due to known physiological condition with major depressive-like episode*/
+"F0633" = "1"      /*Mood disorder due to known physiological condition with manic features*/
+"F0634" = "1"      /*Mood disorder due to known physiological condition with mixed features*/
+"F064" = "1"       /*Anxiety disorder due to known physiological condition*/
+"F3010" = "1"      /*Manic episode without psychotic symptoms, unspecified*/
+"F3011" = "1"      /*Manic episode without psychotic symptoms, mild*/
+"F3012" = "1"      /*Manic episode without psychotic symptoms, moderate*/
+"F3013" = "1"      /*Manic episode, severe, without psychotic symptoms*/
+"F302" = "1"       /*Manic episode, severe with psychotic symptoms*/
+"F303" = "1"       /*Manic episode in partial remission*/
+"F308" = "1"       /*Other manic episodes*/
+"F309" = "1"       /*Manic episode, unspecified*/
+"F310" = "1"       /*Bipolar disorder, current episode hypomanic*/
+"F3110" = "1"      /*Bipolar disorder, current episode manic without psychotic features, unspecified*/
+"F3111" = "1"      /*Bipolar disorder, current episode manic without psychotic features, mild*/
+"F3112" = "1"      /*Bipolar disorder, current episode manic without psychotic features, moderate*/
+"F3113" = "1"      /*Bipolar disorder, current episode manic without psychotic features, severe*/
+"F312" = "1"       /*Bipolar disorder, current episode manic severe with psychotic features*/
+"F3130" = "1"      /*Bipolar disorder, current episode depressed, mild or moderate severity, unspecified*/
+"F3131" = "1"      /*Bipolar disorder, current episode depressed, mild*/
+"F3132" = "1"      /*Bipolar disorder, current episode depressed, moderate*/
+"F314" = "1"       /*Bipolar disorder, current episode depressed, severe, without psychotic features*/
+"F315" = "1"       /*Bipolar disorder, current episode depressed, severe, with psychotic features*/
+"F3160" = "1"      /*Bipolar disorder, current episode mixed, unspecified*/
+"F3161" = "1"      /*Bipolar disorder, current episode mixed, mild*/
+"F3162" = "1"      /*Bipolar disorder, current episode mixed, moderate*/
+"F3163" = "1"      /*Bipolar disorder, current episode mixed, severe, without psychotic features*/
+"F3164" = "1"      /*Bipolar disorder, current episode mixed, severe, with psychotic features*/
+"F3171" = "1"      /*Bipolar disorder, in partial remission, most recent episode hypomanic*/
+"F3173" = "1"      /*Bipolar disorder, in partial remission, most recent episode manic*/
+"F3175" = "1"      /*Bipolar disorder, in partial remission, most recent episode depressed*/
+"F3177" = "1"      /*Bipolar disorder, in partial remission, most recent episode mixed*/
+"F3181" = "1"      /*Bipolar II disorder*/
+"F3189" = "1"      /*Other bipolar disorder*/
+"F319" = "1"       /*Bipolar disorder, unspecified*/
+"F320" = "1"       /*Major depressive disorder, single episode, mild*/
+"F321" = "1"       /*Major depressive disorder, single episode, moderate*/
+"F322" = "1"       /*Major depressive disorder, single episode, severe without psychotic features*/
+"F323" = "1"       /*Major depressive disorder, single episode, severe with psychotic features*/
+"F324" = "1"       /*Major depressive disorder, single episode, in partial remission*/
+"F3289" = "1"      /*Other specified depressive episodes*/
+"F329" = "1"       /*Major depressive disorder, single episode, unspecified*/
+"F32A" = "1"       /*Depression, unspecified*/
+"F330" = "1"       /*Major depressive disorder, recurrent, mild*/
+"F331" = "1"       /*Major depressive disorder, recurrent, moderate*/
+"F332" = "1"       /*Major depressive disorder, recurrent severe without psychotic features*/
+"F333" = "1"       /*Major depressive disorder, recurrent, severe with psychotic symptoms*/
+"F3341" = "1"      /*Major depressive disorder, recurrent, in partial remission*/
+"F338" = "1"       /*Other recurrent depressive disorders*/
+"F339" = "1"       /*Major depressive disorder, recurrent, unspecified*/
+"F340" = "1"       /*Cyclothymic disorder*/
+"F341" = "1"       /*Dysthymic disorder*/
+"F3481" = "1"      /*Disruptive mood dysregulation disorder*/
+"F3489" = "1"      /*Other specified persistent mood disorders*/
+"F349" = "1"       /*Persistent mood [affective] disorder, unspecified*/
+"F39" = "1"        /*Unspecified mood [affective] disorder*/
+"F4000" = "1"      /*Agoraphobia, unspecified*/
+"F4001" = "1"      /*Agoraphobia with panic disorder*/
+"F4002" = "1"      /*Agoraphobia without panic disorder*/
+"F4010" = "1"      /*Social phobia, unspecified*/
+"F4011" = "1"      /*Social phobia, generalized*/
+"F40210" = "1"     /*Arachnophobia*/
+"F40218" = "1"     /*Other animal type phobia*/
+"F40220" = "1"     /*Fear of thunderstorms*/
+"F40228" = "1"     /*Other natural environment type phobia*/
+"F40230" = "1"     /*Fear of blood*/
+"F40231" = "1"     /*Fear of injections and transfusions*/
+"F40232" = "1"     /*Fear of other medical care*/
+"F40233" = "1"     /*Fear of injury*/
+"F40240" = "1"     /*Claustrophobia*/
+"F40241" = "1"     /*Acrophobia*/
+"F40242" = "1"     /*Fear of bridges*/
+"F40243" = "1"     /*Fear of flying*/
+"F40248" = "1"     /*Other situational type phobia*/
+"F40290" = "1"     /*Androphobia*/
+"F40291" = "1"     /*Gynephobia*/
+"F40298" = "1"     /*Other specified phobia*/
+"F408" = "1"       /*Other phobic anxiety disorders*/
+"F409" = "1"       /*Phobic anxiety disorder, unspecified*/
+"F410" = "1"       /*Panic disorder [episodic paroxysmal anxiety]*/
+"F411" = "1"       /*Generalized anxiety disorder*/
+"F413" = "1"       /*Other mixed anxiety disorders*/
+"F418" = "1"       /*Other specified anxiety disorders*/
+"F419" = "1"       /*Anxiety disorder, unspecified*/
+"F430" = "1"       /*Acute stress reaction*/
+"F4310" = "1"      /*Post-traumatic stress disorder, unspecified*/
+"F4311" = "1"      /*Post-traumatic stress disorder, acute*/
+"F4312" = "1"      /*Post-traumatic stress disorder, chronic*/
+"F530" = "1"       /*Postpartum depression*/
+Other = "0"
+;
+
+run;

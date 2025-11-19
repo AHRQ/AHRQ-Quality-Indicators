@@ -9,13 +9,13 @@
 *         population file and PQI_AREA_MEASURES.SAS output.
 *         Variables created by this program are PAPQxx and OAPQxx.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *============================================================================ ;
 
  title2 'PROGRAM PQI_AREA_OBSERVED';
- title3 'AHRQ PREVENTION QUALITY INDICATORS: CALCULATE ADJUSTED AREA RATES';
+ title3 'Prevention Quality Indicators in Inpatient Settings (PQI): CALCULATE ADJUSTED AREA RATES';
 
  * ---------------------------------------------------------------- ;
  * --- ADD POPULATION DENOMINATOR                               --- ;
@@ -70,7 +70,7 @@
            POP_2005 POP_2006 POP_2007 POP_2008 POP_2009 
            POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
            POP_2015 POP_2016 POP_2017 POP_2018 POP_2019 
-           POP_2020 POP_2021 POP_2022 POP_2023 POP 8;
+           POP_2020 POP_2021 POP_2022 POP_2023 POP_2024 POP 8;
 
     infile POPFILE missover firstobs=2;
 
@@ -80,7 +80,7 @@
           POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
           POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
           POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-          POP_2020 POP_2021 POP_2022 POP_2023;
+          POP_2020 POP_2021 POP_2022 POP_2023 POP_2024;
 
     %CTY2MA
 
@@ -351,17 +351,17 @@ run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS.(where=(_TYPE_ in (8))) n nmiss min max sum nolabels;
      var TAPQ01 TAPQ03 TAPQ05 TAPQ07-TAPQ08 TAPQ11-TAPQ12 TAPQ14-TAPQ16 TAPQ90-TAPQ93;
-     title  "PREVENTION QUALITY AREA-LEVEL INDICATOR OVERALL NUMERATOR WHEN _TYPE_ =8 ";
+     title  "Prevention Quality Indicators in Inpatient Settings (PQI): OVERALL NUMERATOR WHEN _TYPE_ =8 ";
 run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS. (where=(_TYPE_ in (8))) n nmiss min max sum nolabels;
      var PAPQ01 PAPQ03 PAPQ05 PAPQ07-PAPQ08 PAPQ11-PAPQ12 PAPQ14-PAPQ16 PAPQ90-PAPQ93;
-     title  "PREVENTION QUALITY AREA-LEVEL INDICATOR OVERALL DENOMINATOR (SUM) WHEN _TYPE_ =8";
+     title  "Prevention Quality Indicators in Inpatient Settings (PQI): OVERALL DENOMINATOR (SUM) WHEN _TYPE_ =8";
 run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS. (where=(_TYPE_ in (8))) n nmiss min max mean nolabels;
      var OAPQ01 OAPQ03 OAPQ05 OAPQ07-OAPQ08 OAPQ11-OAPQ12 OAPQ14-OAPQ16 OAPQ90-OAPQ93;
-     title  "PREVENTION QUALITY AREA-LEVEL INDICATOR AVERAGE OBSERVED RATE (MEAN) WHEN _TYPE_ =8";
+     title  "Prevention Quality Indicators in Inpatient Settings (PQI): AVERAGE OBSERVED RATE (MEAN) WHEN _TYPE_ =8";
 run; quit;
 
  * -------------------------------------------------------------- ;
@@ -442,7 +442,7 @@ run; quit;
  %scale_rates;
  file PQTXTAOB lrecl=1000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";

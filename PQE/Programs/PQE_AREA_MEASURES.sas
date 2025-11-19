@@ -5,8 +5,8 @@
 *         Settings (PQE) outcomes of interest to ED records.
 *         Variables created by this program are TAQEnn and EXCLUDEQEnn.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE: The PQE_AREA_FORMATS.SAS program must be run BEFORE
 *             running this program.
@@ -14,7 +14,7 @@
 * ===============================================================================;
 
 TITLE2 'PQE_AREA_MEASURES PROGRAM';
-TITLE3 'AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE): ASSIGN OUTCOMES TO DATA';
+TITLE3 'Prevention Quality Indicators in Emergency Department Settings (PQE): ASSIGN OUTCOMES TO DATA';
 
 * -------------------------------------------------------------- ;
 * --- IN PREPARATION FOR PQEs THAT TRACK ED PATIENTS OVER    --- ;
@@ -27,8 +27,7 @@ DATA TEMP0;
    SET INMSR.&DISCHARGE.
     (KEEP = KEY FEMALE AGE AGEMONTH HOSPID PSTCO HOSPST
             YEAR DQTR DX1-DX&NDX. EDADMIT
-            VisitLink DaysToEvent LOS DIED HCUP_ED &OUTFILE_KEEP);
-   if HCUP_ED > 0;
+            VisitLink DaysToEvent LOS DIED &OUTFILE_KEEP);
    
    ATTRIB RESIDENT LENGTH=8 LABEL='Whether patient resides in same state as admitting hospital';
    IF FIPSTATE(INPUT(SUBSTR(PUT(PSTCO,Z5.),1,2),8.))=HOSPST AND NOT MISSING(HOSPST) THEN RESIDENT=1; ELSE RESIDENT=0;
@@ -363,12 +362,12 @@ RUN;
 
 PROC MEANS DATA = OUTMSR.&OUTFILE_MEAS. N NMISS MIN MAX NOLABELS ;
      VAR YEAR DQTR POPCAT SEXCAT;
-     TITLE4 "ED PREVENTION QUALITY INDICATOR CATEGORICAL VARIABLES AND RANGES OF VALUES";
+     TITLE4 "Prevention Quality Indicators in Emergency Department Settings (PQE): CATEGORICAL VARIABLES AND RANGES OF VALUES";
 RUN; QUIT;
 
 PROC MEANS DATA = OUTMSR.&OUTFILE_MEAS. N NMISS MIN MEAN SUM MAXDEC=2 NOLABELS ;
      VAR TAQE01-TAQE05;
-     TITLE5 "ED PREVENTION QUALITY INDICATOR NUMERATORS (COUNT=SUM)";
+     TITLE5 "Prevention Quality Indicators in Emergency Department Settings (PQE): NUMERATORS (COUNT=SUM)";
 RUN; QUIT;
 
 

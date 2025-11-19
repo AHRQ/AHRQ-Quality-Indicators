@@ -8,8 +8,8 @@
 *         Output stratified by HOSPID, AGECAT, SEXCAT, PAYCAT, and  RACECAT.
 *         Variables created by this program are PPIQXX and OPIQXX
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *===================================================================================;
 
@@ -157,10 +157,9 @@ run; quit;
 
  %IF &PRINT. = 1 %THEN %DO;
 
- %MACRO PRT(IQ,TEXT,VOLUME);
+ %MACRO PRT(IQ,TEXT);
 
  proc   PRINT data=OUTHOBS.&OUTFILE_HOSPOBS. LABEL SPLIT='*';
- %IF &VOLUME=0 %THEN %DO;
  var   HOSPID AGECAT SEXCAT PAYCAT RACECAT TPIQ&IQ. PPIQ&IQ. OPIQ&IQ. ;
  label HOSPID  = "Hospital Identification Number"
        AGECAT  = "Age Categories"
@@ -171,53 +170,40 @@ run; quit;
        PPIQ&IQ.   = "PPIQ&IQ.*(Population)"
        OPIQ&IQ.   = "OPIQ&IQ.*(Observed rate)"
        ;
- format TPIQ&IQ. PPIQ&IQ. 13.0 OPIQ&IQ. 8.6;
- %END;
- %ELSE %DO;
- var   HOSPID AGECAT SEXCAT PAYCAT RACECAT TPIQ&IQ.  ;
- label HOSPID  = "Hospital Identification Number"
-       AGECAT  = "Age Categories"
-       SEXCAT  = "Sex Categories"
-       PAYCAT  = "Patient Primary Payer"
-       RACECAT = "Race Categories"
-       TPIQ&IQ.   = "TPIQ&IQ.*(Numerator)"
-       ;
- format TPIQ&IQ. 13.0;
- %END;
  format AGECAT AGECAT.
         SEXCAT SEXCAT.
         PAYCAT PAYCAT.
-        RACECAT RACECAT.
+        RACECAT RACECAT. TPIQ&IQ. PPIQ&IQ. 13.0 OPIQ&IQ. 8.6
    ;
  title4 "Indicator &IQ.: &TEXT";
  run;
 
  %MEND PRT;
 
- %PRT(08, Esophageal Resection Mortality Rate,0);
- %PRT(09, Pancreatic Resection Mortality Rate,0)
- %PRT(09_WITH_CANCER, Pancreatic Resection Mortality Rate Stratum_WITH_CANCER Presence of Pancreatic Cancer,0);
- %PRT(09_WITHOUT_CANCER, Pancreatic Resection Mortality Rate Stratum_WITHOUT_CANCER Absence of Pancreatic Cancer,0)
- %PRT(11, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate,0);
- %PRT(11_OPEN_RUPTURED,   Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_OPEN_RUPTURED:   Open Repair of Ruptured,0);
- %PRT(11_OPEN_UNRUPTURED, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_OPEN_UNRUPTURED: Open Repair of Unruptured,0);
- %PRT(11_ENDO_RUPTURED,   Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_ENDO_RUPTURED:   Endovascular Repair of Ruptured,0);
- %PRT(11_ENDO_UNRUPTURED, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_ENDO_UNRUPTURED: Endovascular Repair of Unruptured,0);
- %PRT(12, Coronary Artery Bypass Graft (CABG) Mortality Rate,0);
- %PRT(15, Acute Myocardial Infarction (AMI) Mortality Rate,0);
- %PRT(16, Heart Failure Mortality Rate,0);
- %PRT(17, Acute Stroke Mortality Rate,0);
- %PRT(17_HEMSTROKE_SUBARACH, Acute Stroke Mortality Rate Stratum_HEMSTROKE_SUBARACH: Subarachnoid Hemorrhage,0);
- %PRT(17_HEMSTROKE_INTRACER, Acute Stroke Mortality Rate Stratum_HEMSTROKE_INTRACER: Intracerebral Hemorrhage ,0);
- %PRT(17_ISCHEMSTROKE,       Acute Stroke Mortality Rate Stratum_ISCHEMSTROKE:       Ischemic Stroke,0);
- %PRT(18, Gastrointestinal Hemorrhage Mortality Rate,0);
- %PRT(19, Hip Fracture Mortality Rate,0);
- %PRT(20, Pneumonia Mortality Rate,0);
- %PRT(21, %BQUOTE(Cesarean Delivery Rate, Uncomplicated),0);
- %PRT(22, %BQUOTE(Vaginal Birth After Cesarean (VBAC) Delivery Rate, Uncomplicated),0);
- %PRT(30, Percutaneous Coronary Intervention (PCI) Mortality Rate,0);
- %PRT(31, Carotid Endarterectomy Mortality Rate,0);
- %PRT(33, %BQUOTE(Primary Cesarean Delivery Rate, Uncomplicated),0);
+ %PRT(08, Esophageal Resection Mortality Rate);
+ %PRT(09, Pancreatic Resection Mortality Rate);
+ %PRT(09_WITH_CANCER, Pancreatic Resection Mortality Rate Stratum_WITH_CANCER Presence of Pancreatic Cancer);
+ %PRT(09_WITHOUT_CANCER, Pancreatic Resection Mortality Rate Stratum_WITHOUT_CANCER Absence of Pancreatic Cancer);
+ %PRT(11, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate);
+ %PRT(11_OPEN_RUPTURED,   Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_OPEN_RUPTURED:   Open Repair of Ruptured);
+ %PRT(11_OPEN_UNRUPTURED, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_OPEN_UNRUPTURED: Open Repair of Unruptured);
+ %PRT(11_ENDO_RUPTURED,   Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_ENDO_RUPTURED:   Endovascular Repair of Ruptured);
+ %PRT(11_ENDO_UNRUPTURED, Abdominal Aortic Aneurysm (AAA) Repair Mortality Rate Stratum_ENDO_UNRUPTURED: Endovascular Repair of Unruptured);
+ %PRT(12, Coronary Artery Bypass Graft (CABG) Mortality Rate);
+ %PRT(15, Acute Myocardial Infarction (AMI) Mortality Rate);
+ %PRT(16, Heart Failure Mortality Rate);
+ %PRT(17, Acute Stroke Mortality Rate);
+ %PRT(17_HEMSTROKE_SUBARACH, Acute Stroke Mortality Rate Stratum_HEMSTROKE_SUBARACH: Subarachnoid Hemorrhage);
+ %PRT(17_HEMSTROKE_INTRACER, Acute Stroke Mortality Rate Stratum_HEMSTROKE_INTRACER: Intracerebral Hemorrhage);
+ %PRT(17_ISCHEMSTROKE,       Acute Stroke Mortality Rate Stratum_ISCHEMSTROKE:       Ischemic Stroke);
+ %PRT(18, Gastrointestinal Hemorrhage Mortality Rate);
+ %PRT(19, Hip Fracture Mortality Rate);
+ %PRT(20, Pneumonia Mortality Rate);
+ %PRT(21, %BQUOTE(Cesarean Delivery Rate, Uncomplicated));
+ %PRT(22, %BQUOTE(Vaginal Birth After Cesarean (VBAC) Delivery Rate, Uncomplicated));
+ %PRT(30, Percutaneous Coronary Intervention (PCI) Mortality Rate);
+ %PRT(31, Carotid Endarterectomy Mortality Rate);
+ %PRT(33, %BQUOTE(Primary Cesarean Delivery Rate, Uncomplicated));
 
  %END;
 
@@ -250,7 +236,7 @@ run; quit;
  %scale_rates;
  file IQTXTHOB lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

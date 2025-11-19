@@ -9,13 +9,13 @@
 *         population file and PQE_AREA_MEASURES.SAS output.
 *         Variables created by this program are PAQExx and OAQExx.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *============================================================================ ;
 
  title2 'PQE_AREA_OBSERVED PROGRAM';
- title3 'AHRQ PREVENTION QUALITY INDICATORS IN ED SETTINGS (PQE): CALCULATE OBSERVED AREA RATES';
+ title3 'Prevention Quality Indicators in Emergency Department Settings (PQE): CALCULATE OBSERVED AREA RATES';
 
  * ---------------------------------------------------------------- ;   
  * --- POPULATION GROUPS FOR EACH QI BASED ON 18 5-YEAR AGE RANGES  ;
@@ -93,7 +93,7 @@
                POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
                POP_2010 POP_2011 POP_2012 POP_2013 POP_2014 
 			   POP_2015 POP_2016 POP_2017 POP_2018 POP_2019 
-			   POP_2020 POP_2021 POP_2022 POP_2023 POP 8
+			   POP_2020 POP_2021 POP_2022 POP_2023 POP_2024 POP 8
                STATE $2.
         ;
     
@@ -104,7 +104,7 @@
 			   POP_2005 POP_2006 POP_2007 POP_2008 POP_2009 
 			   POP_2010 POP_2011 POP_2012 POP_2013 POP_2014 
 			   POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-			   POP_2020 POP_2021 POP_2022 POP_2023;
+			   POP_2020 POP_2021 POP_2022 POP_2023 POP_2024;
     
         %CTY2MA
     
@@ -351,17 +351,17 @@ run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS.(where=(_TYPE_ in (4))) n nmiss min max sum nolabels;
      var TAQE01 TAQE02 TAQE03 TAQE04 TAQE05;
-     title  "ED PREVENTION QUALITY AREA-LEVEL INDICATOR OVERALL NUMERATOR WHEN _TYPE_ =4 ";
+     title  "Prevention Quality Indicators in Emergency Department Settings (PQE): OVERALL NUMERATOR WHEN _TYPE_ =4 ";
 run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS. (where=(_TYPE_ in (4))) n nmiss min max sum nolabels;
      var PAQE01 PAQE02 PAQE03 PAQE04 PAQE05;
-     title  "ED PREVENTION QUALITY AREA-LEVEL INDICATOR OVERALL DENOMINATOR (SUM) WHEN _TYPE_ =4";
+     title  "Prevention Quality Indicators in Emergency Department Settings (PQE): OVERALL DENOMINATOR (SUM) WHEN _TYPE_ =4";
 run; quit;
 
 proc Means data = OUTAOBS.&OUTFILE_AREAOBS. (where=(_TYPE_ in (4))) n nmiss min max mean nolabels;
      var OAQE01 OAQE02 OAQE03 OAQE04 OAQE05;
-     title  "ED PREVENTION QUALITY AREA-LEVEL INDICATOR AVERAGE OBSERVED RATE (MEAN) WHEN _TYPE_ =4";
+     title  "Prevention Quality Indicators in Emergency Department Settings (PQE): AVERAGE OBSERVED RATE (MEAN) WHEN _TYPE_ =4";
 run; quit;
 
  * -------------------------------------------------------------- ;
@@ -433,7 +433,7 @@ run; quit;
  %scale_rates;
  file QETXTAOB lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_AREAOBS data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";

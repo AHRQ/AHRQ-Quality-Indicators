@@ -6,18 +6,18 @@
 *         based on user defined weights.
 *         (Default National Quality Forum Weights supplied.)
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE:  Requires output from IQI_HOSP_RISKADJ.SAS
 *              BEFORE running this program.
 *
 *========================================================================;
 
-%let OUTSASC3 = IQI_HOSP_Composite_Arrays_v2024.sas ;
+%let OUTSASC3 = IQI_HOSP_Composite_Arrays_v2025.sas ;
 
-*If supplying weights, update array in IQI_HOSP_Composite_Wt_v2024.sas file;
-%let IQIWTS = IQI_HOSP_Composite_Wt_v2024.sas ;
+*If supplying weights, update array in IQI_HOSP_Composite_Wt_v2025.sas file;
+%let IQIWTS = IQI_HOSP_Composite_Wt_v2025.sas ;
 
 %MACRO IQC;
 
@@ -313,7 +313,7 @@ run;
  %scale_rates;
  file IQTXTCMP lrecl=2000 ;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_HOSPOBS data set created with the following CONTROL options:";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";
  put "&&MDC_PROVIDED&MDC_PROVIDED. (MDC_PROVIDED = &MDC_PROVIDED)";
  put "&&PRDAY&PRDAY. (PRDAY = &PRDAY)";

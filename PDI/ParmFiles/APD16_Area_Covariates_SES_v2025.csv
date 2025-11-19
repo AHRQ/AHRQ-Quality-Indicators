@@ -1,0 +1,18 @@
+VARIABLE,DF,Estimate,STDERR,WALDCHISQ,ProbChiSq,LABEL,SoftwareVersion,SrcData
+Intercept,1,-7.127563852441,0.025244766512,79714.902035257,0.000000000000,Intercept,v2025,HCUP 2022
+FEMALE,1,-0.184947033776,0.017506560972,111.60741759355,0.000000000000,Female,v2025,HCUP 2022
+AGECAT2,1,-1.478840254288,0.025638355186,3327.0720630556,0.000000000000,Age 5-9,v2025,HCUP 2022
+AGECAT3,1,-2.435820578208,0.037899572128,4130.6840371647,0.000000000000,Age 10-14,v2025,HCUP 2022
+AGECAT4,1,-2.443645791330,0.047389873999,2658.9208007020,0.000000000000,Age 15-17,v2025,HCUP 2022
+FAGECAT2,1,0.117184573799,0.037574463030,9.726471618934,0.001816328325,"Female,Age 5-9",v2025,HCUP 2022
+FAGECAT3,1,0.113736392979,0.055437798473,4.209077779721,0.040208191425,"Female,Age 10-14",v2025,HCUP 2022
+FAGECAT4,1,0.447566988179,0.064165353372,48.653592306108,0.000000000003,"Female,Age 15-17",v2025,HCUP 2022
+POVCAT2,1,-0.228877446915,0.035226798541,42.214305551842,0.000000000082,Poverty category 2: Estimated percent of people of all ages in poverty larger than 7.4% and less than or equal to 8.7%,v2025,HCUP 2022
+POVCAT3,1,0.025270867051,0.032505009055,0.604421220051,0.436896085162,Poverty category 3: Estimated percent of people of all ages in poverty larger than 8.7% and less than or equal to 10.1%,v2025,HCUP 2022
+POVCAT4,1,0.068029392376,0.032865452730,4.284636129002,0.038458313605,Poverty category 4: Estimated percent of people of all ages in poverty larger than 10.1% and less than or equal to 10.9%,v2025,HCUP 2022
+POVCAT5,1,0.018517673442,0.034102712991,0.294845824662,0.587131815583,Poverty category 5: Estimated percent of people of all ages in poverty larger than 10.9% and less than or equal to 12.2%,v2025,HCUP 2022
+POVCAT6,1,0.148206996750,0.032191566535,21.195964881228,0.000004146366,Poverty category 6: Estimated percent of people of all ages in poverty larger than 12.2% and less than or equal to 13.5%,v2025,HCUP 2022
+POVCAT7,1,0.058904278779,0.033164877058,3.154546273194,0.075715737436,Poverty category 7: Estimated percent of people of all ages in poverty larger than 13.5% and less than or equal to 14.2%,v2025,HCUP 2022
+POVCAT8,1,0.085217336566,0.031922976891,7.126054601651,0.007597171538,Poverty category 8: Estimated percent of people of all ages in poverty larger than 14.2% and less than or equal to 15.9%,v2025,HCUP 2022
+POVCAT9,1,-0.063033737652,0.033591566928,3.521158660276,0.060590075854,Poverty category 9: Estimated percent of people of all ages in poverty larger than 15.9% and less than or equal to 18.4%,v2025,HCUP 2022
+POVCAT10,1,0.391496869824,0.030037546213,169.87430156335,0.000000000000,Poverty category 10: Estimated percent of people of all ages in poverty larger than 18.4% and less than or equal to 42.4%,v2025,HCUP 2022

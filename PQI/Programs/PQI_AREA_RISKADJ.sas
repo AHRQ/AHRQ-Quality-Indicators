@@ -11,13 +11,13 @@
 *         Output stratified by AGE, SEXCAT and POVCAT from
 *         population file and PQI_AREA_MEASURES output.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *====================================================================;
 
  title2 'PROGRAM PQI_AREA_RISKADJ PART I';
- title3 'AHRQ PREVENTION QUALITY INDICATORS: CALCULATE ADJUSTED AREA RATES';
+ title3 'Prevention Quality Indicators in Inpatient Settings (PQI): CALCULATE ADJUSTED AREA RATES';
 
  * ------------------------------------------------------------------- ;
  * --- PREVENTION QUALITY INDICATOR (PQI) NAMING CONVENTION:       --- ;
@@ -90,7 +90,7 @@
            POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
            POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
            POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-           POP_2020 POP_2021 POP_2022 POP_2023 POP 8;
+           POP_2020 POP_2021 POP_2022 POP_2023 POP_2024 POP 8;
 
     infile POPFILE missover FIRSTOBS=2;
 
@@ -100,7 +100,7 @@
           POP_2005 POP_2006 POP_2007 POP_2008 POP_2009
           POP_2010 POP_2011 POP_2012 POP_2013 POP_2014
           POP_2015 POP_2016 POP_2017 POP_2018 POP_2019
-          POP_2020 POP_2021 POP_2022 POP_2023;
+          POP_2020 POP_2021 POP_2022 POP_2023 POP_2024;
 
     %CTY2MA
 
@@ -260,7 +260,7 @@
 
  if PVIDX > 0 then ARRY3(PVIDX) = 1;
 
- /*remove PVIDX=0 counties for SES risk-adjusted rate calculation, this happens to CT in v2024*/
+ /*remove PVIDX=0 counties for SES risk-adjusted rate calculation, this happens to CT in v2025*/
  %if &USE_SES = 1 %then %do; 
    if PVIDX = 0 then delete; 
  %end;
@@ -270,10 +270,10 @@
  * --- COVARIATE.                                                --- ;
 
  %IF &USE_SES=0 %THEN %DO ;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_v2024.csv";
+    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_v2025.csv";
  %END ;
  %ELSE %DO;
-    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_SES_v2024.csv";
+    filename RACOEFFS "&RADIR./&PQ._Area_Covariates_SES_v2025.csv";
  %END ;
 
  * --- LOAD CSV PARAMTERS & SHAPE DATA --- ;
@@ -333,10 +333,10 @@ run;
     SET TEMP1Y; 
      * --- SWITCH OE RATIO BASED ON USE_SES FLAG --- ;
     %IF &USE_SES = 0 %THEN %DO ;
-      %include MacLib(PQI_AREA_OE_Array_v2024.SAS);
+      %include MacLib(PQI_AREA_OE_Array_v2025.SAS);
     %END ;
     %ELSE %DO ;
-      %include MacLib(PQI_AREA_OE_Array_SES_v2024.SAS);
+      %include MacLib(PQI_AREA_OE_Array_SES_v2025.SAS);
     %END ;   
     
     * --- MAP MEASURE NUM TO ARRAY INDEX SUB_N --- ;
@@ -405,10 +405,10 @@ run;
 
  * --- SWITCH SIGNAL VARIANCE BASED ON USE_SES FLAG --- ;
  %IF &USE_SES = 0 %THEN %DO ;
-   %include MacLib(PQI_AREA_Sigvar_Array_v2024.SAS);
+   %include MacLib(PQI_AREA_Sigvar_Array_v2025.SAS);
  %END ;
  %ELSE %DO ;
-   %include MacLib(PQI_AREA_Sigvar_Array_SES_v2024.SAS);
+   %include MacLib(PQI_AREA_Sigvar_Array_SES_v2025.SAS);
  %END ;
 
  if &N. = 1 then SUB_N = 1;
@@ -556,7 +556,7 @@ run;
 *=======================================================================;
 
  title2 'PROGRAM PQI_AREA_RISKADJ  PART II';
- title3 'AHRQ PREVENTION QUALITY INDICATORS:  AREA-LEVEL MERGED FILES';
+ title3 'Prevention Quality Indicators in Inpatient Settings (PQI):  AREA-LEVEL MERGED FILES';
 
  * ---------------------------------------------------------------- ;
  * --- PREVENTION QUALITY INDICATOR MERGED RATES                --- ;
@@ -722,9 +722,10 @@ run;
 
  data _NULL_;
  set OUTARSK.&OUTFILE_AREARISK;
+ %scale_rates;
  FILE "&PQCSVRF2." lrecl=2000;
  if _N_=1 then do;
- put "AHRQ SAS QI v2024 &OUTFILE_AREARISK data set created with the following CONTROL options:";
+ put "AHRQ SAS QI v2025 &OUTFILE_AREARISK data set created with the following CONTROL options:";
  put "&&MALEVL&MALEVL (MALEVL = &MALEVL)";
  put "Population year (POPYEAR) = &POPYEAR";
  put "&&Calibration_OE_to_ref_pop&Calibration_OE_to_ref_pop. (Calibration_OE_to_ref_pop = &Calibration_OE_to_ref_pop)";

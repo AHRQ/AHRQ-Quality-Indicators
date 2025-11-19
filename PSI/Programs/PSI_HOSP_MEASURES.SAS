@@ -6,8 +6,8 @@
 *         Variables created by this program are TPPSXX, PPPSXX, stratifiers, and 
 *         severity indicators.
 *
-*  VERSION: SAS QI v2024
-*  RELEASE DATE: JULY 2024
+*  VERSION: SAS QI v2025
+*  RELEASE DATE: AUGUST 2024
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI_FORMATS.SAS BEFORE running this program. 
@@ -16,7 +16,7 @@
 *  USER NOTE2: The AHRQ QI software does not support the calculation of weighted
 *              estimates and standard errors using complex sampling designs.
 *
-*  USER NOTE3: See the AHRQ_PSI_SAS_v2024_ICD10_Release_Notes.txt file for 
+*  USER NOTE3: See the AHRQ_PSI_SAS_v2025_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
 *  USER NOTE4: Although some of the exclusion criteria for present on admission 
@@ -113,16 +113,16 @@
           CMR_DIAB_UNCX    CMR_DRUG_ABUSE   CMR_HF           CMR_HTN_CX      CMR_HTN_UNCX     CMR_LIVER_MLD    CMR_LIVER_SEV    CMR_LUNG_CHRONIC
           CMR_NEURO_MOVT   CMR_NEURO_OTH    CMR_NEURO_SEIZ   CMR_OBESE       CMR_PARALYSIS    CMR_PERIVASC     CMR_PSYCHOSES    CMR_PULMCIRC
           CMR_RENLFL_MOD   CMR_RENLFL_SEV   CMR_THYROID_HYPO CMR_THYROID_OTH CMR_ULCER_PEPTIC CMR_VALVE        CMR_WGHTLOSS
-          TRNSFER DNR MEDICDR
+          TRNSFER DNR MEDICDR CHVTEPEDVTD CHVTEOTHD SOLKIDD CSHOCKANOXBDD ODC903
           RegVarPS04_DVT_PE_ANY RegVarPS04_DVT_PE_SEVERE
           RegVarPS04_PNEUMONIA_ANY RegVarPS04_PNEUMONIA_SEVERE
           RegVarPS04_SEPSIS_ANY RegVarPS04_SEPSIS_SEVERE
           RegVarPS04_SHOCK_ANY RegVarPS04_SHOCK_SEVERE
           RegVarPS04_GIHEMORRHAGE_ANY RegVarPS04_GIHEMORRHAGE_SEVERE
 
-          TPPS02-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE
+          TPPS03-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE
           TPPS05-TPPS08  TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19
-          PPPS02-PPPS04  PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE
+          PPPS03-PPPS04  PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE
           PPPS05-PPPS08  PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19
           HPPS13 HPPS15 &OUTFILE_KEEP
 );
@@ -142,6 +142,7 @@
  ARRAY PR (&NPR.) $  PR1 - PR&NPR.;
  ARRAY DX (&NDX.) $  DX1 - DX&NDX.;
  ARRAY DXPOA (&NDX.) $  DXPOA1 - DXPOA&NDX.;
+ ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;  *Initialize the PRDAYxx variables to avoid the warnings in the log when the macro variable PRDAY is set to 0;
 
  * --------------------------------------------------------------- ;
  * -- DELETE NON-ADULT RECORDS AND RECORDS WITH MISSING VALUES --- ;
@@ -185,8 +186,9 @@
  else if (YEAR in (2023) and DQTR in (1,2,3)) then ICDVER = 40;
  else if (YEAR in (2023) and DQTR in (4))     then ICDVER = 41;
  else if (YEAR in (2024) and DQTR in (1,2,3)) then ICDVER = 41;
- else ICDVER = 41; *Defaults to last version for discharges outside coding updates.;
-
+ else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
+ else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
+ else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
 
  * -------------------------------------------------------------- ;
  * --- DEFINE MEDICAL DRGS -------------------------------------- ;
@@ -228,16 +230,6 @@
    label='Modified DRG';
 
  MDRG = put(put(DRG,Z3.),$DRGF2T.);
-
-
- * -------------------------------------------------------------- ;
- * --- DEFINE LOW MORT DRGS ------------------------------------- ;
- * -------------------------------------------------------------- ;
- 
- attrib LOWMODR length=3
-   label='LOW MORTALITY DRGS';
-
- LOWMODR = put(MDRG,LOWMODR.);
 
 
  * -------------------------------------------------------------- ;
@@ -389,7 +381,6 @@
 
  %mend label_qis;
 
- %label_qis(flag=0, qi_num=PS02,              qi_name=PSI 02 Death Rate in Low-Mortality Diagnosis Related Groups (DRGs));
  %label_qis(flag=0, qi_num=PS03,              qi_name=PSI 03 Pressure Ulcer Rate);
  %label_qis(flag=1, qi_num=PS04,              qi_name=PSI 04 Death Rate among Surgical Inpatients with Serious Treatable Complications);
  %label_qis(flag=1, qi_num=PS04_DVT_PE,       qi_name=PSI 04 Death Rate among Surgical Inpatients with Serious Treatable Complications Stratum: Deep Vein Thrombosis/Pulmonary Embolism (DVT/PE));
@@ -420,8 +411,50 @@
  * --- CONSTRUCT AHRQ COMORBIDITY ------------------------------- ;
  * -------------------------------------------------------------- ;
 
- %include MacLib(PSI_HOSP_Comorb_Code_v2024.sas);
+ %include MacLib(PSI_HOSP_Comorb_Code_v2025.sas);
 
+ * -------------------------------------------------------------- ;
+ * --- DEFINE ODC903                                          --- ;
+ * -------------------------------------------------------------- ;
+ 
+ if %MDX($ODC_VEN.) then ODC903=1; else ODC903=0;
+ label ODC903 = 'Ventilator Dependence flag';
+
+ * -------------------------------------------------------------- ;
+ * --- IDENTIFY CHVTEPEDVTD   ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+  attrib CHVTEPEDVTD length=3
+  label='Chronic VTE PSI 12 trigger diagnosis codes';
+
+  if %MDXAQ2($CHVTEPEDVTD.) then CHVTEPEDVTD = 1;
+  else CHVTEPEDVTD = 0;
+
+ * -------------------------------------------------------------- ;
+ * --- IDENTIFY CHVTEOTHD      ---------------------------------- ;
+ * -------------------------------------------------------------- ;
+  attrib CHVTEOTHD length=3
+  label='Chronic VTE unrelated site diagnosis codes';
+
+  if %MDXAQ2($CHVTEOTHD.) then CHVTEOTHD = 1;
+  else CHVTEOTHD = 0;
+
+ * -------------------------------------------------------------- ;
+ * --- IDENTIFY SOLKIDD       ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+  attrib SOLKIDD length=3
+  label='Solitary kidney diagnosis codes';
+
+  if %MDXAQ2($SOLKIDD.) then SOLKIDD = 1;
+  else SOLKIDD = 0;
+
+ * -------------------------------------------------------------- ;
+ * --- IDENTIFY CSHOCKANOXBDD ----------------------------------- ;
+ * -------------------------------------------------------------- ;
+  attrib CSHOCKANOXBDD length=3
+  label='Cardiogenic shock, cardiac arrest, and anoxic brain damage diagnosis codes';
+
+  if %MDXAQ2($CSHOCKANOXBDD.) then CSHOCKANOXBDD = 1;
+  else CSHOCKANOXBDD = 0;
 
  * -------------------------------------------------------------- ;
  * --- IDENTIFY DNR --------------------------------------------- ;
@@ -437,36 +470,13 @@
  * --- CONSTRUCT HOSPITAL LEVEL INDICATORS ---------------------- ;
  * -------------------------------------------------------------- ;
 
- * ---------------------------------------------------------------------------- ;
- * --- PSI 02 : DEATH RATE IN LOW-MORTALITY DIAGNOSIS RELATED GROUPS (DRGS) --- ;
- * ---------------------------------------------------------------------------- ;
-
-   if LOWMODR then do;
-
-      TPPS02 = 0;
-
-      if DISP in (20) then TPPS02 = 1;
-
-       *** Exclude Trauma, Immunocompromised state, and cancer;
-
-      if %MDX($TRAUMID.) or %MDX($IMMUNID.) or
-         %MPR($IMMUNIP.) or %MDX($CANCEID.)
-      then TPPS02 = .;
-
-      *** Exclude missing discharge disposition or transfer acute care facility;
-
-      if DISP le .Z or DISP=2 then TPPS02 = .;
-
-   end;
-
-
  * -------------------------------------------------------------- ;
  * --- PSI 03 : PRESSURE ULCER RATE ----------------------------- ;
  * -------------------------------------------------------------- ;
  
    if (MEDICDR or SURGIDR) then do;
 
-      %include MacLib(PSI_03_Site_Specific_Macro_v2024.sas);
+      %include MacLib(PSI_03_Site_Specific_Macro_v2025.sas);
 
       *** Exclude severe burns;
 
@@ -1058,10 +1068,15 @@
       %PS11N($PR9671P., 2);
       %PS11N($PR9672P., 0);
 
-      *** Exclude principal diagnosis;
+      *** Exclude principal diagnosis or secondary diagnosis POA of Acute Respiratory Failure;
 
       if %MDX1($ACURF3D.) then TPPS11 = .;
       if %MDX2Q2($ACURF3D.) then QPPS11 = 1;
+
+      *** Exclude principal diagnosis or secondary diagnosis POA of End Stage Heart Failure;
+      
+      if %MDX1($ESHFD.) then TPPS11 = .;
+      if %MDX2Q2($ESHFD.) then QPPS11 = 1;
 
       *** Exclude if tracheostomy procedure is the only OR procedure;
 
@@ -1104,7 +1119,7 @@
 
       *** Exclude Hospitalizations involving lung transplantations;
 
-      if %MPR($LUNGTRANSP.) then TPPS11 = .;
+      if %MPR($LUNGHEARTTXP.) then TPPS11 = .;
 
       *** Exclude MDC 4, 14 ;
 
@@ -1237,15 +1252,15 @@
 
       *** Risk adjust by risk category (0-Low risk, 1-Intermediate risk, 2-High risk, 3-Very high risk);
 
-      if TPPS13 NE . then do;
+      if TPPS13 NE . and QPPS13 NE . and QPPS13 NE 1 then do;
          if %MDXAQ2($IMMUNHD.) then flag_IMMUNHD=1; 
-         if %MPR($TRANSPP.)    then flag_TRANSPP=1;
+         if %MPR($IMMUNIP.)    then flag_IMMUNIP=1;
          if %MDXAQ2($IMMUITD.) then flag_IMMUITD=1;
          if %MDXAQ2($HEPFA2D.) then flag_HEPFA2D=1;
          if %MDXAQ2($HEPFA3D.) then flag_HEPFA3D=1;
 
          if flag_HEPFA3D=1 then HPPS13=3; 
-         else if flag_IMMUNHD=1 or flag_TRANSPP=1 then HPPS13 = 2;
+         else if flag_IMMUNHD=1 or flag_IMMUNIP=1 then HPPS13 = 2;
          else if flag_IMMUITD=1 or flag_HEPFA2D=1 then HPPS13 = 1; 
          else HPPS13 = 0;
       end;
@@ -1350,14 +1365,14 @@
 
   %MEND;
 
-   %include MacLib(PSI_15_Num_Denom_Macro_v2024.sas);
+   %include MacLib(PSI_15_Num_Denom_Macro_v2025.sas);
    %PSI15_denom_numer($ABDOMI15P.);
 
    if (MEDICDR or SURGIDR) and flag_PSI15_Denom = 1 then do;
 
       TPPS15 = 0; QPPS15 = 0;
 
-      %include MacLib(PSI_15_Site_Specific_Macro_v2024.sas);
+      %include MacLib(PSI_15_Site_Specific_Macro_v2025.sas);
 
       *** Exclude MDC 14;
 
@@ -1378,7 +1393,7 @@
 
       %PCLASSR_m;
 
-      if TPPS15 NE . then do;
+      if TPPS15 NE . and QPPS15 NE . and QPPS15 NE 1 then do;
          if PRCLS2 = 0 and PRCLS4 = 0                     then HPPS15 = 1;
          else if PRCLS4 = 0  and PRCLS2 > 0               then HPPS15 = 2;
          else if PRCLS1 = 0 and PRCLS3 = 0 and PRCLS4 = 1 then HPPS15 = 3;
@@ -1457,8 +1472,8 @@
  * ---- ASSIGN DENOMINATORS FOR HOSPITAL_LEVEL PSIs BASED ON NON-MISSING NUMERATOR --- ;
  * ----------------------------------------------------------------------------------- ;
 
-  array TPPS   TPPS02-TPPS04 TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
-  array PPPS 3 PPPS02-PPPS04 PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE PPPS05-PPPS08 PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19;
+  array TPPS   TPPS03-TPPS04 TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
+  array PPPS 3 PPPS03-PPPS04 PPPS04_DVT_PE PPPS04_PNEUMONIA PPPS04_SEPSIS PPPS04_SHOCK PPPS04_GIHEMORRHAGE PPPS05-PPPS08 PPPS08_HIP_FX PPPS08_OTHER_FX PPPS09-PPPS14 PPPS14_OPEN PPPS14_NONOPEN PPPS15 PPPS18 PPPS19;
   do over TPPS;
     if TPPS ge 0 then PPPS = 1;
     else PPPS = .;
@@ -1486,12 +1501,12 @@ proc means data = OUTMSR.&OUTFILE_MEAS.(keep = DRG MDC MDRG YEAR DQTR
 run; quit;
 
 proc means data = OUTMSR.&OUTFILE_MEAS. n nmiss sum mean  nolabels ;
-     var TPPS02-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
+     var TPPS03-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 TPPS18 TPPS19;
      title "PATIENT SAFETY INDICATOR NUMERATOR FOR HOSPITAL LEVEL INDICATORS (=SUM),DENOMINATOR (=N), AND OBSERVED RATE (MEAN) ";
 run; quit;
 
 proc means data = OUTMSR.&OUTFILE_MEAS. n nmiss sum mean nolabels ;
-     var TPPS02-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 ;
+     var TPPS03-TPPS04  TPPS04_DVT_PE TPPS04_PNEUMONIA TPPS04_SEPSIS TPPS04_SHOCK TPPS04_GIHEMORRHAGE TPPS05-TPPS08 TPPS08_HIP_FX TPPS08_OTHER_FX TPPS09-TPPS14 TPPS14_OPEN TPPS14_NONOPEN TPPS15 ;
      title1 "PATIENT SAFETY INDICATOR NUMERATOR FOR HOSPITAL LEVEL INDICATORS (=SUM),DENOMINATORS (=N), AND OBSERVED RATE (MEAN) ";
      title2 "WITH POA MODIFIERS";
 run; quit;
