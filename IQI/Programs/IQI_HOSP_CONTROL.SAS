@@ -1,6 +1,6 @@
 * =======================PROGRAM: IQI_HOSP_CONTROL.SAS ========================;
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 * =============================================================================;
 * The Inpatient Quality Indicator (IQI) module of the AHRQ Quality
   Indicators software includes the following programs:
@@ -169,7 +169,7 @@ libname OUTMSR "&PATHNAME.\SASData";               *<==USER may modify;
 
  * ------------------------------------------------------------------ ;
  * --- INDICATE ADDITIONAL INPUT VARIABLES TO KEEP ON OUTPUT      --- ;
- * --- DATA FILE FROM PSI_HOSP_MEASURES.SAS.                      --- ;
+ * --- DATA FILE FROM IQI_HOSP_MEASURES.SAS.                      --- ;
  * --- INPUT VARIABLES ALWAYS INCLUDED ON THE OUTPUT FILE ARE:    --- ;
  * --- KEY HOSPID DRG MDC SEX AGE YEAR DQTR                       --- ;
  * ------------------------------------------------------------------ ;

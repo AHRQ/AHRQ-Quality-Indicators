@@ -1,6 +1,6 @@
 * ===================== PROGRAM: PSI_HOSP_CONTROL.SAS =========================== ;
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 * =============================================================================== ;
 * The Patient Safety Indicator (PSI) module of the AHRQ Quality
   Indicators software includes the following programs:
@@ -12,7 +12,7 @@
 
    3. PSI_HOSP_MEASURES.SAS  Assigns numerator, denominator, and comorbidity flags for
                              Patient Safety Indicators. 
-							 Refer to technical specification documents for details. 
+                             Refer to technical specification documents for details. 
 
    4. PSI_HOSP_OBSERVED.SAS  Calculates observed rates for hospital level indicators.
 
@@ -30,19 +30,19 @@
                                        The user does not need to open.
 
    3. PSI_HOSP_Regvars_v2025.sas  Creates age, sex, MDC, MDRG flag variables for use by risk adjustment.  
-	
+
    4. PSI_HOSP_Comorb_Format_v2025.sas  Creates formats assigning comorbidity groups based on 
                                         ICD-10-CM ELIXHAUSER COMORBIDITY software.
-	
+
    5. PSI_HOSP_Comorb_Code_v2025.sas  Creates comorbidity variables based on the presence
                                       of secondary diagnoses and redefines comorbidity group by
                                       eliminating DRGs directly related to them.
-	
+
    6. PSI_HOSP_Sigvar_Array_v2025.sas  Arrays for signal variance and reference population rates used 
                                        by risk adjustment program.
-	
+
    7. PSI_HOSP_Composite_Arrays_v2025.sas  Arrays used in PSI_HOSP_COMPOSITE.SAS program.
-	
+
    8. PSI_HOSP_Composite_Wt_v2025.sas  Provides default National Quality Forum endorsed
                                        10 component harm adjusted numerator weights.
 

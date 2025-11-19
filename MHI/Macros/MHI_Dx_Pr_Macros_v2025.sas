@@ -6,18 +6,18 @@
  *               The user does not need to open or modify.   --- ;
  *                                                           --- ;
  *  VERSION: SAS QI v2025                                    --- ;
- *  RELEASE DATE: AUGUST 2024                                --- ;
+ *  RELEASE DATE: AUGUST 2025                                --- ;
  * ------------------------------------------------------------- ;
 
   /*Macro to run Formats, Measures and Observed programs from within Control program.*/
   Filename PROGRMS "&PATHNAME.\Programs";
   %MACRO PROG_EXE(PATHNAME,EXE_FMT,EXE_MSR,EXE_AOBS);
     %if %sysfunc(CEXIST(LIBRARY.FORMATS.POVCAT.FORMATC)) = 0 or &EXE_FMT. = 1 %then %do;
-        %include PROGRMS(MHI_FORMATS.SAS);
+        %include PROGRMS(MHI_FORMATS.sas);
     %end;
   
    %if %sysfunc(CEXIST(LIBRARY.FORMATS.POVCAT.FORMATC)) = 1 and &EXE_MSR. = 1  %then %do;
-        %include PROGRMS(MHI_MEASURES.SAS) /source2;
+        %include PROGRMS(MHI_MEASURES.sas) /source2;
    %end;
 
    %if %sysfunc(CEXIST(LIBRARY.FORMATS.POVCAT.FORMATC)) = 0 and &EXE_MSR. = 1  %then %do;
@@ -26,7 +26,7 @@
    %end;
    
    %if %sysfunc(exist(OUTMSR.&OUTFILE_MEAS.)) = 1 and &EXE_AOBS. = 1 %then %do;
-        %include PROGRMS(MHI_OBSERVED.SAS) /source2;
+        %include PROGRMS(MHI_OBSERVED.sas) /source2;
    %end;
    
    %if %sysfunc(exist(OUTMSR.&OUTFILE_MEAS.)) = 0 and &EXE_AOBS. = 1 %then %do;

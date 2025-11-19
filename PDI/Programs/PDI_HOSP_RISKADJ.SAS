@@ -10,7 +10,7 @@
 *        Output stratified by HOSPID BWHTCAT AGEDCAT PAGECAT SEXCAT PAYCAT RACECAT. 
 *                
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE1: The AHRQ QI software does not support the calculation of weighted   
 *              estimates and standard errors using complex sampling designs. 

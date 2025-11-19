@@ -10,7 +10,7 @@
 *         Variables created by this program are PAQExx and OAQExx.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *============================================================================ ;
 

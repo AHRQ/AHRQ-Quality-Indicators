@@ -1,6 +1,6 @@
 * ======================= PROGRAM: PQI_AREA_CONTROL.SAS ======================= ;
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 * ============================================================================= ;
 * The Prevention Quality Indicator (PQI) module of the AHRQ Quality
   Indicators software includes the following programs:
@@ -120,7 +120,7 @@ libname LIBRARY  "&PATHNAME.\SASData";          *<===USER may modify;
  * --- THE DISCHARGE DATA. POPYEAR WILL IDENTIFY POPULATION USED -- ;
  * --- BY THE PQI_AREA_OBSERVED AND PQI_AREA_RISKADJ PROGRAM     -- ;
  * ---------------------------------------------------------------- ;
-%LET POPYEAR = 2024;   *<===USER may modify;
+%LET POPYEAR = 2024;                            *<===USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- SET LOCATION OF POPULATION FILE                          --- ;

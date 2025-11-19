@@ -4,10 +4,10 @@
 *  DESCRIPTION: Create binary covariates used for scoring   --- ;
 *               discharge records in risk adjustment.       --- ;
 *               Included in PDI_HOSP_RISKADJ.sas program    --- ;
-*               Requires PDI_ALL_MEASURES.SAS output file  --- ;
+*               Requires PDI_ALL_MEASURES.SAS output file   --- ;
 *                                                           --- ;
 *  VERSION: SAS QI v2025                                    --- ;
-*  RELEASE DATE: JULY 2025                                  --- ;
+*  RELEASE DATE: AUGUST 2025                                --- ;
 * ------------------------------------------------------------- ;
 
 * -- macro variables -- * ;

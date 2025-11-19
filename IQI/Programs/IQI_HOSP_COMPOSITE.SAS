@@ -7,7 +7,7 @@
 *         (Default National Quality Forum Weights supplied.)
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE:  Requires output from IQI_HOSP_RISKADJ.SAS
 *              BEFORE running this program.

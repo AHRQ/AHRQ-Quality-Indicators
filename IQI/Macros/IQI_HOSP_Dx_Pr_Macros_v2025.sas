@@ -6,7 +6,7 @@
  *               The user does not need to open or modify.   --- ;
  *                                                           --- ;
  *  VERSION: SAS QI v2025                                    --- ;
- *  RELEASE DATE: AUGUST 2024                                --- ;
+ *  RELEASE DATE: AUGUST 2025                                --- ;
  * ------------------------------------------------------------- ;
 
   /*Macro to run Formats, Measures and Observed programs from within Control program.*/

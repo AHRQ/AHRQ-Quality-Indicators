@@ -7,7 +7,7 @@
 *         GPPD12 from PDI_ALL_MEASURES.SAS program.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *=============================================================================;
 

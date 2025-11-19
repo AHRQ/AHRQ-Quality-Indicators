@@ -6,7 +6,7 @@
 *         Variables created by this program are TAQEnn and EXCLUDEQEnn.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE: The PQE_AREA_FORMATS.SAS program must be run BEFORE
 *             running this program.

@@ -11,7 +11,7 @@
 *     This indicator is also included in the Pediatric Quality Indicator module.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *=================================================================================;
 

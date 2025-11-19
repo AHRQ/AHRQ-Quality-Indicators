@@ -1,6 +1,6 @@
 * ========================= PROGRAM: PQE_AREA_CONTROL.SAS ======================== ;
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 * ================================================================================ ;
 * The Prevention Quality Indicator in Emergency Department Settings (PQE) module
   of the AHRQ Quality Indicators software includes the following programs:
@@ -13,7 +13,7 @@
    3. PQE_AREA_MEASURES.SAS   Assigns Prevention Quality Indicators to outpatient 
                               emergency department (ED) records. 
                               Refer to technical specification documents for details.
-							  
+
    4. PQE_AREA_OBSERVED.SAS   Calculates observed rates for area-level indicators.
 
    5. PQE_AREA_RISKADJ.SAS    Calculates risk adjusted rates for area-level indicators. 
@@ -147,7 +147,6 @@ options compress = YES ;                        *<===USER may modify;
  * ---------------------------------------------------------------- ;
 filename MacLib "&PATHNAME.\Macros" ;           *<===USER may modify;
 
-
  * ---------------------------------------------------------------- ;
  * --- IDENTIFY STATES WITH VALID REVISIT VARIABLES IN THE      --- ;
  * --- INPUT DATA YEAR.                                         --- ;
@@ -176,7 +175,7 @@ libname OUTMSR "&PATHNAME.\SASData";             *<==USER may modify;
 
  * ---------------------------------------------------------------- ;
  * --- INDICATE ADDITIONAL INPUT VARIABLES TO KEEP ON OUTPUT    --- ;
- * --- DATA FILE FROM PSI_HOSP_MEASURES.SAS.                    --- ;
+ * --- DATA FILE FROM PQE_HOSP_MEASURES.SAS.                    --- ;
  * --- INPUT VARIABLES ALWAYS INCLUDED ON THE OUTPUT FILE ARE:  --- ;
  * --- KEY PSTCO YEAR DQTR HOSPST VisitLink LOS DX1             --- ;
  * ---------------------------------------------------------------- ;

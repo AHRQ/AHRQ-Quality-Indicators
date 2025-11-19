@@ -7,7 +7,7 @@
 *         numerator weights.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE:  Requires output from PSI_HOSP_RISKADJ.SAS
 *

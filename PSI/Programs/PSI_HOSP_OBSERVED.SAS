@@ -10,7 +10,7 @@
 *     Variable created by this program is OPPSXX
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *======================================================================;
 

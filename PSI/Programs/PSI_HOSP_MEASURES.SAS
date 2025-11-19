@@ -7,7 +7,7 @@
 *         severity indicators.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI_FORMATS.SAS BEFORE running this program. 
@@ -414,14 +414,14 @@
  %include MacLib(PSI_HOSP_Comorb_Code_v2025.sas);
 
  * -------------------------------------------------------------- ;
- * --- DEFINE ODC903                                          --- ;
+ * --- DEFINE ODC903 -------------------------------------------- ;
  * -------------------------------------------------------------- ;
  
  if %MDX($ODC_VEN.) then ODC903=1; else ODC903=0;
  label ODC903 = 'Ventilator Dependence flag';
 
  * -------------------------------------------------------------- ;
- * --- IDENTIFY CHVTEPEDVTD   ----------------------------------- ;
+ * --- IDENTIFY CHVTEPEDVTD ------------------------------------- ;
  * -------------------------------------------------------------- ;
   attrib CHVTEPEDVTD length=3
   label='Chronic VTE PSI 12 trigger diagnosis codes';
@@ -430,7 +430,7 @@
   else CHVTEPEDVTD = 0;
 
  * -------------------------------------------------------------- ;
- * --- IDENTIFY CHVTEOTHD      ---------------------------------- ;
+ * --- IDENTIFY CHVTEOTHD --------------------------------------- ;
  * -------------------------------------------------------------- ;
   attrib CHVTEOTHD length=3
   label='Chronic VTE unrelated site diagnosis codes';
@@ -439,7 +439,7 @@
   else CHVTEOTHD = 0;
 
  * -------------------------------------------------------------- ;
- * --- IDENTIFY SOLKIDD       ----------------------------------- ;
+ * --- IDENTIFY SOLKIDD ----------------------------------------- ;
  * -------------------------------------------------------------- ;
   attrib SOLKIDD length=3
   label='Solitary kidney diagnosis codes';
@@ -464,7 +464,6 @@
 
   if %MDX2Q2($DNR.) then DNR = 1;
     else DNR = 0;
-
 
  * -------------------------------------------------------------- ;
  * --- CONSTRUCT HOSPITAL LEVEL INDICATORS ---------------------- ;

@@ -1,5 +1,5 @@
 *------------------------------------------------------------- *;
-*--- IQI Hospital COMPOSITE WEIGHT ARRAY v2025        --- *;
+*--- IQI Hospital COMPOSITE WEIGHT ARRAY v2025             --- *;
 *------------------------------------------------------------- *;
 
 * Called from IQI_HOSP_COMPOSITE.sas;

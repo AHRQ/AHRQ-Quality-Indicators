@@ -4,7 +4,7 @@
 *  DESCRIPTION: Classifies procedures into clinical categories                        --- ;
 *                                                                                     --- ;
 *  VERSION: SAS QI v2025                                                              --- ;
-*  RELEASE DATE: JULY 2025                                                            --- ;
+*  RELEASE DATE: AUGUST 2025                                                          --- ;
 * --------------------------------------------------------------------------------------- ;
 
 PROC FORMAT LIBRARY=LIBRARY;

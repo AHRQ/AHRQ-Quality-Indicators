@@ -1,6 +1,6 @@
 *==================== PROGRAM: PSI17_HOSP_CONTROL.SAS ======================= ;
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 * =========================================================================== ;
 * The Patient Safety Indicator PSI 17, BIRTH TRAUMA RATE - INJURY TO NEONATE,
   STAND ALONE module of the AHRQ Indicators software includes the following programs:
@@ -82,7 +82,7 @@
 
 *PATHNAME specifies the location of the PSI17 folder which includes the
           Programs, Macros, and SASData subfolders;
-%LET PATHNAME=C:\pathname\PSI17;               *<===USER MUST modify;
+%LET PATHNAME=C:\Pathname\PSI17;               *<===USER MUST modify;
 
 *DISFOLDER specifies the folder that contains the discharge data;
 %LET DISFOLDER=C:\Pathname;                     *<===USER MUST modify;
@@ -326,7 +326,7 @@ libname OUTHOBS "&PATHNAME.\SASData";          *<===USER MUST modify;
  * --- NAME OF SAS DATASET OUTPUT FROM PSI17_HOSP_OBSERVED.SAS  --- ;
  * --- SUMMARY OUTPUT FILE OF OBSERVED HOSPITAL RATES.          --- ;
  * ---------------------------------------------------------------- ; 
-%LET  OUTFILE_HOSPOBS = PS17HO_&SUFX.;           *<===USER may modify;
+%LET  OUTFILE_HOSPOBS = PS17HO_&SUFX.;          *<===USER may modify;
 
  * ----------------------------------------------------------------- ;
  * --- INDICATE IF A COMMA-DELIMITED TEXT FILE OF OUTFILE_HOSPOBS -- ;

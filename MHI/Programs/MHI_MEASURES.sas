@@ -2,12 +2,12 @@
 *
 *  DESCRIPTION:
 *         Assigns the Maternal Health Indicators outcomes and stratifiers
-*         to inpatient records.
+*         to input records.
 *         Variables created by this program are TAMHXX, stratifiers, and 
 *         severity indicators.
 *
 *  VERSION: SAS Beta version of MHI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using MHI_FORMATS.SAS BEFORE running this program. 
@@ -19,14 +19,10 @@
 *  USER NOTE3: See the AHRQ_MHI_SAS_v2025_ICD10_Release_Notes.txt file for 
 *              software change notes.
 *
-*  USER NOTE4: Although some of the exclusion criteria for present on admission 
-*              conditions were removed in v2020, some of the original logic
-*              is retained for potential use in future versions.
-*
 *===================================================================================;
 
  title2 'MHI_MEASURES PROGRAM';
- title3 'AHRQ MATERNAL HEALTH INDICATORS: ASSIGN MHIs TO INPATIENT DATA';
+ title3 'AHRQ MATERNAL HEALTH INDICATORS: ASSIGN MHIs TO INPUT DATA';
 
  * ---------------------------------------------------------------------- ;
  * --- DETERMINE IF DAYSTOEVENT HAS MISSING VALUES ON THE INPUT FILE  --- ;
@@ -45,17 +41,17 @@
    %end;
  %mend check_daystoevent;
  %check_daystoevent;
-
+ 
  * ------------------------------------------------------------------ ;
  * --- DETERMINE IF PAY1 AND RACE ARE SUPPLIED ON THE INPUT FILE  --- ;
  * ------------------------------------------------------------------ ;
-
+ 
  %macro check_pay1_race;
    %global PAY1_PROVIDED RACE_PROVIDED;
    proc contents data=INMSR.&DISCHARGE. noprint out=chkpay1race(keep=name);run;
    proc sql noprint;
       select sum(upcase(strip(name))="PAY1"), sum(upcase(strip(name))="RACE") into :PAY1_PROVIDED, :RACE_PROVIDED
-	    from chkpay1race;
+        from chkpay1race;
    quit;
 
    %put PAY1_PROVIDED = &PAY1_PROVIDED., RACE_PROVIDED = &RACE_PROVIDED.;
@@ -69,7 +65,10 @@
  %mend check_pay1_race;
  %check_pay1_race;
 
-
+ * ------------------------------------------------------------------ ;
+ * --- DETERMINE YEAR AND QUARTER FOR THE POSTPARTUM MEASURES     --- ;
+ * ------------------------------------------------------------------ ;
+ 
 %macro chk_yr_qtr_post;
    %if &ref_pop. = 2 or &ref_pop. =3 %then %do;
       %global yra qtra;
@@ -88,6 +87,8 @@
          order=_N_;
       run;
 
+      *identify latest year and quarter in the data;
+      *identify last four quarters of data;
       proc sql;
          select year, dqtr into: yra, : qtra
          from agg
@@ -96,6 +97,7 @@
 
       %put yra=&yra.;
       %put qtra=&qtra.;
+
    %end;
 %mend chk_yr_qtr_post;
 %chk_yr_qtr_post;
@@ -110,7 +112,6 @@
     set INMSR.&DISCHARGE.;
     if (AGE lt 12) or (AGE gt 55) or (missing(SEX)) or (missing(DX1)) or (missing(DQTR)) or (missing(YEAR));
  run;
- 
  
  * ------------------------------------------------------------------ ;
  * --- MATERNAL HEALTH INDICATORS (MHI) NAMING CONVENTION:        --- ;
@@ -136,7 +137,7 @@
       set INMSR.&DISCHARGE.(keep = KEY HOSPID SEX AGE YEAR DQTR HOSPST PSTCO DISP
                                            DX1-DX&NDX. PR1-PR&NPR. PRDAY1-PRDAY&NPR. %ADDPAY1_RACE
                                            &OUTFILE_KEEP. LOS VISITLINK DAYSTOEVENT INPATIENT &CUSTOM_STRATUM.);
-	  %include MacLib(MHI_MEASURES_macro.sas);
+      %include MacLib(MHI_MEASURES_macro.sas);
    run;
 
    proc sort data=temp;
@@ -146,6 +147,9 @@
 %mend PrepData;
 %PrepData;
 
+ * --------------------------------------------------------------------------------- ;
+ * ------------------------- MHI NUMERATOR/DENOMINATOR ----------------------------- ;
+ * --------------------------------------------------------------------------------- ;
 
 %let vars  = myocard aneurysm resp_distress am_fluid card_arr conv_card eclampsia heart_fail puerp pulm_ed anes_comp sepsis shock sickle air_thromb hyster tracheo vent;
 %let vars2 = myocard,aneurysm,resp_distress,am_fluid,card_arr,conv_card,eclampsia,heart_fail,puerp,pulm_ed,anes_comp,sepsis,shock,sickle,air_thromb,hyster,tracheo,vent;
@@ -158,11 +162,13 @@
 %macro DefineMeasures;
 
 data temp;
-   set temp;
-   * --------------------------------------------------------------------------------- ;
-   * ------------------------- MHI NUMERATOR/DENOMINAOR ------------------------------ ;
-   * --------------------------------------------------------------------------------- ;
 
+   set temp;
+
+   * -------------------------------------------------------------- ;
+   * --- DEFINE MHI 01 - MHI 04 UNLINKED INPATIENT MEASURES     --- ;
+   * -------------------------------------------------------------- ;
+   
    %if &ref_pop. = 1 %then %do;
 
       %include MacLib(MHI_MEASURES_macro.sas);
@@ -208,7 +214,9 @@ data temp;
          TAMH01 = max(0, &vars2., acute_renal,  diss_intra);
          TAMH02 = max(0, &vars2., acute_renal,  diss_intra,  deceased_flag);
          TAMH03 = max(0, &vars2., acute_renal3, diss_intra3, deceased_flag);
-         if %MDX($DX_BHSUD_DEL.) then TAMH04 = 1;      
+         
+         if %MDX($DX_BHSUD_DEL.) then TAMH04 = 1;
+
       end;
 
       *label the numerator indicators and exclusion flag;
@@ -240,44 +248,55 @@ data temp;
             TAMH03        = "Refined Inpatient Severe Maternal Morbidity Plus In-Hospital Mortality Rate, at Delivery, Beta (20 indicators plus in-hospital mortality) (Numerator)"
             TAMH04        = "Inpatient Mental Health and Substance Use Disorders Rate, at Delivery, Beta (Numerator)";
    %end;
+
    %else %if &ref_pop. = 2 or &ref_pop. = 3 %then %do;
 
       by hospst visitlink daystoevent;
 
-      ARRAY PRDAY(&NPR.)   PRDAY1-PRDAY&NPR.;
+      ARRAY PRDAY(&NPR.) PRDAY1-PRDAY&NPR.;
+
+      *identify the index delivery in the data prior to the last quarter;
 
       %if &ref_pop. = 2 %then %do;
       if not(%MDX($DX_Abortion.) or  %MPR($PR_Abortion.)) then do;
-         if (deliv_dx=1 or deliv_pr=1) and inpatient=1 and ((year = &yra. and dqtr <&qtra.) or year <&yra.) then index_delivery=1; else index_delivery=0;
+         if (deliv_dx=1 or deliv_pr=1) and INPATIENT=1 and ((year = &yra. and dqtr <&qtra.) or year <&yra.) then index_delivery=1; 
+         else index_delivery=0;
       end;
       %end;
       %else %if &ref_pop. = 3 %then %do;
       if not(%MDX($DX_Abortion.) or  %MPR($PR_Abortion.)) then do;
-         if (deliv_dx=1 or deliv_pr=1) and inpatient=1 and ((year = &yra. and dqtr <&qtra.) or year <&yra.) then index_delivery=1; else index_delivery=0;
+         if (deliv_dx=1 or deliv_pr=1) and INPATIENT=1 and ((year = &yra. and dqtr <&qtra.) or year <&yra.) then index_delivery=1; 
+         else index_delivery=0;
       end;
       %end;
 
       *identify the date associated with the index_delivery;
-      %MPRDAY ($PR_Delivery.);
+      %MPRDAY($PR_Delivery.);
       delivery_date = MPRDAY;
 
       *Among index_deliveries, if the delivery_date is missing, then set it to 0;
       if index_delivery=1 and delivery_date = . then delivery_date=0;
 
-      *Limit the dicharges to 42 days of delivery using the delivery_date and DaysToEvent for every discharge;
+      *Limit the discharges to 42 days from delivery using the delivery_date and DaysToEvent for every discharge;
       retain index_daystoevent index_delivery_date;
 
+      *initialize variables;
       if first.visitlink then do; 
          index_daystoevent=.;
          index_delivery_date=.;
       end;
 
+      *assign variables for the index event;
       if index_delivery=1 then do; 
          index_daystoevent=daystoevent;
-       	 index_delivery_date=delivery_date;
+         index_delivery_date=delivery_date;
       end;
 
       %if &ref_pop. = 2 %then %do;
+
+      * -------------------------------------------------------------- ;
+      * --- DEFINE MHI 05 - MHI 07 LINKED INPATIENT MEASURES       --- ;
+      * -------------------------------------------------------------- ;
 
       array indflags_post(23) &vars_post. acute_renal_post diss_intra_post acute_renal3_post diss_intra3_post deceased_flag_post;
 
@@ -320,40 +339,19 @@ data temp;
          TAMH06 = max(0, &vars2_post., acute_renal_post,  diss_intra_post,  deceased_flag_post);
          TAMH07 = max(0, &vars2_post., acute_renal3_post, diss_intra3_post, deceased_flag_post);
 
-        *label the numerator indicators and exclusion flag;
-         label myocard_post      = "Acute Myocardial Infarction Rate through 42 Days postpartum "
-               aneurysm_post     = "Aneurysm Rate through 42 Days postpartum "
-               acute_renal_post  = "Acute Renal Failure Rate through 42 Days postpartum"
-               acute_renal3_post = "Refined Acute Renal Failure Rate through 42 Days postpartum"
-               resp_distress_post= "Adult Respiratory Distress Rate through 42 Days postpartum"
-               am_fluid_post     = "Amniotic Fluid Embolism Rate through 42 Days postpartum"
-               card_arr_post     = "Cardiac Arrest/Ventricular Fibrillation Rate through 42 Days postpartum"
-               conv_card_post    = "Conversion of Cardiac Rhythm Rate through 42 Days postpartum"
-               diss_intra_post   = "Disseminated Intravascular Coagulation Rate through 42 Days postpartum"
-               diss_intra3_post  = "Refined Disseminated Intravascular Coagulation Rate through 42 Days postpartum"
-               eclampsia_post    = "Eclampsia Rate through 42 Days postpartum"
-               heart_fail_post   = "Heart Failure/Arrest during or following Surgery or Procedure Rate through 42 Days postpartum"
-               puerp_post        = "Puerperal Cerebrovascular Disorder Rate through 42 Days postpartum"
-               pulm_ed_post      = "Pulmonary Edema/Acute Heart Failure Rate through 42 Days postpartum"
-               anes_comp_post    = "Severe Anesthesia Complications Rate through 42 Days postpartum"
-               sepsis_post       = "Sepsis Rate through 42 Days postpartum"
-               shock_post        = "Shock Rate through 42 Days postpartum"
-               sickle_post       = "Sickle Cell Disease with Crisis Rate through 42 Days postpartum"
-               air_thromb_post   = "Air and Thrombotic Embolism Rate through 42 Days postpartum"
-               hyster_post       = "Hysterectomy Rate through 42 Days postpartum"
-               tracheo_post      = "Temporary Tracheostomy Rate through 42 Days postpartum"
-               vent_post         = "Respiratory Ventilation Rate through 42 Days postpartum" 
-               deceased_flag_post= "In-Hospital Mortality Rate through 42 Days postpartum"
-               TAMH05            = "Inpatient Severe Maternal Morbidity Rate, Delivery through 42 Days Postpartum, Beta (20 indicators)"
-               TAMH06            = "Inpatient Severe Maternal Morbidity Plus In-Hospital Mortality Rate, Delivery through 42 Days Postpartum, Beta (20 indicators plus in-hospital mortality)"
-               TAMH07            = "Refined Inpatient Severe Maternal Morbidity Plus In-Hospital Mortality Rate, Delivery through 42 Days Postpartum, Beta (20 indicators plus in-hospital mortality)";
-
+        
          output;
       end;
+
       %end;
+
       %else %if &ref_pop. = 3 %then %do;
 
-	  *Initialize before the IF condition below for the discharges including the index delivery;
+      * -------------------------------------------------------------- ;
+      * --- DEFINE MHI 08 - MHI 11 LINKED INPATIENT/ED MEASURES    --- ;
+      * -------------------------------------------------------------- ;
+
+      *Initialize before the IF condition below for the discharges including the index delivery;
          TAMH08  = 0;
          TAMH09  = 0;
          TAMH10A = 0;
@@ -368,9 +366,8 @@ data temp;
          SUD_OD_POST= 0;
          PMAD_POST  = 0;
 
-	  *Does not include index delivery discharges;
+      *Does not include index delivery discharges;
       if (daystoevent ne index_daystoevent) and 0 < (daystoevent-index_daystoevent-index_delivery_date)<=42 then do;
-                
          if %MDX($DX_BHSUD_POST.) then BHSUD_POST = 1;
          if %MDX($DX_SSH_POST.)   then SSH_POST   = 1;
          if %MDX($DX_SUD_POST.)   then SUD_POST   = 1;
@@ -385,17 +382,10 @@ data temp;
          TAMH10  = max(0, SUD_OD_POST);
          TAMH11  = max(0, PMAD_POST);
 
-         *label the numerator indicators and exclusion flag;
-         label TAMH08  = "Emergency Department and Inpatient Mental Health and Substance Use Disorders Rate, Days 1 to 42 Postpartum, Beta"
-               TAMH09  = "Emergency Department and Inpatient Encounters for Intentional Self-Harm Rate, Days 1 to 42 Postpartum, Beta"
-               TAMH10A = "Emergency Department and Inpatient Substance Use Disorders Rate, Days 1 to 42 Postpartum, Beta"
-               TAMH10B = "Emergency Department and Inpatient Accidental Overdose Rate, Days 1 to 42 Postpartum, Beta"
-               TAMH10  = "Emergency Department and Inpatient Substance Use Disorders and Accidental Overdose Rate, Days 1 to 42 Postpartum, Beta"
-               TAMH11  = "Emergency Department and Inpatient Perinatal Mood and Anxiety Disorders Rate, Days 1 to 42 Postpartum, Beta"; 
-    	 
-      end;
+     end;
 
-	  output;
+     output;
+
       %end; 
    %end; 
 
@@ -404,6 +394,9 @@ run;
 %mend DefineMeasures;
 %DefineMeasures;
 
+ * -------------------------------------------------------------- ;
+ * --- CREATE A SINGLE RECORD PER PATIENT / INDEX EVENT       --- ;
+ * -------------------------------------------------------------- ;
 
 %macro Dorollup;
 %if &ref_pop.=1 %then %do;
@@ -416,23 +409,24 @@ run;
    run;
 
 %end;
+
 %else %if &ref_pop.=2 %then %do;
 
    %let keepvars = YEAR DQTR PAYCAT RACECAT POVCAT &CUSTOM_STRATUM.
                    &vars_post. acute_renal_post diss_intra_post acute_renal3_post diss_intra3_post deceased_flag_post
                    TAMH05 TAMH06 TAMH07 ;
 
-   *Roll up the overall measures (MHI05-MHI07) and sub-indicators for each condition 42 days postpartum by HOSPST, visitlink and index_delivery_date
-    Take the maximum of the variables across the discharges;
+   *Roll up the overall measures (MHI 05 - MHI 07) and sub-indicators for each condition 42 days postpartum by HOSPST, visitlink, index_daystoevent and index_delivery_date;
+   *Take the maximum of the variables across the discharges;
    proc sql;
       create table index_delivery_rolledup as
       select  hospst
              ,visitlink
-			 ,index_daystoevent
+             ,index_daystoevent  
              ,index_delivery_date
              %do i= 1 %to %sysfunc(countw(&keepvars.));
              ,max(%scan(&keepvars.,&i.)) as %scan(&keepvars.,&i.)
-             %end;		  
+             %end;
       from temp(where=(not missing(index_delivery_date)))
       group by hospst, visitlink, index_daystoevent, index_delivery_date;
    quit;
@@ -443,27 +437,56 @@ run;
    run;
 
    data OUTMSR.&OUTFILE_MEAS.;
-      retain HOSPST VISITLINK index_daystoevent INDEX_DELIVERY_DATE &keepvars.;
+      retain HOSPST VISITLINK INDEX_DAYSTOEVENT INDEX_DELIVERY_DATE &keepvars.;
       set index_delivery_rolledup;
+
+      *label the numerator indicators and flags;
+      label myocard_post      = "Acute Myocardial Infarction Rate through 42 Days postpartum "
+            aneurysm_post     = "Aneurysm Rate through 42 Days postpartum "
+            acute_renal_post  = "Acute Renal Failure Rate through 42 Days postpartum"
+            acute_renal3_post = "Refined Acute Renal Failure Rate through 42 Days postpartum"
+            resp_distress_post= "Adult Respiratory Distress Rate through 42 Days postpartum"
+            am_fluid_post     = "Amniotic Fluid Embolism Rate through 42 Days postpartum"
+            card_arr_post     = "Cardiac Arrest/Ventricular Fibrillation Rate through 42 Days postpartum"
+            conv_card_post    = "Conversion of Cardiac Rhythm Rate through 42 Days postpartum"
+            diss_intra_post   = "Disseminated Intravascular Coagulation Rate through 42 Days postpartum"
+            diss_intra3_post  = "Refined Disseminated Intravascular Coagulation Rate through 42 Days postpartum"
+            eclampsia_post    = "Eclampsia Rate through 42 Days postpartum"
+            heart_fail_post   = "Heart Failure/Arrest during or following Surgery or Procedure Rate through 42 Days postpartum"
+            puerp_post        = "Puerperal Cerebrovascular Disorder Rate through 42 Days postpartum"
+            pulm_ed_post      = "Pulmonary Edema/Acute Heart Failure Rate through 42 Days postpartum"
+            anes_comp_post    = "Severe Anesthesia Complications Rate through 42 Days postpartum"
+            sepsis_post       = "Sepsis Rate through 42 Days postpartum"
+            shock_post        = "Shock Rate through 42 Days postpartum"
+            sickle_post       = "Sickle Cell Disease with Crisis Rate through 42 Days postpartum"
+            air_thromb_post   = "Air and Thrombotic Embolism Rate through 42 Days postpartum"
+            hyster_post       = "Hysterectomy Rate through 42 Days postpartum"
+            tracheo_post      = "Temporary Tracheostomy Rate through 42 Days postpartum"
+            vent_post         = "Respiratory Ventilation Rate through 42 Days postpartum" 
+            deceased_flag_post= "In-Hospital Mortality Rate through 42 Days postpartum"
+            TAMH05            = "Inpatient Severe Maternal Morbidity Rate, Delivery through 42 Days Postpartum, Beta (20 indicators)"
+            TAMH06            = "Inpatient Severe Maternal Morbidity Plus In-Hospital Mortality Rate, Delivery through 42 Days Postpartum, Beta (20 indicators plus in-hospital mortality)"
+            TAMH07            = "Refined Inpatient Severe Maternal Morbidity Plus In-Hospital Mortality Rate, Delivery through 42 Days Postpartum, Beta (20 indicators plus in-hospital mortality)";
    run;
 
- %end;
- %else %if &ref_pop. = 3 %then %do; 
+%end;
+
+%else %if &ref_pop. = 3 %then %do; 
 
    %let keepvars = YEAR DQTR INPATIENT PAYCAT RACECAT POVCAT &CUSTOM_STRATUM.
                    BHSUD_POST SSH_POST SUD_POST OD_POST SUD_OD_POST PMAD_POST TAMH08 TAMH09 TAMH10A TAMH10B TAMH10 TAMH11;
 
-   *Roll up the overall measures (MHI08-MHI11) 42 days postpartum by HOSPST, visitlink and index_delivery_date
-    Take the maximum of the variables across the discharges;
+   *Roll up the overall measures (MHI 08 - MHI 11) 42 days postpartum by HOSPST, visitlink, index_daystoevent and index_delivery_date;
+   *Take the maximum of the variables across the discharges;
    proc sql;
       create table index_delivery_rolledup as
       select  hospst
              ,visitlink
-			 ,index_daystoevent
+             ,index_daystoevent
              ,index_delivery_date
              %do i= 1 %to %sysfunc(countw(&keepvars.));
-		     ,max(%scan(&keepvars.,&i.)) as %scan(&keepvars.,&i.)                       
-		     %end;	  
+             ,max(%scan(&keepvars.,&i.)) as %scan(&keepvars.,&i.)
+             %end;
       from temp(where=(not missing(index_delivery_date))) 
       group by hospst, visitlink, index_daystoevent, index_delivery_date;
    quit;
@@ -476,14 +499,23 @@ run;
    run;
 
    data OUTMSR.&OUTFILE_MEAS.;
-      retain HOSPST VISITLINK index_daystoevent INDEX_DELIVERY_DATE &keepvars.;
+      retain HOSPST VISITLINK INDEX_DAYSTOEVENT INDEX_DELIVERY_DATE &keepvars.;
       set index_delivery_rolledup;
+
+      *label the numerator indicators and flags;
+      label TAMH08  = "Emergency Department and Inpatient Mental Health and Substance Use Disorders Rate, Days 1 to 42 Postpartum, Beta"
+            TAMH09  = "Emergency Department and Inpatient Encounters for Intentional Self-Harm Rate, Days 1 to 42 Postpartum, Beta"
+            TAMH10A = "Emergency Department and Inpatient Substance Use Disorders Rate, Days 1 to 42 Postpartum, Beta"
+            TAMH10B = "Emergency Department and Inpatient Accidental Overdose Rate, Days 1 to 42 Postpartum, Beta"
+            TAMH10  = "Emergency Department and Inpatient Substance Use Disorders and Accidental Overdose Rate, Days 1 to 42 Postpartum, Beta"
+            TAMH11  = "Emergency Department and Inpatient Perinatal Mood and Anxiety Disorders Rate, Days 1 to 42 Postpartum, Beta"; 
+
    run;
 
 %end;
+
 %mend DoRollup;
 %DoRollup;
-
 
 * -------------------------------------------------------------- ;
 * --- CONTENTS AND MEANS OF MEASURES OUTPUT FILE             --- ;

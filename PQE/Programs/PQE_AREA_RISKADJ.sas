@@ -12,7 +12,7 @@
 *         population file and PQE_AREA_MEASURES output.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *====================================================================;
 

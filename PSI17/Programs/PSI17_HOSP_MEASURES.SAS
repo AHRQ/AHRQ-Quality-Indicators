@@ -6,7 +6,7 @@
 *               Quality Indicator module.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE1: Make sure you have created the format library
 *              using PSI17_FORMATS.SAS BEFORE running this program. 
@@ -159,6 +159,7 @@
  else if (YEAR in (2024) and DQTR in (4))     then ICDVER = 42;
  else if (YEAR in (2025) and DQTR in (1,2,3)) then ICDVER = 42;
  else ICDVER = 42; *Defaults to last version for discharges outside coding updates.;
+
 
  * -------------------------------------------------------------- ;
  * --- CREATE FAKE PAY1 AND RACE IF THEY ARE NOT IN INPUT DATA -- ;

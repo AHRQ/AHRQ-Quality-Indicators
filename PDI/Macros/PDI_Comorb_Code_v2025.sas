@@ -18,11 +18,11 @@
 /*              information is not available, comorbidities that  */
 /*              require POA will be set to missing.               */
 /*                                                                */
-/* Note:	    The SAS program CMR_Format_Program_v2025-1 must      */
-/*	            be run prior to running this mapping program.      */
+/* Note:	    The SAS program CMR_Format_Program_v2025-1 must   */
+/*	            be run prior to running this mapping program.     */
 /*                                                                */
 /* Output:	    This program appends the comorbidity measures     */
-/*	            to the input SAS file.  The data elements start    */
+/*	            to the input SAS file.  The data elements start   */
 /*              with the 4-character prefix CMR_                  */
 /*                                                                */
 /******************************************************************/

@@ -6,7 +6,7 @@
 *         Variables created by this program are TAPQXX and stratifiers.
 *
 *  VERSION: SAS QI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *  USER NOTE1: The PQI_FORMATS.SAS program must be run BEFORE
 *              running this program.

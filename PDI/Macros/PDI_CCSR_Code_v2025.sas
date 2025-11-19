@@ -4,7 +4,7 @@
  *  DESCRIPTION: Creates DXCCSR variables based on diagnoses present on admission   --- ;
  *                                                                                  --- ;
  *  VERSION: SAS QI v2025                                                           --- ;
- *  RELEASE DATE: AUGUST 2024                                                       --- ;
+ *  RELEASE DATE: AUGUST 2025                                                       --- ;
  * ------------------------------------------------------------------------------------ ;
 
 %MACRO CREATE_CCSR;

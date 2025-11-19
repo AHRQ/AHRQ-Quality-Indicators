@@ -7,7 +7,7 @@
 *               Requires IQI_HOSP_MEASURES.SAS output file  --- ;
 *                                                           --- ;
 *  VERSION: SAS QI v2025                                    --- ;
-*  RELEASE DATE: JULY 2025                                  --- ;
+*  RELEASE DATE: AUGUST 2025                                --- ;
 * ------------------------------------------------------------- ;
 
 * -- macro variables -- * ;

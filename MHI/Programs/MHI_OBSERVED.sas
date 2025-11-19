@@ -10,7 +10,7 @@
 *         Variables created by this program are PAMHXX and OAMHXX
 *
 *  VERSION: SAS Beta version of MHI v2025
-*  RELEASE DATE: AUGUST 2024
+*  RELEASE DATE: AUGUST 2025
 *
 *===================================================================================;
 

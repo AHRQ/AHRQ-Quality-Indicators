@@ -3,7 +3,7 @@
 * DESCRIPTION: Creates format library for AHRQ Maternal Health Indicators    
 *
 * VERSION: SAS Beta version of MHI v2025
-* RELEASE DATE: AUGUST 2024
+* RELEASE DATE: AUGUST 2025
 * 
 *============================================================================;
 
